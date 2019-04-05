@@ -1,0 +1,26 @@
+/*
+ * You can define variables and functions for use in calculations.
+ * このスクリプトでは、電卓の計算で使用する変数や関数を定義できます。
+ */
+
+float a = 2.0;
+float b = -1.0;
+float c = 3.0;
+
+float r = 1.01;
+
+float f(float x) {
+	return a*x*x + b*x + c;
+}
+
+float g(float x) {
+	if (x < 0) {
+		return 0;
+	}
+	float value = x;
+	for (int i=0; i<10; i++) {
+		value *= r;
+	}
+	return value;
+}
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<project name="RinearnProcessorNano" basedir="." default="archive">
+	
+	<property name="build.srcdir"  value="src"/>
+	<property name="build.bindir"  value="bin"/>
+	<property name="build.jarname" value="RinearnProcessorNano.jar"/>
+	
+	<target name="archive" depends="compile">
+		<jar jarfile="${build.jarname}" basedir="${build.bindir}">
+			<manifest>
+				<attribute name="Main-Class" value="com.rinearn.processornano.RinearnProcessorNanoMain" />
+				<attribute name="Class-Path" value=". Vnano.jar" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="compile">
+		<mkdir dir="bin" />
+		<javac srcdir="${build.srcdir}" destdir="${build.bindir}" encoding="UTF-8" includeantruntime="false" debug="true">
+			<exclude name="**/*Test.java"/>
+		</javac>
+	</target>
+	
+</project>

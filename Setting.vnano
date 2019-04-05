@@ -1,0 +1,53 @@
+
+statOnTopOfAllWindows = true;
+textFieldFontSize = 18;
+windowWidth = 400;
+windowHeight = 160;
+
+windowOpacity = 0.76;
+
+windowBackgroundColorR = 180;
+windowBackgroundColorG = 220;
+windowBackgroundColorB = 255;
+
+textFieldBackgroundColorR = 100;
+textFieldBackgroundColorG = 100;
+textFieldBackgroundColorB = 100;
+
+textFieldForegroundColorR = 140;
+textFieldForegroundColorG = 255;
+textFieldForegroundColorB = 180;
+
+inputNormalizerEnabled = true;
+// inputNormalizerEnabled = false;
+
+outputRounderEnabled = true;
+// outputRounderEnabled = false;
+
+roundingMode = "HALF_UP";
+// roundingMode = "HALF_DOWN";
+// roundingMode = "HALF_EVEN";
+// roundingMode = "UP";
+// roundingMode = "DOWN";
+
+roundingTarget = "SIGNIFICAND";
+// roundingTarget = "AFTER_FIXED_POINT";
+
+roundingLength = 10;
+
+
+acceleratorEnabled = true;
+// acceleratorEnabled = false;
+
+evalNumberAsFloat = true;
+// evalNumberAsFloat = false;
+
+libraryScriptPath = "./Library.vnano";
+
+libraryScriptEncoding = "UTF-8";
+// libraryScriptEncoding = "Shift_JIS";
+
+localeCode = "AUTO";
+// localeCode = "ja-JP";
+// localeCode = "en-US";
+
