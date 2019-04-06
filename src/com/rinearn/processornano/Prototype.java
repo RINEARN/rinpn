@@ -384,8 +384,8 @@ public final class Prototype {
 	private final String loadCode(String filePath, String encoding, String localeCode)
 			throws PrototypeException {
 
+		// 指定されたファイルが存在するか検査
 		if (!new File(filePath).exists()) {
-
 			if (localeCode.equals(LocaleCode.EN_US)) {
 				this.showMessage("The file \"" + filePath + "\" does not exist.", "Code Loading Error");
 			}
@@ -395,8 +395,13 @@ public final class Prototype {
 			throw new Prototype.PrototypeException("The file \"" + filePath + "\" does not exist.");
 		}
 
+		// 読み込み処理
 		try {
+
+			// 全行を読み込み、行単位で格納したListを取得
 			List<String> lines = Files.readAllLines(Paths.get(filePath), Charset.forName(encoding));
+
+			// 改行コードを挟みつつ全行を結合
 			StringBuilder codeBuilder = new StringBuilder();
 			String eol = System.getProperty("line.separator");
 			for (String line: lines) {
@@ -404,10 +409,20 @@ public final class Prototype {
 				codeBuilder.append(eol);
 			}
 			String code = codeBuilder.toString();
+
+			// UTF-8ではBOMの有無を検査し、付いている場合は削除
+			if(encoding.toLowerCase().equals("utf-8")) {
+				// UTF-8のBOMは 0xEF 0xBB 0xBF だが、文字列内部表現がUTF-16な都合で、読み込み後は 0xFEFF が付いている
+				final char bom = (char)0xFEFF;
+				if(0 < code.length() && code.charAt(0) == bom){
+					code = code.substring(1);
+				}
+			}
+
 			return code;
 
+		// 非対応の文字コードが指定された場合
 		} catch (UnsupportedCharsetException uce) {
-
 
 			if (localeCode.equals(LocaleCode.EN_US)) {
 				this.showMessage("The encoding \"" + encoding + "\" is not supported.", "Code Loading Error");
@@ -417,6 +432,7 @@ public final class Prototype {
 			}
 			throw new Prototype.PrototypeException(uce);
 
+		// 何らかの理由で読み込みに失敗した場合
 		} catch (IOException ioe) {
 
 			if (localeCode.equals(LocaleCode.EN_US)) {
@@ -432,7 +448,6 @@ public final class Prototype {
 				);
 			}
 			throw new Prototype.PrototypeException(ioe);
-
 		}
 	}
 
