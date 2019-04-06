@@ -80,7 +80,7 @@ public final class Prototype {
 	public class SettingContainer implements Cloneable {
 
 		public int textFieldFontSize = 18;
-		public boolean statOnTopOfAllWindows = true;
+		public boolean stayOnTopOfAllWindows = true;
 		public int windowWidth = 400;
 		public int windowHeight = 160;
 		public double windowOpacity = 0.76;
@@ -509,8 +509,8 @@ public final class Prototype {
 		Prototype.SettingContainer setting = new Prototype.SettingContainer();
 		try {
 			settingVnanoEngine.put(
-				"statOnTopOfAllWindows",
-				new Object[] { setting.getClass().getField("statOnTopOfAllWindows"), setting }
+				"stayOnTopOfAllWindows",
+				new Object[] { setting.getClass().getField("stayOnTopOfAllWindows"), setting }
 			);
 			settingVnanoEngine.put(
 				"textFieldFontSize",
@@ -1229,7 +1229,7 @@ public final class Prototype {
 			GraphicsDevice graphicsDevide = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 			if (graphicsDevide.isWindowTranslucencySupported(WindowTranslucency.PERPIXEL_TRANSLUCENT)) {
 				this.ui.frame.setUndecorated(true);
-				this.ui.frame.setAlwaysOnTop(setting.statOnTopOfAllWindows);
+				this.ui.frame.setAlwaysOnTop(setting.stayOnTopOfAllWindows);
 				this.ui.frame.setOpacity((float)setting.windowOpacity);
 
 				this.ui.topPanel.setBackground(new Color(0, 0, 0, 0));
