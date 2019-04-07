@@ -99,7 +99,7 @@ public final class Prototype {
 
 		public boolean inputNormalizerEnabled = true;
 		public boolean outputRounderEnabled = true;
-		public String roundingMode = "HALF_UP_SIGNIF";
+		public String roundingMode = "HALF_UP";
 		public String roundingTarget = "SIGNIFICAND";
 		public int roundingLength = 10;
 
