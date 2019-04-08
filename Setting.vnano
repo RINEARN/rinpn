@@ -207,6 +207,6 @@ libraryScriptEncoding = "UTF-8";           // Text-encoding of the file - ファ
 // (Type: bool)
 // ----------------------------------------------------------------------------------------------------
 
-acceleratorEnabled = true;         // Enable  - 有効化する    (Performance: About 400 MFLOPS ~ 5 GFLOPS)
-// acceleratorEnabled = false;     // Disable - 向こう化する  (Performance: About 10 MFLOPS)
+acceleratorEnabled = true;         // Enable  - 有効化する  (Performance: About 400 MFLOPS ~ 5 GFLOPS)
+// acceleratorEnabled = false;     // Disable - 無効化する  (Performance: About 10 MFLOPS)
 
