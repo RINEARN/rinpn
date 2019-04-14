@@ -492,6 +492,7 @@ public final class Prototype {
 		JDialog messageWindow = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE).createDialog(null, title);
 		messageWindow.setAlwaysOnTop(true);
 		messageWindow.setVisible(true);
+		messageWindow.dispose();
 	}
 
 
