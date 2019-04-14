@@ -11,6 +11,17 @@ RINEARN Processor nano is a simple & compact programmable calculator.
   <img src="https://github.com/RINEARN/rinearn-processor-nano/blob/master/signboard.jpg" alt="" width="890" />
 </div>
 
+This README is for users who want to build this software from source code by yourself.
+You can also get prebuilt-packages of this software from: 
+<a href="https://download.rinearn.com/advanced/#processor-nano">https://download.rinearn.com/advanced/#processor-nano</a>
+
+このREADMEの内容は、このソフトウェアをソースコードからビルドしたい方のためのものです。
+<a href="https://download.rinearn.com/advanced/#processor-nano">https://download.rinearn.com/advanced/#processor-nano</a>
+からビルド済みのパッケージも入手できます。
+
+<hr />
+
+
 
 ## Index - 目次
 - <a href="#caution">Caution - 注意</a>
