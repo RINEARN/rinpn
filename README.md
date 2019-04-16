@@ -30,6 +30,7 @@ You can also get prebuilt-packages of this software from:
 - <a href="#how-to-build">How to Build - ビルド方法</a>
 - <a href="#how-to-use">How to Use - 使用方法</a>
 - <a href="#about-us">About Us - 開発元について</a>
+- <a href="#references">References - 関連記事</a>
 
 
 
@@ -240,6 +241,27 @@ RINEARNでは、主にデータ解析や可視化、計算向けのソフトウ�
 
 - <a href="https://www.rinearn.com/">https://www.rinearn.com/</a>
 
+
+---
+
+<a id="references"></a>
+## References - 関連記事
+
+<dl>
+	<dt style="display: list-item; margin-left:40px;">
+		"シンプル＆コンパクトなプログラム関数電卓！
+「 リニアンプロセッサー nano 」の概要" - RINEARN Website (2019/01/26)
+	</dt>
+	<dd>
+		<a href="https://www.rinearn.com/ja-jp/info/news/2019/0126-rinearn-processor-nano-concept">https://www.rinearn.com/ja-jp/info/news/2019/0126-rinearn-processor-nano-concept</a>
+	</dd>
+	<dt style="display: list-item; margin-left:40px;">
+		"リニアンプロセッサー nano の先行開発版やソースコードリポジトリを公開" - RINEARN Website (2019/04/16)
+	</dt>
+	<dd>
+		<a href="https://www.rinearn.com/ja-jp/info/news/2019/0416-rinearn-processor-nano-advanced">https://www.rinearn.com/ja-jp/info/news/2019/0416-rinearn-processor-nano-advanced</a>
+	</dd>
+</dl>
 
 ---
 
