@@ -32,55 +32,30 @@ public final class RinearnProcessorNano {
 	}
 
 
+	/**
+	 * 電卓画面を起動します。
+	 */
 	public final void launchCalculatorWindow() {
 
-		// 計算機、電卓画面UIコンテナ、設定値コンテナのインスタンスを生成
-		Calculator calculator = new Calculator();
+		// 設定値コンテナと計算機を生成して初期化
+		SettingContainer setting = null;
+		Calculator calculator = null;
+		try {
+			setting = this.createInitializedSettingContainer();
+			calculator = this.createInitializedCalculator(setting);
+
+		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
+		} catch (RinearnProcessorNanoException e) {
+			e.printStackTrace();
+			return;
+		}
+
+
+		// 電卓画面のUIを生成して初期化
 		UIContainer ui = new UIContainer();
-		SettingContainer setting = new SettingContainer();
-
-
-		// 設定スクリプトを実行して設定値コンテナを初期化
-		try {
-			// 設定スクリプトを読み込む
-			String settingScriptCode = null;
-			settingScriptCode = this.loadCode(
-				SettingContainer.SETTING_SCRIPT_PATH, SettingContainer.SETTING_SCRIPT_ENCODING,
-				LocaleCode.getDefaultLocaleCode()
-			);
-
-			// 設定スクリプトを実行して設定値を書き込む（スクリプトエンジンはメソッド内で生成）
-			setting.evaluateSettingScript(settingScriptCode, SettingContainer.SETTING_SCRIPT_PATH);
-
-		// 設定スクリプトの文法エラーなどで失敗した場合
-		} catch (RinearnProcessorNanoException e) {
-			e.printStackTrace();
-			return;
-		}
-
-
-		// 計算機の初期化
-		try {
-			// ライブラリスクリプトを読み込む
-			String libraryScriptCode = this.loadCode(
-				setting.libraryScriptPath, setting.libraryScriptEncoding, setting.localeCode
-			);
-
-			// 計算機を初期化
-			calculator.initialize(setting, libraryScriptCode);
-
-		// スクリプトエンジンの接続や、ライブラリスクリプトの文法エラーなどで失敗した場合
-		} catch (RinearnProcessorNanoException e) {
-			e.printStackTrace();
-			return;
-		}
-
-
-		// 電卓画面UIを構築して初期化
 		try {
 			UIInitializer uiInitialiser = new UIInitializer(ui, setting); // 別スレッドで初期化するためのRunnable
 			SwingUtilities.invokeAndWait(uiInitialiser);                  // それをSwingのイベントスレッドで実行
-			EventListenerManager.addAllEventListenersToUI(ui, calculator, setting);  // イベントリスナを登録
 
 		// 初期化実行スレッドの処理待ち時の割り込みで失敗した場合など（結構異常な場合なので、リトライせず終了する）
 		} catch (InvocationTargetException | InterruptedException e) {
@@ -94,9 +69,72 @@ public final class RinearnProcessorNano {
 			e.printStackTrace();
 			return; // この例外が発生する場合はまだUI構築が走っていないので、破棄するUIリソースはない
 		}
+
+		// UIの各部品にイベントリスナを登録
+		EventListenerManager.addAllEventListenersToUI(ui, calculator, setting);
 	}
 
 
+	/**
+	 * 設定スクリプトを実行して値を初期化済みの、設定値コンテナを生成して返します。
+	 *
+	 * @return 初期化済みの設定値コンテナ
+	 * @throws RinearnProcessorNanoException
+	 * 		設定スクリプトの読み込みエラーなどで失敗した場合にスローされます。
+	 */
+	private final SettingContainer createInitializedSettingContainer()
+			throws RinearnProcessorNanoException {
+
+		SettingContainer setting = new SettingContainer();
+
+		// 設定スクリプトを読み込む
+		String settingScriptCode = null;
+		settingScriptCode = this.loadCode(
+			SettingContainer.SETTING_SCRIPT_PATH, SettingContainer.SETTING_SCRIPT_ENCODING,
+			LocaleCode.getDefaultLocaleCode()
+		);
+
+		// 設定スクリプトを実行して設定値を書き込む（スクリプトエンジンはメソッド内で生成）
+		setting.evaluateSettingScript(settingScriptCode, SettingContainer.SETTING_SCRIPT_PATH);
+
+		return setting;
+	}
+
+
+	/**
+	 * ライブラリスクリプトや設定値を読み込んで初期化済みの、計算機を生成して返します。
+	 *
+	 * @return 初期化済みの計算機
+	 * @throws RinearnProcessorNanoException
+	 * 		スクリプトエンジンの接続や、ライブラリの読み込みエラーなどで失敗した場合にスローされます。
+	 */
+	private final Calculator createInitializedCalculator(SettingContainer setting)
+			throws RinearnProcessorNanoException {
+
+		Calculator calculator = new Calculator();
+
+		// ライブラリスクリプトを読み込む
+		String libraryScriptCode = this.loadCode(
+			setting.libraryScriptPath, setting.libraryScriptEncoding, setting.localeCode
+		);
+
+		// 計算機を初期化
+		calculator.initialize(setting, libraryScriptCode);
+
+		return calculator;
+	}
+
+
+	/**
+	 * ファイルからコードを読み込みます。
+	 *
+	 * @param filePath ファイルのパス
+	 * @param encoding 文字コード
+	 * @param localeCode エラーメッセージの言語を指定するロケールコード
+	 * @return 読み込まれたコード
+	 * @throws RinearnProcessorNanoException
+	 * 		読み込みに失敗した場合にスローされます。
+	 */
 	private final String loadCode(String filePath, String encoding, String localeCode)
 			throws RinearnProcessorNanoException {
 
