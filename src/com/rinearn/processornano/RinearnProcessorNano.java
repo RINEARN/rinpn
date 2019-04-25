@@ -22,7 +22,6 @@ import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.ui.MessageManager;
 import com.rinearn.processornano.ui.UIContainer;
-import com.rinearn.processornano.ui.UIDisposer;
 import com.rinearn.processornano.ui.UIInitializer;
 
 
@@ -73,15 +72,7 @@ public final class RinearnProcessorNano {
 		// スクリプトエンジンの接続や、ライブラリスクリプトの文法エラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
 			e.printStackTrace();
-
-			// UIリソースを破棄して終了
-			try {
-				SwingUtilities.invokeAndWait(new UIDisposer(ui));
-				return;
-			} catch (InvocationTargetException | InterruptedException disposeException) {
-				disposeException.printStackTrace();
-				System.exit(1);
-			}
+			return;
 		}
 
 
