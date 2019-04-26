@@ -5,12 +5,9 @@
 
 package com.rinearn.processornano.calculator;
 
-import java.math.RoundingMode;
-
 import javax.script.ScriptException;
 
 import com.rinearn.processornano.spec.LocaleCode;
-import com.rinearn.processornano.spec.RoundingTarget;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.ui.MessageManager;
 
@@ -41,10 +38,10 @@ public final class AsynchronousScriptRunner implements Runnable {
 
 		if (this.calculator.isRunning()) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showMessage("The previous calculation have not finished yet!", "!");
+				MessageManager.showErrorMessage("The previous calculation have not finished yet!", "!");
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showMessage("まだ前の計算を実行中です !", "!");
+				MessageManager.showErrorMessage("まだ前の計算を実行中です !", "!");
 			}
 			return;
 		}
@@ -58,10 +55,10 @@ public final class AsynchronousScriptRunner implements Runnable {
 		} catch (ScriptException e) {
 			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showMessage(errorMessage, "Input/Library Error");
+				MessageManager.showErrorMessage(errorMessage, "Input/Library Error");
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showMessage(errorMessage, "計算式やライブラリのエラー");
+				MessageManager.showErrorMessage(errorMessage, "計算式やライブラリのエラー");
 			}
 			e.printStackTrace();
 			this.calculator.setRunning(false);
@@ -69,15 +66,8 @@ public final class AsynchronousScriptRunner implements Runnable {
 		}
 
 		// 値が浮動小数点数なら、設定内容に応じて丸める
-		if (value instanceof Double && this.setting.outputRounderEnabled) {
-
-			// ※ setting 内の設定値の正当性は checkSettingValues で検査済み
-			RoundingMode mode = RoundingMode.valueOf(this.setting.roundingMode);
-			RoundingTarget target = RoundingTarget.valueOf(this.setting.roundingTarget);
-			int digits = this.setting.roundingLength;
-
-			double doubleValue = ((Double)value).doubleValue();
-			value = Rounder.round(doubleValue, mode, target, digits); // 型は BigDecimal になる
+		if (value instanceof Double) {
+			value = Rounder.round( ((Double)value).doubleValue(), setting); // 型は BigDecimal になる
 		}
 
 		// 値を出力フィールドの表示用文字列にセットし、UIスレッドでフィールドに反映

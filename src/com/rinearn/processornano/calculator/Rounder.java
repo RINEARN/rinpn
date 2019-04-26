@@ -10,8 +10,20 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 import com.rinearn.processornano.spec.RoundingTarget;
+import com.rinearn.processornano.spec.SettingContainer;
 
 public final class Rounder {
+
+	public static final BigDecimal round(double value, SettingContainer setting) {
+		if (setting.outputRounderEnabled) {
+			RoundingMode mode = RoundingMode.valueOf(setting.roundingMode);
+			RoundingTarget target = RoundingTarget.valueOf(setting.roundingTarget);
+			int digits = setting.roundingLength;
+			return round(value, mode, target, digits);
+		} else {
+			return new BigDecimal(value);
+		}
+	}
 
 	public static final BigDecimal round(double value, RoundingMode mode, RoundingTarget target, int digits) {
 
@@ -31,4 +43,5 @@ public final class Rounder {
 
 		return bdValue;
 	}
+
 }

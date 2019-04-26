@@ -14,6 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import javax.script.ScriptException;
 import javax.swing.SwingUtilities;
 
 import com.rinearn.processornano.calculator.Calculator;
@@ -29,6 +30,46 @@ public final class RinearnProcessorNano {
 
 	public RinearnProcessorNano() {
 		// 起動は、インスタンス生成後に明示的に launchCalculatorWindow() を呼ぶ
+	}
+
+
+	/**
+	 * 電卓画面を起動せずに、計算を実行し、結果を標準出力に表示します。
+	 *
+	 * @param scriptCode 計算内容（式またはスクリプトコード）
+	 */
+	public final void calculate(String scriptCode) {
+
+		// メッセージの出力をコマンドラインモードに変更
+		MessageManager.setDisplayType(MessageManager.DISPLAY_MODE.CUI);
+
+		// 設定値コンテナと計算機を生成して初期化
+		SettingContainer setting = null;
+		Calculator calculator = null;
+		try {
+			setting = this.createInitializedSettingContainer();
+			calculator = this.createInitializedCalculator(setting);
+
+		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
+		} catch (RinearnProcessorNanoException e) {
+			e.printStackTrace();
+			return;
+		}
+
+		// 計算を実行
+		Object value = null;
+		try {
+			value = calculator.calculate(scriptCode, setting);
+		} catch (ScriptException e) {
+			String message = MessageManager.customizeExceptionMessage(e.getMessage());
+			MessageManager.showErrorMessage(message, "!");
+			e.printStackTrace();
+		}
+
+		// 結果を表示
+		if (value != null) {
+			System.out.println(value.toString());
+		}
 	}
 
 
@@ -61,10 +102,10 @@ public final class RinearnProcessorNano {
 		} catch (InvocationTargetException | InterruptedException e) {
 
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showMessage("Unexpected exception occurred: " + e.getClass().getCanonicalName(), "Error");
+				MessageManager.showErrorMessage("Unexpected exception occurred: " + e.getClass().getCanonicalName(), "Error");
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showMessage("予期しない例外が発生しました: " + e.getClass().getCanonicalName(), "エラー");
+				MessageManager.showErrorMessage("予期しない例外が発生しました: " + e.getClass().getCanonicalName(), "エラー");
 			}
 			e.printStackTrace();
 			return; // この例外が発生する場合はまだUI構築が走っていないので、破棄するUIリソースはない
@@ -141,10 +182,10 @@ public final class RinearnProcessorNano {
 		// 指定されたファイルが存在するか検査
 		if (!new File(filePath).exists()) {
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showMessage("The file \"" + filePath + "\" does not exist.", "Code Loading Error");
+				MessageManager.showErrorMessage("The file \"" + filePath + "\" does not exist.", "Code Loading Error");
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showMessage("ファイル \"" + filePath + "\" が見つかりません。", "コード読み込みエラー");
+				MessageManager.showErrorMessage("ファイル \"" + filePath + "\" が見つかりません。", "コード読み込みエラー");
 			}
 			throw new RinearnProcessorNanoException("The file \"" + filePath + "\" does not exist.");
 		}
@@ -179,10 +220,10 @@ public final class RinearnProcessorNano {
 		} catch (UnsupportedCharsetException uce) {
 
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showMessage("The encoding \"" + encoding + "\" is not supported.", "Code Loading Error");
+				MessageManager.showErrorMessage("The encoding \"" + encoding + "\" is not supported.", "Code Loading Error");
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showMessage("非対応の文字コード \"" + encoding + "\" が指定されています。", "コード読み込みエラー");
+				MessageManager.showErrorMessage("非対応の文字コード \"" + encoding + "\" が指定されています。", "コード読み込みエラー");
 			}
 			throw new RinearnProcessorNanoException(uce);
 
@@ -190,13 +231,13 @@ public final class RinearnProcessorNano {
 		} catch (IOException ioe) {
 
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showMessage(
+				MessageManager.showErrorMessage(
 					"An error (IOException) occurred for the loading of \"" + filePath + "\".",
 					"Code Loading Error"
 				);
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showMessage(
+				MessageManager.showErrorMessage(
 					"\"" + filePath + "\" の読み込みにおいて、エラー (IOException) が発生しました。",
 					"コード読み込みエラー"
 				);

@@ -24,7 +24,7 @@ public final class IOFieldMouseListener implements MouseListener {
 	@Override
 	public final void mouseClicked(MouseEvent e) {
 		if (!(e.getSource() instanceof JTextField)) {
-			MessageManager.showMessage(
+			MessageManager.showErrorMessage(
 				"IOFieldMouseListener is added to the invalid component: "
 				+ e.getSource().getClass().getCanonicalName()
 				+ " (should be JTextField)",
