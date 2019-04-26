@@ -28,7 +28,12 @@ You can also get prebuilt-packages of this software from:
 - <a href="#license">License - ライセンス</a>
 - <a href="#requirements">Requirements - 必要な環境</a>
 - <a href="#how-to-build">How to Build - ビルド方法</a>
+	- <a href="#how-to-build-processor-nano">Build the RINEARN Processor nano - リニアンプロセッサー nano のビルド</a>
+	- <a href="#how-to-build-vnano">Build the Vnano Engine - Vnanoエンジンのビルド</a>
 - <a href="#how-to-use">How to Use - 使用方法</a>
+	- <a href="#how-to-use-gui">How to in the GUI Mode - GUIモードでの使用方法</a>
+	- <a href="#how-to-use-cui">How to in the CUI Mode - CUIモードでの使用方法</a>
+	- <a href="#how-to-use-library">How to Declare Variables and Functions - 変数や関数の定義</a>
 - <a href="#about-us">About Us - 開発元について</a>
 - <a href="#references">References - 関連記事</a>
 
@@ -60,39 +65,12 @@ This software is released under the MIT License.
 <a id="how-to-build"></a>
 ## How to Build - ビルド方法
 
-### 1. Build the Vnano Engine - Vnanoエンジンのビルド
+<a id="how-to-build-processor-nano"></a>
+### 1. Build the RINEARN Processor nano - リニアンプロセッサー nano のビルド
 
-Firstly, get and build source code of the script engine of the <a href="https://github.com/RINEARN/vnano">Vnano</a> (Vnano Engine).
+Firstly, get and build source code of the RINEARN Processor nano.
 
-はじめに、<a href="https://github.com/RINEARN/vnano">Vnano</a>のスクリプトエンジン（Vnanoエンジン）のソースコードを入手してビルドします。
-
-	cd <working-directory>
-	git clone https://github.com/RINEARN/vnano.git
-	cd vnano
-
-for Microsoft&reg; Windows&reg; :
-
-	.\build.bat
-
-for Linux&reg;, etc. :
-
-	./build.sh
-
-for Apache Ant :
-
-    ant -f build.xml
-
-If you succeeded to build, the JAR file "Vnano.jar" will be generated. 
-This JAR file is the Vnano Engine which is necessary for RINEARN Processor nano.
-
-ビルドが成功すると、JARファイル「 Vnano.jar 」が生成されます。
-このJARファイルがVnanoエンジンで、リニアンプロセッサー nano の動作に必要です。
-
-### 2. Build the RINEARN Processor nano - リニアンプロセッサー nano のビルド
-
-Next, get and build source code of the RINEARN Processor nano.
-
-次に、リニアンプロセッサー nano のソースコードを入手してビルドします。
+はじめに、リニアンプロセッサー nano のソースコードを入手してビルドします。
 
 	cd <working-directory>
 	git clone https://github.com/RINEARN/rinearn-processor-nano.git
@@ -114,11 +92,37 @@ If you succeeded to build, the JAR file "RinearnProcessorNano.jar" will be gener
 
 ビルドが成功すると、JARファイル「 RinearnProcessorNano.jar 」が生成されます。
 
-### 3. Put the Vnano Engine in "lib" directory - Vnanoエンジンを「lib」フォルダ内に配置する
 
-Finally, put the JAR file of the Vnano Engine "Vnano.jar" in the same directory as "RinearnProcessorNano.jar".
+<a id="how-to-build-vnano"></a>
+### 2. Build the Vnano Engine - Vnanoエンジンのビルド
 
-最後に、VnanoエンジンのJARファイル「 Vnano.jar 」を、「RinearnProcessorNano.jar」と同じフォルダ内に配置します。
+Next, get and build source code of the script engine of the <a href="https://github.com/RINEARN/vnano">Vnano</a> (Vnano Engine).
+
+次に、<a href="https://github.com/RINEARN/vnano">Vnano</a>のスクリプトエンジン（Vnanoエンジン）のソースコードを入手してビルドします。
+
+	cd <working-directory>
+	git clone https://github.com/RINEARN/vnano.git
+	cd vnano
+
+for Microsoft&reg; Windows&reg; :
+
+	.\build.bat
+
+for Linux&reg;, etc. :
+
+	./build.sh
+
+for Apache Ant :
+
+    ant -f build.xml
+
+If you succeeded to build, the JAR file "Vnano.jar" will be generated. 
+This JAR file is the Vnano Engine which is necessary for RINEARN Processor nano, 
+so put the JAR file of the Vnano Engine "Vnano.jar" in the same directory as "RinearnProcessorNano.jar" :
+
+ビルドが成功すると、JARファイル「 Vnano.jar 」が生成されます。
+このJARファイルがVnanoエンジンで、リニアンプロセッサー nano の動作に必要なので、
+「RinearnProcessorNano.jar」と同じフォルダ内に配置します：
 
 	cd <working-directory>
 
@@ -134,33 +138,41 @@ for Linux&reg;, etc. :
 <a id="how-to-use"></a>
 ## How to Use - 使用方法
 
-### 1. How to Launch - 起動方法
+<a id="how-to-use-gui"></a>
+### 1. How to in the GUI Mode - GUIモードでの使用方法
 
-Execute "RinearnProcessorNano.jar" from the command-line terminal as follows:
+In the GUI mode, you can take calculations on the graphical calculator window.
+At first, execute "RinearnProcessorNano.jar" from the command-line terminal as follows:
 
-コマンドラインで以下のように「 RinearnProcessorNano.jar 」を実行します：
+GUIモードでは、グラフィカルな電卓画面上で計算を行う事ができます。
+まず、コマンドラインで以下のように「 RinearnProcessorNano.jar 」を実行してください：
 
 	cd <working-directory>/rinearn-processor-nano/
 	java -jar RinearnProcessorNano.jar
 
+Alternatively, if you are using the 
+<a href="https://download.rinearn.com/advanced/#processor-nano">pre-built package</a> 
+on the OS of the Microsoft&reg; Windows&reg;, you can execute the above JAR file by double-clicking the batch file "RinearnProcessorNano.bat".
+
+または、もし Microsoft&reg; Windows&reg; のOS上で 
+<a href="https://download.rinearn.com/advanced/#processor-nano">ビルド済みパッケージ</a> 
+を使用している場合は、バッチファイル「 RinearnProcessorNano.bat 」をダブルクリックする事で上記JARファイルを実行する事も可能です。
 
 Then the window of the RINEARN Processor nano will be launched:
 
-すると、以下のようにリニアンプロセッサー nano の画面が起動します: 
+実行すると、以下のようにリニアンプロセッサー nano の画面が起動します: 
 
 <div style="background-color:white; width: 700px; height: 300px; text-align:center; background-image: url('./ui.png'); background-repeat: no-repeat; background-size: contain;">
   <img src="https://github.com/RINEARN/rinearn-processor-nano/blob/master/ui.png" alt="" width="700" />
 </div>
 
-### 2. How to Calculate - 計算方法
 
-
-Input the expression into the "INPUT" text-field, and press the Enter key of your key board, 
-then the calculated value of the expression will be output on the "OUTPUT" text-field.
+To calculate, Input the expression into the "INPUT" text-field, and press the Enter key of your key board.
+Then the calculated value of the expression will be output on the "OUTPUT" text-field.
 For example:
 
-「 INPUT 」欄に計算式を入力し、そのままキーボードの Enter キーを押すと、
-計算された値が「 OUTPUT 」欄に表示されます。
+計算を行うには、「 INPUT 」欄に計算式を入力し、そのままキーボードの Enter キーを押してください。
+すると、計算された値が「 OUTPUT 」欄に表示されます。
 例えば：
 
 
@@ -170,6 +182,25 @@ For example:
 	OUTPUT:
 	2.0
 
+
+<a id="how-to-use-cui"></a>
+### 2. How to Use in CUI Mode - CUIモードでの使用方法
+
+In the CUI mode, you can take calculations on the command-line terminal, whithout launching the calculator window.
+To use the CUI mode, execute the "RinearnProcessorNano.jar" with passing an expression as a command-line argument as follows:
+
+CUIモードでは、コマンドライン端末上で、電卓画面を起動せずにその場で計算を行う事ができます。
+CUIモードを使用するには、コマンドラインで以下のように、計算式を引数として「 RinearnProcessor.jar 」を実行してください：
+
+	cd <working-directory>/rinearn-processor-nano/
+	java -jar RinearnProcessorNano.jar "( 1 + 2 ) / 3 - 4 + 5"
+
+	(result)
+	2.0
+
+
+
+<a id="how-to-use-library"></a>
 ### 3. How to Declare Variables and Functions - 変数や関数の定義
 
 You can define variables and functions in the script file "Library.vnano".
@@ -199,9 +230,9 @@ For example:
     	return arg + 5;
 	}
 
-and use the above variable and functions on the calculator:
+and use the above variable and functions on the calculation:
 
-と定義して、電卓上で以下のように使用できます：
+と定義して、計算時に以下のように使用できます：
 
 	INPUT:
 	2 * var1
