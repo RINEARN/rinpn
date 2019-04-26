@@ -12,7 +12,11 @@ SCRIPT_DIR="$(dirname $0)"
 cd "$SCRIPT_DIR"
 cd ..
 
-java -jar RinearnProcessorNano.jar "$1"
+if [ -z "$1" ]; then 
+	java -jar RinearnProcessorNano.jar
+else
+	java -jar RinearnProcessorNano.jar "$1"
+fi
 
 cd "$CALLER_DIR"
 
