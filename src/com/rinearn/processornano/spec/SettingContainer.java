@@ -77,13 +77,13 @@ public final class SettingContainer implements Cloneable {
 
 		if (settingVnanoEngine == null) {
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showMessage(
+				MessageManager.showErrorMessage(
 					"Please put Vnano.jar in the same directory as RinearnProcessorNano.jar.",
 					"Engine Loading Error"
 				);
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showMessage(
+				MessageManager.showErrorMessage(
 					"Vnano.jar を、RinearnProcessorNano.jar と同じフォルダ内に配置してください。",
 					"エンジン読み込みエラー"
 				);
@@ -194,7 +194,7 @@ public final class SettingContainer implements Cloneable {
 				new Object[] { this.getClass().getField("localeCode"), this }
 			);
 		} catch (NoSuchFieldException | SecurityException e) {
-			MessageManager.showMessage("Binding error occurred for SettingContainer.", "Fatal Error");
+			MessageManager.showErrorMessage("Binding error occurred for SettingContainer.", "Fatal Error");
 			throw new RinearnProcessorNanoException(e);
 		}
 
@@ -209,10 +209,10 @@ public final class SettingContainer implements Cloneable {
 		} catch (ScriptException e) {
 			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showMessage(errorMessage, "Input/Library Error");
+				MessageManager.showErrorMessage(errorMessage, "Input/Library Error");
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showMessage(errorMessage, "計算式やライブラリのエラー");
+				MessageManager.showErrorMessage(errorMessage, "計算式やライブラリのエラー");
 			}
 			throw new RinearnProcessorNanoException(e);
 		}
@@ -433,7 +433,7 @@ public final class SettingContainer implements Cloneable {
 		}
 
 		if (errorOccurred) {
-			MessageManager.showMessage(errorMessage, errorTitle);
+			MessageManager.showErrorMessage(errorMessage, errorTitle);
 			throw new RinearnProcessorNanoException(errorMessage);
 		}
 	}

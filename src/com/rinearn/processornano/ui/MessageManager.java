@@ -8,13 +8,49 @@ package com.rinearn.processornano.ui;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import com.rinearn.processornano.spec.LocaleCode;
+
 public final class MessageManager {
 
-	public static final void showMessage(String message, String title) {
-		JDialog messageWindow = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE).createDialog(null, title);
-		messageWindow.setAlwaysOnTop(true);
-		messageWindow.setVisible(true);
-		messageWindow.dispose();
+	public enum DISPLAY_MODE {
+		GUI,
+		CUI,
+	}
+
+	private static DISPLAY_MODE displayMode = DISPLAY_MODE.GUI;
+
+	public static final void setDisplayType(DISPLAY_MODE mode) {
+		displayMode = mode;
+	}
+
+	public static final void showErrorMessage(String message, String title) {
+		switch (displayMode) {
+			case GUI : {
+				JDialog messageWindow = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE).createDialog(null, title);
+				messageWindow.setAlwaysOnTop(true);
+				messageWindow.setVisible(true);
+				messageWindow.dispose();
+				break;
+			}
+			case CUI : {
+				if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
+					System.err.println();
+					System.err.println("エラー : " + message);
+					System.err.println();
+					System.err.println("--------------------------------------------------------------------------------");
+					System.err.println("スタックトレース : ");
+					System.err.println();
+				}
+				if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
+					System.err.println();
+					System.err.println("Error: " + message);
+					System.err.println();
+					System.err.println("--------------------------------------------------------------------------------");
+					System.err.println("Stack Trace: ");
+					System.err.println();
+				}
+			}
+		}
 	}
 
 	public static final String customizeExceptionMessage(String message) {

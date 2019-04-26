@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 import com.rinearn.processornano.RinearnProcessorNanoException;
 import com.rinearn.processornano.spec.LocaleCode;
@@ -62,10 +63,10 @@ public final class Calculator {
 		this.engine = manager.getEngineByName("vnano");
 		if (engine == null) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showMessage("Please put Vnano.jar in the same directory as RinearnProcessorNano.jar.", "Engine Loading Error");
+				MessageManager.showErrorMessage("Please put Vnano.jar in the same directory as RinearnProcessorNano.jar.", "Engine Loading Error");
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showMessage("Vnano.jar を RinearnProcessorNano.jar と同じフォルダ内に配置してください。", "エンジン読み込みエラー");
+				MessageManager.showErrorMessage("Vnano.jar を RinearnProcessorNano.jar と同じフォルダ内に配置してください。", "エンジン読み込みエラー");
 			}
 			throw new RinearnProcessorNanoException("ScriptEngine of the Vnano could not be loaded.");
 		}
@@ -80,6 +81,26 @@ public final class Calculator {
 
 		// スクリプトエンジンにオプションマップを設定
 		engine.put("VNANO_OPTION", optionMap);
+	}
+
+
+	public final synchronized Object calculate(String scriptCode, SettingContainer setting)
+			throws ScriptException {
+
+		// 入力された式を式文にするために末尾にセミコロンを追加（無い場合のみ）
+		if (!scriptCode.trim().endsWith(";")) {
+			scriptCode += ";";
+		}
+
+		// 計算を実行
+		Object value = this.engine.eval(scriptCode);
+
+		// 値が浮動小数点数なら、設定内容に応じて丸める
+		if (value instanceof Double) {
+			value = Rounder.round( ((Double)value).doubleValue(), setting); // 型は BigDecimal になる
+		}
+
+		return value;
 	}
 
 
