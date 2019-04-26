@@ -145,29 +145,39 @@ In the GUI mode, you can take calculations on the graphical calculator window.
 At first, execute "RinearnProcessorNano.jar" from the command-line terminal as follows:
 
 GUIモードでは、グラフィカルな電卓画面上で計算を行う事ができます。
-まず、コマンドラインで以下のように「 RinearnProcessorNano.jar 」を実行してください：
+それにはまず、コマンドラインで以下のように「 RinearnProcessorNano.jar 」を実行します：
 
 	cd <working-directory>/rinearn-processor-nano/
 	java -jar RinearnProcessorNano.jar
 
+
+
+By the way, if you register the path of "bin" folder to the environment variable "PATH" (or "Path") 
+of your OS, wherever the current directory is, you can launch more simply as follows:
+
+なお、OSの環境変数 PATH （または Path ）に「bin」フォルダのパスを登録しておけば、カレントディレクトリの場所に関わらず、以下のように簡単なコマンドで実行できるようになります：
+
+	rinpron
+
+
 Alternatively, if you are using the 
 <a href="https://download.rinearn.com/advanced/#processor-nano">pre-built package</a> 
-on the OS of the Microsoft&reg; Windows&reg;, you can execute the above JAR file by double-clicking the batch file "RinearnProcessorNano.bat".
+on the OS of the Microsoft&reg; Windows&reg;, you can execute this software by double-clicking the batch file "RinearnProcessorNano.bat".
 
 または、もし Microsoft&reg; Windows&reg; のOS上で 
 <a href="https://download.rinearn.com/advanced/#processor-nano">ビルド済みパッケージ</a> 
-を使用している場合は、バッチファイル「 RinearnProcessorNano.bat 」をダブルクリックする事で上記JARファイルを実行する事も可能です。
+を使用している場合は、バッチファイル「 RinearnProcessorNano.bat 」をダブルクリックして実行する事も可能です。
 
-Then the window of the RINEARN Processor nano will be launched:
+When you execute this software as above ways, the window of the RINEARN Processor nano will be launched:
 
-実行すると、以下のようにリニアンプロセッサー nano の画面が起動します: 
+さて、上記のように実行すると、リニアンプロセッサー nano の画面（下図）が起動します: 
 
 <div style="background-color:white; width: 700px; height: 300px; text-align:center; background-image: url('./ui.png'); background-repeat: no-repeat; background-size: contain;">
   <img src="https://github.com/RINEARN/rinearn-processor-nano/blob/master/ui.png" alt="" width="700" />
 </div>
 
 
-To calculate, Input the expression into the "INPUT" text-field, and press the Enter key of your key board.
+To take calculations, Input the expression into the "INPUT" text-field, and press the Enter key of your key board.
 Then the calculated value of the expression will be output on the "OUTPUT" text-field.
 For example:
 
@@ -193,23 +203,33 @@ CUIモードでは、コマンドライン端末上で、電卓画面を起動�
 CUIモードを使用するには、コマンドラインで以下のように、計算式を引数として「 RinearnProcessor.jar 」を実行してください：
 
 	cd <working-directory>/rinearn-processor-nano/
-	java -jar RinearnProcessorNano.jar "( 1 + 2 ) / 3 - 4 + 5"
+	java -jar RinearnProcessorNano.jar "(1 + 2 ) / 3 - 4 + 5"
 
 	(result)
 	2.0
 
+
+If you register the path of "bin" folder to the environment variable "PATH" (or "Path") 
+of your OS, wherever the current directory is, you can take calculations by more simply as follows:
+
+ここでも、OSの環境変数 PATH （または Path ）に「bin」フォルダのパスを登録しておいた場合は、カレントディレクトリの場所に関わらず、以下のように簡単なコマンドで計算できるようになります：
+
+	rinpron "( 1 + 2 ) / 3 - 4 + 5"
+
+	(result)
+	2.0
 
 
 <a id="how-to-use-library"></a>
 ### 3. How to Declare Variables and Functions - 変数や関数の定義
 
 You can define variables and functions in the script file "Library.vnano".
-Defined variables and functions are available in expressions written in the "INPUT" text-field of the Step-2. 
+Defined variables and functions are available in expressions of the Step-1 and 2. 
 The content of "Library.vnano" should be written in the script language of the Vnano 
 (see "<a href="https://github.com/RINEARN/vnano#language">The Vnano as a Language</a>" for details).
 
 スクリプトファイル「 Library.vnano 」の中で、変数や関数を定義できます。
-そこで定義した変数や関数は、ステップ 2 での「INPUT」欄の計算式の中で使用できます。
+そこで定義した変数や関数は、ステップ 1 や 2 での計算式の中で使用できます。
 なお、「 Library.vnano 」の中身は、Vnano のスクリプト言語
 （ 詳細は「 <a href="https://github.com/RINEARN/vnano#language">言語としてのVnano</a> 」を参照 ）
 で記述する必要があります。
