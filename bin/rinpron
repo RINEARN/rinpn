@@ -1,0 +1,18 @@
+#!/bin/sh
+
+if [ $# -gt 2 ]; then 
+	echo "Error:    Too many arguments."
+	echo "Solution: Enclose the expression by double-quotations, e.g.  \"1+2\"."
+	exit 1
+fi
+
+CALLER_DIR="$(pwd)"
+SCRIPT_DIR="$(dirname $0)"
+
+cd "$SCRIPT_DIR"
+cd ..
+
+java -jar RinearnProcessorNano.jar "$1"
+
+cd "$CALLER_DIR"
+
