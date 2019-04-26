@@ -21,9 +21,9 @@ import com.rinearn.processornano.calculator.Calculator;
 import com.rinearn.processornano.event.EventListenerManager;
 import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
-import com.rinearn.processornano.ui.MessageManager;
 import com.rinearn.processornano.ui.UIContainer;
 import com.rinearn.processornano.ui.UIInitializer;
+import com.rinearn.processornano.util.MessageManager;
 
 
 public final class RinearnProcessorNano {

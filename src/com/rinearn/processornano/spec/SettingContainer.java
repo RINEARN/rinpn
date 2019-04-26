@@ -16,7 +16,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import com.rinearn.processornano.RinearnProcessorNanoException;
-import com.rinearn.processornano.ui.MessageManager;
+import com.rinearn.processornano.util.MessageManager;
 
 public final class SettingContainer implements Cloneable {
 
