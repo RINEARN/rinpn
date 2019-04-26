@@ -31,8 +31,8 @@ You can also get prebuilt-packages of this software from:
 	- <a href="#how-to-build-processor-nano">Build the RINEARN Processor nano - リニアンプロセッサー nano のビルド</a>
 	- <a href="#how-to-build-vnano">Build the Vnano Engine - Vnanoエンジンのビルド</a>
 - <a href="#how-to-use">How to Use - 使用方法</a>
-	- <a href="#how-to-use-gui">How to in the GUI Mode - GUIモードでの使用方法</a>
-	- <a href="#how-to-use-cui">How to in the CUI Mode - CUIモードでの使用方法</a>
+	- <a href="#how-to-use-gui">How to Use in the GUI Mode - GUIモードでの使用方法</a>
+	- <a href="#how-to-use-cui">How to Use in the CUI Mode - CUIモードでの使用方法</a>
 	- <a href="#how-to-use-library">How to Declare Variables and Functions - 変数や関数の定義</a>
 - <a href="#about-us">About Us - 開発元について</a>
 - <a href="#references">References - 関連記事</a>
@@ -139,7 +139,7 @@ for Linux&reg;, etc. :
 ## How to Use - 使用方法
 
 <a id="how-to-use-gui"></a>
-### 1. How to in the GUI Mode - GUIモードでの使用方法
+### 1. How to Use in the GUI Mode - GUIモードでの使用方法
 
 In the GUI mode, you can take calculations on the graphical calculator window.
 At first, execute "RinearnProcessorNano.jar" from the command-line terminal as follows:
@@ -184,7 +184,7 @@ For example:
 
 
 <a id="how-to-use-cui"></a>
-### 2. How to Use in CUI Mode - CUIモードでの使用方法
+### 2. How to Use in the CUI Mode - CUIモードでの使用方法
 
 In the CUI mode, you can take calculations on the command-line terminal, whithout launching the calculator window.
 To use the CUI mode, execute the "RinearnProcessorNano.jar" with passing an expression as a command-line argument as follows:
