@@ -9,7 +9,7 @@ import javax.script.ScriptException;
 
 import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
-import com.rinearn.processornano.ui.MessageManager;
+import com.rinearn.processornano.util.MessageManager;
 
 
 public final class AsynchronousScriptRunner implements Runnable {

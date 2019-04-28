@@ -10,8 +10,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JTextField;
 
-import com.rinearn.processornano.ui.MessageManager;
 import com.rinearn.processornano.ui.UIContainer;
+import com.rinearn.processornano.util.MessageManager;
 
 public final class IOFieldMouseListener implements MouseListener {
 

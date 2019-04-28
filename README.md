@@ -157,7 +157,7 @@ of your OS, wherever the current directory is, you can launch more simply as fol
 
 なお、OSの環境変数 PATH （または Path ）に「bin」フォルダのパスを登録しておけば、カレントディレクトリの場所に関わらず、以下のように簡単なコマンドで実行できるようになります：
 
-	rinpron
+	rinpn
 
 
 Alternatively, if you are using the 
@@ -214,7 +214,7 @@ of your OS, wherever the current directory is, you can take calculations by more
 
 ここでも、OSの環境変数 PATH （または Path ）に「bin」フォルダのパスを登録しておいた場合は、カレントディレクトリの場所に関わらず、以下のように簡単なコマンドで計算できるようになります：
 
-	rinpron "( 1 + 2 ) / 3 - 4 + 5"
+	rinpn "( 1 + 2 ) / 3 - 4 + 5"
 
 	(result)
 	2.0

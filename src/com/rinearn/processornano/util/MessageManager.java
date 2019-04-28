@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.ui;
+package com.rinearn.processornano.util;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
