@@ -17,7 +17,8 @@
 ./com/rinearn/processornano/spec/LocaleCode.java
 ./com/rinearn/processornano/spec/RoundingTarget.java
 ./com/rinearn/processornano/spec/SettingContainer.java
-./com/rinearn/processornano/ui/MessageManager.java
 ./com/rinearn/processornano/ui/UIContainer.java
 ./com/rinearn/processornano/ui/UIDisposer.java
 ./com/rinearn/processornano/ui/UIInitializer.java
+./com/rinearn/processornano/util/CodeLoader.java
+./com/rinearn/processornano/util/MessageManager.java
