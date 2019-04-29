@@ -5,6 +5,7 @@
 
 package com.rinearn.processornano.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
@@ -39,7 +40,7 @@ public final class PluginLoader {
 		for (int baseIndex=0; baseIndex<basePathsLength; baseIndex++) {
 			try {
 
-				baseURLs[baseIndex] = new URL(loadingBasePaths[baseIndex]);
+				baseURLs[baseIndex] = new File(loadingBasePaths[baseIndex]).toURI().toURL();
 
 			} catch (MalformedURLException e) {
 				if (localeCode.equals(LocaleCode.JA_JP)) {
