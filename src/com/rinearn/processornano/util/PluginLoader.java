@@ -38,7 +38,9 @@ public final class PluginLoader {
 		URL[] baseURLs = new URL[basePathsLength];
 		for (int baseIndex=0; baseIndex<basePathsLength; baseIndex++) {
 			try {
+
 				baseURLs[baseIndex] = new URL(loadingBasePaths[baseIndex]);
+
 			} catch (MalformedURLException e) {
 				if (localeCode.equals(LocaleCode.JA_JP)) {
 					MessageManager.showErrorMessage(
@@ -79,7 +81,9 @@ public final class PluginLoader {
 		// 読み込んだクラスからプラグインのインスタンスを生成
 		Object pluginInstance = null;
 		try {
+
 			pluginInstance = pluginClass.getDeclaredConstructor().newInstance();
+
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 
@@ -94,7 +98,7 @@ public final class PluginLoader {
 					"Plugin Loading Error"
 				);
 			}
-			e.printStackTrace();
+			throw new RinearnProcessorNanoException(e);
 		}
 
 		return pluginInstance;
