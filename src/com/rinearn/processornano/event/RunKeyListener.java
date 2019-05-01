@@ -13,17 +13,17 @@ import javax.swing.SwingUtilities;
 import com.rinearn.processornano.calculator.AsynchronousScriptListener;
 import com.rinearn.processornano.calculator.Calculator;
 import com.rinearn.processornano.spec.SettingContainer;
-import com.rinearn.processornano.ui.UIContainer;
+import com.rinearn.processornano.view.ViewContainer;
 
 public final class RunKeyListener implements KeyListener {
 
 	private Calculator calculator;
-	private UIContainer ui;
+	private ViewContainer view;
 	private SettingContainer setting;
 
-	public RunKeyListener(UIContainer ui, Calculator calculator, SettingContainer setting) {
+	public RunKeyListener(ViewContainer view, Calculator calculator, SettingContainer setting) {
 		this.calculator = calculator;
-		this.ui = ui;
+		this.view = view;
 		this.setting = setting;
 	}
 
@@ -32,10 +32,10 @@ public final class RunKeyListener implements KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			AsynchronousScriptListener scriptListener = new AsynchronousScriptListener() {
 				public void scriptingFinished() {
-					SwingUtilities.invokeLater(new UpwardSynchronizer(calculator, ui));
+					SwingUtilities.invokeLater(new UpwardSynchronizer(calculator, view));
 				}
 			};
-			calculator.requestCalculation(this.ui, this.setting, scriptListener);
+			calculator.requestCalculation(this.view, this.setting, scriptListener);
 		}
 	}
 

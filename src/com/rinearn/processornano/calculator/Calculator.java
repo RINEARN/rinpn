@@ -16,9 +16,9 @@ import javax.script.ScriptException;
 import com.rinearn.processornano.RinearnProcessorNanoException;
 import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
-import com.rinearn.processornano.ui.UIContainer;
 import com.rinearn.processornano.util.MessageManager;
 import com.rinearn.processornano.util.PluginLoader;
+import com.rinearn.processornano.view.ViewContainer;
 
 public final class Calculator {
 
@@ -118,18 +118,19 @@ public final class Calculator {
 	}
 
 
-	public final synchronized void requestCalculation(UIContainer ui, SettingContainer setting,
+	// これ、引数に view を受け取っているのは微妙？
+	public final synchronized void requestCalculation(ViewContainer view, SettingContainer setting,
 			AsynchronousScriptListener scriptListener) {
 
 		// 設定に応じて、まず入力フィールドの内容を正規化
 		if (setting.inputNormalizerEnabled) {
-			ui.inputField.setText(
-				Normalizer.normalize(ui.inputField.getText(), Normalizer.Form.NFKC)
+			view.inputField.setText(
+				Normalizer.normalize(view.inputField.getText(), Normalizer.Form.NFKC)
 			);
 		}
 
 		// 入力フィールドの内容を取得してスクリプト実行をリクエストする
-		this.inputText = ui.inputField.getText();
+		this.inputText = view.inputField.getText();
 
 		// 入力された式を式文にするために末尾にセミコロンを追加（無い場合のみ）し、
 		// 実行するスクリプトコードの内容としてセット

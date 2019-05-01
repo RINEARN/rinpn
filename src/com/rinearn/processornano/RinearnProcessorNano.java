@@ -13,10 +13,10 @@ import com.rinearn.processornano.calculator.Calculator;
 import com.rinearn.processornano.event.EventListenerManager;
 import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
-import com.rinearn.processornano.ui.UIContainer;
-import com.rinearn.processornano.ui.UIInitializer;
 import com.rinearn.processornano.util.CodeLoader;
 import com.rinearn.processornano.util.MessageManager;
+import com.rinearn.processornano.view.ViewContainer;
+import com.rinearn.processornano.view.ViewInitializer;
 
 
 public final class RinearnProcessorNano {
@@ -85,11 +85,11 @@ public final class RinearnProcessorNano {
 		}
 
 
-		// 電卓画面のUIを生成して初期化
-		UIContainer ui = new UIContainer();
+		// 電卓画面を生成して初期化
+		ViewContainer view = new ViewContainer();
 		try {
-			UIInitializer uiInitialiser = new UIInitializer(ui, setting); // 別スレッドで初期化するためのRunnable
-			SwingUtilities.invokeAndWait(uiInitialiser);                  // それをSwingのイベントスレッドで実行
+			ViewInitializer initialiser = new ViewInitializer(view, setting); // 別スレッドで初期化するためのRunnable
+			SwingUtilities.invokeAndWait(initialiser);                        // それをSwingのイベントスレッドで実行
 
 		// 初期化実行スレッドの処理待ち時の割り込みで失敗した場合など（結構異常な場合なので、リトライせず終了する）
 		} catch (InvocationTargetException | InterruptedException e) {
@@ -105,7 +105,7 @@ public final class RinearnProcessorNano {
 		}
 
 		// UIの各部品にイベントリスナを登録
-		EventListenerManager.addAllEventListenersToUI(ui, calculator, setting);
+		EventListenerManager.addAllEventListenersToUI(view, calculator, setting);
 	}
 
 

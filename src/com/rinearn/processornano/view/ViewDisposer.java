@@ -3,32 +3,32 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.ui;
+package com.rinearn.processornano.view;
 
-public final class UIDisposer implements Runnable {
+public final class ViewDisposer implements Runnable {
 
-	private UIContainer ui = null;
+	private ViewContainer view = null;
 
-	public UIDisposer(UIContainer ui) {
-		this.ui = ui;
+	public ViewDisposer(ViewContainer view) {
+		this.view = view;
 	}
 
 	@Override
 	public final void run() {
 
-		if (ui.initialized) {
-			ui.frame.dispose();
-			ui.frame = null;
-			ui.basePanel = null;
-			ui.midPanel = null;
-			ui.inputField = null;
-			ui.outputField = null;
-			ui.inputLabel = null;
-			ui.outputLabel = null;
-			ui.runButton = null;
-			ui.exitButton = null;
+		if (view.initialized) {
+			view.frame.dispose();
+			view.frame = null;
+			view.basePanel = null;
+			view.midPanel = null;
+			view.inputField = null;
+			view.outputField = null;
+			view.inputLabel = null;
+			view.outputLabel = null;
+			view.runButton = null;
+			view.exitButton = null;
 		}
 
-		this.ui = null;
+		this.view = null;
 	}
 }

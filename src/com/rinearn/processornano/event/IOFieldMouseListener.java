@@ -10,15 +10,15 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JTextField;
 
-import com.rinearn.processornano.ui.UIContainer;
 import com.rinearn.processornano.util.MessageManager;
+import com.rinearn.processornano.view.ViewContainer;
 
 public final class IOFieldMouseListener implements MouseListener {
 
-	private UIContainer ui = null;
+	private ViewContainer view = null;
 
-	public IOFieldMouseListener(UIContainer ui) {
-		this.ui = ui;
+	public IOFieldMouseListener(ViewContainer view) {
+		this.view = view;
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public final class IOFieldMouseListener implements MouseListener {
 		}
 		if(javax.swing.SwingUtilities.isRightMouseButton(e)){
 			JTextField ioField = (JTextField)e.getSource();
-			this.ui.textFieldPopupMenu.show(ioField, e.getX(), e.getY() );
+			this.view.textFieldPopupMenu.show(ioField, e.getX(), e.getY() );
 		}
 	}
 

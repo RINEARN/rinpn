@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.ui;
+package com.rinearn.processornano.view;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 
-public final class UIContainer {
+public final class ViewContainer {
 	public volatile boolean initialized = false;
 	public JFrame frame = null;
 	public JPanel basePanel = null;
