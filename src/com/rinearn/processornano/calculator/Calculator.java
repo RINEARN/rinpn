@@ -74,21 +74,21 @@ public final class Calculator {
 
 		// スクリプトエンジンに渡すオプション値マップを用意
 		Map<String, Object> optionMap = new HashMap<String, Object>();
-		optionMap.put("ACCELERATOR", setting.acceleratorEnabled);
+		optionMap.put("ACCELERATOR_ENABLED", setting.acceleratorEnabled);
 		optionMap.put("EVAL_NUMBER_AS_FLOAT", setting.evalNumberAsFloat);
-		optionMap.put("LIBRARY_SCRIPT_NAME", setting.libraryScriptPath);
-		optionMap.put("LIBRARY_SCRIPT_CODE", libraryScriptCode);
+		optionMap.put("LIBRARY_SCRIPTS", libraryScriptCode);
+		optionMap.put("LIBRARY_SCRIPT_NAMES", setting.libraryScriptPath);
 		optionMap.put("LOCALE", LocaleCode.toLocale(setting.localeCode));
 
 		// スクリプトエンジンにオプションマップを設定
-		engine.put("VNANO_OPTION", optionMap);
+		engine.put("___VNANO_OPTION_MAP", optionMap);
 
 		// プラグインを読み込んでスクリプトエンジンに接続
 		String[] pluginBasePaths = new String[] {"./plugin/"};
 		for (String pluginPath: setting.pluginPaths) {
 			try {
 				Object plugin = PluginLoader.loadPlugin(pluginPath, pluginBasePaths, setting.localeCode);
-				engine.put("VNANO_AUTO_KEY", plugin);
+				engine.put("___VNANO_AUTO_KEY", plugin);
 			} catch (RinearnProcessorNanoException e) {
 				e.printStackTrace();
 				// 接続に失敗しても、そのプラグイン以外の機能には支障が無いため、本体側は落とさない。
