@@ -9,3 +9,7 @@
 ./org/vcssl/connect/FieldXvci1Adapter.java
 ./org/vcssl/connect/MethodXfci1Adapter.java
 ./org/vcssl/connect/package-info.java
+
+
+./defaultplugin/DefaultPlugin.java
+./ExamplePlugin.java

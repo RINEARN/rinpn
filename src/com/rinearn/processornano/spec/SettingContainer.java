@@ -62,6 +62,7 @@ public final class SettingContainer implements Cloneable {
 	public boolean evalNumberAsFloat = true;
 	public String libraryScriptPath = "./Library.vnano";
 	public String libraryScriptEncoding = "UTF-8";
+	public String[] pluginPaths = new String[0];
 
 	public String localeCode = LocaleCode.getDefaultLocaleCode();
 
