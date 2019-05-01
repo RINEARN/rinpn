@@ -23,3 +23,4 @@
 ./com/rinearn/processornano/util/CodeLoader.java
 ./com/rinearn/processornano/util/MessageManager.java
 ./com/rinearn/processornano/util/PluginLoader.java
+./com/rinearn/processornano/util/TestPlugin.java
