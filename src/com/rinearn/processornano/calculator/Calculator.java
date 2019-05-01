@@ -18,6 +18,7 @@ import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.ui.UIContainer;
 import com.rinearn.processornano.util.MessageManager;
+import com.rinearn.processornano.util.PluginLoader;
 
 public final class Calculator {
 
@@ -81,6 +82,19 @@ public final class Calculator {
 
 		// スクリプトエンジンにオプションマップを設定
 		engine.put("VNANO_OPTION", optionMap);
+
+		// プラグインを読み込んでスクリプトエンジンに接続
+		String[] pluginBasePaths = new String[] {"./plugin/"};
+		for (String pluginPath: setting.pluginPaths) {
+			try {
+				Object plugin = PluginLoader.loadPlugin(pluginPath, pluginBasePaths, setting.localeCode);
+				engine.put("VNANO_AUTO_KEY", plugin);
+			} catch (RinearnProcessorNanoException e) {
+				e.printStackTrace();
+				// 接続に失敗しても、そのプラグイン以外の機能には支障が無いため、本体側は落とさない。
+				// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
+			}
+		}
 	}
 
 

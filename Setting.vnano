@@ -202,6 +202,17 @@ libraryScriptEncoding = "UTF-8";           // Text-encoding of the file - ファ
 
 
 // ----------------------------------------------------------------------------------------------------
+// Specify plugins by dot-separated relative paths (without extension) from "plugin" folder.
+// 使用するプラグインを、「 plugin 」フォルダから見たドット区切りの相対パス（拡張子なし）で指定します。
+// (Type: string[])
+// ----------------------------------------------------------------------------------------------------
+string tmpPluginPaths[2];
+pluginPaths = tmpPluginPaths;
+pluginPaths[0] = "defaultplugin.DefaultPlugin";
+pluginPaths[1] = "ExamplePlugin";
+
+
+// ----------------------------------------------------------------------------------------------------
 // Specify whether enable the high-speed VM or not. If the behaviour seems to be strange, disable it.
 // 高速版のVMを有効化するかどうかを指定します。挙動がおかしい場合は、試しに無効にしてみてください。
 // (Type: bool)
