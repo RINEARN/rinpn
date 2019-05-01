@@ -91,114 +91,10 @@ public final class SettingContainer implements Cloneable {
 			throw new RinearnProcessorNanoException("ScriptEngine of the Vnano could not be loaded.");
 		}
 
-		// 設定値フィールドをスクリプトエンジンにバインディング
-		try {
-			settingVnanoEngine.put(
-				"stayOnTopOfAllWindows",
-				new Object[] { this.getClass().getField("stayOnTopOfAllWindows"), this }
-			);
-			settingVnanoEngine.put(
-				"textFieldFontSize",
-				new Object[] { this.getClass().getField("textFieldFontSize"), this }
-			);
-			settingVnanoEngine.put(
-				"windowWidth",
-				new Object[] { this.getClass().getField("windowWidth"), this }
-			);
-			settingVnanoEngine.put(
-				"windowHeight",
-				new Object[] { this.getClass().getField("windowHeight"), this }
-			);
-			settingVnanoEngine.put(
-				"windowOpacity",
-				new Object[] { this.getClass().getField("windowOpacity"), this }
-			);
+		// 設定値をスクリプトから読み書きするため、このインスタンスをスクリプトエンジンにバインディング
+		settingVnanoEngine.put("SettingContainer", this); // キーは省略可能な名前空間として使用される
 
-			settingVnanoEngine.put(
-				"windowBackgroundColorR",
-				new Object[] { this.getClass().getField("windowBackgroundColorR"), this }
-			);
-			settingVnanoEngine.put(
-				"windowBackgroundColorG",
-				new Object[] { this.getClass().getField("windowBackgroundColorG"), this }
-			);
-			settingVnanoEngine.put(
-				"windowBackgroundColorB",
-				new Object[] { this.getClass().getField("windowBackgroundColorB"), this }
-			);
-
-			settingVnanoEngine.put(
-				"textFieldBackgroundColorR",
-				new Object[] { this.getClass().getField("textFieldBackgroundColorR"), this }
-			);
-			settingVnanoEngine.put(
-				"textFieldBackgroundColorG",
-				new Object[] { this.getClass().getField("textFieldBackgroundColorG"), this }
-			);
-			settingVnanoEngine.put(
-				"textFieldBackgroundColorB",
-				new Object[] { this.getClass().getField("textFieldBackgroundColorB"), this }
-			);
-
-			settingVnanoEngine.put(
-				"textFieldForegroundColorR",
-				new Object[] { this.getClass().getField("textFieldForegroundColorR"), this }
-			);
-			settingVnanoEngine.put(
-				"textFieldForegroundColorG",
-				new Object[] { this.getClass().getField("textFieldForegroundColorG"), this }
-			);
-			settingVnanoEngine.put(
-				"textFieldForegroundColorB",
-				new Object[] { this.getClass().getField("textFieldForegroundColorB"), this }
-			);
-
-			settingVnanoEngine.put(
-				"inputNormalizerEnabled",
-				new Object[] { this.getClass().getField("inputNormalizerEnabled"), this }
-			);
-			settingVnanoEngine.put(
-				"outputRounderEnabled",
-				new Object[] { this.getClass().getField("outputRounderEnabled"), this }
-			);
-			settingVnanoEngine.put(
-				"roundingMode",
-				new Object[] { this.getClass().getField("roundingMode"), this }
-			);
-			settingVnanoEngine.put(
-				"roundingTarget",
-				new Object[] { this.getClass().getField("roundingTarget"), this }
-			);
-			settingVnanoEngine.put(
-				"roundingLength",
-				new Object[] { this.getClass().getField("roundingLength"), this }
-			);
-			settingVnanoEngine.put(
-				"acceleratorEnabled",
-				new Object[] { this.getClass().getField("acceleratorEnabled"), this }
-			);
-			settingVnanoEngine.put(
-				"evalNumberAsFloat",
-				new Object[] { this.getClass().getField("evalNumberAsFloat"), this }
-			);
-			settingVnanoEngine.put(
-				"libraryScriptPath",
-				new Object[] { this.getClass().getField("libraryScriptPath"), this }
-			);
-			settingVnanoEngine.put(
-				"libraryScriptEncoding",
-				new Object[] { this.getClass().getField("libraryScriptEncoding"), this }
-			);
-			settingVnanoEngine.put(
-				"localeCode",
-				new Object[] { this.getClass().getField("localeCode"), this }
-			);
-		} catch (NoSuchFieldException | SecurityException e) {
-			MessageManager.showErrorMessage("Binding error occurred for SettingContainer.", "Fatal Error");
-			throw new RinearnProcessorNanoException(e);
-		}
-
-		// 設定スクリプト解釈用のスクリプトエンジンに渡すオプションを用意（スクリプト名を設定するだけ）
+		// スクリプトエンジンに渡すオプションを用意（エラーメッセージ用にスクリプト名を設定するだけ）
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("EVAL_SCRIPT_NAME", settingScriptName);
 		settingVnanoEngine.put("VNANO_OPTION", optionMap);
@@ -209,10 +105,10 @@ public final class SettingContainer implements Cloneable {
 		} catch (ScriptException e) {
 			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(errorMessage, "Input/Library Error");
+				MessageManager.showErrorMessage(errorMessage, "Setting Error");
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(errorMessage, "計算式やライブラリのエラー");
+				MessageManager.showErrorMessage(errorMessage, "設定スクリプトのエラー");
 			}
 			throw new RinearnProcessorNanoException(e);
 		}
