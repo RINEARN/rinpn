@@ -98,7 +98,7 @@ public final class SettingContainer implements Cloneable {
 		// スクリプトエンジンに渡すオプションを用意（エラーメッセージ用にスクリプト名を設定するだけ）
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("EVAL_SCRIPT_NAME", settingScriptName);
-		settingVnanoEngine.put("VNANO_OPTION", optionMap);
+		settingVnanoEngine.put("___VNANO_OPTION_MAP", optionMap);
 
 		// 設定スクリプトを読み込み、実行して設定ファイルの記述内容を解釈する
 		try {

@@ -16,9 +16,9 @@ import javax.script.ScriptException;
 import com.rinearn.processornano.RinearnProcessorNanoException;
 import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
-import com.rinearn.processornano.ui.UIContainer;
 import com.rinearn.processornano.util.MessageManager;
 import com.rinearn.processornano.util.PluginLoader;
+import com.rinearn.processornano.view.ViewContainer;
 
 public final class Calculator {
 
@@ -74,21 +74,21 @@ public final class Calculator {
 
 		// スクリプトエンジンに渡すオプション値マップを用意
 		Map<String, Object> optionMap = new HashMap<String, Object>();
-		optionMap.put("ACCELERATOR", setting.acceleratorEnabled);
+		optionMap.put("ACCELERATOR_ENABLED", setting.acceleratorEnabled);
 		optionMap.put("EVAL_NUMBER_AS_FLOAT", setting.evalNumberAsFloat);
-		optionMap.put("LIBRARY_SCRIPT_NAME", setting.libraryScriptPath);
-		optionMap.put("LIBRARY_SCRIPT_CODE", libraryScriptCode);
+		optionMap.put("LIBRARY_SCRIPTS", libraryScriptCode);
+		optionMap.put("LIBRARY_SCRIPT_NAMES", setting.libraryScriptPath);
 		optionMap.put("LOCALE", LocaleCode.toLocale(setting.localeCode));
 
 		// スクリプトエンジンにオプションマップを設定
-		engine.put("VNANO_OPTION", optionMap);
+		engine.put("___VNANO_OPTION_MAP", optionMap);
 
 		// プラグインを読み込んでスクリプトエンジンに接続
 		String[] pluginBasePaths = new String[] {"./plugin/"};
 		for (String pluginPath: setting.pluginPaths) {
 			try {
 				Object plugin = PluginLoader.loadPlugin(pluginPath, pluginBasePaths, setting.localeCode);
-				engine.put("VNANO_AUTO_KEY", plugin);
+				engine.put("___VNANO_AUTO_KEY", plugin);
 			} catch (RinearnProcessorNanoException e) {
 				e.printStackTrace();
 				// 接続に失敗しても、そのプラグイン以外の機能には支障が無いため、本体側は落とさない。
@@ -118,18 +118,19 @@ public final class Calculator {
 	}
 
 
-	public final synchronized void requestCalculation(UIContainer ui, SettingContainer setting,
+	// これ、引数に view を受け取っているのは微妙？
+	public final synchronized void requestCalculation(ViewContainer view, SettingContainer setting,
 			AsynchronousScriptListener scriptListener) {
 
 		// 設定に応じて、まず入力フィールドの内容を正規化
 		if (setting.inputNormalizerEnabled) {
-			ui.inputField.setText(
-				Normalizer.normalize(ui.inputField.getText(), Normalizer.Form.NFKC)
+			view.inputField.setText(
+				Normalizer.normalize(view.inputField.getText(), Normalizer.Form.NFKC)
 			);
 		}
 
 		// 入力フィールドの内容を取得してスクリプト実行をリクエストする
-		this.inputText = ui.inputField.getText();
+		this.inputText = view.inputField.getText();
 
 		// 入力された式を式文にするために末尾にセミコロンを追加（無い場合のみ）し、
 		// 実行するスクリプトコードの内容としてセット

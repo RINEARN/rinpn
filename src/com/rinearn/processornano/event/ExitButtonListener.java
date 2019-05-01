@@ -13,18 +13,18 @@ import javax.swing.JOptionPane;
 import com.rinearn.processornano.calculator.Calculator;
 import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
-import com.rinearn.processornano.ui.UIContainer;
-import com.rinearn.processornano.ui.UIDisposer;
+import com.rinearn.processornano.view.ViewContainer;
+import com.rinearn.processornano.view.ViewDisposer;
 
 public final class ExitButtonListener implements ActionListener {
 
 	private Calculator calculator = null;
-	private UIContainer ui = null;
+	private ViewContainer view = null;
 	private SettingContainer setting = null;
 
-	public ExitButtonListener(UIContainer ui, Calculator calculator, SettingContainer setting) {
+	public ExitButtonListener(ViewContainer view, Calculator calculator, SettingContainer setting) {
 		this.calculator = calculator;
-		this.ui = ui;
+		this.view = view;
 		this.setting = setting;
 	}
 
@@ -57,6 +57,6 @@ public final class ExitButtonListener implements ActionListener {
 		}
 
 		// UIを破棄（ここはイベントスレッド内なので、SwingUtilities.invokeAndWait はせずrunを直接呼ぶ）
-		new UIDisposer(this.ui).run();
+		new ViewDisposer(this.view).run();
 	}
 }

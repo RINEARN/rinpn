@@ -6,21 +6,21 @@
 package com.rinearn.processornano.event;
 
 import com.rinearn.processornano.calculator.Calculator;
-import com.rinearn.processornano.ui.UIContainer;
+import com.rinearn.processornano.view.ViewContainer;
 
 public final class DownwardSynchronizer implements Runnable {
 
 	private Calculator calculator = null;
-	private UIContainer ui = null;
+	private ViewContainer view = null;
 
-	public DownwardSynchronizer(Calculator calculator, UIContainer ui) {
+	public DownwardSynchronizer(Calculator calculator, ViewContainer view) {
 		this.calculator = calculator;
-		this.ui = ui;
+		this.view = view;
 	}
 
 	@Override
 	public final void run() {
-		calculator.setInputText(this.ui.inputField.getText());
-		calculator.setOutputText(this.ui.outputField.getText());
+		calculator.setInputText(this.view.inputField.getText());
+		calculator.setOutputText(this.view.outputField.getText());
 	}
 }
