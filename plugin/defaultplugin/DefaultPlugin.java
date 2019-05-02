@@ -2,12 +2,9 @@ package defaultplugin;
 
 import org.vcssl.connect.ExternalLibraryConnector1;
 import org.vcssl.connect.ExternalFunctionConnector1;
-import org.vcssl.connect.ExternalFunctionException;
 import org.vcssl.connect.ExternalVariableConnector1;
-import org.vcssl.connect.ExternalVariableException;
-import org.vcssl.connect.FieldXvci1Adapter;
-import org.vcssl.connect.MethodXfci1Adapter;
-import org.vcssl.connect.ExternalPermission;
+import org.vcssl.connect.ConnectorException;
+import org.vcssl.connect.ConnectorPermission;
 import org.vcssl.connect.ArrayDataContainer1;
 import javax.swing.JOptionPane;
 
@@ -18,24 +15,48 @@ import javax.swing.JOptionPane;
 //     javac -encoding UTF-8 defaultplugin/DefaultPlugin.java @sourcelist.txt
 
 public class DefaultPlugin implements ExternalFunctionConnector1 {
-	
+		
+		@Override
 		public String getFunctionName() { return "testout"; }
+		
+		@Override
 		public boolean hasParameterNames() { return true; }
+		
+		@Override
 		public String[] getParameterNames() { return new String[]{ "value" }; }
+		
+		@Override
 		public Class<?>[] getParameterClasses() { return new Class<?>[]{ double.class }; } 
+		
+		@Override
 		public Class<?> getReturnClass() { return Void.class; }
+		
+		@Override
 		public boolean isVariadic() { return false; }
-		public String[] getNecessaryPermissions() { return new String[]{ ExternalPermission.NONE }; }
-		public String[] getUnnecessaryPermissions() { return new String[]{ ExternalPermission.ALL }; }
-		public void setEngine(Object engineConnector) { }
-		public void initializeForConnection() { }
-		public void finalizeForDisconnection() { }
-		public void initializeForExecution() { }
-		public void finalizeForTermination() { }
-
+		
+		@Override
+		public String[] getNecessaryPermissions() { return new String[]{ ConnectorPermission.NONE }; }
+		
+		@Override
+		public String[] getUnnecessaryPermissions() { return new String[]{ ConnectorPermission.ALL }; }
+		
+		@Override
+		public void initializeForConnection(Object engineConnector) throws ConnectorException { }
+		
+		@Override
+		public void finalizeForDisconnection(Object engineConnector) throws ConnectorException { }
+		
+		@Override
+		public void initializeForExecution(Object engineConnector) throws ConnectorException { }
+		
+		@Override
+		public void finalizeForTermination(Object engineConnector) throws ConnectorException { }
+		
+		@Override
 		public boolean isDataConversionNecessary() { return true; }
-	
-		public Object invoke(Object[] arguments) throws ExternalFunctionException {
+		
+		@Override
+		public Object invoke(Object[] arguments) throws ConnectorException {
 			
 			@SuppressWarnings("unchecked")
 			Double argValue = (Double)arguments[0];
