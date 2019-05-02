@@ -30,6 +30,7 @@ You can also get prebuilt-packages of this software from:
 - <a href="#how-to-build">How to Build - ビルド方法</a>
 	- <a href="#how-to-build-processor-nano">Build the RINEARN Processor nano - リニアンプロセッサー nano のビルド</a>
 	- <a href="#how-to-build-vnano">Build the Vnano Engine - Vnanoエンジンのビルド</a>
+	- <a href="#how-to-compile-plugins">Compile Plug-Ins - プラグインのコンパイル</a>
 - <a href="#how-to-use">How to Use - 使用方法</a>
 	- <a href="#how-to-use-gui">How to Use in the GUI Mode - GUIモードでの使用方法</a>
 	- <a href="#how-to-use-cui">How to Use in the CUI Mode - CUIモードでの使用方法</a>
@@ -133,6 +134,24 @@ for Microsoft&reg; Windows&reg; :
 for Linux&reg;, etc. :
 
 	cp ./vnano/Vnano.jar ./rinearn-processor-nano/Vnano.jar
+
+
+<a id="how-to-compile-plugins"></a>
+### 3. プラグインのコンパイル
+
+Finally, compile plug-ins which provide embedded-functions/variables to the Vnano Engine:
+
+最後に、Vnanoエンジンに組み込み関数/変数を提供するプラグインをコンパイルします：
+
+	cd <working-directory>/rinearn-processor-nano/plugin/
+	javac -encoding UTF-8 @sourcelist.txt
+
+where target source files of the compilation are listed in "&lt;working-directory&gt;/rinearn-processor-nano/plugin/sourcelist.txt".
+If you want to append a new plug-in, write the path of the source file of the plug-in in the above "sourcelist.txt", 
+and take the compilation again, and then specify its class-name in "Setting.vnano".
+
+ここでコンパイル対象ファイルの一覧は「 &lt;working-directory&gt;/rinearn-processor-nano/plugin/sourcelist.txt 」内に記載されています。
+もしも新しいプラグインを追加したい場合は、上記の sourcelist.txt 内にプラグインのソースコードのファイルパスを追記して再コンパイルした上で、「 Setting.vnano 」内でそのプラグインのクラス名を指定してください。
 
 
 <a id="how-to-use"></a>
