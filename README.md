@@ -146,50 +146,13 @@ Finally, compile plug-ins which provide embedded-functions/variables to the Vnan
 	cd <working-directory>/rinearn-processor-nano/plugin/
 	javac -encoding UTF-8 @sourcelist.txt
 
-where target source files of the compilation are listed in "&lt;working-directory&gt;/rinearn-processor-nano/plugin/sourcelist.txt":
+where target source files of the compilation are listed in "&lt;working-directory&gt;/rinearn-processor-nano/plugin/sourcelist.txt".
+If you want to append a new plug-in, write the path of the source file of the plug-in in the above "sourcelist.txt", 
+and take the compilation again, and then specify its class-name in "Setting.vnano".
 
-ここでコンパイル対象ファイルの一覧は「 &lt;working-directory&gt;/rinearn-processor-nano/plugin/sourcelist.txt 」内に記載されています:
+ここでコンパイル対象ファイルの一覧は「 &lt;working-directory&gt;/rinearn-processor-nano/plugin/sourcelist.txt 」内に記載されています。
+もしも新しいプラグインを追加したい場合は、上記の sourcelist.txt 内にプラグインのソースコードのファイルパスを追記して再コンパイルした上で、「 Setting.vnano 」内でそのプラグインのクラス名を指定してください。
 
-	(in sourcelist.txt)
-
-	./org/vcssl/connect/ArrayDataContainer1.java
-	./org/vcssl/connect/ClassToXlci1Adapter.java
-	./org/vcssl/connect/ConnectorException.java
-	...
-
-	./defaultplugin/DefaultPlugin.java
-	./ExamplePlugin.java
-
-Files starting with "./org/vcssl/connect/..." are interfaces and components to develop plug-ins for the Vnano Engine. Last two files are implementations of plug-ins.
-"./defaultplugin/DefaultPlugin.java" is a plug-in to provide practical embedded functions/variables for calculations.
-"./ExamplePlugin.java" is a example implementation of a plug-in in the most simple way. 
-It might be a reference when you want to implement an original plug-in.
-
-「 ./org/vcssl/connect/... 」で始まるファイル群は、Vnanoエンジン用のプラグインを開発するためのインターフェース類やコンポーネント類です。最後の2つのファイルが、実際のプラグインの実装です。
-「 ./defaultplugin/DefaultPlugin.java 」は、電卓用に実用的な関数や変数を提供するためのプラグインです。
-「 ./ExamplePlugin.java 」は、最も簡単な方法で実装されたサンプルプラグインです。
-プラグインを自作したい場合の参考になるかもしれません。
-
-If you append a new plug-in, write the file-path of it in the above file "sourcelist.txt" and take the compilation again, and then specify its class-name in "Setting.vnano" to load it:
-
-もしも新しいプラグインを追加したい場合は、上記の sourcelist.txt 内にそのファイルパスを追記して再コンパイルした上で、「 Setting.vnano 」内でそのクラス名を読み込むように指定してください：
-
-	(in Setting.vnano)
-	...
-
-	// ------------------------------------------------------------------------------------------
-	// Specify plugins by dot-separated relative paths (without extension) from "plugin" folder.
-	// 使用するプラグインを、「 plugin 」フォルダから見たドット区切りの相対パス（拡張子なし）で指定します。
-	// (Type: string[])
-	// ------------------------------------------------------------------------------------------
-	string tmpPluginPaths[2];
-	pluginPaths = tmpPluginPaths;
-	pluginPaths[0] = "defaultplugin.DefaultPlugin";
-	pluginPaths[1] = "ExamplePlugin";
-
-By default, two plug-ins we mentioned above are specified as the above code.
-
-標準では上記のように、先に挙げた2つのプラグインが指定されています。
 
 <a id="how-to-use"></a>
 ## How to Use - 使用方法
