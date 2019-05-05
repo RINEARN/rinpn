@@ -1,10 +1,10 @@
-# RINEARN Processor nano
+# RINEARN Processor nano (RINPN)
 
 
 
-RINEARN Processor nano is a simple & compact programmable calculator.
+RINEARN Processor nano (abbreviated: RINPN) is a simple & compact programmable calculator.
 
-リニアンプロセッサー nano は、シンプルでコンパクトなプログラマブル関数電卓です。
+リニアンプロセッサー nano（略称：RINPN）は、シンプルでコンパクトなプログラマブル関数電卓です。
 
 
 <div style="background-color:black; width: 890px; height: 463px; text-align:center; background-image: url('./signboard.jpg'); background-repeat: no-repeat; background-size: contain;">
@@ -34,7 +34,8 @@ You can also get prebuilt-packages of this software from:
 - <a href="#how-to-use">How to Use - 使用方法</a>
 	- <a href="#how-to-use-gui">How to Use in the GUI Mode - GUIモードでの使用方法</a>
 	- <a href="#how-to-use-cui">How to Use in the CUI Mode - CUIモードでの使用方法</a>
-	- <a href="#how-to-use-library">How to Declare Variables and Functions - 変数や関数の定義</a>
+	- <a href="#how-to-use-library">How to Define Variables and Functions as Script Code - スクリプトで変数や関数を定義する</a>
+	- <a href="#how-to-implement-plugin">How to Implement Embedded Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する</a>
 - <a href="#about-us">About Us - 開発元について</a>
 - <a href="#references">References - 関連記事</a>
 
@@ -43,9 +44,9 @@ You can also get prebuilt-packages of this software from:
 <a id="caution"></a>
 ## Caution - 注意
 
-RINEARN Processor nano is under development, so it has not practical quality yet.
+This software is under development, so it has not practical quality yet.
 
-リニアンプロセッサー nano は開発の途中であり、現時点でまだ実用的な品質ではありません。
+このソフトウェアは開発の途中であり、現時点でまだ実用的な品質ではありません。
 
 
 <a id="license"></a>
@@ -67,7 +68,7 @@ This software is released under the MIT License.
 ## How to Build - ビルド方法
 
 <a id="how-to-build-processor-nano"></a>
-### 1. Build the RINEARN Processor nano - リニアンプロセッサー nano のビルド
+### Step-1. Build the RINEARN Processor nano - リニアンプロセッサー nano のビルド
 
 Firstly, get and build source code of the RINEARN Processor nano.
 
@@ -95,7 +96,7 @@ If you succeeded to build, the JAR file "RinearnProcessorNano.jar" will be gener
 
 
 <a id="how-to-build-vnano"></a>
-### 2. Build the Vnano Engine - Vnanoエンジンのビルド
+### Step-2. Build the Vnano Engine - Vnanoエンジンのビルド
 
 Next, get and build source code of the script engine of the <a href="https://github.com/RINEARN/vnano">Vnano</a> (Vnano Engine).
 
@@ -137,7 +138,7 @@ for Linux&reg;, etc. :
 
 
 <a id="how-to-compile-plugins"></a>
-### 3. プラグインのコンパイル
+### Step-3. Compile Plug-Ins - プラグインのコンパイル
 
 Finally, compile plug-ins which provide embedded-functions/variables to the Vnano Engine:
 
@@ -158,7 +159,7 @@ and take the compilation again, and then specify its class-name in "Setting.vnan
 ## How to Use - 使用方法
 
 <a id="how-to-use-gui"></a>
-### 1. How to Use in the GUI Mode - GUIモードでの使用方法
+### Step-1. How to Use in the GUI Mode - GUIモードでの使用方法
 
 In the GUI mode, you can take calculations on the graphical calculator window.
 At first, execute "RinearnProcessorNano.jar" from the command-line terminal as follows:
@@ -187,9 +188,9 @@ on the OS of the Microsoft&reg; Windows&reg;, you can execute this software by d
 <a href="https://download.rinearn.com/advanced/#processor-nano">ビルド済みパッケージ</a> 
 を使用している場合は、バッチファイル「 RinearnProcessorNano.bat 」をダブルクリックして実行する事も可能です。
 
-When you execute this software as above ways, the window of the RINEARN Processor nano will be launched:
+When you execute this software as above ways, the calculator window (the image below) will be launched:
 
-さて、上記のように実行すると、リニアンプロセッサー nano の画面（下図）が起動します: 
+さて、上記のように実行すると、電卓画面（下図）が起動します: 
 
 <div style="background-color:white; width: 700px; height: 300px; text-align:center; background-image: url('./ui.png'); background-repeat: no-repeat; background-size: contain;">
   <img src="https://github.com/RINEARN/rinearn-processor-nano/blob/master/ui.png" alt="" width="700" />
@@ -209,11 +210,11 @@ For example:
 	( 1 + 2 ) / 3 - 4 + 5
 
 	OUTPUT:
-	2.0
+	2
 
 
 <a id="how-to-use-cui"></a>
-### 2. How to Use in the CUI Mode - CUIモードでの使用方法
+### Step-2. How to Use in the CUI Mode - CUIモードでの使用方法
 
 In the CUI mode, you can take calculations on the command-line terminal, whithout launching the calculator window.
 To use the CUI mode, execute the "RinearnProcessorNano.jar" with passing an expression as a command-line argument as follows:
@@ -225,7 +226,7 @@ CUIモードを使用するには、コマンドラインで以下のように�
 	java -jar RinearnProcessorNano.jar "(1 + 2 ) / 3 - 4 + 5"
 
 	(result)
-	2.0
+	2
 
 
 If you register the path of "bin" folder to the environment variable "PATH" (or "Path") 
@@ -236,22 +237,25 @@ of your OS, wherever the current directory is, you can take calculations by more
 	rinpn "( 1 + 2 ) / 3 - 4 + 5"
 
 	(result)
-	2.0
+	2
 
 
 <a id="how-to-use-library"></a>
-### 3. How to Declare Variables and Functions - 変数や関数の定義
+### Step-3. How to Define Variables and Functions as Script Code - スクリプトで変数や関数を定義する
 
 You can define variables and functions in the script file "Library.vnano".
 Defined variables and functions are available in expressions of the Step-1 and 2. 
 The content of "Library.vnano" should be written in the script language of the Vnano 
 (see "<a href="https://github.com/RINEARN/vnano#language">The Vnano as a Language</a>" for details).
+It does not require installation of development environments such as the compiler, 
+so simply open the above file by your favorite text editor, and write code in there.
 
 スクリプトファイル「 Library.vnano 」の中で、変数や関数を定義できます。
-そこで定義した変数や関数は、ステップ 1 や 2 での計算式の中で使用できます。
-なお、「 Library.vnano 」の中身は、Vnano のスクリプト言語
+そこで定義した変数や関数は、Step-1 や 2 での計算式の中で使用できます。
+なお、「 Library.vnano 」の中身は、Vnano のスクリプトの記法
 （ 詳細は「 <a href="https://github.com/RINEARN/vnano#language">言語としてのVnano</a> 」を参照 ）
 で記述する必要があります。
+コンパイラなどの特別な開発環境の導入は不要なので、適当なテキストエディタで上記ファイルを開き、中にコードを書いてください。
 
 For example:
 
@@ -283,12 +287,68 @@ and use the above variable and functions on the calculation:
 	fun1(2) + fun2(3)
 
 	OUTPUT:
-	12.0
+	12
 
 
+<a id="how-to-implement-plugin"></a>
+### Step-4. How to Implement Embedded Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する
 
+You can implement new embedded variables and function in the Java&reg; programming language.
+In this way, compared to defining variables/functions as script code (in the step-3), 
+high-functionality of Java&reg; might be the great merit.
+On the other hand, it requres Java&reg; Development Kit (JDK) to compile implemented code.
 
+Java&reg;言語を用いて、新しい組み込み関数/変数を実装する事もできます。
+この方法では、Step-3 のようにスクリプトで関数や変数を定義する事と比べて、
+Java&reg; 言語の高い機能性を利用できる事が大きなメリットになるかもしれません。
+一方で、実装したコードをコンパイルする際に Java&reg; 言語の開発環境 (JDK) が必要になります。
 
+On this software, we refer a Java&reg; program to add new embedded function/variables as "plug-in".
+A simple example of a plug-in is bundled in "plugin" folder as "ExamplePlugin.java":
+
+このソフトウェアでは、新しい組み込み関数/変数を追加するためのプログラムを「プラグイン」と呼びます。
+「 plugin 」フォルダ内に、簡単なプラグインのサンプル「 ExamplePlugin.java 」が同梱されています：
+
+	( in plugin/ExamplePlugin.java )
+
+	public class ExamplePlugin {
+    
+		public double pivar = 1.0;
+
+		public double pifun(double arg) {
+			return arg * 2.0;
+		}
+	}
+
+The compilation of this plug-in is contained in the building procedure, so it might already be compiled.
+If you modified the above code, it requires recompilation to use.
+About the compilaton, see "<a href="#how-to-compile-plugins">Compile Plug-Ins</a>".
+
+このプラグインは恐らくビルド時にコンパイルされてるはずです。内容を編集した場合は再コンパイルが必要です。
+コンパイル方法については「<a href="#how-to-compile-plugins">プラグインのコンパイル</a>」をご参照ください。
+
+After the compilation, embedded variables/functions are available in the expressions of the Step-1 and 2, 
+and in the script code of the step-3.
+For example:
+
+コンパイル済の組み込み関数/変数は、Step-1 や Step-2 での計算式の中や、Step-3 でのライブラリスクリプトの中で使用できます。
+例えば：
+
+	INPUT:
+	pifun(pivar)
+
+	OUTPUT:
+	2
+
+For more detailed explanation to implement plug-in, 
+see: "<a href="https://github.com/RINEARN/vnano#plugin">Plugin Development</a>" section in the document of the Vnano.
+Classes specified in the setting script "Setting.vnano" of this software 
+will be passed as arguments of the "put" method of the script engine of the Vnano, 
+to be connected as plug-ins.
+
+プラグインの実装方法についてのより詳細な解説は、Vnanoのドキュメント内の
+「 <a href="https://github.com/RINEARN/vnano#plugin">プラグインの開発</a> 」セクションをご参照ください。
+このソフトウェアの設定スクリプト「 Setting.vnano 」内で指定したクラスが、Vnanoのスクリプトエンジンの「 put 」メソッドに引数として渡され、プラグインとして接続されます。
 
 
 <a id="about-us"></a>
@@ -299,13 +359,13 @@ and use the above variable and functions on the calculation:
 </div>
 
 
-RINEARN Processor nano is developed by <a href="https://www.rinearn.com/">RINEARN</a> 
-which is a personal studio in Japan developing software for data-analysis, visualization, computation, and so on.
-Please feel free to contact us if you have any question about RINEARN Processor nano, or you are interested in RINEARN Processor nano.
+This software is developed by <a href="https://www.rinearn.com/">RINEARN</a> 
+which is a studio in Japan developing software for data-analysis, visualization, computation, and so on.
+Please feel free to contact us if you have any questions/feedbacks about this software.
 
-リニアンプロセッサー nano は、日本の開発スタジオである <a href="https://www.rinearn.com/">RINEARN</a> が開発しています。
+このソフトウェアは、日本の開発スタジオである <a href="https://www.rinearn.com/">RINEARN</a> が開発しています。
 RINEARNでは、主にデータ解析や可視化、計算向けのソフトウェアを開発しています。
-リニアンプロセッサー nano に関するご質問や、リニアンプロセッサー nano にご興味をお持ちの場合は、ご気軽にお問い合せください。
+このソフトウェアに関するご質問やご意見・ご感想などをお持ちの場合は、ご気軽にお問い合せください。
 
 ### Our website - ウェブサイト
 
