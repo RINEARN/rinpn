@@ -243,51 +243,72 @@ of your OS, wherever the current directory is, you can take calculations by more
 <a id="how-to-use-library"></a>
 ### Step-3. How to Define Variables and Functions as Script Code - スクリプトで変数や関数を定義する
 
-You can define variables and functions in the script file "Library.vnano".
+You can define variables and functions in the script file "ExampleLibrary.vnano" in "lib" folder.
 Defined variables and functions are available in expressions of the Step-1 and 2. 
-The content of "Library.vnano" should be written in the script language of the Vnano 
+The content of the script file should be written in the script language of the Vnano 
 (see "<a href="https://github.com/RINEARN/vnano#language">The Vnano as a Language</a>" for details).
 It does not require installation of development environments such as the compiler, 
 so simply open the above file by your favorite text editor, and write code in there.
 
-スクリプトファイル「 Library.vnano 」の中で、変数や関数を定義できます。
+「 lib 」フォルダ内にあるスクリプトファイル「 ExampleLibrary.vnano 」の中で、変数や関数を定義できます。
 そこで定義した変数や関数は、Step-1 や 2 での計算式の中で使用できます。
-なお、「 Library.vnano 」の中身は、Vnano のスクリプトの記法
+なお、スクリプトファイルの中身は、Vnano のスクリプト言語の記法
 （ 詳細は「 <a href="https://github.com/RINEARN/vnano#language">言語としてのVnano</a> 」を参照 ）
 で記述する必要があります。
 コンパイラなどの特別な開発環境の導入は不要なので、適当なテキストエディタで上記ファイルを開き、中にコードを書いてください。
 
-For example:
+For example, the default content of "ExampleLibrary.vnano" is as follows:
 
-例えば：
+例えば、標準状態での「 ExampleLibrary.vnano 」の内容は以下の通りです：
 
-	( in Library.vnano )
+	( in lib/ExampleLibrary.vnano )
 
-	float var1 = 1.2345678;
+	// Note: The precision of "float" type in the Vnano is 64-bit, same with "double".
+	// 備考: Vnano での「 float 」型は、いわゆる「 double 」型と同様の64bit精度です。
 
-	float fun1(float arg) {
-		return arg * 2;
+	float a = 2.0;
+	float b = -1.0;
+	float c = 3.0;
+
+	float r = 1.01;
+
+	float f(float x) {
+		return a*x*x + b*x + c;
 	}
 
-	float fun2(float arg) {
-    	return arg + 5;
+	float g(float x) {
+		if (x < 0) {
+			return 0.0;
+		}
+		float value = x;
+		for (int i=0; i<10; i++) {
+			value *= r;
+		}
+		return value;
 	}
 
-and use the above variable and functions on the calculation:
+In the the expression of the calculation, you can use variables and functions defined in the above script, as the following example:
 
-と定義して、計算時に以下のように使用できます：
-
-	INPUT:
-	2 * var1
-
-	OUTPUT:
-	2.4691356
+計算式の中で、上記のスクリプト内で定義されている変数や関数を、以下の例のように使用できます：
 
 	INPUT:
-	fun1(2) + fun2(3)
+	a + b + c
 
 	OUTPUT:
-	12
+	4
+
+	INPUT:
+	( 1 + 2 * f(3) ) / g(1.23)
+
+	OUTPUT:
+	27.23220921
+
+If you want, you can create other script files and can define variables and functions in them.
+All files with the extension ".vnano" in "lib" folder will be loaded automatically as scripts.
+
+なお、必要に応じて、別のスクリプトファイルを作成し、その中で変数や関数を定義する事もできます。
+「 lib 」フォルダ内に置いた、拡張子「 .vnano 」のファイルは、全てスクリプトとして自動で読み込まれます。
+
 
 
 <a id="how-to-implement-plugin"></a>

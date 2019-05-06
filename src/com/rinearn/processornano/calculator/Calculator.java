@@ -56,7 +56,7 @@ public final class Calculator {
 	}
 
 
-	public final void initialize(SettingContainer setting, String libraryScriptCode)
+	public final void initialize(SettingContainer setting, String[] libraryScripts, String[] libraryScriptNames)
 					throws RinearnProcessorNanoException {
 
 		// 式やライブラリの解釈/実行用に、Vnanoのスクリプトエンジンを読み込んで生成
@@ -76,8 +76,8 @@ public final class Calculator {
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("ACCELERATOR_ENABLED", setting.acceleratorEnabled);
 		optionMap.put("EVAL_NUMBER_AS_FLOAT", setting.evalNumberAsFloat);
-		optionMap.put("LIBRARY_SCRIPTS", libraryScriptCode);
-		optionMap.put("LIBRARY_SCRIPT_NAMES", setting.libraryScriptPath);
+		optionMap.put("LIBRARY_SCRIPTS", libraryScripts);
+		optionMap.put("LIBRARY_SCRIPT_NAMES", libraryScriptNames);
 		optionMap.put("LOCALE", LocaleCode.toLocale(setting.localeCode));
 
 		// スクリプトエンジンにオプションマップを設定

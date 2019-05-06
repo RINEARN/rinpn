@@ -10,6 +10,9 @@
  * License: CC0
  */
 
+// Note: The precision of "float" type in the Vnano is 64-bit, same with "double".
+// 備考: Vnano での「 float 」型は、いわゆる「 double 」型と同様の64bit精度です。
+
 float a = 2.0;
 float b = -1.0;
 float c = 3.0;

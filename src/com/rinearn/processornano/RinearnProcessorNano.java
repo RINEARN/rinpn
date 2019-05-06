@@ -6,7 +6,12 @@
 package com.rinearn.processornano;
 
 import javax.script.ScriptException;
+
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.swing.SwingUtilities;
 
 import com.rinearn.processornano.calculator.Calculator;
@@ -145,16 +150,30 @@ public final class RinearnProcessorNano {
 	private final Calculator createInitializedCalculator(SettingContainer setting)
 			throws RinearnProcessorNanoException {
 
+		// ライブラリの配置フォルダからファイル一覧を取得（フォルダの存在は SettingContainer 内で検査済み）
+		File libraryDir = new File(setting.libraryFolder);
+		File[] files = libraryDir.listFiles();
+
+		// ライブラリのスクリプトコード内容やファイル名を一時的に格納するリストを用意
+		List<String> libraryScriptList = new LinkedList<String>();
+		List<String> libraryNameList = new LinkedList<String>();
+
+		// 拡張子が「 .vnano 」のファイルを全て読み込んでリストに格納し、最後に配列として取り出す
+		for (File file: files) {
+			if (file.getPath().endsWith(setting.libraryExtension)) {
+				String script = CodeLoader.loadCode(
+					file.getPath(), setting.libraryEncoding, setting.localeCode
+				);
+				libraryScriptList.add(script);
+				libraryNameList.add(file.getName());
+			}
+		}
+		String[] libraryScripts = libraryScriptList.toArray(new String[0]);
+		String[] libraryNames = libraryNameList.toArray(new String[0]);
+
+		// 計算機のインスタンスを生成、初期化して返す
 		Calculator calculator = new Calculator();
-
-		// ライブラリスクリプトを読み込む
-		String libraryScriptCode = CodeLoader.loadCode(
-			setting.libraryScriptPath, setting.libraryScriptEncoding, setting.localeCode
-		);
-
-		// 計算機を初期化
-		calculator.initialize(setting, libraryScriptCode);
-
+		calculator.initialize(setting, libraryScripts, libraryNames);
 		return calculator;
 	}
 
