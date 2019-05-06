@@ -7,21 +7,21 @@ package com.rinearn.processornano.presenter;
 
 import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.spec.SettingContainer;
-import com.rinearn.processornano.view.ViewContainer;
+import com.rinearn.processornano.view.ViewInterface;
 
 public final class Presenter {
 
 	public final void link(
-			ViewContainer view, CalculatorModel calculator, SettingContainer setting) {
+			ViewInterface view, CalculatorModel calculator, SettingContainer setting) {
 
 		// 各リスナを生成して投げて終わりじゃなくフィールドに保持して管理する方針の方が良い？ 後で要検討
 		WindowMouseListener windowMouseListener = new WindowMouseListener(view);
-		view.frame.addMouseListener(windowMouseListener);
-		view.frame.addMouseMotionListener(windowMouseListener);
-		view.inputField.addKeyListener(new RunKeyListener(view, calculator, setting));
-		view.inputField.addMouseListener(new IOFieldMouseListener(view));
-		view.outputField.addMouseListener(new IOFieldMouseListener(view));
-		view.runButton.addActionListener(new RunButtonListener(view, calculator, setting));
-		view.exitButton.addActionListener(new ExitButtonListener(view, calculator, setting));
+		view.addFrameMouseListener(windowMouseListener);
+		view.addFrameMouseMotionListener(windowMouseListener);
+		view.addInputFieldKeyListener(new RunKeyListener(view, calculator, setting));
+		view.addInputFieldMouseListener(new InputFieldMouseListener(view));
+		view.addOutputFieldMouseListener(new OutputFieldMouseListener(view));
+		view.addRunButtonActionListener(new RunButtonListener(view, calculator, setting));
+		view.addExitButtonActionListener(new ExitButtonListener(view, calculator, setting));
 	}
 }
