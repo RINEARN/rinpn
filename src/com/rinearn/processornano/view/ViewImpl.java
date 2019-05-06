@@ -30,17 +30,18 @@ import com.rinearn.processornano.spec.SettingContainer;
 public final class ViewImpl implements ViewInterface {
 
 	private volatile boolean initialized = false;
-	protected JFrame frame = null;
-	protected JPanel basePanel = null;
-	protected JPanel topPanel = null;
-	protected JPanel midPanel = null;
-	protected JTextField inputField = null;
-	protected JTextField outputField = null;
-	protected JLabel inputLabel = null;
-	protected JLabel outputLabel = null;
-	protected JButton runButton = null;
-	protected JButton exitButton = null;
-	protected JPopupMenu textFieldPopupMenu = null;
+	private JFrame frame = null;
+	private JPanel basePanel = null;
+	private JPanel topPanel = null;
+	private JPanel midPanel = null;
+	private JTextField inputField = null;
+	private JTextField outputField = null;
+	private JLabel inputLabel = null;
+	private JLabel outputLabel = null;
+	private JButton runButton = null;
+	private JButton exitButton = null;
+	private JPopupMenu textFieldPopupMenu = null;
+
 
 	@Override
 	public void setOutputText(String text) {
@@ -116,6 +117,7 @@ public final class ViewImpl implements ViewInterface {
 	public boolean isInitialized() {
 		return this.initialized;
 	}
+
 
 	// ViewInitializer を介して SwingUtilities.invokeAndWait で実行する
 	@Override
@@ -247,6 +249,7 @@ public final class ViewImpl implements ViewInterface {
 
 		this.initialized = true;
 	}
+
 
 	// イベントスレッド内からは直接呼び、
 	// それ以外からは ViewDisposer を介して SwingUtilities.invokeAndWait で実行する
