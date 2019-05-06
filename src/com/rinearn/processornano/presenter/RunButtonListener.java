@@ -35,6 +35,7 @@ public final class RunButtonListener implements ActionListener {
 				SwingUtilities.invokeLater(new UpwardSynchronizer(calculator, view));
 			}
 		};
-		calculator.requestCalculation(this.view, this.setting, scriptListener);
+		calculator.setInputText(view.inputField.getText());
+		calculator.requestCalculation(this.setting, scriptListener);
 	}
 }

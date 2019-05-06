@@ -35,7 +35,8 @@ public final class RunKeyListener implements KeyListener {
 					SwingUtilities.invokeLater(new UpwardSynchronizer(calculator, view));
 				}
 			};
-			calculator.requestCalculation(this.view, this.setting, scriptListener);
+			this.calculator.setInputText(this.view.inputField.getText());
+			calculator.requestCalculation(this.setting, scriptListener);
 		}
 	}
 

@@ -70,12 +70,13 @@ public final class AsynchronousScriptRunner implements Runnable {
 			value = Rounder.round( ((Double)value).doubleValue(), setting); // 型は BigDecimal になる
 		}
 
-		// 値を出力フィールドの表示用文字列にセットし、UIスレッドでフィールドに反映
-		if (value == null) {
-			this.calculator.setOutputText("");
-		} else {
+		// 値を文字列化して計算機モデルに設定
+		this.calculator.setOutputText("");
+		if (value != null) {
 			this.calculator.setOutputText(value.toString());
 		}
+
+		// 計算リクエスト元に計算完了を通知
 		this.scriptListener.scriptingFinished();
 
 		this.calculator.setRunning(false);

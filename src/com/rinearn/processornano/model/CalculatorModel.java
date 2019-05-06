@@ -18,7 +18,6 @@ import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.util.MessageManager;
 import com.rinearn.processornano.util.PluginLoader;
-import com.rinearn.processornano.view.ViewContainer;
 
 public final class CalculatorModel {
 
@@ -118,30 +117,23 @@ public final class CalculatorModel {
 	}
 
 
-	// これ、引数に view を受け取っているのは微妙？
-	public final synchronized void requestCalculation(ViewContainer view, SettingContainer setting,
-			AsynchronousScriptListener scriptListener) {
+	public final synchronized void requestCalculation(
+			SettingContainer setting, AsynchronousScriptListener scriptListener) {
 
 		// 設定に応じて、まず入力フィールドの内容を正規化
 		if (setting.inputNormalizerEnabled) {
-			view.inputField.setText(
-				Normalizer.normalize(view.inputField.getText(), Normalizer.Form.NFKC)
-			);
+			this.inputText = Normalizer.normalize(this.inputText, Normalizer.Form.NFKC);
 		}
 
-		// 入力フィールドの内容を取得してスクリプト実行をリクエストする
-		this.inputText = view.inputField.getText();
-
-		// 入力された式を式文にするために末尾にセミコロンを追加（無い場合のみ）し、
-		// 実行するスクリプトコードの内容としてセット
-		String scriptCode = this.inputText;
-		if (!scriptCode.trim().endsWith(";")) {
-			scriptCode += ";";
+		// 入力された式を、式文のスクリプトにするため、末尾にセミコロンを追加（無い場合のみ）
+		String inputScript = this.inputText;
+		if (!inputScript.trim().endsWith(";")) {
+			inputScript += ";";
 		}
 
 		// スクリプト実行スレッドを生成して実行
 		AsynchronousScriptRunner asyncScriptRunner
-				= new AsynchronousScriptRunner(scriptCode, scriptListener, this, setting);
+				= new AsynchronousScriptRunner(inputScript, scriptListener, this, setting);
 		Thread scriptingThread = new Thread(asyncScriptRunner);
 		scriptingThread.start();
 	}
