@@ -20,7 +20,7 @@ import com.rinearn.processornano.util.MessageManager;
 import com.rinearn.processornano.util.PluginLoader;
 import com.rinearn.processornano.view.ViewContainer;
 
-public final class Calculator {
+public final class CalculatorModel {
 
 	private ScriptEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
 	private volatile boolean running = false;

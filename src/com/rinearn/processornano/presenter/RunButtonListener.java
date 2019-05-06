@@ -11,17 +11,17 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 
 import com.rinearn.processornano.model.AsynchronousScriptListener;
-import com.rinearn.processornano.model.Calculator;
+import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.view.ViewContainer;
 
 public final class RunButtonListener implements ActionListener {
 
-	private Calculator calculator = null;
+	private CalculatorModel calculator = null;
 	private ViewContainer view = null;
 	private SettingContainer setting = null;
 
-	public RunButtonListener(ViewContainer view, Calculator calculator, SettingContainer setting) {
+	public RunButtonListener(ViewContainer view, CalculatorModel calculator, SettingContainer setting) {
 		this.calculator = calculator;
 		this.view = view;
 		this.setting = setting;

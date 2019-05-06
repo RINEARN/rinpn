@@ -5,14 +5,14 @@
 
 package com.rinearn.processornano.presenter;
 
-import com.rinearn.processornano.model.Calculator;
+import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.view.ViewContainer;
 
 public final class Presenter {
 
 	public final void link(
-			ViewContainer view, Calculator calculator, SettingContainer setting) {
+			ViewContainer view, CalculatorModel calculator, SettingContainer setting) {
 
 		// 各リスナを生成して投げて終わりじゃなくフィールドに保持して管理する方針の方が良い？ 後で要検討
 		WindowMouseListener windowMouseListener = new WindowMouseListener(view);

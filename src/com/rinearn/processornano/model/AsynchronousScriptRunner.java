@@ -16,12 +16,12 @@ public final class AsynchronousScriptRunner implements Runnable {
 
 	private String scriptCode = null;
 	private AsynchronousScriptListener scriptListener = null;
-	private Calculator calculator = null;
+	private CalculatorModel calculator = null;
 	private SettingContainer setting = null;
 
 	public AsynchronousScriptRunner(
 			String scriptCode, AsynchronousScriptListener scriptListener,
-			Calculator calculator, SettingContainer setting) {
+			CalculatorModel calculator, SettingContainer setting) {
 
 		this.scriptCode = scriptCode;
 		this.scriptListener = scriptListener;

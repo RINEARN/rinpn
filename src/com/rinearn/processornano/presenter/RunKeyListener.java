@@ -11,17 +11,17 @@ import java.awt.event.KeyListener;
 import javax.swing.SwingUtilities;
 
 import com.rinearn.processornano.model.AsynchronousScriptListener;
-import com.rinearn.processornano.model.Calculator;
+import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.view.ViewContainer;
 
 public final class RunKeyListener implements KeyListener {
 
-	private Calculator calculator;
+	private CalculatorModel calculator;
 	private ViewContainer view;
 	private SettingContainer setting;
 
-	public RunKeyListener(ViewContainer view, Calculator calculator, SettingContainer setting) {
+	public RunKeyListener(ViewContainer view, CalculatorModel calculator, SettingContainer setting) {
 		this.calculator = calculator;
 		this.view = view;
 		this.setting = setting;

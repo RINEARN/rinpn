@@ -5,15 +5,15 @@
 
 package com.rinearn.processornano.presenter;
 
-import com.rinearn.processornano.model.Calculator;
+import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.view.ViewContainer;
 
 public final class DownwardSynchronizer implements Runnable {
 
-	private Calculator calculator = null;
+	private CalculatorModel calculator = null;
 	private ViewContainer view = null;
 
-	public DownwardSynchronizer(Calculator calculator, ViewContainer view) {
+	public DownwardSynchronizer(CalculatorModel calculator, ViewContainer view) {
 		this.calculator = calculator;
 		this.view = view;
 	}

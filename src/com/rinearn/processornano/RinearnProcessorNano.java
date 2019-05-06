@@ -14,7 +14,7 @@ import java.util.List;
 
 import javax.swing.SwingUtilities;
 
-import com.rinearn.processornano.model.Calculator;
+import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.presenter.Presenter;
 import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
@@ -41,12 +41,12 @@ public final class RinearnProcessorNano {
 		// メッセージの出力をコマンドラインモードに変更
 		MessageManager.setDisplayType(MessageManager.DISPLAY_MODE.CUI);
 
-		// 設定値コンテナと計算機を生成して初期化
+		// 設定値コンテナと計算機モデルを生成して初期化
 		SettingContainer setting = null;
-		Calculator calculator = null;
+		CalculatorModel calculator = null;
 		try {
 			setting = this.createInitializedSettingContainer();
-			calculator = this.createInitializedCalculator(setting);
+			calculator = this.createInitializedCalculatorModel(setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
@@ -76,12 +76,12 @@ public final class RinearnProcessorNano {
 	 */
 	public final void launchCalculatorWindow() {
 
-		// 設定値コンテナと計算機を生成して初期化
+		// 設定値コンテナと計算機モデルを生成して初期化
 		SettingContainer setting = null;
-		Calculator calculator = null;
+		CalculatorModel calculator = null;
 		try {
 			setting = this.createInitializedSettingContainer();
-			calculator = this.createInitializedCalculator(setting);
+			calculator = this.createInitializedCalculatorModel(setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
@@ -109,7 +109,7 @@ public final class RinearnProcessorNano {
 			return; // この例外が発生する場合はまだUI構築が走っていないので、破棄するUIリソースはない
 		}
 
-		// UIと計算機との間でイベント処理や更新処理などを担うプレゼンターを生成し、両者を繋ぐ
+		// UIと計算機モデルとの間でイベント処理や更新処理などを担うプレゼンターを生成し、両者を繋ぐ
 		Presenter presenter = new Presenter();
 		presenter.link(view, calculator, setting);
 	}
@@ -142,13 +142,13 @@ public final class RinearnProcessorNano {
 
 
 	/**
-	 * ライブラリスクリプトや設定値を読み込んで初期化済みの、計算機を生成して返します。
+	 * ライブラリスクリプトや設定値を読み込んで初期化済みの、計算機モデルを生成して返します。
 	 *
-	 * @return 初期化済みの計算機
+	 * @return 初期化済みの計算機モデル
 	 * @throws RinearnProcessorNanoException
 	 * 		スクリプトエンジンの接続や、ライブラリの読み込みエラーなどで失敗した場合にスローされます。
 	 */
-	private final Calculator createInitializedCalculator(SettingContainer setting)
+	private final CalculatorModel createInitializedCalculatorModel(SettingContainer setting)
 			throws RinearnProcessorNanoException {
 
 		// ライブラリの配置フォルダからファイル一覧を取得（フォルダの存在は SettingContainer 内で検査済み）
@@ -173,7 +173,7 @@ public final class RinearnProcessorNano {
 		String[] libraryNames = libraryNameList.toArray(new String[0]);
 
 		// 計算機のインスタンスを生成、初期化して返す
-		Calculator calculator = new Calculator();
+		CalculatorModel calculator = new CalculatorModel();
 		calculator.initialize(setting, libraryScripts, libraryNames);
 		return calculator;
 	}
