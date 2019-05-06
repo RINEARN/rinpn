@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.calculator;
+package com.rinearn.processornano.model;
 
 public interface AsynchronousScriptListener {
 

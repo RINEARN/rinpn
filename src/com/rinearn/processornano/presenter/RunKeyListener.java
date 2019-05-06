@@ -10,8 +10,8 @@ import java.awt.event.KeyListener;
 
 import javax.swing.SwingUtilities;
 
-import com.rinearn.processornano.calculator.AsynchronousScriptListener;
-import com.rinearn.processornano.calculator.Calculator;
+import com.rinearn.processornano.model.AsynchronousScriptListener;
+import com.rinearn.processornano.model.Calculator;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.view.ViewContainer;
 

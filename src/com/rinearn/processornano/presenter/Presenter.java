@@ -5,7 +5,7 @@
 
 package com.rinearn.processornano.presenter;
 
-import com.rinearn.processornano.calculator.Calculator;
+import com.rinearn.processornano.model.Calculator;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.view.ViewContainer;
 
