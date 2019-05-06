@@ -24,15 +24,10 @@ public final class CalculatorModel {
 	private ScriptEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
 	private volatile boolean calculating = false;
 
-	public final ScriptEngine getScriptEngine() {
-		return this.engine;
-	}
-
 	// AsynchronousScriptRunner から参照する
 	public final boolean isCalculating() {
 		return this.calculating;
 	}
-
 
 	public final void initialize(SettingContainer setting, String[] libraryScripts, String[] libraryScriptNames)
 					throws RinearnProcessorNanoException {
