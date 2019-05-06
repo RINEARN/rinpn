@@ -29,7 +29,7 @@ import com.rinearn.processornano.spec.SettingContainer;
 
 public final class ViewContainer implements ViewInterface {
 
-	protected volatile boolean initialized = false;
+	private volatile boolean initialized = false;
 	protected JFrame frame = null;
 	protected JPanel basePanel = null;
 	protected JPanel topPanel = null;
@@ -112,6 +112,9 @@ public final class ViewContainer implements ViewInterface {
 		this.exitButton.addActionListener(listener);
 	}
 
+	protected boolean isInitialized() {
+		return this.initialized;
+	}
 
 	// ViewInitializer を介して SwingUtilities.invokeAndWait で実行する
 	protected void initialize(SettingContainer setting) {
@@ -241,5 +244,20 @@ public final class ViewContainer implements ViewInterface {
 		this.frame.setVisible(true);
 
 		this.initialized = true;
+	}
+
+	// イベントスレッド内からは直接呼び、
+	// それ以外からは ViewDisposer を介して SwingUtilities.invokeAndWait で実行する
+	public void dispose() {
+		this.frame.dispose();
+		this.frame = null;
+		this.basePanel = null;
+		this.midPanel = null;
+		this.inputField = null;
+		this.outputField = null;
+		this.inputLabel = null;
+		this.outputLabel = null;
+		this.runButton = null;
+		this.exitButton = null;
 	}
 }
