@@ -5,7 +5,18 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import com.rinearn.processornano.spec.SettingContainer;
+
 public interface ViewInterface {
+
+	// ViewInitializer を介して SwingUtilities.invokeAndWait で実行する
+	public abstract void initialize(SettingContainer setting);
+
+	public abstract boolean isInitialized();
+
+	// イベントスレッド内からは直接呼び、
+	// それ以外からは ViewDisposer を介して SwingUtilities.invokeAndWait で実行する
+	public abstract void dispose();
 
 	public abstract void setOutputText(String text);
 
@@ -34,4 +45,6 @@ public interface ViewInterface {
 	public abstract void addRunButtonActionListener(ActionListener listener);
 
 	public abstract void addExitButtonActionListener(ActionListener listener);
+
+
 }

@@ -9,10 +9,10 @@ import com.rinearn.processornano.spec.SettingContainer;
 
 public final class ViewInitializer implements Runnable {
 
-	private ViewImpl view = null;
+	private ViewInterface view = null;
 	private SettingContainer setting = null;
 
-	public ViewInitializer(ViewImpl view, SettingContainer setting) {
+	public ViewInitializer(ViewInterface view, SettingContainer setting) {
 		this.view = view;
 		this.setting = setting;
 	}

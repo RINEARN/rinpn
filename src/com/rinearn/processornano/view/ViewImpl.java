@@ -112,12 +112,14 @@ public final class ViewImpl implements ViewInterface {
 		this.exitButton.addActionListener(listener);
 	}
 
-	protected boolean isInitialized() {
+	@Override
+	public boolean isInitialized() {
 		return this.initialized;
 	}
 
 	// ViewInitializer を介して SwingUtilities.invokeAndWait で実行する
-	protected void initialize(SettingContainer setting) {
+	@Override
+	public void initialize(SettingContainer setting) {
 
 		// ウィンドウを生成
 		this.frame = new JFrame();
@@ -248,6 +250,7 @@ public final class ViewImpl implements ViewInterface {
 
 	// イベントスレッド内からは直接呼び、
 	// それ以外からは ViewDisposer を介して SwingUtilities.invokeAndWait で実行する
+	@Override
 	public void dispose() {
 		this.frame.dispose();
 		this.frame = null;

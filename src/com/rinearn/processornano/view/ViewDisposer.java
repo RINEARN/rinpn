@@ -7,9 +7,9 @@ package com.rinearn.processornano.view;
 
 public final class ViewDisposer implements Runnable {
 
-	private ViewImpl view = null;
+	private ViewInterface view = null;
 
-	public ViewDisposer(ViewImpl view) {
+	public ViewDisposer(ViewInterface view) {
 		this.view = view;
 	}
 
