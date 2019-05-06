@@ -22,18 +22,15 @@ import com.rinearn.processornano.util.PluginLoader;
 public final class CalculatorModel {
 
 	private ScriptEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
-	private volatile boolean running = false;
+	private volatile boolean calculating = false;
 
 	public final ScriptEngine getScriptEngine() {
 		return this.engine;
 	}
 
-	public final boolean isRunning() {
-		return this.running;
-	}
-
-	public final synchronized void setRunning(boolean running) {
-		this.running = running;
+	// AsynchronousScriptRunner から参照する
+	public final boolean isCalculating() {
+		return this.calculating;
 	}
 
 
@@ -82,6 +79,8 @@ public final class CalculatorModel {
 	public final synchronized String calculate(String inputExpression, SettingContainer setting)
 			throws ScriptException {
 
+		this.calculating = true;
+
 		// 設定に応じて、まず入力フィールドの内容を正規化
 		if (setting.inputNormalizerEnabled) {
 			inputExpression = Normalizer.normalize(inputExpression, Normalizer.Form.NFKC);
@@ -107,6 +106,8 @@ public final class CalculatorModel {
 			outputText = value.toString();
 		}
 
+		this.calculating = false;
+
 		return outputText;
 	}
 
@@ -117,6 +118,7 @@ public final class CalculatorModel {
 		// 計算実行スレッドを生成して実行（中でこのクラスの calculate が呼ばれて実行される）
 		AsynchronousScriptRunner asyncScriptRunner
 				= new AsynchronousScriptRunner(inputExpression, scriptListener, this, setting);
+
 		Thread scriptingThread = new Thread(asyncScriptRunner);
 		scriptingThread.start();
 	}

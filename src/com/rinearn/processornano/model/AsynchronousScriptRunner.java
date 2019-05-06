@@ -36,7 +36,7 @@ public final class AsynchronousScriptRunner implements Runnable {
 		// 処理がどんどん積もっていって全部消化されるまで待たなければいけなくなるので、
 		// 実行中に実行リクエストがあった場合はその場で弾くようにする。
 
-		if (this.calculator.isRunning()) {
+		if (this.calculator.isCalculating()) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage("The previous calculation have not finished yet!", "!");
 			}
@@ -45,8 +45,6 @@ public final class AsynchronousScriptRunner implements Runnable {
 			}
 			return;
 		}
-
-		this.calculator.setRunning(true);
 
 		// 入力フィールドの計算式を実行し、結果の値を取得
 		String outputText = "";
@@ -62,13 +60,10 @@ public final class AsynchronousScriptRunner implements Runnable {
 				MessageManager.showErrorMessage(errorMessage, "計算式やライブラリのエラー");
 			}
 			e.printStackTrace();
-			this.calculator.setRunning(false);
 			return;
 		}
 
 		// 計算リクエスト元に計算完了を通知
 		this.scriptListener.scriptingFinished(outputText);
-
-		this.calculator.setRunning(false);
 	}
 }
