@@ -20,7 +20,7 @@ import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.util.CodeLoader;
 import com.rinearn.processornano.util.MessageManager;
-import com.rinearn.processornano.view.ViewContainer;
+import com.rinearn.processornano.view.ViewImpl;
 import com.rinearn.processornano.view.ViewInitializer;
 
 
@@ -90,7 +90,7 @@ public final class RinearnProcessorNano {
 
 
 		// 電卓画面を生成して初期化
-		ViewContainer view = new ViewContainer();
+		ViewImpl view = new ViewImpl();
 		try {
 			ViewInitializer initialiser = new ViewInitializer(view, setting); // 別スレッドで初期化するためのRunnable
 			SwingUtilities.invokeAndWait(initialiser);                        // それをSwingのイベントスレッドで実行

@@ -21,7 +21,7 @@
 ./com/rinearn/processornano/util/MessageManager.java
 ./com/rinearn/processornano/util/PluginLoader.java
 ./com/rinearn/processornano/util/TestPlugin.java
-./com/rinearn/processornano/view/ViewContainer.java
 ./com/rinearn/processornano/view/ViewDisposer.java
+./com/rinearn/processornano/view/ViewImpl.java
 ./com/rinearn/processornano/view/ViewInitializer.java
 ./com/rinearn/processornano/view/ViewInterface.java

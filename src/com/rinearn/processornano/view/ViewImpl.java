@@ -27,7 +27,7 @@ import javax.swing.text.DefaultEditorKit;
 
 import com.rinearn.processornano.spec.SettingContainer;
 
-public final class ViewContainer implements ViewInterface {
+public final class ViewImpl implements ViewInterface {
 
 	private volatile boolean initialized = false;
 	protected JFrame frame = null;
