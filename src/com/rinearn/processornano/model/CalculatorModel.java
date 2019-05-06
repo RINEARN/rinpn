@@ -23,8 +23,6 @@ public final class CalculatorModel {
 
 	private ScriptEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
 	private volatile boolean running = false;
-	private volatile String inputText = "";
-	private volatile String outputText = "";
 
 	public final ScriptEngine getScriptEngine() {
 		return this.engine;
@@ -36,22 +34,6 @@ public final class CalculatorModel {
 
 	public final synchronized void setRunning(boolean running) {
 		this.running = running;
-	}
-
-	public final String getInputText() {
-		return this.inputText;
-	}
-
-	public final synchronized void setInputText(String inputText) {
-		this.inputText = inputText;
-	}
-
-	public final String getOutputText() {
-		return this.outputText;
-	}
-
-	public final synchronized void setOutputText(String outputText) {
-		this.outputText = outputText;
 	}
 
 
@@ -97,16 +79,16 @@ public final class CalculatorModel {
 	}
 
 
-	public final synchronized void calculate(SettingContainer setting)
+	public final synchronized String calculate(String inputExpression, SettingContainer setting)
 			throws ScriptException {
 
 		// 設定に応じて、まず入力フィールドの内容を正規化
 		if (setting.inputNormalizerEnabled) {
-			this.inputText = Normalizer.normalize(this.inputText, Normalizer.Form.NFKC);
+			inputExpression = Normalizer.normalize(inputExpression, Normalizer.Form.NFKC);
 		}
 
 		// 入力された式を、式文のスクリプトにするため、末尾にセミコロンを追加（無い場合のみ）
-		String inputScript = this.inputText;
+		String inputScript = inputExpression;
 		if (!inputScript.trim().endsWith(";")) {
 			inputScript += ";";
 		}
@@ -120,19 +102,21 @@ public final class CalculatorModel {
 		}
 
 		// 値を文字列化して出力フィールドに設定
-		this.outputText = "";
+		String outputText = "";
 		if (value != null) {
-			this.outputText = value.toString();
+			outputText = value.toString();
 		}
+
+		return outputText;
 	}
 
 
-	public final synchronized void requestCalculation(
-			SettingContainer setting, AsynchronousScriptListener scriptListener) {
+	public final synchronized void calculateAsynchronously(
+			String inputExpression, SettingContainer setting, AsynchronousScriptListener scriptListener) {
 
-		// スクリプト実行スレッドを生成して実行
+		// 計算実行スレッドを生成して実行（中でこのクラスの calculate が呼ばれて実行される）
 		AsynchronousScriptRunner asyncScriptRunner
-				= new AsynchronousScriptRunner(scriptListener, this, setting);
+				= new AsynchronousScriptRunner(inputExpression, scriptListener, this, setting);
 		Thread scriptingThread = new Thread(asyncScriptRunner);
 		scriptingThread.start();
 	}

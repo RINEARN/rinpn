@@ -17,10 +17,13 @@ public final class AsynchronousScriptRunner implements Runnable {
 	private AsynchronousScriptListener scriptListener = null;
 	private CalculatorModel calculator = null;
 	private SettingContainer setting = null;
+	private String inputExpression = null;
 
 	public AsynchronousScriptRunner(
-			AsynchronousScriptListener scriptListener, CalculatorModel calculator, SettingContainer setting) {
+			String inputExpression, AsynchronousScriptListener scriptListener,
+			CalculatorModel calculator, SettingContainer setting) {
 
+		this.inputExpression = inputExpression;
 		this.scriptListener = scriptListener;
 		this.calculator = calculator;
 		this.setting = setting;
@@ -29,8 +32,8 @@ public final class AsynchronousScriptRunner implements Runnable {
 	@Override
 	public final void run() {
 
-		// CalculatorModel の計算実行は synchronized なので、スクリプト内容が重い場合に実行ボタンが連打されると、
-		// 実行待ちがどんどん積もっていって全部消化されるまで待たなければいけなくなるので、
+		// スクリプト内容が重い場合に実行ボタンが連打されると、
+		// 処理がどんどん積もっていって全部消化されるまで待たなければいけなくなるので、
 		// 実行中に実行リクエストがあった場合はその場で弾くようにする。
 
 		if (this.calculator.isRunning()) {
@@ -45,9 +48,10 @@ public final class AsynchronousScriptRunner implements Runnable {
 
 		this.calculator.setRunning(true);
 
-		// 入力フィールドの計算式を実行
+		// 入力フィールドの計算式を実行し、結果の値を取得
+		String outputText = "";
 		try {
-			this.calculator.calculate(setting);
+			outputText = this.calculator.calculate(this.inputExpression, this.setting);
 
 		} catch (ScriptException e) {
 			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
@@ -63,7 +67,7 @@ public final class AsynchronousScriptRunner implements Runnable {
 		}
 
 		// 計算リクエスト元に計算完了を通知
-		this.scriptListener.scriptingFinished();
+		this.scriptListener.scriptingFinished(outputText);
 
 		this.calculator.setRunning(false);
 	}

@@ -29,13 +29,11 @@ public final class RunButtonListener implements ActionListener {
 
 	@Override
 	public final void actionPerformed(ActionEvent e) {
-
 		AsynchronousScriptListener scriptListener = new AsynchronousScriptListener() {
-			public void scriptingFinished() {
-				SwingUtilities.invokeLater(new UpwardSynchronizer(calculator, view));
+			public void scriptingFinished(String outputText) {
+				SwingUtilities.invokeLater(new OutputFieldUpdater(view, outputText));
 			}
 		};
-		calculator.setInputText(view.inputField.getText());
-		calculator.requestCalculation(this.setting, scriptListener);
+		calculator.calculateAsynchronously(this.view.inputField.getText(), this.setting, scriptListener);
 	}
 }
