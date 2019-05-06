@@ -60,8 +60,9 @@ public final class SettingContainer implements Cloneable {
 
 	public boolean acceleratorEnabled = true;
 	public boolean evalNumberAsFloat = true;
-	public String libraryScriptPath = "./Library.vnano";
-	public String libraryScriptEncoding = "UTF-8";
+	public String libraryFolder = "./lib/";
+	public String libraryEncoding = "UTF-8";
+	public String libraryExtension = ".vnano";
 	public String[] pluginPaths = new String[0];
 
 	public String localeCode = LocaleCode.getDefaultLocaleCode();
@@ -123,16 +124,22 @@ public final class SettingContainer implements Cloneable {
 			throws RinearnProcessorNanoException {
 
 		boolean errorOccurred = false;
-
 		String errorMessage = null;
-		String errorTitle = null;
-		if (this.localeCode.equals(LocaleCode.EN_US)) {
-			errorTitle = "Setting Error";
-		}
-		if (this.localeCode.equals(LocaleCode.JA_JP)) {
-			errorTitle = "設定エラー";
-		}
 
+		this.localeCode = this.localeCode.toLowerCase();
+		if (!LocaleCode.isSupported(this.localeCode)) {
+
+			if (this.localeCode.equals(LocaleCode.EN_US)) {
+				errorMessage = "The locale-code \"" + this.localeCode + "\" is not supported.";
+			}
+			if (this.localeCode.equals(LocaleCode.JA_JP)) {
+				errorMessage = "非対応のロケールコード \"" + this.localeCode + "\" が指定されています。";
+			}
+			errorOccurred = true;
+		}
+		if (this.localeCode.equals(LocaleCode.AUTO)) {
+			this.localeCode = LocaleCode.getDefaultLocaleCode();
+		}
 
 		if (this.textFieldFontSize <= 0) {
 			if (this.localeCode.equals(LocaleCode.EN_US)) {
@@ -292,44 +299,45 @@ public final class SettingContainer implements Cloneable {
 			errorOccurred = true;
 		}
 
-		if ( !(new File(this.libraryScriptPath).exists()) ) {
+		if ( !(new File(this.libraryFolder).exists()) ) {
 			if (this.localeCode.equals(LocaleCode.EN_US)) {
-				errorMessage = "The library script file \"" + this.libraryScriptPath + "\" does not exist.";
+				errorMessage = "The library folder \"" + this.libraryFolder + "\" does not exist.";
 			}
 			if (this.localeCode.equals(LocaleCode.JA_JP)) {
-				errorMessage = "ライブラリスクリプトのファイル \"" + this.libraryScriptPath + "\" が見つかりません。";
+				errorMessage = "ライブラリの配置フォルダ \"" + this.libraryFolder + "\" が見つかりません。";
+			}
+			errorOccurred = true;
+
+		} else if (!( new File(this.libraryFolder).isDirectory() )) {
+			if (this.localeCode.equals(LocaleCode.EN_US)) {
+				errorMessage = "The path \"" + this.libraryFolder + "\" specified as the library folder is not a folder.";
+			}
+			if (this.localeCode.equals(LocaleCode.JA_JP)) {
+				errorMessage = "ライブラリの配置場所のパス \"" + this.libraryFolder + "\" が、フォルダではありません。";
 			}
 			errorOccurred = true;
 		}
 
-		if ( !this.libraryScriptEncoding.equals("UTF-8")
-		     && !this.libraryScriptEncoding.equals("Shift_JIS") ) {
+		if ( !this.libraryEncoding.equals("UTF-8")
+		     && !this.libraryEncoding.equals("Shift_JIS") ) {
 
 			if (this.localeCode.equals(LocaleCode.EN_US)) {
-				errorMessage = "The encoding \"" + this.libraryScriptPath + "\" is not supported.";
+				errorMessage = "The encoding \"" + this.libraryEncoding + "\" is not supported.";
 			}
 			if (this.localeCode.equals(LocaleCode.JA_JP)) {
-				errorMessage = "非対応の文字コード \"" + this.libraryScriptPath + "\" が指定されています。";
+				errorMessage = "非対応の文字コード \"" + this.libraryEncoding + "\" が指定されています。";
 			}
 			errorOccurred = true;
-		}
-
-		this.localeCode = this.localeCode.toLowerCase();
-		if (!LocaleCode.isSupported(this.localeCode)) {
-
-			if (this.localeCode.equals(LocaleCode.EN_US)) {
-				errorMessage = "The locale-code \"" + this.localeCode + "\" is not supported.";
-			}
-			if (this.localeCode.equals(LocaleCode.JA_JP)) {
-				errorMessage = "非対応のロケールコード \"" + this.localeCode + "\" が指定されています。";
-			}
-			errorOccurred = true;
-		}
-		if (this.localeCode.equals(LocaleCode.AUTO)) {
-			this.localeCode = LocaleCode.getDefaultLocaleCode();
 		}
 
 		if (errorOccurred) {
+			String errorTitle = null;
+			if (this.localeCode.equals(LocaleCode.EN_US)) {
+				errorTitle = "Setting Error";
+			}
+			if (this.localeCode.equals(LocaleCode.JA_JP)) {
+				errorTitle = "設定エラー";
+			}
 			MessageManager.showErrorMessage(errorMessage, errorTitle);
 			throw new RinearnProcessorNanoException(errorMessage);
 		}
