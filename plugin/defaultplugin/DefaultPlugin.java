@@ -1,6 +1,6 @@
 package defaultplugin;
 
-import org.vcssl.connect.ExternalLibraryConnector1;
+import org.vcssl.connect.ExternalNamespaceConnector1;
 import org.vcssl.connect.ExternalFunctionConnector1;
 import org.vcssl.connect.ExternalVariableConnector1;
 import org.vcssl.connect.ConnectorException;
