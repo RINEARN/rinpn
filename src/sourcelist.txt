@@ -2,13 +2,12 @@
 ./com/rinearn/processornano/model/AsynchronousScriptRunner.java
 ./com/rinearn/processornano/model/CalculatorModel.java
 ./com/rinearn/processornano/model/Rounder.java
-./com/rinearn/processornano/presenter/DownwardSynchronizer.java
 ./com/rinearn/processornano/presenter/ExitButtonListener.java
 ./com/rinearn/processornano/presenter/IOFieldMouseListener.java
+./com/rinearn/processornano/presenter/OutputFieldUpdater.java
 ./com/rinearn/processornano/presenter/Presenter.java
 ./com/rinearn/processornano/presenter/RunButtonListener.java
 ./com/rinearn/processornano/presenter/RunKeyListener.java
-./com/rinearn/processornano/presenter/UpwardSynchronizer.java
 ./com/rinearn/processornano/presenter/WindowMouseListener.java
 ./com/rinearn/processornano/Prototype.java
 ./com/rinearn/processornano/RinearnProcessorNano.java
