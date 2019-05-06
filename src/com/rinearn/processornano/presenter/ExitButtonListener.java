@@ -14,8 +14,6 @@ import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.view.ViewInterface;
-import com.rinearn.processornano.view.ViewImpl;
-import com.rinearn.processornano.view.ViewDisposer;
 
 public final class ExitButtonListener implements ActionListener {
 
@@ -57,9 +55,8 @@ public final class ExitButtonListener implements ActionListener {
 			}
 		}
 
-		// UIを破棄（ここはイベントスレッド内なので、SwingUtilities.invokeAndWait はせずrunを直接呼ぶ）
-		if (this.view instanceof ViewImpl) {
-			new ViewDisposer((ViewImpl)this.view).run(); // ここがViewの実装に依存してるのが微妙。後で要検討
-		}
+		// UIを破棄
+		//（ここはイベントスレッド内なので、ViewDisposer で SwingUtilities.invokeAndWait はせず、破棄メソッドを直接呼ぶ）
+		this.view.dispose();
 	}
 }
