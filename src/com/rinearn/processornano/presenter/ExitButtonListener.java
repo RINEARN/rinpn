@@ -32,7 +32,7 @@ public final class ExitButtonListener implements ActionListener {
 	public final void actionPerformed(ActionEvent actionEvent) {
 
 		// スクリプトが実行中の場合は、強制終了するかどうか尋ねて、YESなら強制終了する
-		if (calculator.isRunning()) {
+		if (calculator.isCalculating()) {
 
 			// 尋ねるメッセージを用意
 			String message = "";

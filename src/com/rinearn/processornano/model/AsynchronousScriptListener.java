@@ -9,5 +9,5 @@ public interface AsynchronousScriptListener {
 
 	// event パッケージの RunButtonListener や RunKeyLister クラス内で匿名クラスとして実装
 
-	public abstract void scriptingFinished();
+	public abstract void scriptingFinished(String outputText);
 }

@@ -18,43 +18,16 @@ import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.util.MessageManager;
 import com.rinearn.processornano.util.PluginLoader;
-import com.rinearn.processornano.view.ViewContainer;
 
 public final class CalculatorModel {
 
 	private ScriptEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
-	private volatile boolean running = false;
-	private volatile String inputText = "";
-	private volatile String outputText = "";
+	private volatile boolean calculating = false;
 
-	public final ScriptEngine getScriptEngine() {
-		return this.engine;
+	// AsynchronousScriptRunner から参照する
+	public final boolean isCalculating() {
+		return this.calculating;
 	}
-
-	public final boolean isRunning() {
-		return this.running;
-	}
-
-	public final synchronized void setRunning(boolean running) {
-		this.running = running;
-	}
-
-	public final String getInputText() {
-		return this.inputText;
-	}
-
-	public final synchronized void setInputText(String inputText) {
-		this.inputText = inputText;
-	}
-
-	public final String getOutputText() {
-		return this.outputText;
-	}
-
-	public final synchronized void setOutputText(String outputText) {
-		this.outputText = outputText;
-	}
-
 
 	public final void initialize(SettingContainer setting, String[] libraryScripts, String[] libraryScriptNames)
 					throws RinearnProcessorNanoException {
@@ -98,50 +71,49 @@ public final class CalculatorModel {
 	}
 
 
-	public final synchronized Object calculate(String scriptCode, SettingContainer setting)
+	public final synchronized String calculate(String inputExpression, SettingContainer setting)
 			throws ScriptException {
 
-		// 入力された式を式文にするために末尾にセミコロンを追加（無い場合のみ）
-		if (!scriptCode.trim().endsWith(";")) {
-			scriptCode += ";";
+		this.calculating = true;
+
+		// 設定に応じて、まず入力フィールドの内容を正規化
+		if (setting.inputNormalizerEnabled) {
+			inputExpression = Normalizer.normalize(inputExpression, Normalizer.Form.NFKC);
+		}
+
+		// 入力された式を、式文のスクリプトにするため、末尾にセミコロンを追加（無い場合のみ）
+		String inputScript = inputExpression;
+		if (!inputScript.trim().endsWith(";")) {
+			inputScript += ";";
 		}
 
 		// 計算を実行
-		Object value = this.engine.eval(scriptCode);
+		Object value = this.engine.eval(inputScript);
 
 		// 値が浮動小数点数なら、設定内容に応じて丸める
 		if (value instanceof Double) {
 			value = Rounder.round( ((Double)value).doubleValue(), setting); // 型は BigDecimal になる
 		}
 
-		return value;
+		// 値を文字列化して出力フィールドに設定
+		String outputText = "";
+		if (value != null) {
+			outputText = value.toString();
+		}
+
+		this.calculating = false;
+
+		return outputText;
 	}
 
 
-	// これ、引数に view を受け取っているのは微妙？
-	public final synchronized void requestCalculation(ViewContainer view, SettingContainer setting,
-			AsynchronousScriptListener scriptListener) {
+	public final synchronized void calculateAsynchronously(
+			String inputExpression, SettingContainer setting, AsynchronousScriptListener scriptListener) {
 
-		// 設定に応じて、まず入力フィールドの内容を正規化
-		if (setting.inputNormalizerEnabled) {
-			view.inputField.setText(
-				Normalizer.normalize(view.inputField.getText(), Normalizer.Form.NFKC)
-			);
-		}
-
-		// 入力フィールドの内容を取得してスクリプト実行をリクエストする
-		this.inputText = view.inputField.getText();
-
-		// 入力された式を式文にするために末尾にセミコロンを追加（無い場合のみ）し、
-		// 実行するスクリプトコードの内容としてセット
-		String scriptCode = this.inputText;
-		if (!scriptCode.trim().endsWith(";")) {
-			scriptCode += ";";
-		}
-
-		// スクリプト実行スレッドを生成して実行
+		// 計算実行スレッドを生成して実行（中でこのクラスの calculate が呼ばれて実行される）
 		AsynchronousScriptRunner asyncScriptRunner
-				= new AsynchronousScriptRunner(scriptCode, scriptListener, this, setting);
+				= new AsynchronousScriptRunner(inputExpression, scriptListener, this, setting);
+
 		Thread scriptingThread = new Thread(asyncScriptRunner);
 		scriptingThread.start();
 	}

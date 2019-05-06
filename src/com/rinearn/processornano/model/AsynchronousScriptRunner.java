@@ -14,16 +14,16 @@ import com.rinearn.processornano.util.MessageManager;
 
 public final class AsynchronousScriptRunner implements Runnable {
 
-	private String scriptCode = null;
 	private AsynchronousScriptListener scriptListener = null;
 	private CalculatorModel calculator = null;
 	private SettingContainer setting = null;
+	private String inputExpression = null;
 
 	public AsynchronousScriptRunner(
-			String scriptCode, AsynchronousScriptListener scriptListener,
+			String inputExpression, AsynchronousScriptListener scriptListener,
 			CalculatorModel calculator, SettingContainer setting) {
 
-		this.scriptCode = scriptCode;
+		this.inputExpression = inputExpression;
 		this.scriptListener = scriptListener;
 		this.calculator = calculator;
 		this.setting = setting;
@@ -32,11 +32,11 @@ public final class AsynchronousScriptRunner implements Runnable {
 	@Override
 	public final void run() {
 
-		// 実行処理を synchronized にすると、スクリプト内容が重い場合に実行ボタンが連打された際、
-		// 実行待ちスレッドがどんどん積もっていって、全部消化されるまで待たなければいけなくなるので、
+		// スクリプト内容が重い場合に実行ボタンが連打されると、
+		// 処理がどんどん積もっていって全部消化されるまで待たなければいけなくなるので、
 		// 実行中に実行リクエストがあった場合はその場で弾くようにする。
 
-		if (this.calculator.isRunning()) {
+		if (this.calculator.isCalculating()) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage("The previous calculation have not finished yet!", "!");
 			}
@@ -45,12 +45,11 @@ public final class AsynchronousScriptRunner implements Runnable {
 			}
 			return;
 		}
-		this.calculator.setRunning(true);
 
-		// 入力フィールドの式を評価して値を所得
-		Object value = null;
+		// 入力フィールドの計算式を実行し、結果の値を取得
+		String outputText = "";
 		try {
-			value = this.calculator.getScriptEngine().eval(this.scriptCode);
+			outputText = this.calculator.calculate(this.inputExpression, this.setting);
 
 		} catch (ScriptException e) {
 			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
@@ -61,23 +60,10 @@ public final class AsynchronousScriptRunner implements Runnable {
 				MessageManager.showErrorMessage(errorMessage, "計算式やライブラリのエラー");
 			}
 			e.printStackTrace();
-			this.calculator.setRunning(false);
 			return;
 		}
 
-		// 値が浮動小数点数なら、設定内容に応じて丸める
-		if (value instanceof Double) {
-			value = Rounder.round( ((Double)value).doubleValue(), setting); // 型は BigDecimal になる
-		}
-
-		// 値を出力フィールドの表示用文字列にセットし、UIスレッドでフィールドに反映
-		if (value == null) {
-			this.calculator.setOutputText("");
-		} else {
-			this.calculator.setOutputText(value.toString());
-		}
-		this.scriptListener.scriptingFinished();
-
-		this.calculator.setRunning(false);
+		// 計算リクエスト元に計算完了を通知
+		this.scriptListener.scriptingFinished(outputText);
 	}
 }

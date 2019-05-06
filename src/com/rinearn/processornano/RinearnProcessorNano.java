@@ -34,9 +34,9 @@ public final class RinearnProcessorNano {
 	/**
 	 * 電卓画面を起動せずに、計算を実行し、結果を標準出力に表示します。
 	 *
-	 * @param scriptCode 計算内容（式またはスクリプトコード）
+	 * @param inputExpression 計算式（式またはスクリプトコード）
 	 */
-	public final void calculate(String scriptCode) {
+	public final void calculate(String inputExpression) {
 
 		// メッセージの出力をコマンドラインモードに変更
 		MessageManager.setDisplayType(MessageManager.DISPLAY_MODE.CUI);
@@ -55,9 +55,10 @@ public final class RinearnProcessorNano {
 		}
 
 		// 計算を実行
-		Object value = null;
+		String outputText = null;
 		try {
-			value = calculator.calculate(scriptCode, setting);
+			outputText = calculator.calculate(inputExpression, setting);
+
 		} catch (ScriptException e) {
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
 			MessageManager.showErrorMessage(message, "!");
@@ -65,9 +66,7 @@ public final class RinearnProcessorNano {
 		}
 
 		// 結果を表示
-		if (value != null) {
-			System.out.println(value.toString());
-		}
+		System.out.println(outputText);
 	}
 
 
