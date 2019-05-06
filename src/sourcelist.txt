@@ -3,7 +3,8 @@
 ./com/rinearn/processornano/model/CalculatorModel.java
 ./com/rinearn/processornano/model/Rounder.java
 ./com/rinearn/processornano/presenter/ExitButtonListener.java
-./com/rinearn/processornano/presenter/IOFieldMouseListener.java
+./com/rinearn/processornano/presenter/InputFieldMouseListener.java
+./com/rinearn/processornano/presenter/OutputFieldMouseListener.java
 ./com/rinearn/processornano/presenter/OutputFieldUpdater.java
 ./com/rinearn/processornano/presenter/Presenter.java
 ./com/rinearn/processornano/presenter/RunButtonListener.java
@@ -23,3 +24,4 @@
 ./com/rinearn/processornano/view/ViewContainer.java
 ./com/rinearn/processornano/view/ViewDisposer.java
 ./com/rinearn/processornano/view/ViewInitializer.java
+./com/rinearn/processornano/view/ViewInterface.java

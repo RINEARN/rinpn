@@ -13,15 +13,15 @@ import javax.swing.SwingUtilities;
 import com.rinearn.processornano.model.AsynchronousScriptListener;
 import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.spec.SettingContainer;
-import com.rinearn.processornano.view.ViewContainer;
+import com.rinearn.processornano.view.ViewInterface;
 
 public final class RunButtonListener implements ActionListener {
 
 	private CalculatorModel calculator = null;
-	private ViewContainer view = null;
+	private ViewInterface view = null;
 	private SettingContainer setting = null;
 
-	public RunButtonListener(ViewContainer view, CalculatorModel calculator, SettingContainer setting) {
+	public RunButtonListener(ViewInterface view, CalculatorModel calculator, SettingContainer setting) {
 		this.calculator = calculator;
 		this.view = view;
 		this.setting = setting;
@@ -34,6 +34,6 @@ public final class RunButtonListener implements ActionListener {
 				SwingUtilities.invokeLater(new OutputFieldUpdater(view, outputText));
 			}
 		};
-		calculator.calculateAsynchronously(this.view.inputField.getText(), this.setting, scriptListener);
+		calculator.calculateAsynchronously(this.view.getInputText(), this.setting, scriptListener);
 	}
 }
