@@ -97,28 +97,8 @@ public final class CalculatorModel {
 	}
 
 
-	public final synchronized Object calculate(String scriptCode, SettingContainer setting)
+	public final synchronized void calculate(SettingContainer setting)
 			throws ScriptException {
-
-		// 入力された式を式文にするために末尾にセミコロンを追加（無い場合のみ）
-		if (!scriptCode.trim().endsWith(";")) {
-			scriptCode += ";";
-		}
-
-		// 計算を実行
-		Object value = this.engine.eval(scriptCode);
-
-		// 値が浮動小数点数なら、設定内容に応じて丸める
-		if (value instanceof Double) {
-			value = Rounder.round( ((Double)value).doubleValue(), setting); // 型は BigDecimal になる
-		}
-
-		return value;
-	}
-
-
-	public final synchronized void requestCalculation(
-			SettingContainer setting, AsynchronousScriptListener scriptListener) {
 
 		// 設定に応じて、まず入力フィールドの内容を正規化
 		if (setting.inputNormalizerEnabled) {
@@ -131,9 +111,28 @@ public final class CalculatorModel {
 			inputScript += ";";
 		}
 
+		// 計算を実行
+		Object value = this.engine.eval(inputScript);
+
+		// 値が浮動小数点数なら、設定内容に応じて丸める
+		if (value instanceof Double) {
+			value = Rounder.round( ((Double)value).doubleValue(), setting); // 型は BigDecimal になる
+		}
+
+		// 値を文字列化して出力フィールドに設定
+		this.outputText = "";
+		if (value != null) {
+			this.outputText = value.toString();
+		}
+	}
+
+
+	public final synchronized void requestCalculation(
+			SettingContainer setting, AsynchronousScriptListener scriptListener) {
+
 		// スクリプト実行スレッドを生成して実行
 		AsynchronousScriptRunner asyncScriptRunner
-				= new AsynchronousScriptRunner(inputScript, scriptListener, this, setting);
+				= new AsynchronousScriptRunner(scriptListener, this, setting);
 		Thread scriptingThread = new Thread(asyncScriptRunner);
 		scriptingThread.start();
 	}

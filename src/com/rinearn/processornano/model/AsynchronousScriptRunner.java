@@ -14,16 +14,13 @@ import com.rinearn.processornano.util.MessageManager;
 
 public final class AsynchronousScriptRunner implements Runnable {
 
-	private String scriptCode = null;
 	private AsynchronousScriptListener scriptListener = null;
 	private CalculatorModel calculator = null;
 	private SettingContainer setting = null;
 
 	public AsynchronousScriptRunner(
-			String scriptCode, AsynchronousScriptListener scriptListener,
-			CalculatorModel calculator, SettingContainer setting) {
+			AsynchronousScriptListener scriptListener, CalculatorModel calculator, SettingContainer setting) {
 
-		this.scriptCode = scriptCode;
 		this.scriptListener = scriptListener;
 		this.calculator = calculator;
 		this.setting = setting;
@@ -32,8 +29,8 @@ public final class AsynchronousScriptRunner implements Runnable {
 	@Override
 	public final void run() {
 
-		// 実行処理を synchronized にすると、スクリプト内容が重い場合に実行ボタンが連打された際、
-		// 実行待ちスレッドがどんどん積もっていって、全部消化されるまで待たなければいけなくなるので、
+		// CalculatorModel の計算実行は synchronized なので、スクリプト内容が重い場合に実行ボタンが連打されると、
+		// 実行待ちがどんどん積もっていって全部消化されるまで待たなければいけなくなるので、
 		// 実行中に実行リクエストがあった場合はその場で弾くようにする。
 
 		if (this.calculator.isRunning()) {
@@ -45,12 +42,12 @@ public final class AsynchronousScriptRunner implements Runnable {
 			}
 			return;
 		}
+
 		this.calculator.setRunning(true);
 
-		// 入力フィールドの式を評価して値を所得
-		Object value = null;
+		// 入力フィールドの計算式を実行
 		try {
-			value = this.calculator.getScriptEngine().eval(this.scriptCode);
+			this.calculator.calculate(setting);
 
 		} catch (ScriptException e) {
 			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
@@ -63,17 +60,6 @@ public final class AsynchronousScriptRunner implements Runnable {
 			e.printStackTrace();
 			this.calculator.setRunning(false);
 			return;
-		}
-
-		// 値が浮動小数点数なら、設定内容に応じて丸める
-		if (value instanceof Double) {
-			value = Rounder.round( ((Double)value).doubleValue(), setting); // 型は BigDecimal になる
-		}
-
-		// 値を文字列化して計算機モデルに設定
-		this.calculator.setOutputText("");
-		if (value != null) {
-			this.calculator.setOutputText(value.toString());
 		}
 
 		// 計算リクエスト元に計算完了を通知

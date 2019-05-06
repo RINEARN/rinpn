@@ -55,9 +55,12 @@ public final class RinearnProcessorNano {
 		}
 
 		// 計算を実行
-		Object value = null;
+		String outputText = null;
 		try {
-			value = calculator.calculate(scriptCode, setting);
+			calculator.setInputText(scriptCode);
+			calculator.calculate(setting);
+			outputText = calculator.getOutputText();
+
 		} catch (ScriptException e) {
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
 			MessageManager.showErrorMessage(message, "!");
@@ -65,9 +68,7 @@ public final class RinearnProcessorNano {
 		}
 
 		// 結果を表示
-		if (value != null) {
-			System.out.println(value.toString());
-		}
+		System.out.println(outputText);
 	}
 
 
