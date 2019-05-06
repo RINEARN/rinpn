@@ -9,9 +9,9 @@ import com.rinearn.processornano.calculator.Calculator;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.view.ViewContainer;
 
-public final class EventListenerManager {
+public final class Presenter {
 
-	public final static void addAllEventListenersToUI(
+	public final void link(
 			ViewContainer view, Calculator calculator, SettingContainer setting) {
 
 		// 各リスナを生成して投げて終わりじゃなくフィールドに保持して管理する方針の方が良い？ 後で要検討

@@ -15,7 +15,7 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 import com.rinearn.processornano.calculator.Calculator;
-import com.rinearn.processornano.presenter.EventListenerManager;
+import com.rinearn.processornano.presenter.Presenter;
 import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.util.CodeLoader;
@@ -109,8 +109,9 @@ public final class RinearnProcessorNano {
 			return; // この例外が発生する場合はまだUI構築が走っていないので、破棄するUIリソースはない
 		}
 
-		// UIの各部品にイベントリスナを登録
-		EventListenerManager.addAllEventListenersToUI(view, calculator, setting);
+		// UIと計算機との間でイベント処理や更新処理などを担うプレゼンターを生成し、両者を繋ぐ
+		Presenter presenter = new Presenter();
+		presenter.link(view, calculator, setting);
 	}
 
 
