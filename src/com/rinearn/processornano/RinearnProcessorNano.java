@@ -15,7 +15,7 @@ import java.util.List;
 import javax.swing.SwingUtilities;
 
 import com.rinearn.processornano.calculator.Calculator;
-import com.rinearn.processornano.event.EventListenerManager;
+import com.rinearn.processornano.presenter.EventListenerManager;
 import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.util.CodeLoader;

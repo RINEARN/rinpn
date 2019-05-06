@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.event;
+package com.rinearn.processornano.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
