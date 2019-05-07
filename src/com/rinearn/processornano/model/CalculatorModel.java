@@ -74,6 +74,7 @@ public final class CalculatorModel {
 	public final synchronized String calculate(String inputExpression, SettingContainer setting)
 			throws ScriptException {
 
+		// 計算中の状態にする（AsynchronousScriptRunner から参照する）
 		this.calculating = true;
 
 		// 設定に応じて、まず入力フィールドの内容を正規化
@@ -88,7 +89,15 @@ public final class CalculatorModel {
 		}
 
 		// 計算を実行
-		Object value = this.engine.eval(inputScript);
+		Object value = null;
+		try {
+			value = this.engine.eval(inputScript);
+
+		// 入力した式やライブラリに誤りがあった場合は、計算終了状態に戻してから例外を上層に投げる
+		} catch (ScriptException e) {
+			this.calculating = false;
+			throw e;
+		}
 
 		// 値が浮動小数点数なら、設定内容に応じて丸める
 		if (value instanceof Double) {
@@ -101,6 +110,7 @@ public final class CalculatorModel {
 			outputText = value.toString();
 		}
 
+		// 計算終了状態に戻す（AsynchronousScriptRunner から参照する）
 		this.calculating = false;
 
 		return outputText;
