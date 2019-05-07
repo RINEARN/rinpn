@@ -14,7 +14,7 @@ public final class OutputFieldMouseListener implements MouseListener {
 
 	private ViewInterface view = null;
 
-	public OutputFieldMouseListener(ViewInterface view) {
+	protected OutputFieldMouseListener(ViewInterface view) {
 		this.view = view;
 	}
 

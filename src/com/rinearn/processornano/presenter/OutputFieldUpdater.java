@@ -12,7 +12,7 @@ public final class OutputFieldUpdater implements Runnable {
 	private ViewInterface view = null;
 	private String outputText = null;
 
-	public OutputFieldUpdater(ViewInterface view, String outputText) {
+	protected OutputFieldUpdater(ViewInterface view, String outputText) {
 		this.view = view;
 		this.outputText = outputText;
 	}
