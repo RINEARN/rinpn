@@ -21,7 +21,7 @@ public final class RunButtonListener implements ActionListener {
 	private ViewInterface view = null;
 	private SettingContainer setting = null;
 
-	public RunButtonListener(ViewInterface view, CalculatorModel calculator, SettingContainer setting) {
+	protected RunButtonListener(ViewInterface view, CalculatorModel calculator, SettingContainer setting) {
 		this.calculator = calculator;
 		this.view = view;
 		this.setting = setting;

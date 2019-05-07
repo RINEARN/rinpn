@@ -17,7 +17,7 @@ public final class WindowMouseListener implements MouseListener, MouseMotionList
 	private int mousePressedX = -1;
 	private int mousePressedY = -1;
 
-	public WindowMouseListener(ViewInterface view) {
+	protected WindowMouseListener(ViewInterface view) {
 		this.view = view;
 	}
 

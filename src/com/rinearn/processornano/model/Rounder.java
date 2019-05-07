@@ -14,7 +14,7 @@ import com.rinearn.processornano.spec.SettingContainer;
 
 public final class Rounder {
 
-	public static final BigDecimal round(double value, SettingContainer setting) {
+	protected static final BigDecimal round(double value, SettingContainer setting) {
 		if (setting.outputRounderEnabled) {
 			RoundingMode mode = RoundingMode.valueOf(setting.roundingMode);
 			RoundingTarget target = RoundingTarget.valueOf(setting.roundingTarget);
@@ -25,7 +25,7 @@ public final class Rounder {
 		}
 	}
 
-	public static final BigDecimal round(double value, RoundingMode mode, RoundingTarget target, int digits) {
+	protected static final BigDecimal round(double value, RoundingMode mode, RoundingTarget target, int digits) {
 
 		BigDecimal bdValue = new BigDecimal(value);
 

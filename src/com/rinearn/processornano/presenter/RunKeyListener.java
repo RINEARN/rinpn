@@ -21,7 +21,7 @@ public final class RunKeyListener implements KeyListener {
 	private ViewInterface view;
 	private SettingContainer setting;
 
-	public RunKeyListener(ViewInterface view, CalculatorModel calculator, SettingContainer setting) {
+	protected RunKeyListener(ViewInterface view, CalculatorModel calculator, SettingContainer setting) {
 		this.calculator = calculator;
 		this.view = view;
 		this.setting = setting;

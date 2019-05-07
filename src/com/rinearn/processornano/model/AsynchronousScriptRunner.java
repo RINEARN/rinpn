@@ -19,7 +19,7 @@ public final class AsynchronousScriptRunner implements Runnable {
 	private SettingContainer setting = null;
 	private String inputExpression = null;
 
-	public AsynchronousScriptRunner(
+	protected AsynchronousScriptRunner(
 			String inputExpression, AsynchronousScriptListener scriptListener,
 			CalculatorModel calculator, SettingContainer setting) {
 
