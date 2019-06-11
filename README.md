@@ -459,7 +459,7 @@ UI表面の実装は <a href="https://github.com/RINEARN/rinearn-processor-nano/
 クラスによって提供され、このクラスのインスタンスには、コンポーネント外部からは 
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewInterface.java">ViewInterface</a> 
 インターフェースを介してアクセスされます。
-ViewImpl クラスのインスタンスは、（"SwingUtilities.invokeAndWait" メソッドの機能を介して）イベントスレッド上で
+ViewImpl クラスのインスタンスは、（"SwingUtilities.invokeAndWait" メソッドの機能を介して）イベントディスパッチスレッド上で
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewInitializer.java">ViewInitializer</a> クラスを用いて初期化されます。
 
 
@@ -506,7 +506,7 @@ After the calculation will have been finished, view updaters ( e.g.
 クラスの calculateAsynchronously メソッドに投げられます。
 その際、計算完了時に通知を受け取って、後に続く処理を行うために、
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousScriptListener.java">AsynchronousScriptListener</a> インターフェースを実装したイベントリスナが引数として渡されます。
-計算完了後は、（"SwingUtilities.invokeAndWait" メソッドの機能を介して）イベントスレッド上で、ビューアップデータ（ 
+計算完了後は、（"SwingUtilities.invokeAndWait" メソッドの機能を介して）イベントディスパッチスレッド上で、ビューアップデータ（ 
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/presenter/OutputFieldUpdater.java">OutputFieldUpdater</a> 
 クラスなど 
 ）がUIの表示を更新します。
