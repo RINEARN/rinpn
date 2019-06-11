@@ -36,8 +36,8 @@ You can also get prebuilt-packages of this software from:
 	- <a href="#how-to-use-cui">How to Use in the CUI Mode - CUIモードでの使用方法</a>
 	- <a href="#how-to-use-library">How to Define Variables and Functions as Script Code - スクリプトで変数や関数を定義する</a>
 	- <a href="#how-to-implement-plugin">How to Implement Embedded Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する</a>
-- <a href="#architecture">Abstract and a Block Diagram - 概要とブロック図</a>
-	- <a href="#architecture-abstract">Abstract - 概要</a>
+- <a href="#architecture">Architecture - アーキテクチャ</a>
+	- <a href="#architecture-abstract">Abstract and a Block Diagram - 概要とブロック図</a>
 	- <a href="#architecture-model">Model - モデル</a>
 	- <a href="#architecture-view">View - ビュー</a>
 	- <a href="#architecture-presenter">Presenter - プレゼンター</a>
