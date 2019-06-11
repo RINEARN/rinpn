@@ -26,8 +26,30 @@ import com.rinearn.processornano.view.ViewInitializer;
 
 public final class RinearnProcessorNano {
 
+	public static void main(String[] args) {
+
+		// 電卓画面を起動
+		if (args.length == 0) {
+			new RinearnProcessorNano().launchCalculatorWindow();
+
+		// 電卓画面を起動せずに計算を実行（コマンドライン用）
+		} else if (args.length == 1) {
+			new RinearnProcessorNano().calculate(args[0]);
+
+		// 引数が多すぎる場合はエラー
+		} else {
+			if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
+				System.out.println("コマンドライン引数の数が多すぎます。");
+			}
+			if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
+				System.out.println("Too many command-line arguments.");
+			}
+		}
+	}
+
+
 	public RinearnProcessorNano() {
-		// 起動は、インスタンス生成後に明示的に launchCalculatorWindow() を呼ぶ
+		// 電卓画面の起動は、インスタンス生成後に明示的に launchCalculatorWindow() を呼ぶ
 	}
 
 

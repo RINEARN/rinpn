@@ -36,7 +36,8 @@ You can also get prebuilt-packages of this software from:
 	- <a href="#how-to-use-cui">How to Use in the CUI Mode - CUIモードでの使用方法</a>
 	- <a href="#how-to-use-library">How to Define Variables and Functions as Script Code - スクリプトで変数や関数を定義する</a>
 	- <a href="#how-to-implement-plugin">How to Implement Embedded Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する</a>
-- <a href="#architecture">Architecture - アーキテクチャ</a>
+- <a href="#architecture">Abstract and a Block Diagram - 概要とブロック図</a>
+	- <a href="#architecture-abstract">Abstract - 概要</a>
 	- <a href="#architecture-model">Model - モデル</a>
 	- <a href="#architecture-view">View - ビュー</a>
 	- <a href="#architecture-presenter">Presenter - プレゼンター</a>
@@ -385,6 +386,9 @@ In this section, we will explain the internal architecture of this software, whi
 
 ここでは、ソースコードを把握する際の参考となる情報として、このソフトウェアの内部的なアーキテクチャの説明を行います。
 
+<a id="architecture-abstract"></a>
+### Abstract and a Block Diagram - 概要とブロック図
+
 The architecture of the RINEARN Processor nano adopts the MVP pattern which consists mainly of 3 core components: Model, View, and Presenter.
 Each component is packed as a package.
 
@@ -398,7 +402,7 @@ In addition, although it is completely independent from the implementation of th
 また、リニアンプロセッサー nano 本体の実装とは完全に独立していますが、計算処理を担う Vnano のスクリプトエンジンも、ソフトウェア全体のアーキテクチャの観点では1つの重要なコンポーネントです。
 
 
-The following is a block-diagram to grasp relationship between components we mentioned above:
+The following is a block diagram to grasp relationship between components we mentioned above:
 
 下図は、各コンポーネントの関係を把握するためのブロック図です：
 
@@ -406,8 +410,15 @@ The following is a block-diagram to grasp relationship between components we men
 	<img src="https://github.com/RINEARN/rinearn-processor-nano/blob/master/architecture.jpg" alt="" width="700" />
 </div>
 
+As in the above diagram, 
+<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/RinearnProcessorNano.java">RinearnProcessorNano</a> 
+class plays the role of the outer frame of implementation of this software, 
+and in there Model/View/Presenter components are combined and work together.
 In the following, we will explain roles of components.
 
+上図の通り、
+<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/RinearnProcessorNano.java">RinearnProcessorNano</a> 
+クラスがこのソフトウェアの実装の外枠で、その中で Model/View/Presenter の各コンポーネントが組み合わさって動いています。
 以下では、各コンポーネントの役割を解説します。
 
 
@@ -424,19 +435,15 @@ In the GUI mode, input/output (I/O) to this component are performed in event-dri
 In the contrast, the processing flow in the CUI mode is continuous and synchronized, so it is very easy to grasp: Firstly, 
 "calculate" method of 
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
-class will be called from the 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/RinearnProcessorNanoMain.java">main method</a>, 
-through "calculate" method of 
+class will be called from the "calculate" method of 
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/RinearnProcessorNano.java">RinearnProcessorNano</a> 
-class.
+class, which will be called from "main" method.
 The calculation expression inputted from the command-line will be passed as an argument of the method, so then next, it takes the calculation by calling the script engine (see <a href="#architecture-engine">the explanation of the script engine</a> for details), and output the result to the standard-output.
 
 このコンポーネントの入出力は、GUIモードでは Presenter を介してイベント駆動で行われるため、処理の流れは少し複雑です（詳細は<a href="#architecture-presenter">Presenter の説明</a>参照）。
 対して、CUIモードでの処理の流れは、連続的かつ同期的で、非常に単純です： 具体的には、
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/RinearnProcessorNanoMain.java">main メソッド</a> 
-から 
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/RinearnProcessorNano.java">RinearnProcessorNano</a> 
-クラスの calculate メソッドを介して、
+クラスの main メソッド から calculate メソッドを介して、
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> クラスの calculate メソッドが呼ばれます。
 この引数に、コマンドラインから入力された計算式が渡されるので、
 それをスクリプトエンジンに渡して計算して（詳細は<a href="#architecture-engine">Script Engine の説明</a>参照）、
