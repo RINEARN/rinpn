@@ -13,7 +13,6 @@
 ./com/rinearn/processornano/Prototype.java
 ./com/rinearn/processornano/RinearnProcessorNano.java
 ./com/rinearn/processornano/RinearnProcessorNanoException.java
-./com/rinearn/processornano/RinearnProcessorNanoMain.java
 ./com/rinearn/processornano/spec/LocaleCode.java
 ./com/rinearn/processornano/spec/RoundingTarget.java
 ./com/rinearn/processornano/spec/SettingContainer.java

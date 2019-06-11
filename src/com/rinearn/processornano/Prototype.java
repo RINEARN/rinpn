@@ -62,6 +62,12 @@ import java.lang.reflect.InvocationTargetException;
  */
 public final class Prototype {
 
+	/*
+	public static void main(String[] args) {
+		new Prototype().launch();
+	}
+	*/
+
 	private static final String TEXT_FIELD_FONT_NAME = "Monospaced";
 	private static final int TEXT_FIELD_FONT_TYPE = Font.BOLD;
 	private static final Font LABEL_FONT = new Font("Dialog", Font.BOLD, 14);
