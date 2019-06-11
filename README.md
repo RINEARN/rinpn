@@ -381,6 +381,10 @@ to be connected as plug-ins.
 <a id="architecture"></a>
 ## Architecture - アーキテクチャ
 
+In this section, we will explain the internal architecture of this software, which help you to grasp the global structure of the implementation before reading source code.
+
+ここでは、ソースコードを把握する際の参考となる情報として、このソフトウェアの内部的なアーキテクチャの説明を行います。
+
 The architecture of the RINEARN Processor nano adopts the MVP pattern which consists mainly of 3 core components: Model, View, and Presenter.
 Each component is packed as a package.
 
@@ -442,21 +446,22 @@ The calculation expression inputted from the command-line will be passed as an a
 <a id="architecture-view"></a>
 ### View - ビュー ( <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/">com.rinearn.processornano.view</a> package )
 
-In the GUI mode, this component play the role of the surface of the UI, which composed of a window, text fields, and so on.
+In the GUI mode, this component play the role of the graphical surface of the UI, which composed of a window, text fields, and so on.
 Please note that this component does NOT handle any events from the UI by itself (it is a role of the <a href="#architecture-presenter">Presenter</a>).
 
-このコンポーネントは、GUIモードにおいて、ウィンドウやテキストフィールドなどで構成される、UIの表面の役割を担います。
+このコンポーネントは、GUIモードにおいて、ウィンドウやテキストフィールドなどで構成される、UIのグラフィカルな表面（見える部分）の役割を担います。
 ただし、このコンポーネント自身は、UIからのイベントを処理しない事に留意が必要です（イベント処理は <a href="#architecture-presenter">Presenter</a> が担います）。
 
-The implementation of the UI is provided by 
+The implementation of the surface of the UI is provided by 
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewImpl.java">ViewImpl</a> class, 
-but other components access to an instance of this class through 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewInterface.java">ViewInterface</a> interface.
+and an instance of this class is accessed through 
+<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewInterface.java">ViewInterface</a> interface 
+from outside of the View component (package).
 An instance of ViewImpl class is initialized by 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewInitializer.java">ViewInitializer</a> class on the event-thread  (by using the feature of "SwingUtilities.invokeAndWait" method).
+<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewInitializer.java">ViewInitializer</a> class on the event-dispatching thread  (by using the feature of "SwingUtilities.invokeAndWait" method).
 
 UI表面の実装は <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewImpl.java">ViewImpl</a> 
-クラスによって提供され、このクラスのインスタンスには、コンポーネント外部からは 
+クラスによって提供され、このクラスのインスタンスには、View以外のコンポーネント（パッケージ）からは 
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewInterface.java">ViewInterface</a> 
 インターフェースを介してアクセスされます。
 ViewImpl クラスのインスタンスは、（"SwingUtilities.invokeAndWait" メソッドの機能を介して）イベントディスパッチスレッド上で
@@ -491,7 +496,7 @@ interface, to catch the event notifying the finishing of the calculation
 and invoke subsequent procedures.
 After the calculation will have been finished, view updaters ( e.g. 
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/presenter/OutputFieldUpdater.java">OutputFieldUpdater</a>, and so on	
-) will update the UI on the event-thread  (by using the feature of "SwingUtilities.invokeAndWait" method).
+) will update the UI on the event-dispatching thread  (by using the feature of "SwingUtilities.invokeAndWait" method).
 
 
 
