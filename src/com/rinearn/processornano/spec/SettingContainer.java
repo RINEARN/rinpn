@@ -65,6 +65,9 @@ public final class SettingContainer implements Cloneable {
 	public String libraryExtension = ".vnano";
 	public String[] pluginPaths = new String[0];
 
+	public boolean dumperEnabled = false;
+	public String dumperTarget = "ALL";
+
 	public String localeCode = LocaleCode.getDefaultLocaleCode();
 
 
