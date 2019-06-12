@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingUtilities;
 
-import com.rinearn.processornano.model.AsynchronousScriptListener;
+import com.rinearn.processornano.model.AsynchronousCalculationListener;
 import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.view.ViewInterface;
@@ -29,11 +29,11 @@ public final class RunButtonListener implements ActionListener {
 
 	@Override
 	public final void actionPerformed(ActionEvent e) {
-		AsynchronousScriptListener scriptListener = new AsynchronousScriptListener() {
-			public void scriptingFinished(String outputText) {
+		AsynchronousCalculationListener asyncCalcListener = new AsynchronousCalculationListener() {
+			public void calculationFinished(String outputText) {
 				SwingUtilities.invokeLater(new OutputFieldUpdater(view, outputText));
 			}
 		};
-		calculator.calculateAsynchronously(this.view.getInputText(), this.setting, scriptListener);
+		calculator.calculateAsynchronously(this.view.getInputText(), this.setting, asyncCalcListener);
 	}
 }

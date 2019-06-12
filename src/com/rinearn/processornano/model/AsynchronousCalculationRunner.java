@@ -12,19 +12,19 @@ import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.util.MessageManager;
 
 
-public final class AsynchronousScriptRunner implements Runnable {
+public final class AsynchronousCalculationRunner implements Runnable {
 
-	private AsynchronousScriptListener scriptListener = null;
+	private AsynchronousCalculationListener calculationListener = null;
 	private CalculatorModel calculator = null;
 	private SettingContainer setting = null;
 	private String inputExpression = null;
 
-	protected AsynchronousScriptRunner(
-			String inputExpression, AsynchronousScriptListener scriptListener,
+	protected AsynchronousCalculationRunner(
+			String inputExpression, AsynchronousCalculationListener scriptListener,
 			CalculatorModel calculator, SettingContainer setting) {
 
 		this.inputExpression = inputExpression;
-		this.scriptListener = scriptListener;
+		this.calculationListener = scriptListener;
 		this.calculator = calculator;
 		this.setting = setting;
 	}
@@ -64,6 +64,6 @@ public final class AsynchronousScriptRunner implements Runnable {
 		}
 
 		// 計算リクエスト元に計算完了を通知
-		this.scriptListener.scriptingFinished(outputText);
+		this.calculationListener.calculationFinished(outputText);
 	}
 }

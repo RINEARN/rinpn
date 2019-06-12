@@ -1,5 +1,5 @@
-./com/rinearn/processornano/model/AsynchronousScriptListener.java
-./com/rinearn/processornano/model/AsynchronousScriptRunner.java
+./com/rinearn/processornano/model/AsynchronousCalculationListener.java
+./com/rinearn/processornano/model/AsynchronousCalculationRunner.java
 ./com/rinearn/processornano/model/CalculatorModel.java
 ./com/rinearn/processornano/model/Rounder.java
 ./com/rinearn/processornano/presenter/ExitButtonListener.java
