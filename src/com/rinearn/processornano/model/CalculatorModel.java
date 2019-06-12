@@ -52,6 +52,8 @@ public final class CalculatorModel {
 		optionMap.put("LIBRARY_SCRIPTS", libraryScripts);
 		optionMap.put("LIBRARY_SCRIPT_NAMES", libraryScriptNames);
 		optionMap.put("LOCALE", LocaleCode.toLocale(setting.localeCode));
+		optionMap.put("DUMPER_ENABLED", setting.dumperEnabled);
+		optionMap.put("DUMPER_TARGET", setting.dumperTarget);
 
 		// スクリプトエンジンにオプションマップを設定
 		engine.put("___VNANO_OPTION_MAP", optionMap);
