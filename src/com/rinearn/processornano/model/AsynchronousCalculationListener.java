@@ -5,9 +5,9 @@
 
 package com.rinearn.processornano.model;
 
-public interface AsynchronousScriptListener {
+public interface AsynchronousCalculationListener {
 
 	// event パッケージの RunButtonListener や RunKeyLister クラス内で匿名クラスとして実装
 
-	public abstract void scriptingFinished(String outputText);
+	public abstract void calculationFinished(String outputText);
 }

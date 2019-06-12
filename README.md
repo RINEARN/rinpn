@@ -498,7 +498,7 @@ class, and so on
 Then the listener will request to the Model to take the calculation asynchronously on an other thread, by calling "calculateAsynchronously" method of 
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a>. 
 Also, as an argument of the method, the lisner will create and passe an new event listener which implements
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousScriptListener.java">AsynchronousScriptListener</a> 
+<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationListener.java">AsynchronousCalculationListener</a> 
 interface, to catch the event notifying the finishing of the calculation 
 and invoke subsequent procedures.
 After the calculation will have been finished, view updaters ( e.g. 
@@ -517,7 +517,7 @@ After the calculation will have been finished, view updaters ( e.g.
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
 クラスの calculateAsynchronously メソッドに投げられます。
 その際、計算完了時に通知を受け取って、後に続く処理を行うために、
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousScriptListener.java">AsynchronousScriptListener</a> インターフェースを実装したイベントリスナが引数として渡されます。
+<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationListener.java">AsynchronousCalculationListener</a> インターフェースを実装したイベントリスナが引数として渡されます。
 計算完了後は、（"SwingUtilities.invokeAndWait" メソッドの機能を介して）イベントディスパッチスレッド上で、ビューアップデータ（ 
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/presenter/OutputFieldUpdater.java">OutputFieldUpdater</a> 
 クラスなど 
@@ -554,7 +554,7 @@ CUIモードでは、
 
 In the GUI mode, in the processing of "calculateAsynchronously" method of
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
-class, an instance of <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousScriptRunner.java">AsynchronousScriptRunner</a> class will be created, and "run" method of the class will be invoked on an other thread.
+class, an instance of <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationRunner.java">AsynchronousCalculationRunner</a> class will be created, and "run" method of the class will be invoked on an other thread.
 From there, "calculate" method of 
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a>
 class which we mentioned above will be called, and "eval" method of the script engine will be called in there (see also: <a href="#architecture-presenter">the explanation of the Presenter</a>).
@@ -562,7 +562,7 @@ class which we mentioned above will be called, and "eval" method of the script e
 GUIモードでは、
 <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
 クラスの calculateAsynchronously メソッド内において、まず 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousScriptRunner.java">AsynchronousScriptRunner</a> 
+<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationRunner.java">AsynchronousCalculationRunner</a> 
 クラスのインスタンスが生成され、その run メソッドが別スレッドで実行されます。
 そこから、先ほども述べた <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> クラスの calculate メソッドが実行され、その中でスクリプトエンジンの eval メソッドが呼び出されます
 （<a href="#architecture-presenter">Presenter の説明</a>も参照）。

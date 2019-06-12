@@ -10,7 +10,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.SwingUtilities;
 
-import com.rinearn.processornano.model.AsynchronousScriptListener;
+import com.rinearn.processornano.model.AsynchronousCalculationListener;
 import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.view.ViewInterface;
@@ -30,12 +30,12 @@ public final class RunKeyListener implements KeyListener {
 	@Override
 	public final void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-			AsynchronousScriptListener scriptListener = new AsynchronousScriptListener() {
-				public void scriptingFinished(String outputText) {
+			AsynchronousCalculationListener asyncCalcListener = new AsynchronousCalculationListener() {
+				public void calculationFinished(String outputText) {
 					SwingUtilities.invokeLater(new OutputFieldUpdater(view, outputText));
 				}
 			};
-			calculator.calculateAsynchronously(this.view.getInputText(), this.setting, scriptListener);
+			calculator.calculateAsynchronously(this.view.getInputText(), this.setting, asyncCalcListener);
 		}
 	}
 

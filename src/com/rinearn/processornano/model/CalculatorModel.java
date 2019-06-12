@@ -24,7 +24,7 @@ public final class CalculatorModel {
 	private ScriptEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
 	private volatile boolean calculating = false;
 
-	// AsynchronousScriptRunner から参照する
+	// AsynchronousCalculationRunner から参照する
 	public final boolean isCalculating() {
 		return this.calculating;
 	}
@@ -76,7 +76,7 @@ public final class CalculatorModel {
 	public final synchronized String calculate(String inputExpression, SettingContainer setting)
 			throws ScriptException {
 
-		// 計算中の状態にする（AsynchronousScriptRunner から参照する）
+		// 計算中の状態にする（AsynchronousCalculationRunner から参照する）
 		this.calculating = true;
 
 		// 設定に応じて、まず入力フィールドの内容を正規化
@@ -112,7 +112,7 @@ public final class CalculatorModel {
 			outputText = value.toString();
 		}
 
-		// 計算終了状態に戻す（AsynchronousScriptRunner から参照する）
+		// 計算終了状態に戻す（AsynchronousCalculationRunner から参照する）
 		this.calculating = false;
 
 		return outputText;
@@ -120,14 +120,14 @@ public final class CalculatorModel {
 
 
 	public final synchronized void calculateAsynchronously(
-			String inputExpression, SettingContainer setting, AsynchronousScriptListener scriptListener) {
+			String inputExpression, SettingContainer setting, AsynchronousCalculationListener scriptListener) {
 
 		// 計算実行スレッドを生成して実行（中でこのクラスの calculate が呼ばれて実行される）
-		AsynchronousScriptRunner asyncScriptRunner
-				= new AsynchronousScriptRunner(inputExpression, scriptListener, this, setting);
+		AsynchronousCalculationRunner asyncCalcRunner
+				= new AsynchronousCalculationRunner(inputExpression, scriptListener, this, setting);
 
-		Thread scriptingThread = new Thread(asyncScriptRunner);
-		scriptingThread.start();
+		Thread calculatingThread = new Thread(asyncCalcRunner);
+		calculatingThread.start();
 	}
 
 }
