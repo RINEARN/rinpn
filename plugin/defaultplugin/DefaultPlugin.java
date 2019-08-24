@@ -29,7 +29,7 @@ public class DefaultPlugin implements ExternalFunctionConnector1 {
 		public Class<?>[] getParameterClasses() { return new Class<?>[]{ double.class }; } 
 		
 		@Override
-		public Class<?> getReturnClass() { return Void.class; }
+		public Class<?> getReturnClass(Class<?>[] parameterClasses) { return Void.class; }
 		
 		@Override
 		public boolean isVariadic() { return false; }
