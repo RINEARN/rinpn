@@ -4,7 +4,7 @@
 	
 	<property name="build.srcdir"  value="src"/>
 	<property name="build.bindir"  value="bin"/>
-	<property name="build.jarname" value="RinearnProcessorNano.jar"/>
+	<property name="build.jarname" value="RINPn.jar"/>
 	
 	<target name="archive" depends="compile">
 		<jar jarfile="${build.jarname}" basedir="${build.bindir}">

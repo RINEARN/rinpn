@@ -13,4 +13,4 @@ cd ..
 # create a JAR file
 # --------------------------------------------------
 
-jar cvfm RinearnProcessorNano.jar src/main.mf -C bin com
+jar cvfm RINPn.jar src/main.mf -C bin com
