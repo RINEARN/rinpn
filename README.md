@@ -1,22 +1,21 @@
-# RINEARN Processor nano (RINPN)
+# RINPn
 
 
+RINPn (abbreviated of "RINEARN Processor nano") is a simple & compact programmable calculator.
 
-RINEARN Processor nano (abbreviated: RINPN) is a simple & compact programmable calculator.
-
-リニアンプロセッサー nano（略称：RINPN）は、シンプルでコンパクトなプログラマブル関数電卓です。
+RINPn （RINEARN Processor nano の略称、発音「りんぷん」）は、シンプルでコンパクトなプログラマブル関数電卓です。
 
 
 <div style="background-color:black; width: 890px; height: 463px; text-align:center; background-image: url('./signboard.jpg'); background-repeat: no-repeat; background-size: contain;">
-  <img src="https://github.com/RINEARN/rinearn-processor-nano/blob/master/signboard.jpg" alt="" width="890" />
+  <img src="https://github.com/RINEARN/rinpn/blob/master/signboard.jpg" alt="" width="890" />
 </div>
 
 This README is for users who want to build this software from source code by yourself.
 You can also get prebuilt-packages of this software from: 
-<a href="https://download.rinearn.com/advanced/#processor-nano">https://download.rinearn.com/advanced/#processor-nano</a>
+<a href="https://download.rinearn.com/advanced/#rinpn">https://download.rinearn.com/advanced/#rinpn</a>
 
 このREADMEの内容は、このソフトウェアをソースコードからビルドしたい方のためのものです。
-<a href="https://download.rinearn.com/advanced/#processor-nano">https://download.rinearn.com/advanced/#processor-nano</a>
+<a href="https://download.rinearn.com/advanced/#rinpn">https://download.rinearn.com/advanced/#rinpn</a>
 からビルド済みのパッケージも入手できます。
 
 <hr />
@@ -28,7 +27,7 @@ You can also get prebuilt-packages of this software from:
 - <a href="#license">License - ライセンス</a>
 - <a href="#requirements">Requirements - 必要な環境</a>
 - <a href="#how-to-build">How to Build - ビルド方法</a>
-	- <a href="#how-to-build-processor-nano">Build the RINEARN Processor nano - リニアンプロセッサー nano のビルド</a>
+	- <a href="#how-to-build-processor-nano">Build the RINPn - RINPn のビルド</a>
 	- <a href="#how-to-build-vnano">Build the Vnano Engine - Vnanoエンジンのビルド</a>
 	- <a href="#how-to-compile-plugins">Compile Plug-Ins - プラグインのコンパイル</a>
 	    - <a href="#how-to-compile-official-plugins">Get and Compile Vnano Official Plug-Ins - Vnano公式プラグインの入手とコンパイル</a>
@@ -76,15 +75,15 @@ This software is released under the MIT License.
 ## How to Build - ビルド方法
 
 <a id="how-to-build-processor-nano"></a>
-### Step-1. Build the RINEARN Processor nano - リニアンプロセッサー nano のビルド
+### Step-1. Build the RINPn - RINPn のビルド
 
-Firstly, get and build source code of the RINEARN Processor nano.
+Firstly, get and build source code of the RINPn.
 
-はじめに、リニアンプロセッサー nano のソースコードを入手してビルドします。
+はじめに、RINPn のソースコードを入手してビルドします。
 
 	cd <working-directory>
-	git clone https://github.com/RINEARN/rinearn-processor-nano.git
-	cd rinearn-processor-nano
+	git clone https://github.com/RINEARN/rinpn.git
+	cd rinpn
 
 for Microsoft&reg; Windows&reg; :
 
@@ -98,9 +97,9 @@ for Apache Ant :
 
     ant -f build.xml
 
-If you succeeded to build, the JAR file "RinearnProcessorNano.jar" will be generated. 
+If you succeeded to build, the JAR file "RINPn.jar" will be generated. 
 
-ビルドが成功すると、JARファイル「 RinearnProcessorNano.jar 」が生成されます。
+ビルドが成功すると、JARファイル「 RINPn.jar 」が生成されます。
 
 
 <a id="how-to-build-vnano"></a>
@@ -127,22 +126,22 @@ for Apache Ant :
     ant -f build.xml
 
 If you succeeded to build, the JAR file "Vnano.jar" will be generated. 
-This JAR file is the Vnano Engine which is necessary for RINEARN Processor nano, 
-so put the JAR file of the Vnano Engine "Vnano.jar" in the same directory as "RinearnProcessorNano.jar" :
+This JAR file is the Vnano Engine which is necessary for RINPn, 
+so put the JAR file of the Vnano Engine "Vnano.jar" in the same directory as "RINPn.jar" :
 
 ビルドが成功すると、JARファイル「 Vnano.jar 」が生成されます。
-このJARファイルがVnanoエンジンで、リニアンプロセッサー nano の動作に必要なので、
-「RinearnProcessorNano.jar」と同じフォルダ内に配置します：
+このJARファイルがVnanoエンジンで、RINPn の動作に必要なので、
+「RINPn.jar」と同じフォルダ内に配置します：
 
 	cd <working-directory>
 
 for Microsoft&reg; Windows&reg; :
 
-	copy .\vnano\Vnano.jar .\rinearn-processor-nano\Vnano.jar
+	copy .\vnano\Vnano.jar .\rinpn\Vnano.jar
 
 for Linux&reg;, etc. :
 
-	cp ./vnano/Vnano.jar ./rinearn-processor-nano/Vnano.jar
+	cp ./vnano/Vnano.jar ./rinpn/Vnano.jar
 
 
 <a id="how-to-compile-plugins"></a>
@@ -166,23 +165,23 @@ Let's get and compile official plug-ins:
 	cd <working-directory>
 	git clone https://github.com/RINEARN/vnano-plugin.git
 
-The "vnano-plugin" folder will be generated, and in there "plugin" folder exists. so copy the all contents in the "plugin" folder into the "plugin" folder of the RINEARN Processor nano, and then compile them:
+The "vnano-plugin" folder will be generated, and in there "plugin" folder exists. so copy the all contents in the "plugin" folder into the "plugin" folder of the RINPn, and then compile them:
 
 これでフォルダ「 vnano-plugin 」が生成されるため、その中の「 plugin 」フォルダの中身を、
-リニアンプロセッサー nano の plugin フォルダ内にコピーし、コンパイルします：
+RINPn の plugin フォルダ内にコピーし、コンパイルします：
 
 for Microsoft&reg; Windows&reg; :
 
     cd <working-directory>
-	xcopy /s .\vnano-plugin\plugin\* .\rinearn-processor-nano\plugin\
-	cd rinearn-processor-nano\plugin
+	xcopy /s .\vnano-plugin\plugin\* .\rinpn\plugin\
+	cd rinpn\plugin
 	javac -classpath ".;../Vnano.jar" -encoding UTF-8 @org\vcssl\nano\plugin\sourcelist.txt
 
 for Linux&reg;, etc. :
 
     cd <working-directory>
-	cp -r ./vnano-plugin/plugin/* ./rinearn-processor-nano/plugin/
-	cd rinearn-processor-nano/plugin
+	cp -r ./vnano-plugin/plugin/* ./rinpn/plugin/
+	cd rinpn/plugin
 	javac -classpath ".:../Vnano.jar" -encoding UTF-8 @org/vcssl/nano/plugin/sourcelist.txt
 
 
@@ -199,12 +198,12 @@ Let's compile it as follows:
 
 for Microsoft&reg; Windows&reg; :
 
-    cd <working-directory>\rinearn-processor-nano\plugin
+    cd <working-directory>\rinpn\plugin
 	javac -classpath ".;../Vnano.jar" -encoding UTF-8 ExamplePlugin.java
 
 for Linux&reg;, etc. :
 
-    cd <working-directory>/rinearn-processor-nano/plugin
+    cd <working-directory>/rinpn/plugin
 	javac -classpath ".:../Vnano.jar" -encoding UTF-8 ExamplePlugin.java
 
 
@@ -215,13 +214,13 @@ for Linux&reg;, etc. :
 ### Step-1. How to Use in the GUI Mode - GUIモードでの使用方法
 
 In the GUI mode, you can take calculations on the graphical calculator window.
-At first, execute "RinearnProcessorNano.jar" from the command-line terminal as follows:
+At first, execute "RINPn.jar" from the command-line terminal as follows:
 
 GUIモードでは、グラフィカルな電卓画面上で計算を行う事ができます。
-それにはまず、コマンドラインで以下のように「 RinearnProcessorNano.jar 」を実行します：
+それにはまず、コマンドラインで以下のように「 RINPn.jar 」を実行します：
 
-	cd <working-directory>/rinearn-processor-nano/
-	java -jar RinearnProcessorNano.jar
+	cd <working-directory>/rinpn/
+	java -jar RINPn.jar
 
 
 
@@ -246,7 +245,7 @@ When you execute this software as above ways, the calculator window (the image b
 さて、上記のように実行すると、電卓画面（下図）が起動します: 
 
 <div style="background-color:white; width: 700px; height: 300px; text-align:center; background-image: url('./ui.png'); background-repeat: no-repeat; background-size: contain;">
-  <img src="https://github.com/RINEARN/rinearn-processor-nano/blob/master/ui.png" alt="" width="700" />
+  <img src="https://github.com/RINEARN/rinpn/blob/master/ui.png" alt="" width="700" />
 </div>
 
 
@@ -270,13 +269,13 @@ For example:
 ### Step-2. How to Use in the CUI Mode - CUIモードでの使用方法
 
 In the CUI mode, you can take calculations on the command-line terminal, whithout launching the calculator window.
-To use the CUI mode, execute the "RinearnProcessorNano.jar" with passing an expression as a command-line argument as follows:
+To use the CUI mode, execute the "RINPn.jar" with passing an expression as a command-line argument as follows:
 
 CUIモードでは、コマンドライン端末上で、電卓画面を起動せずにその場で計算を行う事ができます。
 CUIモードを使用するには、コマンドラインで以下のように、計算式を引数として「 RinearnProcessor.jar 」を実行してください：
 
-	cd <working-directory>/rinearn-processor-nano/
-	java -jar RinearnProcessorNano.jar "(1 + 2 ) / 3 - 4 + 5"
+	cd <working-directory>/rinpn/
+	java -jar RINPn.jar "(1 + 2 ) / 3 - 4 + 5"
 
 	(result)
 	2
@@ -436,17 +435,17 @@ In this section, we will explain the internal architecture of this software, whi
 <a id="architecture-abstract"></a>
 ### Abstract and a Block Diagram - 概要とブロック図
 
-The architecture of the RINEARN Processor nano adopts the MVP pattern which consists mainly of 3 core components: Model, View, and Presenter.
+The architecture of the RINPn adopts the MVP pattern which consists mainly of 3 core components: Model, View, and Presenter.
 Each component is packed as a package.
 
-リニアンプロセッサー nano の本体は、
+RINPn の本体は、
 Model / View / Presenter の3つの主要コンポーネントを軸に構成される、MVPパターンに基づくアーキテクチャを採用しています。
 各コンポーネントは、それぞれ個別のパッケージとしてまとめられています。
 
 
-In addition, although it is completely independent from the implementation of the RINEARN Processor nano, the script engine of the Vnano to take calculations is also an important component from the point of view of the architecture of the whole software.
+In addition, although it is completely independent from the implementation of the RINPn, the script engine of the Vnano to take calculations is also an important component from the point of view of the architecture of the whole software.
 
-また、リニアンプロセッサー nano 本体の実装とは完全に独立していますが、計算処理を担う Vnano のスクリプトエンジンも、ソフトウェア全体のアーキテクチャの観点では1つの重要なコンポーネントです。
+また、RINPn 本体の実装とは完全に独立していますが、計算処理を担う Vnano のスクリプトエンジンも、ソフトウェア全体のアーキテクチャの観点では1つの重要なコンポーネントです。
 
 
 The following is a block diagram to grasp relationship between components we mentioned above:
@@ -454,23 +453,23 @@ The following is a block diagram to grasp relationship between components we men
 下図は、各コンポーネントの関係を把握するためのブロック図です：
 
 <div style="background-color:black; width: 640px; height: 840px; text-align:center; background-image: url('./architecture.jpg'); background-repeat: no-repeat; background-size: contain;">
-	<img src="https://github.com/RINEARN/rinearn-processor-nano/blob/master/architecture.jpg" alt="" width="700" />
+	<img src="https://github.com/RINEARN/rinpn/blob/master/architecture.jpg" alt="" width="700" />
 </div>
 
 As in the above diagram, 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/RinearnProcessorNano.java">RinearnProcessorNano</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/RinearnProcessorNano.java">RinearnProcessorNano</a> 
 class plays the role of the outer frame of implementation of this software, 
 and in there Model/View/Presenter components are combined and work together.
 In the following, we will explain roles of components.
 
 上図の通り、
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/RinearnProcessorNano.java">RinearnProcessorNano</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/RinearnProcessorNano.java">RinearnProcessorNano</a> 
 クラスがこのソフトウェアの実装の外枠で、その中で Model/View/Presenter の各コンポーネントが組み合わさって動いています。
 以下では、各コンポーネントの役割を解説します。
 
 
 <a id="architecture-model"></a>
-### Model - モデル ( <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/">com.rinearn.processornano.model</a> package )
+### Model - モデル ( <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/">com.rinearn.processornano.model</a> package )
 
 This component provides the functional aspects of the calculator, excepting the UI.
 For example, this component takes a calculation expression as an input, and return the calculated result as an output.
@@ -481,24 +480,24 @@ For example, this component takes a calculation expression as an input, and retu
 In the GUI mode, input/output (I/O) to this component are performed in event-driven ways through the Presenter, so it is a little difficult to grasp the processing flow (see <a href="#architecture-presenter">the explanation of the Presenter</a> for details).
 In the contrast, the processing flow in the CUI mode is continuous and synchronized, so it is very easy to grasp: Firstly, 
 "calculate" method of 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
 class will be called from the "calculate" method of 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/RinearnProcessorNano.java">RinearnProcessorNano</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/RinearnProcessorNano.java">RinearnProcessorNano</a> 
 class, which will be called from "main" method.
 The calculation expression inputted from the command-line will be passed as an argument of the method, so then next, it takes the calculation by calling the script engine (see <a href="#architecture-engine">the explanation of the script engine</a> for details), and output the result to the standard-output.
 
 このコンポーネントの入出力は、GUIモードでは Presenter を介してイベント駆動で行われるため、処理の流れは少し複雑です（詳細は<a href="#architecture-presenter">Presenter の説明</a>参照）。
 対して、CUIモードでの処理の流れは、連続的かつ同期的で、非常に単純です： 具体的には、
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/RinearnProcessorNano.java">RinearnProcessorNano</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/RinearnProcessorNano.java">RinearnProcessorNano</a> 
 クラスの main メソッド から calculate メソッドを介して、
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> クラスの calculate メソッドが呼ばれます。
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> クラスの calculate メソッドが呼ばれます。
 この引数に、コマンドラインから入力された計算式が渡されるので、
 それをスクリプトエンジンに渡して計算して（詳細は<a href="#architecture-engine">Script Engine の説明</a>参照）、
 結果を標準出力に表示するだけです。
 
 
 <a id="architecture-view"></a>
-### View - ビュー ( <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/">com.rinearn.processornano.view</a> package )
+### View - ビュー ( <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/view/">com.rinearn.processornano.view</a> package )
 
 In the GUI mode, this component play the role of the graphical surface of the UI, which composed of a window, text fields, and so on.
 Please note that this component does NOT handle any events from the UI by itself (it is a role of the <a href="#architecture-presenter">Presenter</a>).
@@ -507,66 +506,66 @@ Please note that this component does NOT handle any events from the UI by itself
 ただし、このコンポーネント自身は、UIからのイベントを処理しない事に留意が必要です（イベント処理は <a href="#architecture-presenter">Presenter</a> が担います）。
 
 The implementation of the surface of the UI is provided by 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewImpl.java">ViewImpl</a> class, 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/view/ViewImpl.java">ViewImpl</a> class, 
 and an instance of this class is accessed through 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewInterface.java">ViewInterface</a> interface 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/view/ViewInterface.java">ViewInterface</a> interface 
 from outside of the View component (package).
 An instance of ViewImpl class is initialized by 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewInitializer.java">ViewInitializer</a> class on the event-dispatching thread  (by using the feature of "SwingUtilities.invokeAndWait" method).
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/view/ViewInitializer.java">ViewInitializer</a> class on the event-dispatching thread  (by using the feature of "SwingUtilities.invokeAndWait" method).
 
-UI表面の実装は <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewImpl.java">ViewImpl</a> 
+UI表面の実装は <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/view/ViewImpl.java">ViewImpl</a> 
 クラスによって提供され、このクラスのインスタンスには、View以外のコンポーネント（パッケージ）からは 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewInterface.java">ViewInterface</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/view/ViewInterface.java">ViewInterface</a> 
 インターフェースを介してアクセスされます。
 ViewImpl クラスのインスタンスは、（"SwingUtilities.invokeAndWait" メソッドの機能を介して）イベントディスパッチスレッド上で
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/view/ViewInitializer.java">ViewInitializer</a> クラスを用いて初期化されます。
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/view/ViewInitializer.java">ViewInitializer</a> クラスを用いて初期化されます。
 
 
 <a id="architecture-presenter"></a>
-### Presenter - プレゼンター ( <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/presenter/">com.rinearn.processornano.presenter</a> package )
+### Presenter - プレゼンター ( <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/">com.rinearn.processornano.presenter</a> package )
 
 This component mediates between the Model and the View.
 Classes in this component will behave individually in event-driven ways, after they are linked to the Model and the View by "link" method of 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/presenter/Presenter.java">Presenter</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/Presenter.java">Presenter</a> 
 class.
 
 このコンポーネントは、GUIモードにおいて、View と Model の間を仲介します。
 このコンポーネント内の各クラスは、
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/presenter/Presenter.java">Presenter</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/Presenter.java">Presenter</a> 
 クラスの "link" メソッドによって Model と View の間に接続された後は、個々にイベント駆動で動作します。
 
 
 The action to the UI by the user to take a calculation will be catched by UI event listeners ( e.g. 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/presenter/RunKeyListener.java">RunKeyListener</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/RunKeyListener.java">RunKeyListener</a> 
 class, 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/presenter/RunButtonListener.java">RunButtonListener</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/RunButtonListener.java">RunButtonListener</a> 
 class, and so on
 ) in this component.
 Then the listener will request to the Model to take the calculation asynchronously on an other thread, by calling "calculateAsynchronously" method of 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a>. 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a>. 
 Also, as an argument of the method, the lisner will create and passe an new event listener which implements
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationListener.java">AsynchronousCalculationListener</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationListener.java">AsynchronousCalculationListener</a> 
 interface, to catch the event notifying the finishing of the calculation 
 and invoke subsequent procedures.
 After the calculation will have been finished, view updaters ( e.g. 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/presenter/OutputFieldUpdater.java">OutputFieldUpdater</a>, and so on	
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/OutputFieldUpdater.java">OutputFieldUpdater</a>, and so on	
 ) will update the UI on the event-dispatching thread  (by using the feature of "SwingUtilities.invokeAndWait" method).
 
 
 
 
 ユーザーのUI操作による計算実行アクションには、まずこのコンポーネント内のUIイベントリスナ（
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/presenter/RunKeyListener.java">RunKeyListener</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/RunKeyListener.java">RunKeyListener</a> 
 クラスや
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/presenter/RunButtonListener.java">RunButtonListener</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/RunButtonListener.java">RunButtonListener</a> 
 クラスなど ）が反応します。
 そこから、別スレッドで非同期に計算を行うリクエストが、Model 内の
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
 クラスの calculateAsynchronously メソッドに投げられます。
 その際、計算完了時に通知を受け取って、後に続く処理を行うために、
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationListener.java">AsynchronousCalculationListener</a> インターフェースを実装したイベントリスナが引数として渡されます。
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationListener.java">AsynchronousCalculationListener</a> インターフェースを実装したイベントリスナが引数として渡されます。
 計算完了後は、（"SwingUtilities.invokeAndWait" メソッドの機能を介して）イベントディスパッチスレッド上で、ビューアップデータ（ 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/presenter/OutputFieldUpdater.java">OutputFieldUpdater</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/OutputFieldUpdater.java">OutputFieldUpdater</a> 
 クラスなど 
 ）がUIの表示を更新します。
 
@@ -590,28 +589,28 @@ Therefore, for details of this component itself, see the document of: <a href="h
 
 This component is accessed from the Model through javax.script.ScriptEngine interface of Java&reg; Scripting API.
 In the CUI mode, "eval" method of the script engine is simply called in the processing of the "calculate" method of 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> class.
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> class.
 The "eval" method takes a calculation expression (or script) as an argument, and returns the calculated result as a return-value.
 
 このコンポーネントは、Java&reg; Scripting API の javax.script.ScriptEngine インターフェースを介して、Model からアクセスされます。
 CUIモードでは、
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
 クラスの calculate メソッド内の処理において、スクリプトエンジンの eval メソッドが単純に呼び出されます。
 この eval メソッドは、引数として渡された式（やスクリプト）の値を計算して、その結果を戻り値として返します。
 
 In the GUI mode, in the processing of "calculateAsynchronously" method of
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
-class, an instance of <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationRunner.java">AsynchronousCalculationRunner</a> class will be created, and "run" method of the class will be invoked on an other thread.
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
+class, an instance of <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationRunner.java">AsynchronousCalculationRunner</a> class will be created, and "run" method of the class will be invoked on an other thread.
 From there, "calculate" method of 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a>
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a>
 class which we mentioned above will be called, and "eval" method of the script engine will be called in there (see also: <a href="#architecture-presenter">the explanation of the Presenter</a>).
 
 GUIモードでは、
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
 クラスの calculateAsynchronously メソッド内において、まず 
-<a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationRunner.java">AsynchronousCalculationRunner</a> 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationRunner.java">AsynchronousCalculationRunner</a> 
 クラスのインスタンスが生成され、その run メソッドが別スレッドで実行されます。
-そこから、先ほども述べた <a href="https://github.com/RINEARN/rinearn-processor-nano/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> クラスの calculate メソッドが実行され、その中でスクリプトエンジンの eval メソッドが呼び出されます
+そこから、先ほども述べた <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> クラスの calculate メソッドが実行され、その中でスクリプトエンジンの eval メソッドが呼び出されます
 （<a href="#architecture-presenter">Presenter の説明</a>も参照）。
 
 
@@ -643,16 +642,16 @@ RINEARNでは、主にデータ解析や可視化、計算向けのソフトウ�
 
 <dl>
 	<dt style="display: list-item; margin-left:40px;">
-		"シンプル＆コンパクトなプログラム関数電卓「 リニアンプロセッサー nano 」の概要" - RINEARN Website (2019/01/26)
+		"シンプル＆コンパクトなプログラム関数電卓「 RINEARN Processor nano 」の概要" - RINEARN Website (2019/01/26)
 	</dt>
 	<dd>
-		<a href="https://www.rinearn.com/ja-jp/info/news/2019/0126-rinearn-processor-nano-concept">https://www.rinearn.com/ja-jp/info/news/2019/0126-rinearn-processor-nano-concept</a>
+		<a href="https://www.rinearn.com/ja-jp/info/news/2019/0126-rinearn-processor-nano-concept">https://www.rinearn.com/ja-jp/info/news/2019/0126-rinpn-concept</a>
 	</dd>
 	<dt style="display: list-item; margin-left:40px;">
-		"リニアンプロセッサー nano の先行開発版やソースコードリポジトリを公開" - RINEARN Website (2019/04/16)
+		"RINPn の先行開発版やソースコードリポジトリを公開" - RINEARN Website (2019/04/16)
 	</dt>
 	<dd>
-		<a href="https://www.rinearn.com/ja-jp/info/news/2019/0416-rinearn-processor-nano-advanced">https://www.rinearn.com/ja-jp/info/news/2019/0416-rinearn-processor-nano-advanced</a>
+		<a href="https://www.rinearn.com/ja-jp/info/news/2019/0416-rinearn-processor-nano-advanced">https://www.rinearn.com/ja-jp/info/news/2019/0416-rinpn-advanced</a>
 	</dd>
 </dl>
 
