@@ -31,6 +31,8 @@ You can also get prebuilt-packages of this software from:
 	- <a href="#how-to-build-processor-nano">Build the RINEARN Processor nano - リニアンプロセッサー nano のビルド</a>
 	- <a href="#how-to-build-vnano">Build the Vnano Engine - Vnanoエンジンのビルド</a>
 	- <a href="#how-to-compile-plugins">Compile Plug-Ins - プラグインのコンパイル</a>
+	    - <a href="#how-to-compile-official-plugins">Get and Compile Vnano Official Plug-Ins - Vnano公式プラグインの入手とコンパイル</a>
+	    - <a href="#how-to-compile-user-plugins">Compile User Plug-Ins - ユーザープラグインのコンパイル</a>
 - <a href="#how-to-use">How to Use - 使用方法</a>
 	- <a href="#how-to-use-gui">How to Use in the GUI Mode - GUIモードでの使用方法</a>
 	- <a href="#how-to-use-cui">How to Use in the CUI Mode - CUIモードでの使用方法</a>
@@ -146,19 +148,64 @@ for Linux&reg;, etc. :
 <a id="how-to-compile-plugins"></a>
 ### Step-3. Compile Plug-Ins - プラグインのコンパイル
 
-Finally, compile plug-ins which provide embedded-functions/variables to the Vnano Engine:
+Finally, compile plug-ins which provide embedded-functions/variables to the Vnano Engine.
+On this software, you can develop your original plug-ins. 
+In addition, and some official plug-ins are provided on the repository of RINEARN, 
 
-最後に、Vnanoエンジンに組み込み関数/変数を提供するプラグインをコンパイルします：
+最後に、Vnanoエンジンに組み込み関数/変数を提供するプラグインをコンパイルします。
+このソフトウェアでは、ユーザーが独自のプラグインを開発する事もできます。
+加えて、RINEARN のリポジトリ上で、いくつかの公式プラグインが提供されています。
 
-	cd <working-directory>/rinearn-processor-nano/plugin/
-	javac -encoding UTF-8 @sourcelist.txt
+<a id="how-to-compile-official-plugins"></a>
+#### 3-1. Get and Compile Vnano Official Plug-Ins - Vnano公式プラグインの入手とコンパイル
 
-where target source files of the compilation are listed in "&lt;working-directory&gt;/rinearn-processor-nano/plugin/sourcelist.txt".
-If you want to append a new plug-in, write the path of the source file of the plug-in in the above "sourcelist.txt", 
-and take the compilation again, and then specify its class-name in "Setting.vnano".
+Let's get and compile official plug-ins: 
 
-ここでコンパイル対象ファイルの一覧は「 &lt;working-directory&gt;/rinearn-processor-nano/plugin/sourcelist.txt 」内に記載されています。
-もしも新しいプラグインを追加したい場合は、上記の sourcelist.txt 内にプラグインのソースコードのファイルパスを追記して再コンパイルした上で、「 Setting.vnano 」内でそのプラグインのクラス名を指定してください。
+公式プラグインを入手してコンパイルします：
+
+	cd <working-directory>
+	git clone https://github.com/RINEARN/vnano-plugin.git
+
+The "vnano-plugin" folder will be generated, and in there "plugin" folder exists. so copy the all contents in the "plugin" folder into the "plugin" folder of the RINEARN Processor nano, and then compile them:
+
+これでフォルダ「 vnano-plugin 」が生成されるため、その中の「 plugin 」フォルダの中身を、
+リニアンプロセッサー nano の plugin フォルダ内にコピーし、コンパイルします：
+
+for Microsoft&reg; Windows&reg; :
+
+    cd <working-directory>
+	xcopy /s .\vnano-plugin\plugin\* .\rinearn-processor-nano\plugin\
+	cd rinearn-processor-nano\plugin
+	javac -classpath ".;../Vnano.jar" -encoding UTF-8 @org\vcssl\nano\plugin\sourcelist.txt
+
+for Linux&reg;, etc. :
+
+    cd <working-directory>
+	cp -r ./vnano-plugin/plugin/* ./rinearn-processor-nano/plugin/
+	cd rinearn-processor-nano/plugin
+	javac -classpath ".:../Vnano.jar" -encoding UTF-8 @org/vcssl/nano/plugin/sourcelist.txt
+
+
+<a id="how-to-compile-user-plugins"></a>
+#### 3-2. Compile User Plug-Ins - ユーザープラグインのコンパイル
+
+"ExamplePlugin.java" in "plugin" folder is a simple example of the plug-in, 
+assumed that users customize the code of it, or create new plug-ins by referencing code of it. 
+We refer such plug-ins as "User Plug-ins".
+Let's compile it as follows: 
+
+「 plugin 」フォルダ内にある「 ExamplePlugin.java 」は、非常に単純なプラグインの実装例で、ユーザーがそのコード内容を改造したり、参考にして新しいプラグインを作成する事を想定しています。そのようなプラグインを「 ユーザープラグイン 」と呼びます。
+以下のようにコンパイルします：
+
+for Microsoft&reg; Windows&reg; :
+
+    cd <working-directory>\rinearn-processor-nano\plugin
+	javac -classpath ".;../Vnano.jar" -encoding UTF-8 ExamplePlugin.java
+
+for Linux&reg;, etc. :
+
+    cd <working-directory>/rinearn-processor-nano/plugin
+	javac -classpath ".:../Vnano.jar" -encoding UTF-8 ExamplePlugin.java
 
 
 <a id="how-to-use"></a>
@@ -349,10 +396,10 @@ A simple example of a plug-in is bundled in "plugin" folder as "ExamplePlugin.ja
 
 The compilation of this plug-in is contained in the building procedure, so it might already be compiled.
 If you modified the above code, it requires recompilation to use.
-About the compilaton, see "<a href="#how-to-compile-plugins">Compile Plug-Ins</a>".
+About the compilaton, see "<a href="#how-to-compile-user-plugins">Compile User Plug-Ins</a>".
 
 このプラグインは恐らくビルド時にコンパイルされてるはずです。内容を編集した場合は再コンパイルが必要です。
-コンパイル方法については「<a href="#how-to-compile-plugins">プラグインのコンパイル</a>」をご参照ください。
+コンパイル方法については「<a href="#how-to-compile-user-plugins">ユーザープラグインのコンパイル</a>」をご参照ください。
 
 After the compilation, embedded variables/functions are available in the expressions of the Step-1 and 2, 
 and in the script code of the step-3.
