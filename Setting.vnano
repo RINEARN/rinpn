@@ -211,7 +211,7 @@ libraryExtension = ".vnano";      // The extention of library files - ライブ�
 
 // Contain paths of plug-ins in an array - 配列を用意し、その中にプラグインのパスを格納
 string tmpPluginPaths[2];
-tmpPluginPaths[0] = "defaultplugin.DefaultPlugin";
+tmpPluginPaths[0] = "org.vcssl.nano.plugin.SimpleCalculatorPlugin";
 tmpPluginPaths[1] = "ExamplePlugin";
 
 // Specify the above array as the setting value - 上で用意した配列を設定値に指定

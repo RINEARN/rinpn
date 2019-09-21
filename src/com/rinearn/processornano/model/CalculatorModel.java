@@ -21,6 +21,8 @@ import com.rinearn.processornano.util.PluginLoader;
 
 public final class CalculatorModel {
 
+	private static final String[] PLUGIN_BASE_PATHS = { "./plugin/" };
+
 	private ScriptEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
 	private volatile boolean calculating = false;
 
@@ -59,11 +61,14 @@ public final class CalculatorModel {
 		engine.put("___VNANO_OPTION_MAP", optionMap);
 
 		// プラグインを読み込んでスクリプトエンジンに接続
-		String[] pluginBasePaths = new String[] {"./plugin/"};
+		PluginLoader pluginLoader = new PluginLoader(setting.localeCode);
+		pluginLoader.open(PLUGIN_BASE_PATHS);
 		for (String pluginPath: setting.pluginPaths) {
 			try {
-				Object plugin = PluginLoader.loadPlugin(pluginPath, pluginBasePaths, setting.localeCode);
+
+				Object plugin = pluginLoader.loadPlugin(pluginPath);
 				engine.put("___VNANO_AUTO_KEY", plugin);
+
 			} catch (RinearnProcessorNanoException e) {
 				e.printStackTrace();
 				// 接続に失敗しても、そのプラグイン以外の機能には支障が無いため、本体側は落とさない。
