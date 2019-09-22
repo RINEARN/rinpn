@@ -13,9 +13,9 @@ cd "$SCRIPT_DIR"
 cd ..
 
 if [ -z "$1" ]; then 
-	java -jar RinearnProcessorNano.jar
+	java -jar RINPn.jar
 else
-	java -jar RinearnProcessorNano.jar "$1"
+	java -jar RINPn.jar "$1"
 fi
 
 cd "$CALLER_DIR"
