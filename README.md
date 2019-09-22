@@ -642,16 +642,16 @@ RINEARNでは、主にデータ解析や可視化、計算向けのソフトウ�
 
 <dl>
 	<dt style="display: list-item; margin-left:40px;">
-		"シンプル＆コンパクトなプログラム関数電卓「 RINEARN Processor nano 」の概要" - RINEARN Website (2019/01/26)
+		"シンプル＆コンパクトなプログラム関数電卓「 リニアンプロセッサー nano 」の概要" - RINEARN Website (2019/01/26)
 	</dt>
 	<dd>
-		<a href="https://www.rinearn.com/ja-jp/info/news/2019/0126-rinearn-processor-nano-concept">https://www.rinearn.com/ja-jp/info/news/2019/0126-rinpn-concept</a>
+		<a href="https://www.rinearn.com/ja-jp/info/news/2019/0126-rinearn-processor-nano-concept">https://www.rinearn.com/ja-jp/info/news/2019/0126-rinearn-processor-nano-concept</a>
 	</dd>
 	<dt style="display: list-item; margin-left:40px;">
-		"RINPn の先行開発版やソースコードリポジトリを公開" - RINEARN Website (2019/04/16)
+		"リニアンプロセッサー nano の先行開発版やソースコードリポジトリを公開" - RINEARN Website (2019/04/16)
 	</dt>
 	<dd>
-		<a href="https://www.rinearn.com/ja-jp/info/news/2019/0416-rinearn-processor-nano-advanced">https://www.rinearn.com/ja-jp/info/news/2019/0416-rinpn-advanced</a>
+		<a href="https://www.rinearn.com/ja-jp/info/news/2019/0416-rinearn-processor-nano-advanced">https://www.rinearn.com/ja-jp/info/news/2019/0416-rinearn-processor-nano-advanced</a>
 	</dd>
 </dl>
 
