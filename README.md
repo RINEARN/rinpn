@@ -36,7 +36,10 @@ You can also get prebuilt-packages of this software from:
 	- <a href="#how-to-use-gui">How to Use in the GUI Mode - GUIモードでの使用方法</a>
 	- <a href="#how-to-use-cui">How to Use in the CUI Mode - CUIモードでの使用方法</a>
 	- <a href="#how-to-use-library">How to Define Variables and Functions as Script Code - スクリプトで変数や関数を定義する</a>
-	- <a href="#how-to-implement-plugin">How to Implement Embedded Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する</a>
+	- <a href="#how-to-implement-plugin">How to Implement Built-in Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する</a>
+- <a href="#built-in">Built-in Functions and Variables - 組み込み関数/変数</a>
+	- <a href="#built-in-functions">Built-in Functions - 組み込み関数</a>
+	- <a href="#built-in-variables">Built-in Variables - 組み込み変数</a>
 - <a href="#architecture">Architecture - アーキテクチャ</a>
 	- <a href="#architecture-abstract">Abstract and a Block Diagram - 概要とブロック図</a>
 	- <a href="#architecture-model">Model - モデル</a>
@@ -147,7 +150,7 @@ for Linux&reg;, etc. :
 <a id="how-to-compile-plugins"></a>
 ### Step-3. Compile Plug-Ins - プラグインのコンパイル
 
-Finally, compile plug-ins which provide embedded-functions/variables to the Vnano Engine.
+Finally, compile plug-ins which provide built-in functions/variables to the Vnano Engine.
 On this software, you can develop your original plug-ins. 
 In addition, and some official plug-ins are provided on the repository of RINEARN, 
 
@@ -339,9 +342,9 @@ For example, the default content of "ExampleLibrary.vnano" is as follows:
 		return value;
 	}
 
-In the the expression of the calculation, you can use variables and functions defined in the above script, as the following example:
+In the the expression inputted to the the calculator (see Step-1 and Step-2), you can use variables and functions defined in the above script, as the following example:
 
-計算式の中で、上記のスクリプト内で定義されている変数や関数を、以下の例のように使用できます：
+Step-1 や Step-2 で扱った電卓の計算式の中で、上記のスクリプト内で定義されている変数や関数を、以下の例のように使用できます：
 
 	INPUT:
 	a + b + c
@@ -364,9 +367,9 @@ All files with the extension ".vnano" in "lib" folder will be loaded automatical
 
 
 <a id="how-to-implement-plugin"></a>
-### Step-4. How to Implement Embedded Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する
+### Step-4. How to Implement Built-in Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する
 
-You can implement new embedded variables and function in the Java&reg; programming language.
+You can implement new built-in variables and function in the Java&reg; programming language.
 In this way, compared to defining variables/functions as script code (in the step-3), 
 high-functionality of Java&reg; might be the great merit.
 On the other hand, it requres Java&reg; Development Kit (JDK) to compile implemented code.
@@ -376,7 +379,7 @@ Java&reg;言語を用いて、新しい組み込み関数/変数を実装する�
 Java&reg; 言語の高い機能性を利用できる事が大きなメリットになるかもしれません。
 一方で、実装したコードをコンパイルする際に Java&reg; 言語の開発環境 (JDK) が必要になります。
 
-On this software, we refer a Java&reg; program to add new embedded function/variables as "plug-in".
+On this software, we refer a Java&reg; program to add new built-in function/variables as "plug-in".
 A simple example of a plug-in is bundled in "plugin" folder as "ExamplePlugin.java":
 
 このソフトウェアでは、新しい組み込み関数/変数を追加するためのプログラムを「プラグイン」と呼びます。
@@ -400,7 +403,7 @@ About the compilaton, see "<a href="#how-to-compile-user-plugins">Compile User P
 このプラグインは恐らくビルド時にコンパイルされてるはずです。内容を編集した場合は再コンパイルが必要です。
 コンパイル方法については「<a href="#how-to-compile-user-plugins">ユーザープラグインのコンパイル</a>」をご参照ください。
 
-After the compilation, embedded variables/functions are available in the expressions of the Step-1 and 2, 
+After the compilation, built-in variables/functions are available in the expression inputted to the calculator (see Step-1 and Step-2), 
 and in the script code of the step-3.
 For example:
 
@@ -424,6 +427,234 @@ to be connected as plug-ins.
 このソフトウェアの設定スクリプト「 Setting.vnano 」内で指定したクラスが、Vnanoのスクリプトエンジンの「 put 」メソッドに引数として渡され、プラグインとして接続されます。
 
 
+<a id="built-in"></a>
+## Built-in Functions and Variables - 組み込み関数/変数
+
+
+<a id="built-in-functions"></a>
+
+On this software, following functions and variables are available by default.
+
+このソフトウェアでは、以下の関数および変数が標準で利用できます。
+
+### Built-in Functions - 組み込み関数
+
+<dl style="margin-left: 30px;">
+	<dt style="display: list-item;">rad( degree )</dt>
+	<dd>
+		<p>
+		The conversion function from degree to radian. Example:
+		<br />
+		度からラジアンへの変換関数です。例：
+		</p>
+		<p>
+		rad( 180.0 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">deg( radian )</dt>
+	<dd>
+		<p>
+		The conversion function from radian to degree. Example:
+		<br />
+		ラジアンから度への変換関数です。例：
+		</p>
+		<p>
+		deg( 2.0 * PI )
+		</p>
+	</dd>
+	<dt style="display: list-item;">sin( x )</dt>
+	<dd>
+		<p>
+		The sine function. The unit of the argument "x" is radian. Example:
+		<br />
+		正弦関数です。引数 x の単位はラジアンです。例：
+		</p>
+		<p>
+		sin( PI / 2.0 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">cos( x )</dt>
+	<dd>
+		<p>
+		The cosine function. The unit of the argument "x" is radian. Example:
+		<br />
+		余弦関数です。引数 x の単位はラジアンです。例：
+		</p>
+		<p>
+		cos( 2.0 * PI )
+		</p>
+	</dd>
+	<dt style="display: list-item;">tan( x )</dt>
+	<dd>
+		<p>
+		The tangent function. The unit of the argument "x" is radian. Example:
+		<br />
+		正接関数です。引数 x の単位はラジアンです。例：
+		</p>
+		<p>
+		tan( PI / 4.0 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">sqrt( x )</dt>
+	<dd>
+		<p>
+		The square-root function. Example:
+		<br />
+		平方根を求める関数です。例：
+		</p>
+		<p>
+		sqrt( 4.0 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">ln( x )</dt>
+	<dd>
+		<p>
+		The logarithm function with the base "e" (napier number). Example:
+		<br />
+		自然数 e を底とする対数関数です。例：
+		</p>
+		<p>
+		ln( 10.0 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">log10( x )</dt>
+	<dd>
+		<p>
+		The logarithm function with the base "10". Example:
+		<br />
+		10 を底とする対数関数です。例：
+		</p>
+		<p>
+		log10( 1000.0 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">pow( x, exponent )</dt>
+	<dd>
+		<p>
+		The function which returns the value of "x" to "exponent"-power. Example:
+		<br />
+		x の exponent 乗を求める関数です。例：
+		</p>
+		<p>
+		pow( 2.0, 3.0 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">exp( exponent )</dt>
+	<dd>
+		<p>
+		The function which returns the value of "e" (napier number) to "exponent"-power. Example:
+		<br />
+		自然数 e の exponent 乗を求める関数です。例：
+		</p>
+		<p>
+		exp( 1.2 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">abs( x )</dt>
+	<dd>
+		<p>
+		The absolute-value function. Example:
+		<br />
+		絶対値関数です。例：
+		</p>
+		<p>
+		abs( -1.23 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">sum( ... )</dt>
+	<dd>
+		<p>
+		The summation function. Example:
+		<br />
+		和を求める関数です。例：
+		</p>
+		<p>
+		sum( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">mean( ... )</dt>
+	<dd>
+		<p>
+		The mean-value (arithmetic mean) function. Example:
+		<br />
+		平均値（算術平均）を求める関数です。例：
+		</p>
+		<p>
+		mean( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">van( ... )</dt>
+	<dd>
+		<p>
+		The variance function ( denominator : n ). Example:
+		<br />
+		分散（ 分母： n ）を求める関数です。例：
+		</p>
+		<p>
+		van( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">van1( ... )</dt>
+	<dd>
+		<p>
+		The variance function ( denominator : n-1 ). Example:
+		<br />
+		分散（ 分母： n-1 ）を求める関数です。例：
+		</p>
+		<p>
+		van1( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">sdn( ... )</dt>
+	<dd>
+		<p>
+		The standard-deviation function ( denominator : n ). Example:
+		<br />
+		標準偏差（ 分母： n ）を求める関数です。例：
+		</p>
+		<p>
+		sdn( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">sdn1( ... )</dt>
+	<dd>
+		<p>
+		The standard-deviation function ( denominator : n-1 ). Example:
+		<br />
+		標準偏差（ 分母： n-1 ）を求める関数です。例：
+		</p>
+		<p>
+		sdn1( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">length( array, dim )</dt>
+	<dd>
+		<p>
+		The function which returns length of the "dim"-th dimension of an "array".
+		<br />
+		配列 array における、dim 番目の次元の要素数を返す関数です。
+		</p>
+		<p>
+		length( array, 0 )
+		</p>
+	</dd>
+</dl>
+
+### Built-in Variables - 組み込み変数
+
+<dl style="margin-left: 30px;">
+	<dt style="display: list-item;">PI</dt>
+	<dd>
+		<p>
+		The constant variable storing the value of the circle ratio π. Value: 
+		<br />
+		円周率 π の値を保持する変数（定数）です。値：
+		</p>
+		<p>
+		3.141592653589793
+		</p>
+	</dd>
+</dl>
 
 <a id="architecture"></a>
 ## Architecture - アーキテクチャ
