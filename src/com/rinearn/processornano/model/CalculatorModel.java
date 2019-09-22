@@ -108,10 +108,12 @@ public final class CalculatorModel {
 
 		// 値が浮動小数点数なら、設定内容に応じて丸める
 		if (value instanceof Double) {
-			value = Rounder.round( ((Double)value).doubleValue(), setting); // 型は BigDecimal になる
+			if ( !((Double)value).isNaN() && !((Double)value).isInfinite() ) {
+				value = Rounder.round( ((Double)value).doubleValue(), setting); // 型は BigDecimal になる
+			}
 		}
 
-		// 値を文字列化して出力フィールドに設定
+		// 値を文字列化
 		String outputText = "";
 		if (value != null) {
 			outputText = value.toString();
