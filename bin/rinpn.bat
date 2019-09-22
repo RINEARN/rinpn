@@ -12,6 +12,5 @@ if "%2" == "" (
 cd /d %~dp0
 cd ..
 
-java -jar RinearnProcessorNano.jar %1
-
+java -jar RINPn.jar %1
 
