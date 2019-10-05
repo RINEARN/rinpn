@@ -240,11 +240,11 @@ of your OS, wherever the current directory is, you can launch more simply as fol
 
 Alternatively, if you are using the 
 <a href="https://download.rinearn.com/advanced/#processor-nano">pre-built package</a> 
-on the OS of the Microsoft&reg; Windows&reg;, you can execute this software by double-clicking the batch file "RinearnProcessorNano.bat".
+on the OS of the Microsoft&reg; Windows&reg;, you can execute this software by double-clicking the batch file "RINPn.bat".
 
 または、もし Microsoft&reg; Windows&reg; のOS上で 
 <a href="https://download.rinearn.com/advanced/#processor-nano">ビルド済みパッケージ</a> 
-を使用している場合は、バッチファイル「 RinearnProcessorNano.bat 」をダブルクリックして実行する事も可能です。
+を使用している場合は、バッチファイル「 RINPn.bat 」をダブルクリックして実行する事も可能です。
 
 When you execute this software as above ways, the calculator window (the image below) will be launched:
 
