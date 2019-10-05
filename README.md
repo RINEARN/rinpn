@@ -10,16 +10,19 @@ RINPn （RINEARN Processor nano の略称、発音「りんぷん」）は、シ
   <img src="https://github.com/RINEARN/rinpn/blob/master/signboard.jpg" alt="" width="890" />
 </div>
 
-This README is for users who want to build this software from source code by yourself.
-You can also get prebuilt-packages of this software from: 
-<a href="https://download.rinearn.com/advanced/#rinpn">https://download.rinearn.com/advanced/#rinpn</a>
+### The Official Website - 公式サイト
 
-このREADMEの内容は、このソフトウェアをソースコードからビルドしたい方のためのものです。
-<a href="https://download.rinearn.com/advanced/#rinpn">https://download.rinearn.com/advanced/#rinpn</a>
-からビルド済みのパッケージも入手できます。
+- English: <a href="https://www.rinearn.com/en-us/rinpn/">https://www.rinearn.com/en-us/rinpn/</a>
+- 日本語:   <a href="https://www.rinearn.com/ja-jp/rinpn/">https://www.rinearn.com/ja-jp/rinpn/</a>
 
 <hr />
 
+
+This README is for users who want to build this software from source code by yourself.
+You can also get prebuilt-packages of this software from the above official website.
+
+このREADMEの内容は、このソフトウェアをソースコードからビルドしたい方のためのものです。
+上記公式サイトから、ビルド済みのパッケージも入手できます。
 
 
 ## Index - 目次
@@ -883,6 +886,12 @@ RINEARNでは、主にデータ解析や可視化、計算向けのソフトウ�
 	</dt>
 	<dd>
 		<a href="https://www.rinearn.com/ja-jp/info/news/2019/0416-rinearn-processor-nano-advanced">https://www.rinearn.com/ja-jp/info/news/2019/0416-rinearn-processor-nano-advanced</a>
+	</dd>
+	<dt style="display: list-item; margin-left:40px;">
+		"小型関数電卓 RINPn（旧称リニアンプロセッサー nano）の公式ページを開設" - RINEARN Website (2019/10/02)
+	</dt>
+	<dd>
+		<a href="https://www.rinearn.com/ja-jp/info/news/2019/1002-rinpn-website">https://www.rinearn.com/ja-jp/info/news/2019/1002-rinpn-website</a>
 	</dd>
 </dl>
 
