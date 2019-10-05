@@ -1,9 +1,9 @@
 # RINPn
 
 
-RINPn (abbreviated of "RINEARN Processor nano") is a simple & compact programmable calculator.
+RINPn (RINEARN Processor nano) is a simple & compact programmable calculator.
 
-RINPn （RINEARN Processor nano の略称、発音「りんぷん」）は、シンプルでコンパクトなプログラマブル関数電卓です。
+RINPn (RINEARN Processor nano、発音「りんぷん」) は、シンプルでコンパクトなプログラマブル関数電卓です。
 
 
 <div style="background-color:black; width: 890px; height: 463px; text-align:center; background-image: url('./signboard.jpg'); background-repeat: no-repeat; background-size: contain;">
