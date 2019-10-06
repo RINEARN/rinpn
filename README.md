@@ -150,6 +150,25 @@ for Linux&reg;, etc. :
 	cp ./vnano/Vnano.jar ./rinpn/Vnano.jar
 
 
+You can check whether "Vnano.jar" is recognized expectedly on "RINPn.jar" or not as follows :
+
+以下のように、「 RINPn.jar 」から「 Vnano.jar 」が正しく認識されているかどうかを確認できます：
+
+    cd <working-directory>/rinpn
+    java -jar RINPn.jar --version
+
+結果は：
+
+The result is :
+
+    OK:  RINPn Ver.0.2.0  / with Vnano Ver.0.2.2
+    NG:  RINPn Ver.0.2.0
+
+Note that numbers depend on the version in above results.
+
+なお、上記結果の数字部分はバージョンによって異なります。
+
+
 <a id="how-to-compile-plugins"></a>
 ### Step-3. Compile Plug-Ins - プラグインのコンパイル
 
