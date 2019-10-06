@@ -27,10 +27,10 @@ public class PluginLoaderTest {
 	@Test
 	public void test() throws RinearnProcessorNanoException {
 
-		Object loadedPlugin = PluginLoader.loadPlugin(
-			"com.rinearn.processornano.util.TestPlugin",
-			new String[] { "./" },
-			LocaleCode.getDefaultLocaleCode()
+		PluginLoader loader = new PluginLoader(LocaleCode.JA_JP);
+		loader.open(new String[] { "./" });
+		Object loadedPlugin = loader.loadPlugin(
+			"com.rinearn.processornano.util.TestPlugin"
 		);
 
 		assertTrue(loadedPlugin instanceof TestPlugin);
@@ -42,6 +42,8 @@ public class PluginLoaderTest {
 		assertEquals(124318312, castedPlugin.examplePluginData);
 		castedPlugin.examplePluginData = 21103212;
 		assertEquals(21103212, castedPlugin.examplePluginData);
+
+		loader.close();
 	}
 
 }
