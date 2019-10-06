@@ -489,7 +489,7 @@ On this software, following functions and variables are available by default.
 		<p>
 		The sine function. The unit of the argument "x" is radian. Example:
 		<br />
-		正弦関数です。引数 x の単位はラジアンです。例：
+		正弦（サイン）関数です。引数 x の単位はラジアンです。例：
 		</p>
 		<p>
 		sin( PI / 2.0 )
@@ -500,7 +500,7 @@ On this software, following functions and variables are available by default.
 		<p>
 		The cosine function. The unit of the argument "x" is radian. Example:
 		<br />
-		余弦関数です。引数 x の単位はラジアンです。例：
+		余弦（コサイン）関数です。引数 x の単位はラジアンです。例：
 		</p>
 		<p>
 		cos( 2.0 * PI )
@@ -511,10 +511,43 @@ On this software, following functions and variables are available by default.
 		<p>
 		The tangent function. The unit of the argument "x" is radian. Example:
 		<br />
-		正接関数です。引数 x の単位はラジアンです。例：
+		正接（タンジェント）関数です。引数 x の単位はラジアンです。例：
 		</p>
 		<p>
 		tan( PI / 4.0 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">asin( x )</dt>
+	<dd>
+		<p>
+		The inverse function of sine (arc-sine). The unit of the result is radian. Example:
+		<br />
+		正弦関数の逆関数（アークサイン）です。結果の単位はラジアンです。例：
+		</p>
+		<p>
+		asin( 1.0 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">acos( x )</dt>
+	<dd>
+		<p>
+		The inverse function of cosine (arc-cosine). The unit of the result is radian.  Example:
+		<br />
+		余弦関数の逆関数（アークコサイン）です。結果の単位はラジアンです。例：
+		</p>
+		<p>
+		acos( 1.0 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">atan( x )</dt>
+	<dd>
+		<p>
+		The inverse function of tangent (arc-tangent). The unit of the result is radian. Example:
+		<br />
+		正接関数の逆関数（アークタンジェント）です。結果の単位はラジアンです。例：
+		</p>
+		<p>
+		atan( 1.0 )
 		</p>
 	</dd>
 	<dt style="display: list-item;">sqrt( x )</dt>
