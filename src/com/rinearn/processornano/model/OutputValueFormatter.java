@@ -46,7 +46,7 @@ public final class OutputValueFormatter {
 
 	protected static final String simplify(BigDecimal inputValue) {
 		String fullStr = inputValue.toString().toUpperCase();
-
+System.out.println("input: " + inputValue);
 		// 指数部と仮数部に分割
 		String significandStr = null;  // 仮数部
 		String exponentStr = null;     // 指数部
@@ -91,7 +91,7 @@ public final class OutputValueFormatter {
 
 		// 各部を結合し、値全体の文字列を生成して返す
 		String outputValueStr = integerStr;
-		if (hasPoint) {
+		if (hasPoint && 0 < fractionStr.length()) {
 			outputValueStr += "." + fractionStr;
 		}
 		if (hasExponent) {
