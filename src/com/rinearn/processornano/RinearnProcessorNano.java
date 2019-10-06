@@ -5,6 +5,8 @@
 
 package com.rinearn.processornano;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import java.io.File;
@@ -26,14 +28,23 @@ import com.rinearn.processornano.view.ViewInitializer;
 
 public final class RinearnProcessorNano {
 
+	private static final String VERSION = "0.2.0";
+	private static final String OPTION_NAME_VERSION = "--version";
+
+
 	public static void main(String[] args) {
 
-		// 電卓画面を起動
+		// 引数が何も無い場合は電卓画面を起動
 		if (args.length == 0) {
 			new RinearnProcessorNano().launchCalculatorWindow();
 
-		// 電卓画面を起動せずに計算を実行（コマンドライン用）
+		// 引数がバージョン出力オプションだった場合は、バージョンを表示して終了
+		} else if (args.length == 1 && args[0].equals(OPTION_NAME_VERSION)) {
+			printVersion();
+
+		// それ以外の引数は式と見なして、電卓画面を起動せずに計算を実行（コマンドライン用）
 		} else if (args.length == 1) {
+
 			new RinearnProcessorNano().calculate(args[0]);
 
 		// 引数が多すぎる場合はエラー
@@ -45,6 +56,20 @@ public final class RinearnProcessorNano {
 				System.out.println("Too many command-line arguments.");
 			}
 		}
+	}
+
+	private static void printVersion() {
+		System.out.print("RINPn Ver." + VERSION + " ");
+
+		// Vnanoのバージョンも表示するため、スクリプトエンジンを読み込む
+		ScriptEngineManager manager = new ScriptEngineManager();
+		ScriptEngine engine = manager.getEngineByName("vnano");
+		if (engine == null) {
+			return;
+		}
+		System.out.print(" / with " + engine.get(ScriptEngine.LANGUAGE));
+		System.out.print(" Ver." + engine.get(ScriptEngine.LANGUAGE_VERSION));
+		System.out.println("");
 	}
 
 
