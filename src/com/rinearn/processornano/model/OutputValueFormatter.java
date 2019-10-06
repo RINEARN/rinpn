@@ -13,7 +13,7 @@ import com.rinearn.processornano.RinearnProcessorNanoFatalException;
 import com.rinearn.processornano.spec.RoundingTarget;
 import com.rinearn.processornano.spec.SettingContainer;
 
-public final class Rounder {
+public final class OutputValueFormatter {
 
 	protected static final BigDecimal round(double inputValue, SettingContainer setting) {
 		if (setting.outputRounderEnabled) {

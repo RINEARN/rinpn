@@ -110,8 +110,8 @@ public final class CalculatorModel {
 		// 値が浮動小数点数なら、設定内容に応じて丸め、書式を調整
 		if (value instanceof Double) {
 			if ( !((Double)value).isNaN() && !((Double)value).isInfinite() ) {
-				value = Rounder.round( ((Double)value).doubleValue(), setting); // 丸め処理： 型は BigDecimal になる
-				value = Rounder.simplify( (BigDecimal)value );                    // 書式調整： 型は String になる
+				value = OutputValueFormatter.round( ((Double)value).doubleValue(), setting); // 丸め処理： 結果は BigDecimal
+				value = OutputValueFormatter.simplify( (BigDecimal)value );                  // 書式調整： 結果は String
 			}
 		}
 
