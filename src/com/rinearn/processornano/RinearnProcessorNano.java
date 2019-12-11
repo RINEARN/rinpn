@@ -50,10 +50,10 @@ public final class RinearnProcessorNano {
 		// 引数が多すぎる場合はエラー
 		} else {
 			if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
-				System.out.println("コマンドライン引数の数が多すぎます。");
+				System.err.println("コマンドライン引数の数が多すぎます。");
 			}
 			if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
-				System.out.println("Too many command-line arguments.");
+				System.err.println("Too many command-line arguments.");
 			}
 		}
 	}

@@ -34,13 +34,12 @@ public final class MessageManager {
 			}
 			case CUI : {
 				if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
-					System.err.println();
 					System.err.println("エラー : " + message);
 				}
 				if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
-					System.err.println();
 					System.err.println("Error: " + message);
 				}
+				break;
 			}
 		}
 	}
