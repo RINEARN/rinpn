@@ -59,7 +59,9 @@ public final class AsynchronousCalculationRunner implements Runnable {
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(errorMessage, "計算式やライブラリのエラー");
 			}
-			e.printStackTrace();
+			if (setting.exceptionStackTracerEnabled) {
+				MessageManager.showExceptionStackTrace(e);
+			}
 			return;
 		}
 

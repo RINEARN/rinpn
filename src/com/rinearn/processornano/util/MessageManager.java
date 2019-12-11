@@ -34,22 +34,30 @@ public final class MessageManager {
 			}
 			case CUI : {
 				if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
-					System.err.println();
 					System.err.println("エラー : " + message);
-					System.err.println();
-					System.err.println("--------------------------------------------------------------------------------");
-					System.err.println("スタックトレース : ");
-					System.err.println();
 				}
 				if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
-					System.err.println();
 					System.err.println("Error: " + message);
-					System.err.println();
-					System.err.println("--------------------------------------------------------------------------------");
-					System.err.println("Stack Trace: ");
-					System.err.println();
 				}
+				break;
 			}
+		}
+	}
+
+	public static final void showExceptionStackTrace(Exception e) {
+		if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
+			System.err.println();
+			System.err.println("--------------------------------------------------------------------------------");
+			System.err.println("スタックトレース : ");
+			System.err.println();
+			e.printStackTrace();
+		}
+		if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
+			System.err.println();
+			System.err.println("--------------------------------------------------------------------------------");
+			System.err.println("Stack Trace: ");
+			System.err.println();
+			e.printStackTrace();
 		}
 	}
 

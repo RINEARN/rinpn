@@ -28,7 +28,7 @@ import com.rinearn.processornano.view.ViewInitializer;
 
 public final class RinearnProcessorNano {
 
-	private static final String VERSION = "0.2.0";
+	private static final String VERSION = "0.2.2";
 	private static final String OPTION_NAME_VERSION = "--version";
 
 
@@ -50,10 +50,10 @@ public final class RinearnProcessorNano {
 		// 引数が多すぎる場合はエラー
 		} else {
 			if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
-				System.out.println("コマンドライン引数の数が多すぎます。");
+				System.err.println("コマンドライン引数の数が多すぎます。");
 			}
 			if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
-				System.out.println("Too many command-line arguments.");
+				System.err.println("Too many command-line arguments.");
 			}
 		}
 	}
@@ -97,23 +97,25 @@ public final class RinearnProcessorNano {
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
-			e.printStackTrace();
+			if (setting.exceptionStackTracerEnabled) {
+				MessageManager.showExceptionStackTrace(e);
+			}
 			return;
 		}
 
-		// 計算を実行
+		// 計算を実行して結果を表示
 		String outputText = null;
 		try {
 			outputText = calculator.calculate(inputExpression, setting);
+			System.out.println(outputText);
 
 		} catch (ScriptException e) {
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
 			MessageManager.showErrorMessage(message, "!");
-			e.printStackTrace();
+			if (setting.exceptionStackTracerEnabled) {
+				MessageManager.showExceptionStackTrace(e);
+			}
 		}
-
-		// 結果を表示
-		System.out.println(outputText);
 	}
 
 
@@ -131,7 +133,9 @@ public final class RinearnProcessorNano {
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
-			e.printStackTrace();
+			if (setting.exceptionStackTracerEnabled) {
+				MessageManager.showExceptionStackTrace(e);
+			}
 			return;
 		}
 
@@ -146,12 +150,18 @@ public final class RinearnProcessorNano {
 		} catch (InvocationTargetException | InterruptedException e) {
 
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage("Unexpected exception occurred: " + e.getClass().getCanonicalName(), "Error");
+				MessageManager.showErrorMessage(
+					"Unexpected exception occurred: " + e.getClass().getCanonicalName(), "Error"
+				);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage("予期しない例外が発生しました: " + e.getClass().getCanonicalName(), "エラー");
+				MessageManager.showErrorMessage(
+					"予期しない例外が発生しました: " + e.getClass().getCanonicalName(), "エラー"
+				);
 			}
-			e.printStackTrace();
+			if (setting.exceptionStackTracerEnabled) {
+				MessageManager.showExceptionStackTrace(e);
+			}
 			return; // この例外が発生する場合はまだUI構築が走っていないので、破棄するUIリソースはない
 		}
 

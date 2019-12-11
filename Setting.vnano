@@ -219,6 +219,16 @@ pluginPaths = tmpPluginPaths;
 
 
 // --------------------------------------------------------------------------------------------------------------
+// Specify whether print stack traces to the standard-error or don't, when exceptions occurred.  (for debugging)
+// 例外発生時に、スタックトレースを標準エラー出力に表示するかどうかを指定します。               （デバッグ用）
+// (Type: bool)
+// --------------------------------------------------------------------------------------------------------------
+
+exceptionStackTracerEnabled = false;      // Don't print - 表示しない
+// exceptionStackTracerEnabled = true;    // Print       - 表示する
+
+
+// --------------------------------------------------------------------------------------------------------------
 // Specify whether dump intermediate code, Abstract Syntax Tree (AST), etc.  (for debugging)
 // 中間コードや抽象構文木(AST)などをダンプするかどうかを指定します。        （デバッグ用）
 // (Type: bool)

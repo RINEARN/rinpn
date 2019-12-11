@@ -181,11 +181,11 @@ In addition, and some official plug-ins are provided on the repository of RINEAR
 加えて、RINEARN のリポジトリ上で、いくつかの公式プラグインが提供されています。
 
 <a id="how-to-compile-official-plugins"></a>
-#### 3-1. Get and Compile Vnano Official Plug-Ins - Vnano公式プラグインの入手とコンパイル
+#### 3-1. Get and Compile Vnano Official Plug-Ins - Vnano 公式プラグインの入手とコンパイル
 
-Let's get and compile official plug-ins: 
+Let's get and compile <a href="https://github.com/RINEARN/vnano-plugin">Vnano official plug-ins</a>: 
 
-公式プラグインを入手してコンパイルします：
+<a href="https://github.com/RINEARN/vnano-plugin">Vnano 公式プラグイン</a>を入手してコンパイルします：
 
 	cd <working-directory>
 	git clone https://github.com/RINEARN/vnano-plugin.git

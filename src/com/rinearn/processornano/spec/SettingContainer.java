@@ -68,6 +68,8 @@ public final class SettingContainer implements Cloneable {
 	public boolean dumperEnabled = false;
 	public String dumperTarget = "ALL";
 
+	public boolean exceptionStackTracerEnabled = false;
+
 	public String localeCode = LocaleCode.getDefaultLocaleCode();
 
 
