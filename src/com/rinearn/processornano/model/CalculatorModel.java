@@ -71,14 +71,23 @@ public final class CalculatorModel {
 				engine.put("___VNANO_AUTO_KEY", plugin);
 
 			} catch (RinearnProcessorNanoException e) {
-				e.printStackTrace();
 				// 接続に失敗しても、そのプラグイン以外の機能には支障が無いため、本体側は落とさない。
 				// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
+				if (setting.localeCode.equals(LocaleCode.EN_US)) {
+					MessageManager.showErrorMessage(e.getMessage(), "Plug-in Error");
+				}
+				if (setting.localeCode.equals(LocaleCode.JA_JP)) {
+					MessageManager.showErrorMessage(e.getMessage(), "プラグイン エラー");
+				}
+				if (setting.exceptionStackTracerEnabled) {
+					MessageManager.showExceptionStackTrace(e);
+				}
 			}
 		}
 	}
 
 
+	// (AsynchronousCalculationListener から呼ばれて実行される)
 	public final synchronized String calculate(String inputExpression, SettingContainer setting)
 			throws ScriptException {
 
