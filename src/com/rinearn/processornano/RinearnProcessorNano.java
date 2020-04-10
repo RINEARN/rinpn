@@ -30,31 +30,50 @@ public final class RinearnProcessorNano {
 
 	private static final String VERSION = "0.2.3";
 	private static final String OPTION_NAME_VERSION = "--version";
+	private static final String OPTION_NAME_DEBUG = "--debug";
 
 
 	public static void main(String[] args) {
 
-		// 引数が何も無い場合は電卓画面を起動
-		if (args.length == 0) {
-			new RinearnProcessorNano().launchCalculatorWindow();
+		// コマンドラインから渡された内容を控える変数
+		String expression = null;     // 計算式
+		boolean debugEnabled = false; // デバッグモードが有効かどうか
 
-		// 引数がバージョン出力オプションだった場合は、バージョンを表示して終了
-		} else if (args.length == 1 && args[0].equals(OPTION_NAME_VERSION)) {
-			printVersion();
+		// 引数の解釈
+		for (String arg: args) {
 
-		// それ以外の引数は式と見なして、電卓画面を起動せずに計算を実行（コマンドライン用）
-		} else if (args.length == 1) {
+			// 引数がバージョン出力オプションだった場合は、バージョンを表示
+			if (arg.equals(OPTION_NAME_VERSION)) {
+				printVersion();
 
-			new RinearnProcessorNano().calculate(args[0]);
+			// 引数がデバッグオプションだった場合は、デバッグモードを有効化
+			} else if (arg.equals(OPTION_NAME_DEBUG)) {
+				debugEnabled = true;
 
-		// 引数が多すぎる場合はエラー
+			// それ以外の引数は計算式と見なすので、後で計算するために控える
+			} else {
+				if (expression == null) {
+					expression = arg;
+
+				// 既に計算式が控えられている場合は、引数が多すぎるのでエラー
+				} else {
+					if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
+						System.err.println("コマンドライン引数の数が多すぎます。");
+					}
+					if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
+						System.err.println("Too many command-line arguments.");
+					}
+				}
+			}
+		}
+
+		// 計算式が渡されなかった場合は電卓画面を起動
+		if (expression == null) {
+			new RinearnProcessorNano().launchCalculatorWindow(debugEnabled);
+
+		// 計算式が渡された場合はCUIモードで計算（結果はコマンドラインに表示）
 		} else {
-			if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
-				System.err.println("コマンドライン引数の数が多すぎます。");
-			}
-			if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
-				System.err.println("Too many command-line arguments.");
-			}
+			new RinearnProcessorNano().calculate(expression, debugEnabled);
 		}
 	}
 
@@ -82,8 +101,9 @@ public final class RinearnProcessorNano {
 	 * 電卓画面を起動せずに、計算を実行し、結果を標準出力に表示します。
 	 *
 	 * @param inputExpression 計算式（式またはスクリプトコード）
+	 * @param debug デバッグ情報を出力するかどうか
 	 */
-	public final void calculate(String inputExpression) {
+	public final void calculate(String inputExpression, boolean debug) {
 
 		// メッセージの出力をコマンドラインモードに変更
 		MessageManager.setDisplayType(MessageManager.DISPLAY_MODE.CUI);
@@ -92,7 +112,7 @@ public final class RinearnProcessorNano {
 		SettingContainer setting = null;
 		CalculatorModel calculator = null;
 		try {
-			setting = this.createInitializedSettingContainer();
+			setting = this.createInitializedSettingContainer(debug);
 			calculator = this.createInitializedCalculatorModel(setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
@@ -121,14 +141,16 @@ public final class RinearnProcessorNano {
 
 	/**
 	 * 電卓画面を起動します。
+	 *
+	 * @param debug デバッグモードで起動するかどうか
 	 */
-	public final void launchCalculatorWindow() {
+	public final void launchCalculatorWindow(boolean debug) {
 
 		// 設定値コンテナと計算機モデルを生成して初期化
 		SettingContainer setting = null;
 		CalculatorModel calculator = null;
 		try {
-			setting = this.createInitializedSettingContainer();
+			setting = this.createInitializedSettingContainer(debug);
 			calculator = this.createInitializedCalculatorModel(setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
@@ -174,11 +196,12 @@ public final class RinearnProcessorNano {
 	/**
 	 * 設定スクリプトを実行して値を初期化済みの、設定値コンテナを生成して返します。
 	 *
+	 * @param debug デバッグ情報を出力するかどうか
 	 * @return 初期化済みの設定値コンテナ
 	 * @throws RinearnProcessorNanoException
 	 * 		設定スクリプトの読み込みエラーなどで失敗した場合にスローされます。
 	 */
-	private final SettingContainer createInitializedSettingContainer()
+	private final SettingContainer createInitializedSettingContainer(boolean debug)
 			throws RinearnProcessorNanoException {
 
 		SettingContainer setting = new SettingContainer();
@@ -191,7 +214,7 @@ public final class RinearnProcessorNano {
 		);
 
 		// 設定スクリプトを実行して設定値を書き込む（スクリプトエンジンはメソッド内で生成）
-		setting.evaluateSettingScript(settingScriptCode, SettingContainer.SETTING_SCRIPT_PATH);
+		setting.evaluateSettingScript(settingScriptCode, SettingContainer.SETTING_SCRIPT_PATH, debug);
 
 		return setting;
 	}
