@@ -101,9 +101,11 @@ public final class SettingContainer implements Cloneable {
 		// 設定値をスクリプトから読み書きするため、このインスタンスをスクリプトエンジンにバインディング
 		settingVnanoEngine.put("SettingContainer", this); // キーは省略可能な名前空間として使用される
 
-		// スクリプトエンジンに渡すオプションを用意（エラーメッセージ用にスクリプト名を設定するだけ）
+		// スクリプトエンジンに渡すオプションを用意
+		//（エラーメッセージ用にスクリプト名し、アクセラレータも無効化する）
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("EVAL_SCRIPT_NAME", settingScriptName);
+		optionMap.put("ACCELERATOR_ENABLED", false);
 		settingVnanoEngine.put("___VNANO_OPTION_MAP", optionMap);
 
 		// 設定スクリプトを読み込み、実行して設定ファイルの記述内容を解釈する
