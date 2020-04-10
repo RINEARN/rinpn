@@ -97,7 +97,7 @@ public final class RinearnProcessorNano {
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
-			if (setting.exceptionStackTracerEnabled) {
+			if (setting==null || setting.exceptionStackTracerEnabled) {
 				MessageManager.showExceptionStackTrace(e);
 			}
 			return;
@@ -112,7 +112,7 @@ public final class RinearnProcessorNano {
 		} catch (ScriptException e) {
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
 			MessageManager.showErrorMessage(message, "!");
-			if (setting.exceptionStackTracerEnabled) {
+			if (setting==null || setting.exceptionStackTracerEnabled) {
 				MessageManager.showExceptionStackTrace(e);
 			}
 		}
@@ -133,7 +133,7 @@ public final class RinearnProcessorNano {
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
-			if (setting.exceptionStackTracerEnabled) {
+			if (setting==null || setting.exceptionStackTracerEnabled) {
 				MessageManager.showExceptionStackTrace(e);
 			}
 			return;
