@@ -73,8 +73,9 @@ public final class SettingContainer implements Cloneable {
 	public String localeCode = LocaleCode.getDefaultLocaleCode();
 
 
-	public synchronized final void evaluateSettingScript(String settingScriptCode, String settingScriptName)
-			throws RinearnProcessorNanoException {
+	public synchronized final void evaluateSettingScript(
+			String settingScriptCode, String settingScriptName, boolean debug)
+					throws RinearnProcessorNanoException {
 
 		String localeCode = LocaleCode.getDefaultLocaleCode();
 
@@ -101,10 +102,22 @@ public final class SettingContainer implements Cloneable {
 		// 設定値をスクリプトから読み書きするため、このインスタンスをスクリプトエンジンにバインディング
 		settingVnanoEngine.put("SettingContainer", this); // キーは省略可能な名前空間として使用される
 
-		// スクリプトエンジンに渡すオプションを用意（エラーメッセージ用にスクリプト名を設定するだけ）
+		// スクリプトエンジンに渡すオプションを用意
+		//（エラーメッセージ用にスクリプト名し、アクセラレータも無効化する）
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("EVAL_SCRIPT_NAME", settingScriptName);
+		optionMap.put("DUMPER_ENABLED", debug);
+		optionMap.put("ACCELERATOR_ENABLED", false);
 		settingVnanoEngine.put("___VNANO_OPTION_MAP", optionMap);
+
+		if (debug) {
+			System.out.println("");
+			System.out.println("################################################################################");
+			System.out.println("### - Debug Info -");
+			System.out.println("###   Results of \"--dump\" option of the Vnano Engine for the setting script");
+			System.out.println("################################################################################");
+			System.out.println("");
+		}
 
 		// 設定スクリプトを読み込み、実行して設定ファイルの記述内容を解釈する
 		try {
