@@ -6,7 +6,6 @@
 package com.rinearn.processornano.spec;
 
 import java.awt.Font;
-import java.io.File;
 import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
@@ -60,10 +59,6 @@ public final class SettingContainer implements Cloneable {
 
 	public boolean acceleratorEnabled = true;
 	public boolean evalNumberAsFloat = true;
-	public String libraryFolder = "./lib/";
-	public String libraryEncoding = "UTF-8";
-	public String libraryExtension = ".vnano";
-	public String[] pluginPaths = new String[0];
 
 	public boolean dumperEnabled = false;
 	public String dumperTarget = "ALL";
@@ -74,7 +69,8 @@ public final class SettingContainer implements Cloneable {
 
 
 	public synchronized final void evaluateSettingScript(
-			String settingScriptCode, String settingScriptName, boolean debug)
+			String settingScriptCode, String settingScriptName,
+			String libraryListFilePath, String pluginListFilePath, boolean debug)
 					throws RinearnProcessorNanoException {
 
 		String localeCode = LocaleCode.getDefaultLocaleCode();
@@ -97,6 +93,25 @@ public final class SettingContainer implements Cloneable {
 				);
 			}
 			throw new RinearnProcessorNanoException("ScriptEngine of the Vnano could not be loaded.");
+		}
+
+		// ライブラリ/プラグインの読み込みリストファイルを登録
+		try {
+			settingVnanoEngine.put("___VNANO_LIBRARY_LIST_FILE", libraryListFilePath);
+			settingVnanoEngine.put("___VNANO_PLUGIN_LIST_FILE", pluginListFilePath);
+
+		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
+		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
+		} catch (Exception e) {
+			String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			if (localeCode.equals(LocaleCode.EN_US)) {
+				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error");
+			}
+			if (localeCode.equals(LocaleCode.JA_JP)) {
+				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー");
+			}
+			System.err.println("\n" + message);
+			MessageManager.showExceptionStackTrace(e);
 		}
 
 		// 設定値をスクリプトから読み書きするため、このインスタンスをスクリプトエンジンにバインディング
@@ -133,7 +148,25 @@ public final class SettingContainer implements Cloneable {
 			throw new RinearnProcessorNanoException(e);
 		}
 
-		// 設定値を検査する
+		// ライブラリ/プラグインを接続解除
+		try {
+			settingVnanoEngine.put("___VNANO_COMMAND", "REMOVE_PLUGIN");
+			settingVnanoEngine.put("___VNANO_COMMAND", "REMOVE_LIBRARY");
+
+		// 設定の読み込みは完了しているため、本体側を落とさないため、例外をさらに上には投げない。通知のみ行う。
+		} catch (Exception e) {
+			String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			if (localeCode.equals(LocaleCode.EN_US)) {
+				MessageManager.showErrorMessage(message, "Plug-in Finalization Error");
+			}
+			if (localeCode.equals(LocaleCode.JA_JP)) {
+				MessageManager.showErrorMessage(message, "プラグイン終了時処理エラー");
+			}
+			System.err.println("\n" + message);
+			MessageManager.showExceptionStackTrace(e);
+		}
+
+		// 読み込んだ設定値を検査する
 		this.checkAndNormalizeSettingValues();
 	}
 
@@ -313,37 +346,6 @@ public final class SettingContainer implements Cloneable {
 			if (this.localeCode.equals(LocaleCode.JA_JP)) {
 				errorMessage = "\"roundingLength\" の値は 1 ~ "
 				             + MAX_ROUNDING_LENGTH + " の範囲内で指定してください。";
-			}
-			errorOccurred = true;
-		}
-
-		if ( !(new File(this.libraryFolder).exists()) ) {
-			if (this.localeCode.equals(LocaleCode.EN_US)) {
-				errorMessage = "The library folder \"" + this.libraryFolder + "\" does not exist.";
-			}
-			if (this.localeCode.equals(LocaleCode.JA_JP)) {
-				errorMessage = "ライブラリの配置フォルダ \"" + this.libraryFolder + "\" が見つかりません。";
-			}
-			errorOccurred = true;
-
-		} else if (!( new File(this.libraryFolder).isDirectory() )) {
-			if (this.localeCode.equals(LocaleCode.EN_US)) {
-				errorMessage = "The path \"" + this.libraryFolder + "\" specified as the library folder is not a folder.";
-			}
-			if (this.localeCode.equals(LocaleCode.JA_JP)) {
-				errorMessage = "ライブラリの配置場所のパス \"" + this.libraryFolder + "\" が、フォルダではありません。";
-			}
-			errorOccurred = true;
-		}
-
-		if ( !this.libraryEncoding.equals("UTF-8")
-		     && !this.libraryEncoding.equals("Shift_JIS") ) {
-
-			if (this.localeCode.equals(LocaleCode.EN_US)) {
-				errorMessage = "The encoding \"" + this.libraryEncoding + "\" is not supported.";
-			}
-			if (this.localeCode.equals(LocaleCode.JA_JP)) {
-				errorMessage = "非対応の文字コード \"" + this.libraryEncoding + "\" が指定されています。";
 			}
 			errorOccurred = true;
 		}

@@ -58,5 +58,8 @@ public final class ExitButtonListener implements ActionListener {
 		// UIを破棄
 		//（ここはイベントスレッド内なので、ViewDisposer で SwingUtilities.invokeAndWait はせず、破棄メソッドを直接呼ぶ）
 		this.view.dispose();
+
+		// 計算機モデルの終了時処理を実行
+		this.calculator.shutdown(this.setting);
 	}
 }

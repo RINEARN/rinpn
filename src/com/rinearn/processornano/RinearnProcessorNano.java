@@ -9,10 +9,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.SwingUtilities;
 
@@ -31,6 +28,8 @@ public final class RinearnProcessorNano {
 	private static final String VERSION = "0.2.3";
 	private static final String OPTION_NAME_VERSION = "--version";
 	private static final String OPTION_NAME_DEBUG = "--debug";
+	private static final String LIBRARY_LIST_FILE = "lib/VnanoLibraryList.txt";
+	private static final String PLUGIN_LIST_FILE = "plugin/VnanoPluginList.txt";
 
 
 	public static void main(String[] args) {
@@ -136,6 +135,9 @@ public final class RinearnProcessorNano {
 				MessageManager.showExceptionStackTrace(e);
 			}
 		}
+
+		// 最後に計算機モデルの終了時処理を実行
+		calculator.shutdown(setting);
 	}
 
 
@@ -214,7 +216,10 @@ public final class RinearnProcessorNano {
 		);
 
 		// 設定スクリプトを実行して設定値を書き込む（スクリプトエンジンはメソッド内で生成）
-		setting.evaluateSettingScript(settingScriptCode, SettingContainer.SETTING_SCRIPT_PATH, debug);
+		setting.evaluateSettingScript(
+			settingScriptCode, SettingContainer.SETTING_SCRIPT_PATH,
+			LIBRARY_LIST_FILE, PLUGIN_LIST_FILE, debug
+		);
 
 		return setting;
 	}
@@ -230,30 +235,9 @@ public final class RinearnProcessorNano {
 	private final CalculatorModel createInitializedCalculatorModel(SettingContainer setting)
 			throws RinearnProcessorNanoException {
 
-		// ライブラリの配置フォルダからファイル一覧を取得（フォルダの存在は SettingContainer 内で検査済み）
-		File libraryDir = new File(setting.libraryFolder);
-		File[] files = libraryDir.listFiles();
-
-		// ライブラリのスクリプトコード内容やファイル名を一時的に格納するリストを用意
-		List<String> libraryScriptList = new LinkedList<String>();
-		List<String> libraryNameList = new LinkedList<String>();
-
-		// 拡張子が「 .vnano 」のファイルを全て読み込んでリストに格納し、最後に配列として取り出す
-		for (File file: files) {
-			if (file.getPath().endsWith(setting.libraryExtension)) {
-				String script = CodeLoader.loadCode(
-					file.getPath(), setting.libraryEncoding, setting.localeCode
-				);
-				libraryScriptList.add(script);
-				libraryNameList.add(file.getName());
-			}
-		}
-		String[] libraryScripts = libraryScriptList.toArray(new String[0]);
-		String[] libraryNames = libraryNameList.toArray(new String[0]);
-
 		// 計算機のインスタンスを生成、初期化して返す
 		CalculatorModel calculator = new CalculatorModel();
-		calculator.initialize(setting, libraryScripts, libraryNames);
+		calculator.initialize(setting, LIBRARY_LIST_FILE, PLUGIN_LIST_FILE);
 		return calculator;
 	}
 

@@ -189,33 +189,18 @@ textFieldForegroundColorB = 180;     // Blue  - 青成分 (0 ~ 255)
 //         - スクリプト関連の設定 -
 // **************************************************************************************************************
 
-
 // --------------------------------------------------------------------------------------------------------------
-// Specify the location of library scripts in which variables and functions are defined.
-// Library scripts in the specified location will be loaded automatically.
-// 変数や関数を定義する、ライブラリスクリプトの配置場所を指定します。
-// 指定された場所にあるライブラリスクリプトは、自動で読み込まれます。
-// (Type: string)
+// Specify of library scripts and plug-ins to be loaded.
+// 読み込むライブラリスクリプトやプラグインを指定します。
 // --------------------------------------------------------------------------------------------------------------
 
-libraryFolder = "./lib/";         // Folder to put libraries - ライブラリの配置先フォルダ
-libraryEncoding = "UTF-8";        // Text-encoding of library files - ライブラリのファイルの文字コード
-libraryExtension = ".vnano";      // The extention of library files - ライブラリのファイルの拡張子
+// Settings for loading library scripts was moved to: lib/VnanoLibraryList.txt
+// ライブラリの読み込み設定は下記ファイルに移動されました:
+//     lib/VnanoLibraryList.txt
 
-
-// --------------------------------------------------------------------------------------------------------------
-// Specify plug-ins by dot-separated relative paths (without extension) from "plugin" folder.
-// 使用するプラグインを、「 plugin 」フォルダから見たドット区切りの相対パス（拡張子なし）で指定します。
-// (Type: string[])
-// --------------------------------------------------------------------------------------------------------------
-
-// Contain paths of plug-ins in an array - 配列を用意し、その中にプラグインのパスを格納
-string tmpPluginPaths[2];
-tmpPluginPaths[0] = "org.vcssl.nano.plugin.calc.xci1.ScientificCalculatorPlugin";
-tmpPluginPaths[1] = "ExamplePlugin";
-
-// Specify the above array as the setting value - 上で用意した配列を設定値に指定
-pluginPaths = tmpPluginPaths;
+// Settings for loading plug-ins was moved to:
+// プラグインの読み込み設定は下記ファイルに移動されました:
+//     plugin/VnanoPluginList.txt
 
 
 // --------------------------------------------------------------------------------------------------------------
