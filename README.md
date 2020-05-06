@@ -387,7 +387,7 @@ Step-1 や Step-2 で扱った電卓の計算式の中で、上記のスクリ�
 If you want, you can create other script files and can define variables and functions in them. When you have created/appended new script files, describe its file path in the content of the text file "VnanoLibraryList.txt" in "lib" folder, for loading it.
 
 なお、必要に応じて、別のスクリプトファイルを作成し、その中で変数や関数を定義する事もできます。
-新しいスクリプトファイルを作成/追加した際は、そのファイルパスを、「 lib 」フォルダ内にあるテキストファイル「 VnanoLibraryList.txt 」内に記載（追記）してください。そうすると、そのプラグインが読み込まれるようになります。
+新しいスクリプトファイルを作成/追加した際は、そのファイルパスを、「 lib 」フォルダ内にあるテキストファイル「 VnanoLibraryList.txt 」内に記載（追記）してください。そうすると、そのライブラリが読み込まれるようになります。
 
 
 <a id="how-to-implement-plugin"></a>
