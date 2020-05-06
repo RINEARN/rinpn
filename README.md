@@ -231,6 +231,10 @@ for Linux&reg;, etc. :
     cd <working-directory>/rinpn/plugin
 	javac -classpath ".:../Vnano.jar" -encoding UTF-8 ExamplePlugin.java
 
+If you have created/appended a new user plug-in, describe its file path in the content of the text file "VnanoPluginList.txt" in "plugin" folder, for loading it.
+
+新しいユーザープラグインを作成/追加した際は、そのプラグインのファイルパスを、「 plugin 」フォルダ内にあるテキストファイル「 VnanoPluginList.txt 」内に記載（追記）してください。そうすると、そのプラグインが読み込まれるようになります。
+
 
 <a id="how-to-use"></a>
 ## How to Use - 使用方法
@@ -380,12 +384,10 @@ Step-1 や Step-2 で扱った電卓の計算式の中で、上記のスクリ�
 	OUTPUT:
 	27.23220921
 
-If you want, you can create other script files and can define variables and functions in them.
-All files with the extension ".vnano" in "lib" folder will be loaded automatically as scripts.
+If you want, you can create other script files and can define variables and functions in them. When you have created/appended new script files, describe its file path in the content of the text file "VnanoLibraryList.txt" in "lib" folder, for loading it.
 
 なお、必要に応じて、別のスクリプトファイルを作成し、その中で変数や関数を定義する事もできます。
-「 lib 」フォルダ内に置いた、拡張子「 .vnano 」のファイルは、全てスクリプトとして自動で読み込まれます。
-
+新しいスクリプトファイルを作成/追加した際は、そのファイルパスを、「 lib 」フォルダ内にあるテキストファイル「 VnanoLibraryList.txt 」内に記載（追記）してください。そうすると、そのプラグインが読み込まれるようになります。
 
 
 <a id="how-to-implement-plugin"></a>
@@ -440,13 +442,15 @@ For example:
 
 For more detailed explanation to implement plug-in, 
 see: "<a href="https://github.com/RINEARN/vnano#plugin">Plugin Development</a>" section in the document of the Vnano.
-Classes specified in the setting script "Setting.vnano" of this software 
-will be passed as arguments of the "put" method of the script engine of the Vnano, 
-to be connected as plug-ins.
 
 プラグインの実装方法についてのより詳細な解説は、Vnanoのドキュメント内の
 「 <a href="https://github.com/RINEARN/vnano#plugin">プラグインの開発</a> 」セクションをご参照ください。
-このソフトウェアの設定スクリプト「 Setting.vnano 」内で指定したクラスが、Vnanoのスクリプトエンジンの「 put 」メソッドに引数として渡され、プラグインとして接続されます。
+
+On the RINPn, classes specified in the text file "VnanoPluginList.txt" in "plugin" folder  will be connected to the script engine of the Vnano as plug-ins.
+If you have created/appended a new user plug-in, describe its file path in the content of "VnanoPluginList.txt".
+
+RINPnでは、「 plugin 」フォルダ内のテキストファイル「 VnanoPluginList.txt 」内で指定したクラスが、Vnanoのスクリプトエンジンにプラグインとして接続されます。
+新しいユーザープラグインを作成/追加した際は、そのプラグインのファイルパスを「 VnanoPluginList.txt 」内に記載（追記）してください。
 
 
 <a id="built-in"></a>
