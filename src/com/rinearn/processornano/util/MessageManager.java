@@ -8,8 +8,6 @@ package com.rinearn.processornano.util;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
-import com.rinearn.processornano.spec.LocaleCode;
-
 public final class MessageManager {
 
 	public enum DISPLAY_MODE {

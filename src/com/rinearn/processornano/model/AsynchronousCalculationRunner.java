@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
@@ -7,9 +7,9 @@ package com.rinearn.processornano.model;
 
 import javax.script.ScriptException;
 
-import com.rinearn.processornano.spec.LocaleCode;
-import com.rinearn.processornano.spec.SettingContainer;
+import com.rinearn.processornano.util.LocaleCode;
 import com.rinearn.processornano.util.MessageManager;
+import com.rinearn.processornano.util.SettingContainer;
 
 
 public final class AsynchronousCalculationRunner implements Runnable {

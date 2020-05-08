@@ -1,11 +1,11 @@
 /*
- * Copyright(C) 2019 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
 package com.rinearn.processornano.view;
 
-import com.rinearn.processornano.spec.SettingContainer;
+import com.rinearn.processornano.util.SettingContainer;
 
 public final class ViewInitializer implements Runnable {
 

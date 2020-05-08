@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
 
 import com.rinearn.processornano.model.AsynchronousCalculationListener;
 import com.rinearn.processornano.model.CalculatorModel;
-import com.rinearn.processornano.spec.SettingContainer;
+import com.rinearn.processornano.util.SettingContainer;
 import com.rinearn.processornano.view.ViewInterface;
 
 public final class RunKeyListener implements KeyListener {

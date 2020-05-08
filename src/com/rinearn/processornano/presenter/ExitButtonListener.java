@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import com.rinearn.processornano.model.CalculatorModel;
-import com.rinearn.processornano.spec.LocaleCode;
-import com.rinearn.processornano.spec.SettingContainer;
+import com.rinearn.processornano.util.LocaleCode;
+import com.rinearn.processornano.util.SettingContainer;
 import com.rinearn.processornano.view.ViewInterface;
 
 public final class ExitButtonListener implements ActionListener {

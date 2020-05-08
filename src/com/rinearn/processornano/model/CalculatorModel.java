@@ -15,9 +15,9 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import com.rinearn.processornano.RinearnProcessorNanoException;
-import com.rinearn.processornano.spec.LocaleCode;
-import com.rinearn.processornano.spec.SettingContainer;
+import com.rinearn.processornano.util.LocaleCode;
 import com.rinearn.processornano.util.MessageManager;
+import com.rinearn.processornano.util.SettingContainer;
 
 public final class CalculatorModel {
 

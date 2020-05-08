@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.spec;
+package com.rinearn.processornano.util;
 
 import java.awt.Font;
 import java.io.File;
@@ -19,7 +19,6 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import com.rinearn.processornano.RinearnProcessorNanoException;
-import com.rinearn.processornano.util.MessageManager;
 
 public final class SettingContainer implements Cloneable {
 
