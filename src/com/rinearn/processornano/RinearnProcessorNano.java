@@ -17,7 +17,6 @@ import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.presenter.Presenter;
 import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
-import com.rinearn.processornano.util.CodeLoader;
 import com.rinearn.processornano.util.MessageManager;
 import com.rinearn.processornano.view.ViewImpl;
 import com.rinearn.processornano.view.ViewInitializer;
@@ -208,16 +207,9 @@ public final class RinearnProcessorNano {
 
 		SettingContainer setting = new SettingContainer();
 
-		// 設定スクリプトを読み込む
-		String settingScriptCode = null;
-		settingScriptCode = CodeLoader.loadCode(
-			SettingContainer.SETTING_SCRIPT_PATH, SettingContainer.SETTING_SCRIPT_ENCODING,
-			LocaleCode.getDefaultLocaleCode()
-		);
-
 		// 設定スクリプトを実行して設定値を書き込む（スクリプトエンジンはメソッド内で生成）
 		setting.evaluateSettingScript(
-			settingScriptCode, SettingContainer.SETTING_SCRIPT_PATH,
+			SettingContainer.SETTING_SCRIPT_PATH,
 			LIBRARY_LIST_FILE, PLUGIN_LIST_FILE, debug
 		);
 

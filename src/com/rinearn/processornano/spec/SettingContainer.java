@@ -6,6 +6,10 @@
 package com.rinearn.processornano.spec;
 
 import java.awt.Font;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,11 +74,12 @@ public final class SettingContainer implements Cloneable {
 
 
 	public synchronized final void evaluateSettingScript(
-			String settingScriptCode, String settingScriptName,
+			String settingScriptFilePath,
 			String libraryListFilePath, String pluginListFilePath, boolean debug)
 					throws RinearnProcessorNanoException {
 
 		String localeCode = LocaleCode.getDefaultLocaleCode();
+		File settingScriptFile = new File(settingScriptFilePath);
 
 		// 設定スクリプト解釈用に、Vnanoのスクリプトエンジンを読み込んで生成
 		ScriptEngineManager manager = new ScriptEngineManager();
@@ -121,7 +126,7 @@ public final class SettingContainer implements Cloneable {
 		// スクリプトエンジンに渡すオプションを用意
 		//（エラーメッセージ用にスクリプト名し、アクセラレータも無効化する）
 		Map<String, Object> optionMap = new HashMap<String, Object>();
-		optionMap.put("EVAL_SCRIPT_NAME", settingScriptName);
+		optionMap.put("EVAL_SCRIPT_NAME", settingScriptFile.getName());
 		optionMap.put("DUMPER_ENABLED", debug);
 		optionMap.put("ACCELERATOR_ENABLED", false);
 		settingVnanoEngine.put("___VNANO_OPTION_MAP", optionMap);
@@ -136,17 +141,39 @@ public final class SettingContainer implements Cloneable {
 		}
 
 		// 設定スクリプトを読み込み、実行して設定ファイルの記述内容を解釈する
-		try {
-			settingVnanoEngine.eval(settingScriptCode);
-		} catch (ScriptException e) {
-			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
+		try (FileReader fileReader = new FileReader(settingScriptFile)) {
+			settingVnanoEngine.eval(fileReader);
+
+		// 設定スクリプトの内容にエラーがあった場合
+		} catch (ScriptException se) {
+			String errorMessage = MessageManager.customizeExceptionMessage(se.getMessage());
 			if (localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(errorMessage, "Setting Error");
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(errorMessage, "設定スクリプトのエラー");
 			}
-			throw new RinearnProcessorNanoException(e);
+			throw new RinearnProcessorNanoException(se);
+
+		// 設定スクリプトのファイルが無かった場合
+		} catch (FileNotFoundException fnfe) {
+			if (localeCode.equals(LocaleCode.EN_US)) {
+				MessageManager.showErrorMessage("The setting script file \"" + settingScriptFilePath + "\" not found", "Setting Error");
+			}
+			if (localeCode.equals(LocaleCode.JA_JP)) {
+				MessageManager.showErrorMessage("設定スクリプトファイル「 " + settingScriptFilePath + " 」が見つかりません。", "設定スクリプトのエラー");
+			}
+
+		// I/Oエラーが生じた場合
+		} catch (IOException ioe) {
+			if (localeCode.equals(LocaleCode.EN_US)) {
+				MessageManager.showErrorMessage("An I/O error occurred on the accessing to the setting script file \"" + settingScriptFilePath + "\"", "Setting Error");
+				ioe.printStackTrace();
+			}
+			if (localeCode.equals(LocaleCode.JA_JP)) {
+				MessageManager.showErrorMessage("設定スクリプトファイル「 " + settingScriptFilePath + " 」の読み込みでI/Oエラーが発生しました。", "設定スクリプトのエラー");
+				ioe.printStackTrace();
+			}
 		}
 
 		// ライブラリ/プラグインを接続解除
