@@ -81,14 +81,31 @@ roundingLength = 10;
 
 // --------------------------------------------------------------------------------------------------------------
 // The option to handle numbers (including integers) in inputted expressions as floating-point numbers (64bit).
-// This option does not affect to the interpretation of the code in the library file (Library.vnano).
+// IF YOU DISABLE THIS OPTION, PLEASE BE AWARE THAT THE RESULT OF DIVISION BETWEEN INTEGERS WILL BE AN INTEGER.
+// This option does not affect to the interpretation of the code in the library script files.
 // INPUT欄に入力された数式内で、数字（整数を含む）を浮動小数点数（64bit精度）として扱うオプションです。
+// このオプションを無効化した場合、整数同士の割り算の結果は整数になる事にご注意ください。
 // なお、このオプションは、ライブラリファイル（Library.vnano）内のコード内容の解釈には影響しません。
 // (Type: bool)
 // --------------------------------------------------------------------------------------------------------------
 
 evalNumberAsFloat = true;          // Enable  - 有効化する
 // evalNumberAsFloat = false;      // Disable - 無効化する
+
+
+// --------------------------------------------------------------------------------------------------------------
+// The option to forbid using non-float type values/variables/functions(return value) in inputted expressions.
+// This option is strongly recommended to be enabled when "evalNumberAsFloat" option is enabled, to prevent 
+// overlooking "contermination" of integer values, which can cause of unexpected integer divisions.
+// This option does not affect to the interpretation of the code in the library script files.
+// INPUT欄に入力された数式内で、浮動小数点数以外の値/変数/関数（戻り値）の使用を不可能にするオプションです。
+// 「 evalNumberAsFloat 」オプションが有効な場合、計算式への整数の混入（意図しない整数除算などの原因になり得ます）
+// の見落としを防ぐために、このオプションも併せて有効化する事が強く推奨されます。
+// なお、このオプションは、ライブラリスクリプトファイル内のコード内容の解釈には影響しません。
+// (Type: bool)
+// --------------------------------------------------------------------------------------------------------------
+
+evalOnlyFloat = evalNumberAsFloat;
 
 
 // --------------------------------------------------------------------------------------------------------------
@@ -189,33 +206,18 @@ textFieldForegroundColorB = 180;     // Blue  - 青成分 (0 ~ 255)
 //         - スクリプト関連の設定 -
 // **************************************************************************************************************
 
-
 // --------------------------------------------------------------------------------------------------------------
-// Specify the location of library scripts in which variables and functions are defined.
-// Library scripts in the specified location will be loaded automatically.
-// 変数や関数を定義する、ライブラリスクリプトの配置場所を指定します。
-// 指定された場所にあるライブラリスクリプトは、自動で読み込まれます。
-// (Type: string)
+// Specify of library scripts and plug-ins to be loaded.
+// 読み込むライブラリスクリプトやプラグインを指定します。
 // --------------------------------------------------------------------------------------------------------------
 
-libraryFolder = "./lib/";         // Folder to put libraries - ライブラリの配置先フォルダ
-libraryEncoding = "UTF-8";        // Text-encoding of library files - ライブラリのファイルの文字コード
-libraryExtension = ".vnano";      // The extention of library files - ライブラリのファイルの拡張子
+// Settings for loading library scripts was moved to: lib/VnanoLibraryList.txt
+// ライブラリの読み込み設定は下記ファイルに移動されました:
+//     lib/VnanoLibraryList.txt
 
-
-// --------------------------------------------------------------------------------------------------------------
-// Specify plug-ins by dot-separated relative paths (without extension) from "plugin" folder.
-// 使用するプラグインを、「 plugin 」フォルダから見たドット区切りの相対パス（拡張子なし）で指定します。
-// (Type: string[])
-// --------------------------------------------------------------------------------------------------------------
-
-// Contain paths of plug-ins in an array - 配列を用意し、その中にプラグインのパスを格納
-string tmpPluginPaths[2];
-tmpPluginPaths[0] = "org.vcssl.nano.plugin.calc.xci1.ScientificCalculatorPlugin";
-tmpPluginPaths[1] = "ExamplePlugin";
-
-// Specify the above array as the setting value - 上で用意した配列を設定値に指定
-pluginPaths = tmpPluginPaths;
+// Settings for loading plug-ins was moved to:
+// プラグインの読み込み設定は下記ファイルに移動されました:
+//     plugin/VnanoPluginList.txt
 
 
 // --------------------------------------------------------------------------------------------------------------

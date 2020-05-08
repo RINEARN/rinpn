@@ -18,11 +18,8 @@ import com.rinearn.processornano.RinearnProcessorNanoException;
 import com.rinearn.processornano.spec.LocaleCode;
 import com.rinearn.processornano.spec.SettingContainer;
 import com.rinearn.processornano.util.MessageManager;
-import com.rinearn.processornano.util.PluginLoader;
 
 public final class CalculatorModel {
-
-	private static final String[] PLUGIN_BASE_PATHS = { "./plugin/" };
 
 	private ScriptEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
 	private volatile boolean calculating = false;
@@ -32,7 +29,8 @@ public final class CalculatorModel {
 		return this.calculating;
 	}
 
-	public final void initialize(SettingContainer setting, String[] libraryScripts, String[] libraryScriptNames)
+	// 初期化処理
+	public final void initialize(SettingContainer setting, String libraryListFilePath, String pluginListFilePath)
 					throws RinearnProcessorNanoException {
 
 		// 式やライブラリの解釈/実行用に、Vnanoのスクリプトエンジンを読み込んで生成
@@ -48,41 +46,58 @@ public final class CalculatorModel {
 			throw new RinearnProcessorNanoException("ScriptEngine of the Vnano could not be loaded.");
 		}
 
+		// ライブラリ/プラグインの読み込みリストファイルを登録
+		try {
+			this.engine.put("___VNANO_LIBRARY_LIST_FILE", libraryListFilePath);
+			this.engine.put("___VNANO_PLUGIN_LIST_FILE", pluginListFilePath);
+
+		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
+		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
+		} catch (Exception e) {
+			String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			if (setting.localeCode.equals(LocaleCode.EN_US)) {
+				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error");
+			}
+			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
+				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー");
+			}
+			// プラグインエラーはスクリプトの構文エラーよりも深いエラーなため、常にスタックトレースを出力する
+			System.err.println("\n" + message);
+			MessageManager.showExceptionStackTrace(e);
+		}
+
 		// スクリプトエンジンに渡すオプション値マップを用意
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("ACCELERATOR_ENABLED", setting.acceleratorEnabled);
 		optionMap.put("EVAL_NUMBER_AS_FLOAT", setting.evalNumberAsFloat);
-		optionMap.put("LIBRARY_SCRIPTS", libraryScripts);
-		optionMap.put("LIBRARY_SCRIPT_NAMES", libraryScriptNames);
+		optionMap.put("EVAL_ONLY_FLOAT", setting.evalOnlyFloat);
 		optionMap.put("LOCALE", LocaleCode.toLocale(setting.localeCode));
 		optionMap.put("DUMPER_ENABLED", setting.dumperEnabled);
 		optionMap.put("DUMPER_TARGET", setting.dumperTarget);
 
 		// スクリプトエンジンにオプションマップを設定
 		engine.put("___VNANO_OPTION_MAP", optionMap);
+	}
 
-		// プラグインを読み込んでスクリプトエンジンに接続
-		PluginLoader pluginLoader = new PluginLoader(setting.localeCode);
-		pluginLoader.open(PLUGIN_BASE_PATHS);
-		for (String pluginPath: setting.pluginPaths) {
-			try {
+	// 終了時処理
+	public void shutdown(SettingContainer setting) {
+		try {
+			// プラグインを接続解除し、ライブラリ登録も削除
+			this.engine.put("___VNANO_COMMAND", "REMOVE_PLUGIN");
+			this.engine.put("___VNANO_COMMAND", "REMOVE_LIBRARY");
 
-				Object plugin = pluginLoader.loadPlugin(pluginPath);
-				engine.put("___VNANO_AUTO_KEY", plugin);
-
-			} catch (RinearnProcessorNanoException e) {
-				// 接続に失敗しても、そのプラグイン以外の機能には支障が無いため、本体側は落とさない。
-				// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
-				if (setting.localeCode.equals(LocaleCode.EN_US)) {
-					MessageManager.showErrorMessage(e.getMessage(), "Plug-in Error");
-				}
-				if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-					MessageManager.showErrorMessage(e.getMessage(), "プラグイン エラー");
-				}
-				if (setting.exceptionStackTracerEnabled) {
-					MessageManager.showExceptionStackTrace(e);
-				}
+		// shutdown に失敗しても上層ではどうしようも無いため、ここで通知し、さらに上には投げない。
+		} catch (Exception e) {
+			String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			if (setting.localeCode.equals(LocaleCode.EN_US)) {
+				MessageManager.showErrorMessage(message, "Plug-in Finalization Error");
 			}
+			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
+				MessageManager.showErrorMessage(message, "プラグイン終了時処理エラー");
+			}
+			// プラグインエラーはスクリプトの構文エラーよりも深いエラーなため、常にスタックトレースを出力する
+			System.err.println("\n" + message);
+			MessageManager.showExceptionStackTrace(e);
 		}
 	}
 
@@ -93,6 +108,26 @@ public final class CalculatorModel {
 
 		// 計算中の状態にする（AsynchronousCalculationRunner から参照する）
 		this.calculating = true;
+
+		// ライブラリ/プラグインの再読み込み
+		try {
+			this.engine.put("___VNANO_COMMAND", "RELOAD_LIBRARY");
+			this.engine.put("___VNANO_COMMAND", "RELOAD_PLUGIN");
+
+		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
+		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
+		} catch (Exception e) {
+			String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			if (setting.localeCode.equals(LocaleCode.EN_US)) {
+				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error");
+			}
+			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
+				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー");
+			}
+			// プラグインエラーはスクリプトの構文エラーよりも深いエラーなため、常にスタックトレースを出力する
+			System.err.println("\n" + message);
+			MessageManager.showExceptionStackTrace(e);
+		}
 
 		// 設定に応じて、まず入力フィールドの内容を正規化
 		if (setting.inputNormalizerEnabled) {

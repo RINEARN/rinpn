@@ -1,0 +1,11 @@
+# For loading libary scripts, write relative-paths (from this file) of them in this file.
+# ( Describe 1-path per line as follows. )
+# Also, encoding of this file should be UTF-8.
+
+# ライブラリを読み込むには、以下にこのファイルから見たライブラリの相対パスを記述してください。
+# ( 以下のように、1行につき1ライブラリファイルのパスを記述してください。)
+# なお、このファイルの文字コードはUTF-8で保存してください。
+
+# ----------------------------------------------------------------------------------------------------
+
+ExampleLibrary.vnano
