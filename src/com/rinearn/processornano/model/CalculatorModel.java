@@ -70,6 +70,7 @@ public final class CalculatorModel {
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("ACCELERATOR_ENABLED", setting.acceleratorEnabled);
 		optionMap.put("EVAL_NUMBER_AS_FLOAT", setting.evalNumberAsFloat);
+		optionMap.put("EVAL_ONLY_FLOAT", setting.evalOnlyFloat);
 		optionMap.put("LOCALE", LocaleCode.toLocale(setting.localeCode));
 		optionMap.put("DUMPER_ENABLED", setting.dumperEnabled);
 		optionMap.put("DUMPER_TARGET", setting.dumperTarget);

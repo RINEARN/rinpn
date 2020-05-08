@@ -59,6 +59,7 @@ public final class SettingContainer implements Cloneable {
 
 	public boolean acceleratorEnabled = true;
 	public boolean evalNumberAsFloat = true;
+	public boolean evalOnlyFloat = true;
 
 	public boolean dumperEnabled = false;
 	public String dumperTarget = "ALL";
