@@ -76,7 +76,7 @@ public final class MessageManager {
 		while (lineBegin < messageLength) {
 
 			// 次の最も近い句読点を探して lienEnd にインデックスを格納
-			int lineEnd = messageLength;
+			int lineEnd = messageLength - 1;
 			int[] lineEndCandidates = new int[] {
 				message.indexOf("、", lineBegin + 1),
 				message.indexOf("。", lineBegin + 1)
@@ -111,7 +111,7 @@ public final class MessageManager {
 		while (lineBegin < messageLength) {
 
 			// 次の最も近い句読点を探して lienEnd にインデックスを格納
-			int lineEnd = messageLength;
+			int lineEnd = messageLength - 1;
 			int[] lineEndCandidates = new int[] {
 				message.indexOf(", ", lineBegin + 1),
 				message.indexOf(". ", lineBegin + 1)
