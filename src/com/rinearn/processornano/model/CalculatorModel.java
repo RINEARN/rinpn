@@ -165,6 +165,7 @@ public final class CalculatorModel {
 				setting = setting.clone();
 				setting.evalNumberAsFloat = false;
 				setting.evalOnlyFloat = false;
+				setting.evalOnlyExpression = false;
 			} catch (CloneNotSupportedException e) {
 				this.calculating = false;
 				throw new RinearnProcessorNanoException(e);
@@ -213,6 +214,7 @@ public final class CalculatorModel {
 		optionMap.put("ACCELERATOR_ENABLED", setting.acceleratorEnabled);
 		optionMap.put("EVAL_NUMBER_AS_FLOAT", setting.evalNumberAsFloat);
 		optionMap.put("EVAL_ONLY_FLOAT", setting.evalOnlyFloat);
+		optionMap.put("EVAL_ONLY_EXPRESSION", setting.evalOnlyExpression);
 		optionMap.put("LOCALE", LocaleCode.toLocale(setting.localeCode));
 		optionMap.put("DUMPER_ENABLED", setting.dumperEnabled);
 		optionMap.put("DUMPER_TARGET", setting.dumperTarget);

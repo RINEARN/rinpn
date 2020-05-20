@@ -109,6 +109,21 @@ evalOnlyFloat = evalNumberAsFloat;
 
 
 // --------------------------------------------------------------------------------------------------------------
+// The option to allows only expressions as the input
+// (so, variable declaration, loop, and other statements will be denied).
+// This option does not affect to the interpretation of the code in script files.
+// INPUT欄に入力された内容の中で、式以外の記述（変数宣言やループなど）を不可能にするオプションです。
+// そのような処理はスクリプトとしてファイル内に書くのが望ましく、
+// 上記のデータ型関連のオプションなどの作用による不要な混乱を避けるために存在するオプションです。
+// このオプションは、スクリプトファイル内のコード内容の解釈には影響しません。
+// (Type: bool)
+// --------------------------------------------------------------------------------------------------------------
+
+evalOnlyExpression = true;          // Enable  - 有効化する
+// evalOnlyExpression = false;      // Enable  - 有効化する
+
+
+// --------------------------------------------------------------------------------------------------------------
 // Specify whether take Unicode-normalization to the inputted content or not.
 // INPUT欄の入力内容の中の文字に対して、Unicode正規化を行うかどうかを指定します。
 // (Type: bool)
