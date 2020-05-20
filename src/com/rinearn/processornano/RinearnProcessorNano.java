@@ -27,6 +27,7 @@ public final class RinearnProcessorNano {
 	private static final String VERSION = "0.2.3";
 	private static final String OPTION_NAME_VERSION = "--version";
 	private static final String OPTION_NAME_DEBUG = "--debug";
+	private static final String OPTION_NAME_DIR = "--dir";
 	private static final String LIBRARY_LIST_FILE = "lib/VnanoLibraryList.txt";
 	private static final String PLUGIN_LIST_FILE = "plugin/VnanoPluginList.txt";
 
@@ -34,24 +35,41 @@ public final class RinearnProcessorNano {
 	public static void main(String[] args) {
 
 		// コマンドラインから渡された内容を控える変数
-		String expression = null;     // 計算式
+		String inputtedContent = null;     // 計算対象（計算式またはスクリプト名）
 		boolean debugEnabled = false; // デバッグモードが有効かどうか
+		String dirPath = ".";         // スクリプトの読み込み基準ディレクトリのパス
 
 		// 引数の解釈
-		for (String arg: args) {
+		int argLength = args.length;
+		int argIndex = 0;
+		while (argIndex < argLength) {
 
 			// 引数がバージョン出力オプションだった場合は、バージョンを表示
-			if (arg.equals(OPTION_NAME_VERSION)) {
+			if (args[argIndex].equals(OPTION_NAME_VERSION)) {
 				printVersion();
+				return;
 
 			// 引数がデバッグオプションだった場合は、デバッグモードを有効化
-			} else if (arg.equals(OPTION_NAME_DEBUG)) {
+			} else if (args[argIndex].equals(OPTION_NAME_DEBUG)) {
 				debugEnabled = true;
+				argIndex++;
+
+			} else if (args[argIndex].equals(OPTION_NAME_DIR)) {
+				if (argLength <= argIndex + 1) {
+					if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
+						System.err.println("オプション「 " + OPTION_NAME_DIR + " 」の後に値が必要です。");
+					}
+					if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
+						System.err.println("An option value is required after \"" + OPTION_NAME_DIR + "\".");
+					}
+				}
+				dirPath = args[argIndex + 1];
+				argIndex += 2;
 
 			// それ以外の引数は計算式と見なすので、後で計算するために控える
 			} else {
-				if (expression == null) {
-					expression = arg;
+				if (inputtedContent == null) {
+					inputtedContent = args[argIndex];
 
 				// 既に計算式が控えられている場合は、引数が多すぎるのでエラー
 				} else {
@@ -62,16 +80,17 @@ public final class RinearnProcessorNano {
 						System.err.println("Too many command-line arguments.");
 					}
 				}
+				argIndex++;
 			}
 		}
 
 		// 計算式が渡されなかった場合は電卓画面を起動
-		if (expression == null) {
-			new RinearnProcessorNano().launchCalculatorWindow(debugEnabled);
+		if (inputtedContent == null) {
+			new RinearnProcessorNano().launchCalculatorWindow(dirPath, debugEnabled);
 
 		// 計算式が渡された場合はCUIモードで計算（結果はコマンドラインに表示）
 		} else {
-			new RinearnProcessorNano().calculate(expression, debugEnabled);
+			new RinearnProcessorNano().calculate(inputtedContent, dirPath, debugEnabled);
 		}
 	}
 
@@ -98,10 +117,11 @@ public final class RinearnProcessorNano {
 	/**
 	 * 電卓画面を起動せずに、計算を実行し、結果を標準出力に表示します。
 	 *
-	 * @param inputExpression 計算式（式またはスクリプトコード）
+	 * @param inputtedContent 計算対象（計算式またはスクリプト名）
+	 * @param dirPath スクリプトの読み込み基準ディレクトリのパス
 	 * @param debug デバッグ情報を出力するかどうか
 	 */
-	public final void calculate(String inputExpression, boolean debug) {
+	public final void calculate(String inputtedContent, String dirPath, boolean debug) {
 
 		// メッセージの出力をコマンドラインモードに変更
 		MessageManager.setDisplayType(MessageManager.DISPLAY_MODE.CUI);
@@ -111,7 +131,7 @@ public final class RinearnProcessorNano {
 		CalculatorModel calculator = null;
 		try {
 			setting = this.createInitializedSettingContainer(debug);
-			calculator = this.createInitializedCalculatorModel(setting);
+			calculator = this.createInitializedCalculatorModel(dirPath, setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
@@ -124,10 +144,10 @@ public final class RinearnProcessorNano {
 		// 計算を実行して結果を表示
 		String outputText = null;
 		try {
-			outputText = calculator.calculate(inputExpression, setting);
+			outputText = calculator.calculate(inputtedContent, setting);
 			System.out.println(outputText);
 
-		} catch (ScriptException e) {
+		} catch (ScriptException | RinearnProcessorNanoException e) {
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
 			MessageManager.showErrorMessage(message, "!");
 			if (setting==null || setting.exceptionStackTracerEnabled) {
@@ -145,14 +165,14 @@ public final class RinearnProcessorNano {
 	 *
 	 * @param debug デバッグモードで起動するかどうか
 	 */
-	public final void launchCalculatorWindow(boolean debug) {
+	public final void launchCalculatorWindow(String dirPath, boolean debug) {
 
 		// 設定値コンテナと計算機モデルを生成して初期化
 		SettingContainer setting = null;
 		CalculatorModel calculator = null;
 		try {
 			setting = this.createInitializedSettingContainer(debug);
-			calculator = this.createInitializedCalculatorModel(setting);
+			calculator = this.createInitializedCalculatorModel(dirPath, setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
@@ -224,12 +244,12 @@ public final class RinearnProcessorNano {
 	 * @throws RinearnProcessorNanoException
 	 * 		スクリプトエンジンの接続や、ライブラリの読み込みエラーなどで失敗した場合にスローされます。
 	 */
-	private final CalculatorModel createInitializedCalculatorModel(SettingContainer setting)
+	private final CalculatorModel createInitializedCalculatorModel(String dirPath, SettingContainer setting)
 			throws RinearnProcessorNanoException {
 
 		// 計算機のインスタンスを生成、初期化して返す
 		CalculatorModel calculator = new CalculatorModel();
-		calculator.initialize(setting, LIBRARY_LIST_FILE, PLUGIN_LIST_FILE);
+		calculator.initialize(setting, dirPath, LIBRARY_LIST_FILE, PLUGIN_LIST_FILE);
 		return calculator;
 	}
 

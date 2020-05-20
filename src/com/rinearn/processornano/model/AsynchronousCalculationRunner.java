@@ -7,6 +7,7 @@ package com.rinearn.processornano.model;
 
 import javax.script.ScriptException;
 
+import com.rinearn.processornano.RinearnProcessorNanoException;
 import com.rinearn.processornano.util.LocaleCode;
 import com.rinearn.processornano.util.MessageManager;
 import com.rinearn.processornano.util.SettingContainer;
@@ -51,13 +52,13 @@ public final class AsynchronousCalculationRunner implements Runnable {
 		try {
 			outputText = this.calculator.calculate(this.inputExpression, this.setting);
 
-		} catch (ScriptException e) {
+		} catch (ScriptException | RinearnProcessorNanoException e) {
 			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(errorMessage, "Input/Library Error");
+				MessageManager.showErrorMessage(errorMessage, "Expression/Script Error");
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(errorMessage, "計算式やライブラリのエラー");
+				MessageManager.showErrorMessage(errorMessage, "計算式やスクリプトのエラー");
 			}
 			if (setting.exceptionStackTracerEnabled) {
 				MessageManager.showExceptionStackTrace(e);

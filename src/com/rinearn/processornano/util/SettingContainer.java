@@ -7,9 +7,6 @@ package com.rinearn.processornano.util;
 
 import java.awt.Font;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +26,7 @@ public final class SettingContainer implements Cloneable {
 	public static final Font EXIT_BUTTON_FONT = new Font("Dialog", Font.BOLD, 14);
 
 	public static final String SETTING_SCRIPT_PATH = "./Setting.vnano";
-	public static final String SETTING_SCRIPT_ENCODING = "UTF-8";
+	public static final String DEFAULT_SETTING_SCRIPT_ENCODING = "UTF-8";
 
 	public static final int MAX_ROUNDING_LENGTH = 100;
 
@@ -70,6 +67,16 @@ public final class SettingContainer implements Cloneable {
 	public boolean exceptionStackTracerEnabled = false;
 
 	public String localeCode = LocaleCode.getDefaultLocaleCode();
+
+
+	@Override
+	public SettingContainer clone() throws CloneNotSupportedException {
+		SettingContainer cloned = (SettingContainer) ( super.clone() );
+
+		// 参照型のフィールドを追加した際はここでコピー処理を追記
+
+		return cloned;
+	}
 
 
 	public synchronized final void evaluateSettingScript(
@@ -139,9 +146,15 @@ public final class SettingContainer implements Cloneable {
 			System.out.println("");
 		}
 
-		// 設定スクリプトを読み込み、実行して設定ファイルの記述内容を解釈する
-		try (FileReader fileReader = new FileReader(settingScriptFile)) {
-			settingVnanoEngine.eval(fileReader);
+		// 設定スクリプトを読み込む
+		SettingContainer defaultSetting = new SettingContainer(); // 設定を読み込むために使うデフォルトの設定（言語ロケールなどが影響）
+		String settingScriptCode = ScriptFileLoader.load(
+			settingScriptFile.getPath(), ".", DEFAULT_SETTING_SCRIPT_ENCODING, defaultSetting
+		);
+
+		// 読み込んだ設定スクリプトを実行して、設定ファイルの記述内容を解釈する
+		try {
+			settingVnanoEngine.eval(settingScriptCode);
 
 		// 設定スクリプトの内容にエラーがあった場合
 		} catch (ScriptException se) {
@@ -153,26 +166,6 @@ public final class SettingContainer implements Cloneable {
 				MessageManager.showErrorMessage(errorMessage, "設定スクリプトのエラー");
 			}
 			throw new RinearnProcessorNanoException(se);
-
-		// 設定スクリプトのファイルが無かった場合
-		} catch (FileNotFoundException fnfe) {
-			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage("The setting script file \"" + settingScriptFilePath + "\" not found", "Setting Error");
-			}
-			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage("設定スクリプトファイル「 " + settingScriptFilePath + " 」が見つかりません。", "設定スクリプトのエラー");
-			}
-
-		// I/Oエラーが生じた場合
-		} catch (IOException ioe) {
-			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage("An I/O error occurred on the accessing to the setting script file \"" + settingScriptFilePath + "\"", "Setting Error");
-				ioe.printStackTrace();
-			}
-			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage("設定スクリプトファイル「 " + settingScriptFilePath + " 」の読み込みでI/Oエラーが発生しました。", "設定スクリプトのエラー");
-				ioe.printStackTrace();
-			}
 		}
 
 		// ライブラリ/プラグインを接続解除
