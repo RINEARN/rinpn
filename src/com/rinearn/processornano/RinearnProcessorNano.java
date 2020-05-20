@@ -131,7 +131,7 @@ public final class RinearnProcessorNano {
 		CalculatorModel calculator = null;
 		try {
 			setting = this.createInitializedSettingContainer(debug);
-			calculator = this.createInitializedCalculatorModel(dirPath, setting);
+			calculator = this.createInitializedCalculatorModel(dirPath, false, setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
@@ -144,8 +144,10 @@ public final class RinearnProcessorNano {
 		// 計算を実行して結果を表示
 		String outputText = null;
 		try {
-			outputText = calculator.calculate(inputtedContent, setting);
-			System.out.println(outputText);
+			outputText = calculator.calculate(inputtedContent, false, setting);
+			if (outputText != null) {
+				System.out.println(outputText);
+			}
 
 		} catch (ScriptException | RinearnProcessorNanoException e) {
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
@@ -172,7 +174,7 @@ public final class RinearnProcessorNano {
 		CalculatorModel calculator = null;
 		try {
 			setting = this.createInitializedSettingContainer(debug);
-			calculator = this.createInitializedCalculatorModel(dirPath, setting);
+			calculator = this.createInitializedCalculatorModel(dirPath, true, setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
@@ -244,12 +246,12 @@ public final class RinearnProcessorNano {
 	 * @throws RinearnProcessorNanoException
 	 * 		スクリプトエンジンの接続や、ライブラリの読み込みエラーなどで失敗した場合にスローされます。
 	 */
-	private final CalculatorModel createInitializedCalculatorModel(String dirPath, SettingContainer setting)
+	private final CalculatorModel createInitializedCalculatorModel(String dirPath, boolean isGuiMode, SettingContainer setting)
 			throws RinearnProcessorNanoException {
 
 		// 計算機のインスタンスを生成、初期化して返す
 		CalculatorModel calculator = new CalculatorModel();
-		calculator.initialize(setting, dirPath, LIBRARY_LIST_FILE, PLUGIN_LIST_FILE);
+		calculator.initialize(setting, isGuiMode, dirPath, LIBRARY_LIST_FILE, PLUGIN_LIST_FILE);
 		return calculator;
 	}
 

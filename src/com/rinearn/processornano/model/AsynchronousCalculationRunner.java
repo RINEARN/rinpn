@@ -50,7 +50,7 @@ public final class AsynchronousCalculationRunner implements Runnable {
 		// 入力フィールドの計算式を実行し、結果の値を取得
 		String outputText = "";
 		try {
-			outputText = this.calculator.calculate(this.inputExpression, this.setting);
+			outputText = this.calculator.calculate(this.inputExpression, true, this.setting);
 
 		} catch (ScriptException | RinearnProcessorNanoException e) {
 			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());

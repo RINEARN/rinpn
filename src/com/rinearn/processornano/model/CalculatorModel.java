@@ -27,7 +27,41 @@ public final class CalculatorModel {
 
 	private ScriptEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
 	private String dirPath = ".";
+
 	private volatile boolean calculating = false;
+
+	// スクリプト内から下記の組み込み関数「 output 」を呼んで渡した値を控えておくフィールド（GUIモードでの表示用）
+	private String lastOutputContent = null;
+
+	// スクリプトエンジンに組み込み関数「 output 」を提供するプラグインクラス
+	public class OutputPlugin {
+
+		private boolean isGuiMode;
+		public OutputPlugin(boolean isGuiMode) {
+			this.isGuiMode = isGuiMode;
+		}
+
+		public void output(String value) {
+
+			// GUIモード用に値を控える
+			CalculatorModel.this.lastOutputContent = value;
+
+			// CUIモード用に値を標準出力に出力する
+			if (!this.isGuiMode) {
+				System.out.println(value);
+			}
+		}
+		public void output(long value) {
+			this.output( Long.toString(value) );
+		}
+		public void output(double value) {
+			this.output( Double.toString(value) );
+		}
+		public void output(boolean value) {
+			this.output( Boolean.toString(value) );
+		}
+	}
+
 
 	// AsynchronousCalculationRunner から参照する
 	public final boolean isCalculating() {
@@ -35,7 +69,8 @@ public final class CalculatorModel {
 	}
 
 	// 初期化処理
-	public final void initialize(SettingContainer setting, String dirPath, String libraryListFilePath, String pluginListFilePath)
+	public final void initialize(
+			SettingContainer setting, boolean isGuiMode, String dirPath, String libraryListFilePath, String pluginListFilePath)
 					throws RinearnProcessorNanoException {
 
 		this.dirPath = dirPath;
@@ -72,7 +107,11 @@ public final class CalculatorModel {
 			System.err.println("\n" + message);
 			MessageManager.showExceptionStackTrace(e);
 		}
+
+		// 組み込み関数「 output 」を提供するプラグイン（このクラス内に内部クラスとして実装）を登録
+		this.engine.put("OutputPlugin", new CalculatorModel.OutputPlugin(isGuiMode));
 	}
+
 
 	// 終了時処理
 	public void shutdown(SettingContainer setting) {
@@ -97,12 +136,13 @@ public final class CalculatorModel {
 	}
 
 
-	// (AsynchronousCalculationListener から呼ばれて実行される)
-	public final synchronized String calculate(String inputtedContent, SettingContainer setting)
+	// CUIモードでは RinearnProcessorNano.calculate、GUIモードでは AsynchronousCalculationListener.run から呼ばれて実行される
+	public final synchronized String calculate(String inputtedContent, boolean isGuiMode, SettingContainer setting)
 			throws ScriptException, RinearnProcessorNanoException {
 
 		// 計算中の状態にする（AsynchronousCalculationRunner から参照する）
 		this.calculating = true;
+		this.lastOutputContent = null;
 
 		// 入力内容が計算式かどうかを控えるフラグ（スクリプトファイルの場合は false になる）
 		boolean expressionInputted;
@@ -198,22 +238,27 @@ public final class CalculatorModel {
 			}
 		}
 
-		// 値を文字列化
-		String outputText = "";
-		if (value != null) {
-			outputText = value.toString();
-		}
-
 		// 計算終了状態に戻す（AsynchronousCalculationRunner から参照する）
 		this.calculating = false;
 
-		// 計算式を実行した場合は、その式の値を出力する
-		if (expressionInputted) {
-			return outputText;
 
-		// スクリプトファイルを実行した場合は、自動では何も出力しない（スクリプト内から明示的に出力する）
+		// 計算式を実行した場合は、その式の値を文字列化して出力する
+		if (expressionInputted) {
+			if (value != null) {
+				value = value.toString();
+			}
+			return (String)value;
+
+		// スクリプトファイルを実行した場合は、スクリプト内から組み込み関数「 output 」を呼んで渡した内容が
+		// このクラスの lastOutputContent フィールドに保持されている（内部クラス OutputPlugin 参照）ので、
+		// GUIモードではそれを出力フィールドに表示するために返す。
+		// CUIモードでは逐次的に標準出力に出力済みなのでもう何も追加出力する必要は無く、従って何も返さない。
 		} else {
-			return "";
+			if (isGuiMode) {
+				return this.lastOutputContent;
+			} else {
+				return null;
+			}
 		}
 	}
 
