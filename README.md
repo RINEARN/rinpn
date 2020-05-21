@@ -412,28 +412,11 @@ For example, the default content of "ExampleLibrary.vnano" is as follows:
 
 	( in lib/ExampleLibrary.vnano )
 
-	// Note: The precision of "float" type in the Vnano is 64-bit, same with "double".
-	// 備考: Vnano での「 float 」型は、いわゆる「 double 」型と同様の64bit精度です。
+	float libvar = 2.0;
 
-	float a = 2.0;
-	float b = -1.0;
-	float c = 3.0;
-
-	float r = 1.01;
-
-	float f(float x) {
-		return a*x*x + b*x + c;
-	}
-
-	float g(float x) {
-		if (x < 0) {
-			return 0.0;
-		}
-		float value = x;
-		for (int i=0; i<10; i++) {
-			value *= r;
-		}
-		return value;
+	float libfun(float x) {
+		float result = libvar * x + 1;
+		return result;
 	}
 
 In the the expression inputted to the the calculator (see Step-1 and Step-2), you can use variables and functions defined in the above script, as the following example:
@@ -441,16 +424,16 @@ In the the expression inputted to the the calculator (see Step-1 and Step-2), yo
 Step-1 や Step-2 で扱った電卓の計算式の中で、上記のスクリプト内で定義されている変数や関数を、以下の例のように使用できます：
 
 	INPUT:
-	a + b + c
+	libvar
 
 	OUTPUT:
-	4
+	2
 
 	INPUT:
-	( 1 + 2 * f(3) ) / g(1.23)
+	libfun(1.23)
 
 	OUTPUT:
-	27.23220921
+	3.46
 
 If you want, you can create other script files and can define variables and functions in them. When you have created/appended new script files, describe its file path in the content of the text file "VnanoLibraryList.txt" in "lib" folder, for loading it.
 

@@ -13,6 +13,9 @@ coding UTF-8;
  * License: CC0
  ****************************************************************************************************/
 
+// Note: The precision of "float" type in the Vnano is 64-bit, same with "double".
+// 備考: Vnano での「 float 」型は、いわゆる「 double 」型と同様の64bit精度です。
+
 // Integration parameters - 積分パラメータ
 float A = 0.0;
 float B = 1.0;
