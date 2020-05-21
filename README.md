@@ -38,6 +38,7 @@ You can also get prebuilt-packages of this software from the above official webs
 - <a href="#how-to-use">How to Use - 使用方法</a>
 	- <a href="#how-to-use-gui">How to Use in the GUI Mode - GUIモードでの使用方法</a>
 	- <a href="#how-to-use-cui">How to Use in the CUI Mode - CUIモードでの使用方法</a>
+	- <a href="#how-to-use-script">How to Execute Script Code - スクリプトを実行する</a>
 	- <a href="#how-to-use-library">How to Define Variables and Functions as Script Code - スクリプトで変数や関数を定義する</a>
 	- <a href="#how-to-implement-plugin">How to Implement Built-in Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する</a>
 - <a href="#built-in">Built-in Functions and Variables - 組み込み関数/変数</a>
@@ -321,26 +322,93 @@ of your OS, wherever the current directory is, you can take calculations by more
 	2
 
 
+<a id="how-to-use-script"></a>
+### Step-3. How to Execute Script Code - スクリプトを実行する
+
+The RINPn can execute a script file written in the 
+"<a href="https://www.vcssl.org/en-us/vnano/">Vnano</a>", 
+to perform procedural, algorithmic, or other complicated calculations.
+The vnano is a simple programming language with C-like syntax.
+For details of syntax and so on of the Vnano, see: "<a href="https://www.vcssl.org/en-us/vnano/doc/tutorial/language">Features of the Vnano as a Language</a>".
+To create a script of the Vnano, no installation of development environments such as the compiler is required. Simply create a text file of which name ends with the extention ".vnano", and write code in there.
+
+RINPn では、手続き的な計算やアルゴリズム的な計算、またはその他の複雑な計算処理を行いたい場合のために、「 <a href="https://www.vcssl.org/ja-jp/vnano/">Vnano</a> 」という言語で記述したスクリプトファイルを実行する事もできます。Vnano は、C言語系の文法を持つ簡易プログラミング言語で、
+具体的な記法などについては「 <a href="https://www.vcssl.org/ja-jp/vnano/doc/tutorial/language">言語としてのVnano</a> 」をご参照ください。
+Vnano のスクリプトを作成するために、コンパイラなどの特別な開発環境の導入は不要です。拡張子「 .vnano 」で終わる名前のテキストファイルを作成して、その中にコードを書くだけでOKです。
+
+As an example, the following script file is contained in this repository 
+(and in the downloaded package):
+
+記述例として、以下のスクリプトファイル「 Example.vnano 」がこのリポジトリ内（およびダウンロードパッケージ内）に同梱されています：
+
+	( in Example.vnano )
+
+	// Integration parameters - 積分パラメータ
+	float A = 0.0;
+	float B = 1.0;
+	int N = 10000;
+
+	// Integrant function - 被積分関数
+	float f(float x) {
+    	return cos(x);
+	}
+
+	// Perform integration - 積分を実行
+	float delta = (B - A) / N;
+	float value = 0.0;
+	for(int i=0; i<N; ++i) {
+    	float x = A + i * delta;
+    	value += ( f(x) + f(x+delta) + 4.0 * f(x+delta/2.0) ) * delta / 6.0;
+	}
+
+	// Output result - 結果を出力
+	output(value);
+
+The above example script calculates the numerical integration value of cos(x) from 0 to 1.To execute this script, launch the RINPn and then input the script file name (or path) into "INPUT" text-field as follows:
+
+上記のサンプルスクリプトは、cos(x) の 0 から 1 までの数値積分値を計算する内容になっています。
+このスクリプトを実行するには、まず RINPn を起動し、そしてスクリプトファイルの名前（またはパス）を「 INPUT 」欄に以下のように入力します：
+
+	INPUT:
+	Example.vnano
+
+	OUTPUT:
+	0.8414709848
+
+Then press the enter key, and the script will be executed and its output value "0.8414709848" will be displayed on "OUTPUT" text-field as above.
+The above output value is matched well with the value of sin(1) which is the theoretical integration value of cos(x) from 0 to 1, so it indicates that the above example script has run correctly.
+
+そして「 Enter 」キーを押すと、上記のように「 OUTPUT 」欄にスクリプトの出力「 0.8414709848 」が表示されます。この出力値は、cos(x) の 0 から 1 までの積分の理論値である sin(1) とよく一致しており、
+上記サンプルスクリプトが正しく実行された事がわかります。
+
+If you want to execute a script file in the different folder with the folder at which you has launched the RINPn, it is necessary to input the absolute file path ("C:\\...\\Example.vnano", "/home/.../Example.vnano", etc.) of the script to execute it.
+On the other hand, if the path of "bin" folder is registered to the environment variable "PATH" (or "Path"), you can execute a script in any folder easily. Firstly "cd" to the folder in which the script is locating, and then pass the name of the script file to "rinpn" command:
+
+RINPn を起動したフォルダとは別のフォルダ内にあるスクリプトを実行したい場合、通常はそのスクリプトファイルの絶対パス（例えば "C:\\...\\Example.vnano" や "/home/.../Example.vnano" など）を入力する必要があります。
+そこで、OSの環境変数 PATH （または Path ）に「bin」フォルダのパスを登録しておくと、
+次のようにスクリプトのあるフォルダに cd した後は、rinpn コマンドにスクリプト名を渡すだけで実行できるようになります：
+
+	cd <folder>
+	rinpn "Example.vnano"
+
+	(result)
+	0.8414709848
+
+where \<folder\> is the path of the folder in which Example.vnano (or your script to be executed) is locating.
+
+ここで上記の \<folder\> は、Example.vnano （または実行したいスクリプトファイル）があるフォルダのパスを表しています。
+
+
 <a id="how-to-use-library"></a>
-### Step-3. How to Define Variables and Functions as Script Code - スクリプトで変数や関数を定義する
+### Step-4. How to Define Variables and Functions as Script Code - スクリプトで変数や関数を定義する
 
 You can define variables and functions in the script file "ExampleLibrary.vnano" in "lib" folder.
-Defined variables and functions are available in expressions of the Step-1 and 2. 
-The content of the script file should be written in the script language of the Vnano 
-(see "<a href="https://github.com/RINEARN/vnano#language">The Vnano as a Language</a>" for details).
-It does not require installation of development environments such as the compiler, 
-so simply open the above file by your favorite text editor, and write code in there.
-
-「 lib 」フォルダ内にあるスクリプトファイル「 ExampleLibrary.vnano 」の中で、変数や関数を定義できます。
-そこで定義した変数や関数は、Step-1 や 2 での計算式の中で使用できます。
-なお、スクリプトファイルの中身は、Vnano のスクリプト言語の記法
-（ 詳細は「 <a href="https://github.com/RINEARN/vnano#language">言語としてのVnano</a> 」を参照 ）
-で記述する必要があります。
-コンパイラなどの特別な開発環境の導入は不要なので、適当なテキストエディタで上記ファイルを開き、中にコードを書いてください。
-
+Defined variables and functions are available in expressions of the Step-1 and 2, and in scripts of the Step-3. 
 For example, the default content of "ExampleLibrary.vnano" is as follows:
 
-例えば、標準状態での「 ExampleLibrary.vnano 」の内容は以下の通りです：
+「 lib 」フォルダ内にあるスクリプトファイル「 ExampleLibrary.vnano 」の中で、変数や関数を定義できます。
+そこで定義した変数や関数は、Step-1 や 2 での計算式の中や、Step-3 のスクリプト内で使用できます。
+例えば、標準状態での「 ExampleLibrary.vnano 」の記述内容は以下の通りです：
 
 	( in lib/ExampleLibrary.vnano )
 
@@ -391,7 +459,7 @@ If you want, you can create other script files and can define variables and func
 
 
 <a id="how-to-implement-plugin"></a>
-### Step-4. How to Implement Built-in Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する
+### Step-5. How to Implement Built-in Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する
 
 You can implement new built-in variables and function in the Java&reg; programming language.
 In this way, compared to defining variables/functions as script code (in the step-3), 
