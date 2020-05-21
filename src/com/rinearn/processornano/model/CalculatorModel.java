@@ -153,15 +153,19 @@ public final class CalculatorModel {
 
 		// 計算中の状態にする（AsynchronousCalculationRunner から参照する）
 		this.calculating = true;
+
+		// スクリプト内から output 関数に渡した内容を控える変数をクリア
 		this.lastOutputContent = null;
 
-		// 入力内容が計算式かどうかを控えるフラグ（スクリプトファイルの場合は false になる）
-		boolean expressionInputted;
+		// 入力内容がスクリプトかどうか、およびスクリプト名を控える
+		boolean scriptFileInputted = false;  // スクリプトの場合は true, 計算式の場合は false
+		String scriptFileName = null;
 
 		// 入力内容がスクリプトの拡張子で終わっている場合は、実行対象スクリプトファイルのパスと見なす
 		if (inputtedContent.endsWith(SCRIPT_EXTENSION)) {
 
-			expressionInputted = false;
+			scriptFileInputted = true;
+			scriptFileName = inputtedContent;
 
 			// 入力内容をスクリプトファイルの内容で置き換え
 			try {
@@ -184,8 +188,6 @@ public final class CalculatorModel {
 
 		// それ以外は計算式と見なす
 		} else {
-
-			expressionInputted = true;
 
 			// 式の記述内容を設定に応じて正規化（全角を半角にしたりなど）
 			if (setting.inputNormalizerEnabled) {
@@ -229,6 +231,9 @@ public final class CalculatorModel {
 		optionMap.put("LOCALE", LocaleCode.toLocale(setting.localeCode));
 		optionMap.put("DUMPER_ENABLED", setting.dumperEnabled);
 		optionMap.put("DUMPER_TARGET", setting.dumperTarget);
+		if (scriptFileInputted) {
+			optionMap.put("EVAL_SCRIPT_NAME", scriptFileName);
+		}
 		engine.put("___VNANO_OPTION_MAP", optionMap);
 
 
@@ -243,36 +248,36 @@ public final class CalculatorModel {
 			throw e;
 		}
 
-		// 値が浮動小数点数なら、設定内容に応じて丸め、書式を調整
-		if (value instanceof Double) {
-			if ( !((Double)value).isNaN() && !((Double)value).isInfinite() ) {
-				value = OutputValueFormatter.round( ((Double)value).doubleValue(), setting); // 丸め処理： 結果は BigDecimal
-				value = OutputValueFormatter.simplify( (BigDecimal)value );                  // 書式調整： 結果は String
-			}
-		}
-
-		// 計算終了状態に戻す（AsynchronousCalculationRunner から参照する）
-		this.calculating = false;
-
-
-		// 計算式を実行した場合は、その式の値を文字列化して出力する
-		if (expressionInputted) {
-			if (value != null) {
-				value = value.toString();
-			}
-			return (String)value;
+		// このメソッドの戻り値（出力フィールドに表示される文字列）を格納する
+		String outputText = null;
 
 		// スクリプトファイルを実行した場合は、スクリプト内から組み込み関数「 output 」を呼んで渡した内容が
 		// このクラスの lastOutputContent フィールドに保持されている（内部クラス OutputPlugin 参照）ので、
 		// GUIモードではそれを出力フィールドに表示するために返す。
 		// CUIモードでは逐次的に標準出力に出力済みなのでもう何も追加出力する必要は無く、従って何も返さない。
-		} else {
+		if (scriptFileInputted) {
 			if (isGuiMode) {
-				return this.lastOutputContent;
-			} else {
-				return null;
+				outputText = this.lastOutputContent;
 			}
+
+		// 計算式を実行した場合は、その式の値を丸めた上で文字列化して出力する
+		} else {
+			if (value instanceof Double) {
+				if ( !((Double)value).isNaN() && !((Double)value).isInfinite() ) {
+					value = OutputValueFormatter.round( ((Double)value).doubleValue(), setting); // 丸め処理： 結果は BigDecimal
+					value = OutputValueFormatter.simplify( (BigDecimal)value );                  // 書式調整： 結果は String
+				}
+			}
+			if (value != null) {
+				value = value.toString();
+			}
+			outputText = (String)value;
 		}
+
+		// 計算終了状態に戻す（AsynchronousCalculationRunner から参照する）
+		this.calculating = false;
+
+		return outputText;
 	}
 
 
