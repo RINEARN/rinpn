@@ -37,7 +37,9 @@ public final class CalculatorModel {
 	public class OutputPlugin {
 
 		private boolean isGuiMode;
-		public OutputPlugin(boolean isGuiMode) {
+		private SettingContainer setting;
+		public OutputPlugin(SettingContainer setting, boolean isGuiMode) {
+			this.setting = setting;
 			this.isGuiMode = isGuiMode;
 		}
 
@@ -55,7 +57,16 @@ public final class CalculatorModel {
 			this.output( Long.toString(value) );
 		}
 		public void output(double value) {
-			this.output( Double.toString(value) );
+
+			// 設定内容に応じて丸め、書式を調整
+			if ( !((Double)value).isNaN() && !((Double)value).isInfinite() ) {
+				BigDecimal roundedValue = OutputValueFormatter.round( ((Double)value).doubleValue(), this.setting);
+				String simplifiedValue = OutputValueFormatter.simplify( roundedValue );
+				this.output(simplifiedValue);
+
+			} else {
+				this.output( Double.toString(value) );
+			}
 		}
 		public void output(boolean value) {
 			this.output( Boolean.toString(value) );
@@ -109,7 +120,7 @@ public final class CalculatorModel {
 		}
 
 		// 組み込み関数「 output 」を提供するプラグイン（このクラス内に内部クラスとして実装）を登録
-		this.engine.put("OutputPlugin", new CalculatorModel.OutputPlugin(isGuiMode));
+		this.engine.put("OutputPlugin", new CalculatorModel.OutputPlugin(setting, isGuiMode));
 	}
 
 
