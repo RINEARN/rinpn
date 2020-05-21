@@ -1,0 +1,36 @@
+coding UTF-8;
+
+/****************************************************************************************************
+ * An example script calculating the numerical integration value of cos(x) from B (=0) to A (=1).
+ * This code is written in the C-like simple scripting language "Vnano (VCSSL nano)".
+ * For syntax etc. of Vnano, see:  https://github.com/RINEARN/vnano/#language
+ * 
+ * スクリプトの記述例として、cos(x) の B (=0) から A (=1) までの数値積分の値を計算します。
+ * このコードは、C言語系の文法の簡易スクリプト言語「Vnano (VCSSL nano)」で書かれています。
+ * Vnano の文法などについては： https://github.com/RINEARN/vnano/#language
+ * 計算アルゴリズムについては： https://www.vcssl.org/ja-jp/code/archive/0001/3200-integral-simpson/
+ * 
+ * License: CC0
+ ****************************************************************************************************/
+
+// Integration parameters - 積分パラメータ
+float A = 0.0;
+float B = 1.0;
+int N = 100000;
+
+// Integrant function - 被積分関数
+float f(float x) {
+    return cos(x);
+}
+
+// Perform integration by using simpson's rule - シンプソン法による近似を用いて積分値を求める
+float delta = (B - A) / N;
+float value = 0.0;
+for(int i=0; i<N; ++i) {
+    float x = A + i * delta;
+    value += ( f(x) + f(x+delta) + 4.0 * f(x+delta/2.0) ) * delta / 6.0;
+}
+
+// Output result - 結果を出力
+output(value);
+
