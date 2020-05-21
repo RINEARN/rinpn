@@ -13,9 +13,9 @@ cd "$SCRIPT_DIR"
 cd ..
 
 if [ -z "$1" ]; then 
-	java -jar RINPn.jar
+	java -jar RINPn.jar --dir "$CALLER_DIR"
 else
-	java -jar RINPn.jar "$1"
+	java -jar RINPn.jar --dir "$CALLER_DIR" "$1"
 fi
 
 cd "$CALLER_DIR"

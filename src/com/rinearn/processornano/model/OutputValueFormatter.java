@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
@@ -10,8 +10,8 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 
 import com.rinearn.processornano.RinearnProcessorNanoFatalException;
-import com.rinearn.processornano.spec.RoundingTarget;
-import com.rinearn.processornano.spec.SettingContainer;
+import com.rinearn.processornano.util.RoundingTarget;
+import com.rinearn.processornano.util.SettingContainer;
 
 public final class OutputValueFormatter {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
@@ -25,7 +25,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultEditorKit;
 
-import com.rinearn.processornano.spec.SettingContainer;
+import com.rinearn.processornano.util.SettingContainer;
 
 public final class ViewImpl implements ViewInterface {
 

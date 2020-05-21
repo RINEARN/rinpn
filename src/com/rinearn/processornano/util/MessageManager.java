@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
@@ -7,8 +7,6 @@ package com.rinearn.processornano.util;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-
-import com.rinearn.processornano.spec.LocaleCode;
 
 public final class MessageManager {
 
@@ -154,12 +152,19 @@ public final class MessageManager {
 		// このソフトでは1行の内容しか渡せないため、行番号が表示されてもうれしくないので省略
 		// (毎回同じ内容になる)
 		String defaultErrorSourceDescription = ": in EVAL_SCRIPT at line number 1";
-
-		String result = message;
-		if (result.endsWith(defaultErrorSourceDescription)) {
-			result = result.substring(0, result.length() - defaultErrorSourceDescription.length());
+		if (message.endsWith(defaultErrorSourceDescription)) {
+			message = message.substring(0, message.length() - defaultErrorSourceDescription.length());
 		}
-		return result;
+
+		// 型をfloatのみに制限するオプションによるエラーメッセージは、
+		// エンジン側では式の実行時だけでなくスクリプト実行時にも効き、ライブラリスクリプトに対してのみ効かない。
+		// しかしこのソフトでは、スクリプト実行時には効かないようにオプションを OFF にしているため、
+		// 説明がソフト仕様とちぐはぐにならないようにメッセージを少し調整する。
+		// ※ 元のメッセージは org.vcssl.nano.spec.ErrorMessage の NON_FLOAT_DATA_TYPES_ARE_RESTRICTED 参照
+		message = message.replaceAll("ライブラリスクリプト内を除き、", "ファイルに書かれたスクリプトコード内を除き、");
+		message = message.replaceAll("except in library scripts", "except in scripts written in files");
+
+		return message;
 	}
 
 }

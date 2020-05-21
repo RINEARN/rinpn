@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
@@ -7,9 +7,10 @@ package com.rinearn.processornano.model;
 
 import javax.script.ScriptException;
 
-import com.rinearn.processornano.spec.LocaleCode;
-import com.rinearn.processornano.spec.SettingContainer;
+import com.rinearn.processornano.RinearnProcessorNanoException;
+import com.rinearn.processornano.util.LocaleCode;
 import com.rinearn.processornano.util.MessageManager;
+import com.rinearn.processornano.util.SettingContainer;
 
 
 public final class AsynchronousCalculationRunner implements Runnable {
@@ -49,15 +50,15 @@ public final class AsynchronousCalculationRunner implements Runnable {
 		// 入力フィールドの計算式を実行し、結果の値を取得
 		String outputText = "";
 		try {
-			outputText = this.calculator.calculate(this.inputExpression, this.setting);
+			outputText = this.calculator.calculate(this.inputExpression, true, this.setting);
 
-		} catch (ScriptException e) {
+		} catch (ScriptException | RinearnProcessorNanoException e) {
 			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(errorMessage, "Input/Library Error");
+				MessageManager.showErrorMessage(errorMessage, "Expression/Script Error");
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(errorMessage, "計算式やライブラリのエラー");
+				MessageManager.showErrorMessage(errorMessage, "計算式やスクリプトのエラー");
 			}
 			if (setting.exceptionStackTracerEnabled) {
 				MessageManager.showExceptionStackTrace(e);

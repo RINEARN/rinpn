@@ -9,8 +9,10 @@ if "%2" == "" (
 	exit /b
 )
 
+set CALLER_DIR=%CD%
+
 cd /d %~dp0
 cd ..
 
-java -jar RINPn.jar %1
+java -jar RINPn.jar --dir "%CALLER_DIR%" %1
 

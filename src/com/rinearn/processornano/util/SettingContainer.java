@@ -1,11 +1,12 @@
 /*
- * Copyright(C) 2019 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.spec;
+package com.rinearn.processornano.util;
 
 import java.awt.Font;
+import java.io.File;
 import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +16,6 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import com.rinearn.processornano.RinearnProcessorNanoException;
-import com.rinearn.processornano.util.MessageManager;
 
 public final class SettingContainer implements Cloneable {
 
@@ -26,7 +26,7 @@ public final class SettingContainer implements Cloneable {
 	public static final Font EXIT_BUTTON_FONT = new Font("Dialog", Font.BOLD, 14);
 
 	public static final String SETTING_SCRIPT_PATH = "./Setting.vnano";
-	public static final String SETTING_SCRIPT_ENCODING = "UTF-8";
+	public static final String DEFAULT_SETTING_SCRIPT_ENCODING = "UTF-8";
 
 	public static final int MAX_ROUNDING_LENGTH = 100;
 
@@ -60,6 +60,7 @@ public final class SettingContainer implements Cloneable {
 	public boolean acceleratorEnabled = true;
 	public boolean evalNumberAsFloat = true;
 	public boolean evalOnlyFloat = true;
+	public boolean evalOnlyExpression = true;
 
 	public boolean dumperEnabled = false;
 	public String dumperTarget = "ALL";
@@ -69,12 +70,23 @@ public final class SettingContainer implements Cloneable {
 	public String localeCode = LocaleCode.getDefaultLocaleCode();
 
 
+	@Override
+	public SettingContainer clone() throws CloneNotSupportedException {
+		SettingContainer cloned = (SettingContainer) ( super.clone() );
+
+		// 参照型のフィールドを追加した際はここでコピー処理を追記
+
+		return cloned;
+	}
+
+
 	public synchronized final void evaluateSettingScript(
-			String settingScriptCode, String settingScriptName,
+			String settingScriptFilePath,
 			String libraryListFilePath, String pluginListFilePath, boolean debug)
 					throws RinearnProcessorNanoException {
 
 		String localeCode = LocaleCode.getDefaultLocaleCode();
+		File settingScriptFile = new File(settingScriptFilePath);
 
 		// 設定スクリプト解釈用に、Vnanoのスクリプトエンジンを読み込んで生成
 		ScriptEngineManager manager = new ScriptEngineManager();
@@ -121,7 +133,7 @@ public final class SettingContainer implements Cloneable {
 		// スクリプトエンジンに渡すオプションを用意
 		//（エラーメッセージ用にスクリプト名し、アクセラレータも無効化する）
 		Map<String, Object> optionMap = new HashMap<String, Object>();
-		optionMap.put("EVAL_SCRIPT_NAME", settingScriptName);
+		optionMap.put("EVAL_SCRIPT_NAME", settingScriptFile.getName());
 		optionMap.put("DUMPER_ENABLED", debug);
 		optionMap.put("ACCELERATOR_ENABLED", false);
 		settingVnanoEngine.put("___VNANO_OPTION_MAP", optionMap);
@@ -135,18 +147,26 @@ public final class SettingContainer implements Cloneable {
 			System.out.println("");
 		}
 
-		// 設定スクリプトを読み込み、実行して設定ファイルの記述内容を解釈する
+		// 設定スクリプトを読み込む
+		SettingContainer defaultSetting = new SettingContainer(); // 設定を読み込むために使うデフォルトの設定（言語ロケールなどが影響）
+		String settingScriptCode = ScriptFileLoader.load(
+			settingScriptFile.getPath(), ".", DEFAULT_SETTING_SCRIPT_ENCODING, defaultSetting
+		);
+
+		// 読み込んだ設定スクリプトを実行して、設定ファイルの記述内容を解釈する
 		try {
 			settingVnanoEngine.eval(settingScriptCode);
-		} catch (ScriptException e) {
-			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
+
+		// 設定スクリプトの内容にエラーがあった場合
+		} catch (ScriptException se) {
+			String errorMessage = MessageManager.customizeExceptionMessage(se.getMessage());
 			if (localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(errorMessage, "Setting Error");
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(errorMessage, "設定スクリプトのエラー");
 			}
-			throw new RinearnProcessorNanoException(e);
+			throw new RinearnProcessorNanoException(se);
 		}
 
 		// ライブラリ/プラグインを接続解除
