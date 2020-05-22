@@ -22,15 +22,10 @@ import com.rinearn.processornano.RinearnProcessorNanoException;
 public class ScriptFileLoader {
 
 	public static final String load(
-			String scriptFilePath, String dirPath, String defaultEncoding, SettingContainer setting)
+			String scriptFilePath, String defaultEncoding, SettingContainer setting)
 					throws RinearnProcessorNanoException {
 
 		File file = new File(scriptFilePath);
-
-		// 指定内容がフルパスでなかった場合は、dirPath のディレクトリ基準の相対パスと見なす
-		if (!file.isAbsolute()) {
-			file = new File(dirPath, scriptFilePath);
-		}
 
 		// ファイルが存在しない場合はエラー
 		if (!file.exists()) {

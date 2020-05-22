@@ -151,7 +151,7 @@ public final class MessageManager {
 		// ScriptEngine の eval でスクリプトを渡した際のエラー箇所情報。
 		// このソフトでは1行の内容しか渡せないため、行番号が表示されてもうれしくないので省略
 		// (毎回同じ内容になる)
-		String defaultErrorSourceDescription = ": in EVAL_SCRIPT at line number 1";
+		String defaultErrorSourceDescription = ": in main script at line number 1";
 		if (message.endsWith(defaultErrorSourceDescription)) {
 			message = message.substring(0, message.length() - defaultErrorSourceDescription.length());
 		}

@@ -274,8 +274,8 @@ When you execute this software as above ways, the calculator window (the image b
 
 さて、上記のように実行すると、電卓画面（下図）が起動します: 
 
-<div style="background-color:white; width: 700px; height: 300px; text-align:center; background-image: url('./ui.png'); background-repeat: no-repeat; background-size: contain;">
-  <img src="https://github.com/RINEARN/rinpn/blob/master/ui.png" alt="" width="700" />
+<div style="background-color:white; width: 700px; height: 300px; text-align:center; background-image: url('./gui_expression.png'); background-repeat: no-repeat; background-size: contain;">
+  <img src="https://github.com/RINEARN/rinpn/blob/master/gui_expression.png" alt="" width="700" />
 </div>
 
 
@@ -336,17 +336,18 @@ RINPn では、手続き的な計算やアルゴリズム的な計算、また�
 具体的な記法などについては「 <a href="https://www.vcssl.org/ja-jp/vnano/doc/tutorial/language">言語としてのVnano</a> 」をご参照ください。
 Vnano のスクリプトを作成するために、コンパイラなどの特別な開発環境の導入は不要です。拡張子「 .vnano 」で終わる名前のテキストファイルを作成して、その中にコードを書くだけでOKです。
 
-As an example, the following script file is contained in this repository 
-(and in the downloaded package):
+As an example, the following script file is bundled in this repository 
+(and in the downloaded package).
+This example script calculates the numerical integration value of cos(x) from 0 to 1:
 
-記述例として、以下のスクリプトファイル「 Example.vnano 」がこのリポジトリ内（およびダウンロードパッケージ内）に同梱されています：
+記述例として、以下のスクリプトファイル「 Example.vnano 」がこのリポジトリ内（およびダウンロードパッケージ内）に同梱されています。このサンプルスクリプトは、cos(x) の 0 から 1 までの数値積分値を計算する内容になっています：
 
 	( in Example.vnano )
 
 	// Integration parameters - 積分パラメータ
 	float A = 0.0;
 	float B = 1.0;
-	int N = 10000;
+	int N = 100000;
 
 	// Integrant function - 被積分関数
 	float f(float x) {
@@ -364,27 +365,24 @@ As an example, the following script file is contained in this repository
 	// Output result - 結果を出力
 	output(value);
 
-The above example script calculates the numerical integration value of cos(x) from 0 to 1.To execute this script, launch the RINPn and then input the script file name (or path) into "INPUT" text-field as follows:
+To execute this script, input the script file name (or path) into "INPUT" text-field as follows, and press Enter key. 
+Then the script will be executed and its output value will be displayed on "OUTPUT" text-field: 
 
-上記のサンプルスクリプトは、cos(x) の 0 から 1 までの数値積分値を計算する内容になっています。
-このスクリプトを実行するには、まず RINPn を起動し、そしてスクリプトファイルの名前（またはパス）を「 INPUT 」欄に以下のように入力します：
+このスクリプトを実行するには、スクリプトファイルの名前（またはパス）を「 INPUT 」欄に下図のように入力して、 Enter キーを押します。すると実行され、「 OUTPUT 」欄にスクリプトの出力値が表示されます：
 
-	INPUT:
-	Example.vnano
+<div style="background-color:white; width: 700px; height: 300px; text-align:center; background-image: url('./gui_script.png'); background-repeat: no-repeat; background-size: contain;">
+  <img src="https://github.com/RINEARN/rinpn/blob/master/gui_script.png" alt="" width="700" />
+</div>
 
-	OUTPUT:
-	0.8414709848
+The above output value "0.8414709848" is matched well with the value of sin(1) which is the theoretical integration value of cos(x) from 0 to 1, so it indicates that the above example script has run correctly.
 
-Then press the enter key, and the script will be executed and its output value "0.8414709848" will be displayed on "OUTPUT" text-field as above.
-The above output value is matched well with the value of sin(1) which is the theoretical integration value of cos(x) from 0 to 1, so it indicates that the above example script has run correctly.
-
-そして「 Enter 」キーを押すと、上記のように「 OUTPUT 」欄にスクリプトの出力「 0.8414709848 」が表示されます。この出力値は、cos(x) の 0 から 1 までの積分の理論値である sin(1) とよく一致しており、
+この出力値「 0.8414709848 」は、cos(x) の 0 から 1 までの積分の理論値である sin(1) とよく一致しており、
 上記サンプルスクリプトが正しく実行された事がわかります。
 
 If you want to execute a script file in the different folder with the folder at which you has launched the RINPn, it is necessary to input the absolute file path ("C:\\...\\Example.vnano", "/home/.../Example.vnano", etc.) of the script to execute it.
 On the other hand, if the path of "bin" folder is registered to the environment variable "PATH" (or "Path"), you can execute a script in any folder easily. Firstly "cd" to the folder in which the script is locating, and then pass the name of the script file to "rinpn" command:
 
-RINPn を起動したフォルダとは別のフォルダ内にあるスクリプトを実行したい場合、通常はそのスクリプトファイルの絶対パス（例えば "C:\\...\\Example.vnano" や "/home/.../Example.vnano" など）を入力する必要があります。
+RINPn を起動したフォルダとは別の場所にあるスクリプトを実行したい場合、通常はそのスクリプトファイルの絶対パス（例えば "C:\\...\\Example.vnano" や "/home/.../Example.vnano" など）を入力する必要があります。
 そこで、OSの環境変数 PATH （または Path ）に「bin」フォルダのパスを登録しておくと、
 次のようにスクリプトのあるフォルダに cd した後は、rinpn コマンドにスクリプト名を渡すだけで実行できるようになります：
 
@@ -402,12 +400,10 @@ where \<folder\> is the path of the folder in which Example.vnano (or your scrip
 <a id="how-to-use-library"></a>
 ### Step-4. How to Define Variables and Functions as Script Code - スクリプトで変数や関数を定義する
 
-You can define variables and functions in the script file "ExampleLibrary.vnano" in "lib" folder.
-Defined variables and functions are available in expressions of the Step-1 and 2, and in scripts of the Step-3. 
+You can define variables and functions in the script file "ExampleLibrary.vnano" in "lib" folder, and use them in expressions of the Step-1 and 2, and in scripts of the Step-3. 
 For example, the default content of "ExampleLibrary.vnano" is as follows:
 
-「 lib 」フォルダ内にあるスクリプトファイル「 ExampleLibrary.vnano 」の中で、変数や関数を定義できます。
-そこで定義した変数や関数は、Step-1 や 2 での計算式の中や、Step-3 のスクリプト内で使用できます。
+「 lib 」フォルダ内にあるスクリプトファイル「 ExampleLibrary.vnano 」の中で、変数や関数を定義すると、それを Step-1 や 2 での計算式の中や、Step-3 のスクリプト内で使用できます。
 例えば、標準状態での「 ExampleLibrary.vnano 」の記述内容は以下の通りです：
 
 	( in lib/ExampleLibrary.vnano )
@@ -419,9 +415,9 @@ For example, the default content of "ExampleLibrary.vnano" is as follows:
 		return result;
 	}
 
-In the the expression inputted to the the calculator (see Step-1 and Step-2), you can use variables and functions defined in the above script, as the following example:
+In the the expression/script inputted to the the calculator (see Step-1, 2, and 3), you can use variables and functions defined in the above "ExampleLibrary.vnano", as the following example:
 
-Step-1 や Step-2 で扱った電卓の計算式の中で、上記のスクリプト内で定義されている変数や関数を、以下の例のように使用できます：
+Step-1 から 3 までで扱った、電卓に入力する計算式やスクリプトの中で、上記の「 ExampleLibrary.vnano 」内で定義されている変数や関数を、以下の例のように使用できます：
 
 	INPUT:
 	libvar
@@ -435,29 +431,33 @@ Step-1 や Step-2 で扱った電卓の計算式の中で、上記のスクリ�
 	OUTPUT:
 	3.46
 
-If you want, you can create other script files and can define variables and functions in them. When you have created/appended new script files, describe its file path in the content of the text file "VnanoLibraryList.txt" in "lib" folder, for loading it.
+Like "ExampleLibrary.vnano", a script for providing functions/variables is referred as "library script" on the RINPn and the Vnano. 
+If you want, you can create other library script files and can define variables and functions in them. 
+When you have created/appended new library script files, describe its file path in the content of the text file "VnanoLibraryList.txt" in "lib" folder, for loading it.
 
-なお、必要に応じて、別のスクリプトファイルを作成し、その中で変数や関数を定義する事もできます。
-新しいスクリプトファイルを作成/追加した際は、そのファイルパスを、「 lib 」フォルダ内にあるテキストファイル「 VnanoLibraryList.txt 」内に記載（追記）してください。そうすると、そのライブラリが読み込まれるようになります。
+この「 ExampleLibrary.vnano 」のように、関数や変数の提供を目的とするスクリプトの事を、RINPn および Vnano では「ライブラリスクリプト」と呼びます。
+必要に応じて、別の新しいライブラリスクリプトのファイルを作成し、その中で変数や関数を定義する事もできます。
+新しいライブラリスクリプトファイルを作成/追加した際は、そのファイルパスを、「 lib 」フォルダ内にあるテキストファイル「 VnanoLibraryList.txt 」内に記載（追記）してください。
+そうすると、そのライブラリスクリプトが読み込まれるようになります。
 
 
 <a id="how-to-implement-plugin"></a>
 ### Step-5. How to Implement Built-in Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する
 
 You can implement new built-in variables and function in the Java&reg; programming language.
-In this way, compared to defining variables/functions as script code (in the step-3), 
+In this way, compared to defining variables/functions as script code (in the step-4), 
 high-functionality of Java&reg; might be the great merit.
 On the other hand, it requres Java&reg; Development Kit (JDK) to compile implemented code.
 
 Java&reg;言語を用いて、新しい組み込み関数/変数を実装する事もできます。
-この方法では、Step-3 のようにスクリプトで関数や変数を定義する事と比べて、
+この方法では、Step-4 のようにスクリプトで関数や変数を定義する事と比べて、
 Java&reg; 言語の高い機能性を利用できる事が大きなメリットになるかもしれません。
 一方で、実装したコードをコンパイルする際に Java&reg; 言語の開発環境 (JDK) が必要になります。
 
-On this software, we refer a Java&reg; program to add new built-in function/variables as "plug-in".
+On the RINPn and the Vnano, we refer a Java&reg; program to provide built-in functions/variables as "plug-in".
 A simple example of a plug-in is bundled in "plugin" folder as "ExamplePlugin.java":
 
-このソフトウェアでは、新しい組み込み関数/変数を追加するためのプログラムを「プラグイン」と呼びます。
+RINPn および Vnano では、組み込み関数/変数を提供する事を目的とした、Java&reg; 言語で記述されたプログラムの事を「プラグイン」と呼びます。
 「 plugin 」フォルダ内に、簡単なプラグインのサンプル「 ExamplePlugin.java 」が同梱されています：
 
 	( in plugin/ExamplePlugin.java )
@@ -478,11 +478,11 @@ About the compilaton, see "<a href="#how-to-compile-user-plugins">Compile User P
 このプラグインは恐らくビルド時にコンパイルされてるはずです。内容を編集した場合は再コンパイルが必要です。
 コンパイル方法については「<a href="#how-to-compile-user-plugins">ユーザープラグインのコンパイル</a>」をご参照ください。
 
-After the compilation, built-in variables/functions are available in the expression inputted to the calculator (see Step-1 and Step-2), 
-and in the script code of the step-3.
+After the compilation, built-in variables/functions are available in the expression inputted to the calculator (see Step-1 and 2), 
+and in the script code (see step-3 and 4).
 For example:
 
-コンパイル済の組み込み関数/変数は、Step-1 や Step-2 での計算式の中や、Step-3 でのライブラリスクリプトの中で使用できます。
+コンパイル済みの組み込み関数/変数は、Step-1 や 2 で扱った計算式の中や、Step-3 や 4 で扱ったスクリプトコードの中で使用できます。
 例えば：
 
 	INPUT:
@@ -492,15 +492,15 @@ For example:
 	2
 
 For more detailed explanation to implement plug-in, 
-see: "<a href="https://github.com/RINEARN/vnano#plugin">Plugin Development</a>" section in the document of the Vnano.
+see: "<a href="https://www.vcssl.org/en-us/vnano/doc/tutorial/plugin">Plugin Development</a>" section in the document of the Vnano.
 
 プラグインの実装方法についてのより詳細な解説は、Vnanoのドキュメント内の
-「 <a href="https://github.com/RINEARN/vnano#plugin">プラグインの開発</a> 」セクションをご参照ください。
+「 <a href="https://www.vcssl.org/ja-jp/vnano/doc/tutorial/plugin">プラグインの開発</a> 」セクションをご参照ください。
 
-On the RINPn, classes specified in the text file "VnanoPluginList.txt" in "plugin" folder  will be connected to the script engine of the Vnano as plug-ins.
+On the RINPn, class files specified in the text file "VnanoPluginList.txt" in "plugin" folder will be connected to the script engine of the Vnano as plug-ins.
 If you have created/appended a new user plug-in, describe its file path in the content of "VnanoPluginList.txt".
 
-RINPnでは、「 plugin 」フォルダ内のテキストファイル「 VnanoPluginList.txt 」内で指定したクラスが、Vnanoのスクリプトエンジンにプラグインとして接続されます。
+RINPnでは、「 plugin 」フォルダ内のテキストファイル「 VnanoPluginList.txt 」内で指定したクラスファイルが、Vnanoのスクリプトエンジンにプラグインとして接続されます。
 新しいユーザープラグインを作成/追加した際は、そのプラグインのファイルパスを「 VnanoPluginList.txt 」内に記載（追記）してください。
 
 
@@ -748,6 +748,21 @@ On this software, following functions and variables are available by default.
 		length( array, 0 )
 		</p>
 	</dd>
+	<dt style="display: list-item;">output( value )</dt>
+	<dd>
+		<p>
+		The function to display the calculated value of scripts.
+		On GUI mode, the value will be displayed on "OUTPUT" text-field (so when this function is called multiple times, the displayed value will be overwritten).
+		On CUI mode, the value will be outputted on the standard-output as a line.
+		<br />
+		スクリプトの計算結果の値を表示するための関数です。
+		GUIモードでは、値は「 OUTPUT」 テキストフィールドに表示されます（複数回呼ぶと、表示内容は単純に上書きされます）。
+		CUIモードでは、値は標準出力に 1 行で出力されます。
+		</p>
+		<p>
+		output( 1.23 )
+		</p>
+	</dd>
 </dl>
 
 ### Built-in Variables - 組み込み変数
@@ -793,8 +808,8 @@ The following is a block diagram to grasp relationship between components we men
 
 下図は、各コンポーネントの関係を把握するためのブロック図です：
 
-<div style="background-color:black; width: 640px; height: 840px; text-align:center; background-image: url('./architecture.jpg'); background-repeat: no-repeat; background-size: contain;">
-	<img src="https://github.com/RINEARN/rinpn/blob/master/architecture.jpg" alt="" width="700" />
+<div style="background-color:black; width: 640px; height: 830px; text-align:center; background-image: url('./architecture.jpg'); background-repeat: no-repeat; background-size: contain;">
+	<img src="https://github.com/RINEARN/rinpn/blob/master/architecture.jpg" alt="" width="640" />
 </div>
 
 As in the above diagram, 
@@ -917,12 +932,12 @@ After the calculation will have been finished, view updaters ( e.g.
 ### Script Engine - スクリプトエンジン ( <a href="https://github.com/RINEARN/vnano/blob/master/src/org/vcssl/nano/">org.vcssl.nano</a> package )
 
 This component takes calculations requested by the Model. 
-Executions of library scripts, and communications with plug-ins, are also taken by this component.
+Executions of scripts, and communications with plug-ins, are also taken by this component.
 By the way, this component is being developed independently as the compact script engine "Vnano" for embedded use in applications.
 Therefore, for details of this component itself, see the document of: <a href="https://github.com/RINEARN/vnano">https://github.com/RINEARN/vnano</a>
 
 このコンポーネントは、Model から要求された計算を実行する役割を担います。
-ライブラリスクリプトの実行や、プラグインとのやり取りも、このコンポーネントによって行われます。
+スクリプトの実行や、プラグインとのやり取りも、このコンポーネントによって行われます。
 なお、このコンポーネントは、アプリケーション組み込み用のスクリプトエンジン「 Vnano 」として、このソフトウェアとは独立に開発進行中のものです。
 従って、このコンポーネント自身についての詳細は、そちらのドキュメントをご参照ください： 
 <a href="https://github.com/RINEARN/vnano">https://github.com/RINEARN/vnano</a>

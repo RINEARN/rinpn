@@ -5,6 +5,7 @@
 
 package com.rinearn.processornano.model;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public final class CalculatorModel {
 
 	private static final String SCRIPT_EXTENSION = ".vnano";
 	private static final String DEFAULT_SCRIPT_ENCODING = "UTF-8";
+	private static final String DEFAULT_FILE_IO_ENCODING = "UTF-8";
 
 	private ScriptEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
 	private String dirPath = ".";
@@ -159,17 +161,22 @@ public final class CalculatorModel {
 
 		// 入力内容がスクリプトかどうか、およびスクリプト名を控える
 		boolean scriptFileInputted = false;  // スクリプトの場合は true, 計算式の場合は false
-		String scriptFileName = null;
+		File scriptFile = null;
 
 		// 入力内容がスクリプトの拡張子で終わっている場合は、実行対象スクリプトファイルのパスと見なす
 		if (inputtedContent.endsWith(SCRIPT_EXTENSION)) {
 
 			scriptFileInputted = true;
-			scriptFileName = inputtedContent;
+			scriptFile = new File(inputtedContent);
+
+			// 指定内容がフルパスでなかった場合は、dirPath のディレクトリ基準の相対パスと見なす
+			if (!scriptFile.isAbsolute()) {
+				scriptFile = new File(dirPath, scriptFile.getPath());
+			}
 
 			// 入力内容をスクリプトファイルの内容で置き換え
 			try {
-				inputtedContent = ScriptFileLoader.load(inputtedContent, this.dirPath, DEFAULT_SCRIPT_ENCODING, setting);
+				inputtedContent = ScriptFileLoader.load(scriptFile.getAbsolutePath(), DEFAULT_SCRIPT_ENCODING, setting);
 			} catch (RinearnProcessorNanoException e) {
 				this.calculating = false;
 				throw e;
@@ -231,8 +238,11 @@ public final class CalculatorModel {
 		optionMap.put("LOCALE", LocaleCode.toLocale(setting.localeCode));
 		optionMap.put("DUMPER_ENABLED", setting.dumperEnabled);
 		optionMap.put("DUMPER_TARGET", setting.dumperTarget);
+		optionMap.put("TERMINAL_IO_UI", isGuiMode ? "GUI" : "CUI");
+		optionMap.put("FILE_IO_ENCODING", DEFAULT_FILE_IO_ENCODING);
 		if (scriptFileInputted) {
-			optionMap.put("EVAL_SCRIPT_NAME", scriptFileName);
+			optionMap.put("MAIN_SCRIPT_NAME", scriptFile.getName());
+			optionMap.put("MAIN_DIRECTORY_PATH", scriptFile.getParentFile().getAbsolutePath());
 		}
 		engine.put("___VNANO_OPTION_MAP", optionMap);
 
