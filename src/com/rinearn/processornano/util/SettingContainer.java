@@ -150,7 +150,7 @@ public final class SettingContainer implements Cloneable {
 		// 設定スクリプトを読み込む
 		SettingContainer defaultSetting = new SettingContainer(); // 設定を読み込むために使うデフォルトの設定（言語ロケールなどが影響）
 		String settingScriptCode = ScriptFileLoader.load(
-			settingScriptFile.getPath(), ".", DEFAULT_SETTING_SCRIPT_ENCODING, defaultSetting
+			settingScriptFile.getPath(), DEFAULT_SETTING_SCRIPT_ENCODING, defaultSetting
 		);
 
 		// 読み込んだ設定スクリプトを実行して、設定ファイルの記述内容を解釈する
