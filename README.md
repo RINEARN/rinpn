@@ -808,8 +808,8 @@ The following is a block diagram to grasp relationship between components we men
 
 下図は、各コンポーネントの関係を把握するためのブロック図です：
 
-<div style="background-color:black; width: 640px; height: 840px; text-align:center; background-image: url('./architecture.jpg'); background-repeat: no-repeat; background-size: contain;">
-	<img src="https://github.com/RINEARN/rinpn/blob/master/architecture.jpg" alt="" width="700" />
+<div style="background-color:black; width: 640px; height: 830px; text-align:center; background-image: url('./architecture.jpg'); background-repeat: no-repeat; background-size: contain;">
+	<img src="https://github.com/RINEARN/rinpn/blob/master/architecture.jpg" alt="" width="640" />
 </div>
 
 As in the above diagram, 
