@@ -763,6 +763,35 @@ On this software, following functions and variables are available by default.
 		output( 1.23 )
 		</p>
 	</dd>
+	<dt style="display: list-item;">print( value )</dt>
+	<dd>
+		<p>
+		The function to display long and multiple-line texts in general purpose.
+		This function can display contents of arbitrary number of any type values/arrays 
+		with delimitting tab-spaces.
+		On GUI mode, the value will be appended to the content of a text-area on an independent window, without line-feedings.
+		On CUI mode, the value will be outputted to the standard-output, without line-feedings.
+		<br />
+		スクリプト内で、長い内容や複数行の内容を表示するために、汎用的に用いる関数です。
+		任意個数・任意次元・任意型の値を表示可能で、値は 1 個ずつ（ 1 要素ずつ）タブ空白区切りで表示されます。
+		GUIモードでは、値は独立なウィンドウ上に、自動改行なしで追記されていきます。
+		CUIモードでは、値は標準出力に自動改行なしで追記されていきます。
+		</p>
+		<p>
+		print( 1.2 , 3.4 , 5.6 )
+		</p>
+	</dd>
+	<dt style="display: list-item;">println( value )</dt>
+	<dd>
+		<p>
+		Almost the same with the above "print" function, but this function displays/outputs the content with line-feedings.
+		<br />
+		上記の print 関数とほぼ同様ですが、この関数は内容を自動改行付きで表示/出力します。
+		</p>
+		<p>
+		println( 1.2 , 3.4 , 5.6 )
+		</p>
+	</dd>
 </dl>
 
 ### Built-in Variables - 組み込み変数
