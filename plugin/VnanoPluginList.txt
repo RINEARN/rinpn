@@ -9,4 +9,6 @@
 # ----------------------------------------------------------------------------------------------------
 
 org/vcssl/nano/plugin/calc/xci1/ScientificCalculatorPlugin.class
+org/vcssl/nano/plugin/system/SystemTerminalIOXnci1Plugin.class
+
 ExamplePlugin.class
