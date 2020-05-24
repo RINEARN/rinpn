@@ -512,7 +512,7 @@ You can embed the scripting/calculation engine used in the RINPn,
 the "<a href="https://www.vcssl.org/en-us/vnano/">Vnano Engine</a>", 
 into your applications written in Java&reg;.
 The Vnano Engine is an open source software released under the MIT License, 
-so you can use it for free in both of commercial/non commercial purposes,
+so you can use it for free in both of commercial/non-commercial purposes,
 the same as the RINPn.
 
 RINPn で使用しているスクリプト/計算実行エンジンの「
