@@ -182,31 +182,31 @@ In addition, and some official plug-ins are provided on the repository of RINEAR
 加えて、RINEARN のリポジトリ上で、いくつかの公式プラグインが提供されています。
 
 <a id="how-to-compile-official-plugins"></a>
-#### 3-1. Get and Compile Vnano Official Plug-Ins - Vnano 公式プラグインの入手とコンパイル
+#### 3-1. Get and Compile Vnano Standard Plug-Ins - Vnano 標準プラグインの入手とコンパイル
 
-Let's get and compile <a href="https://github.com/RINEARN/vnano-plugin">Vnano official plug-ins</a>: 
+Let's get and compile <a href="https://github.com/RINEARN/vnano-standard-plugin">Vnano standard plug-ins</a>: 
 
-<a href="https://github.com/RINEARN/vnano-plugin">Vnano 公式プラグイン</a>を入手してコンパイルします：
+<a href="https://github.com/RINEARN/vnano-standard-plugin">Vnano 標準プラグイン</a>を入手してコンパイルします：
 
 	cd <working-directory>
-	git clone https://github.com/RINEARN/vnano-plugin.git
+	git clone https://github.com/RINEARN/vnano-standard-plugin.git
 
-The "vnano-plugin" folder will be generated, and in there "plugin" folder exists. so copy the all contents in the "plugin" folder into the "plugin" folder of the RINPn, and then compile them:
+The "vnano-standard-plugin" folder will be generated, and in there "plugin" folder exists. so copy the all contents in the "plugin" folder into the "plugin" folder of the RINPn, and then compile them:
 
-これでフォルダ「 vnano-plugin 」が生成されるため、その中の「 plugin 」フォルダの中身を、
+これでフォルダ「 vnano-standard-plugin 」が生成されるため、その中の「 plugin 」フォルダの中身を、
 RINPn の plugin フォルダ内にコピーし、コンパイルします：
 
 for Microsoft&reg; Windows&reg; :
 
     cd <working-directory>
-	xcopy /s .\vnano-plugin\plugin\* .\rinpn\plugin\
+	xcopy /s .\vnano-standard-plugin\plugin\* .\rinpn\plugin\
 	cd rinpn\plugin
 	javac -classpath ".;../Vnano.jar" -encoding UTF-8 @org\vcssl\nano\plugin\sourcelist.txt
 
 for Linux&reg;, etc. :
 
     cd <working-directory>
-	cp -r ./vnano-plugin/plugin/* ./rinpn/plugin/
+	cp -r ./vnano-standard-plugin/plugin/* ./rinpn/plugin/
 	cd rinpn/plugin
 	javac -classpath ".:../Vnano.jar" -encoding UTF-8 @org/vcssl/nano/plugin/sourcelist.txt
 
