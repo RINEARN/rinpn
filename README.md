@@ -33,7 +33,7 @@ You can also get prebuilt-packages of this software from the above official webs
 	- <a href="#how-to-build-processor-nano">Build the RINPn - RINPn のビルド</a>
 	- <a href="#how-to-build-vnano">Build the Vnano Engine - Vnanoエンジンのビルド</a>
 	- <a href="#how-to-compile-plugins">Compile Plug-Ins - プラグインのコンパイル</a>
-	    - <a href="#how-to-compile-official-plugins">Get and Compile Vnano Official Plug-Ins - Vnano公式プラグインの入手とコンパイル</a>
+	    - <a href="#how-to-compile-official-plugins">Get and Compile Vnano standard Plug-Ins - Vnano標準プラグインの入手とコンパイル</a>
 	    - <a href="#how-to-compile-user-plugins">Compile User Plug-Ins - ユーザープラグインのコンパイル</a>
 - <a href="#how-to-use">How to Use - 使用方法</a>
 	- <a href="#how-to-use-gui">How to Use in the GUI Mode - GUIモードでの使用方法</a>
@@ -41,6 +41,7 @@ You can also get prebuilt-packages of this software from the above official webs
 	- <a href="#how-to-use-script">How to Execute Script Code - スクリプトを実行する</a>
 	- <a href="#how-to-use-library">How to Define Variables and Functions as Script Code - スクリプトで変数や関数を定義する</a>
 	- <a href="#how-to-implement-plugin">How to Implement Built-in Variables/Functions in Java&reg; - Java&reg;言語で組み込み変数/関数を実装する</a>
+	- <a href="#how-to-embed">How to Embed into Applications - アプリケーション内に組み込んで使う</a>
 - <a href="#built-in">Built-in Functions and Variables - 組み込み関数/変数</a>
 	- <a href="#built-in-functions">Built-in Functions - 組み込み関数</a>
 	- <a href="#built-in-variables">Built-in Variables - 組み込み変数</a>
@@ -175,11 +176,11 @@ Note that numbers depend on the version in above results.
 
 Finally, compile plug-ins which provide built-in functions/variables to the Vnano Engine.
 On this software, you can develop your original plug-ins. 
-In addition, and some official plug-ins are provided on the repository of RINEARN, 
+In addition, on the repository of RINEARN, some plug-ins are provided officially as "standard plug-ins". 
 
 最後に、Vnanoエンジンに組み込み関数/変数を提供するプラグインをコンパイルします。
 このソフトウェアでは、ユーザーが独自のプラグインを開発する事もできます。
-加えて、RINEARN のリポジトリ上で、いくつかの公式プラグインが提供されています。
+加えて、RINEARN のリポジトリ上で、いくつかの公式なプラグインが「標準プラグイン」として提供されています。
 
 <a id="how-to-compile-official-plugins"></a>
 #### 3-1. Get and Compile Vnano Standard Plug-Ins - Vnano 標準プラグインの入手とコンパイル
@@ -502,6 +503,107 @@ If you have created/appended a new user plug-in, describe its file path in the c
 
 RINPnでは、「 plugin 」フォルダ内のテキストファイル「 VnanoPluginList.txt 」内で指定したクラスファイルが、Vnanoのスクリプトエンジンにプラグインとして接続されます。
 新しいユーザープラグインを作成/追加した際は、そのプラグインのファイルパスを「 VnanoPluginList.txt 」内に記載（追記）してください。
+
+
+<a id="how-to-embed"></a>
+## How to Embed into Applications - アプリケーション内に組み込んで使う
+
+You can embed the scripting/calculation engine used in the RINPn, 
+the "<a href="https://www.vcssl.org/en-us/vnano/">Vnano Engine</a>", 
+into your applications written in Java&reg;.
+The Vnano Engine is an open source software released under the MIT License, 
+so you can use it for free in both of commercial/non commercial purposes,
+the same as the RINPn.
+
+RINPn で使用しているスクリプト/計算実行エンジンの「
+<a href="https://www.vcssl.org/ja-jp/vnano/">Vnanoエンジン</a>
+」は、Java&reg; 言語で記述したアプリケーション内に組み込んで使う事ができます。
+Vnanoエンジンも RINPn 同様にMITライセンスのオープンソースソフトウェアで、商用・非商用問わず無償で利用できます。
+
+An example code calculating a value of the expression "1.2 + 3.4" under the same engine-settings with the RINPn is bundled in this repository as "EmbedUseExample.java":
+
+実際に RINPn 同様のエンジン設定で式「 1.2 + 3.4 」の値を計算する単純なサンプルコードが、このリポジトリ内に「 EmbedUseExample.java 」として同梱されています：
+
+	import javax.script.ScriptEngine;
+	import javax.script.ScriptEngineManager;
+	import javax.script.ScriptException;
+	import java.util.Map;
+	import java.util.HashMap;
+
+	public class EmbedUseExample {
+		public static void main(String[] args) {
+
+			// Get the script engine (Vnano Engine) used in the RINPn for calculations.
+			// RINPn で計算に用いているスクリプトエンジン（Vnano Engine）を取得
+			ScriptEngine engine = new ScriptEngineManager().getEngineByName("vnano");
+			if (engine == null) {
+				System.err.println("Script engine loading error");
+				return;
+			}
+
+			// Set options of the script engine
+			// スクリプトエンジンのオプション設定
+			Map<String, Object> optionMap = new HashMap<String, Object>();
+			optionMap.put("EVAL_NUMBER_AS_FLOAT", true);  // See: Setting.vnano: evalNumberAsFloat
+			optionMap.put("EVAL_ONLY_FLOAT",      true);  // See: Setting.vnano: evalOnlyFloat
+			optionMap.put("EVAL_ONLY_EXPRESSION", true);  // See: Setting.vnano: evalOnlyExpression
+			optionMap.put("TERMINAL_IO_UI", "CUI");       // For CUI applications
+			// optionMap.put("TERMINAL_IO_UI", "GUI");    // For GUI applications
+			engine.put("___VNANO_OPTION_MAP", optionMap);
+
+			// Settings for loading libraries/plugins
+			// ライブラリ/プラグインの読み込み設定
+			engine.put("___VNANO_LIBRARY_LIST_FILE", "lib/VnanoLibraryList.txt");
+			engine.put("___VNANO_PLUGIN_LIST_FILE", "plugin/VnanoPluginList.txt");
+
+			// Calculate the value of "1.2 + 3.4" by the script engine, and output
+			// スクリプトエンジンで「 1.2 + 3.4 」の値を計算して表示
+			try{
+				String input = "1.2 + 3.4";
+				double x = (double) engine.eval(input + ";");
+				System.out.println("output: " + x);
+			} catch (ScriptException e) {
+				e.printStackTrace();
+			}
+
+			// Unload libraries/plugins
+			// ライブラリ/プラグインの登録/接続解除
+			engine.put("___VNANO_COMMAND", "REMOVE_LIBRARY");
+			engine.put("___VNANO_COMMAND", "REMOVE_PLUGIN");
+		}
+	}
+
+How to compile:
+
+コンパイル方法は：
+
+	javac -encoding UTF-8 EmbedUseExample.java
+
+How to execute on Microsoft&reg; Windows&reg;:
+
+Microsoft&reg; Windows&reg; 上での実行方法は：
+
+	java -cp ".;Vnano.jar" EmbedUseExample
+
+	(result)
+	output: 4.6
+
+How to execute on Linux&reg; etc.:
+
+Linux&reg; 等での実行方法は：
+
+	java -cp ".:Vnano.jar" EmbedUseExample
+
+	(result)
+	output: 4.6
+
+For more details, see 
+<a href="https://www.vcssl.org/en-us/vnano/doc/tutorial/">the official tutorial of the Vnano Engine</a>.
+
+より詳しい解説は、
+<a href="https://www.vcssl.org/ja-jp/vnano/doc/tutorial/">Vnanoエンジンの公式チュートリアル</a>をご参照ください.
+
+
 
 
 <a id="built-in"></a>
