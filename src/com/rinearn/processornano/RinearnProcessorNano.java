@@ -130,7 +130,7 @@ public final class RinearnProcessorNano {
 		SettingContainer setting = null;
 		CalculatorModel calculator = null;
 		try {
-			setting = this.createInitializedSettingContainer(debug);
+			setting = this.createInitializedSettingContainer(false, debug);
 			calculator = this.createInitializedCalculatorModel(dirPath, false, setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
@@ -173,7 +173,7 @@ public final class RinearnProcessorNano {
 		SettingContainer setting = null;
 		CalculatorModel calculator = null;
 		try {
-			setting = this.createInitializedSettingContainer(debug);
+			setting = this.createInitializedSettingContainer(true, debug);
 			calculator = this.createInitializedCalculatorModel(dirPath, true, setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
@@ -224,7 +224,7 @@ public final class RinearnProcessorNano {
 	 * @throws RinearnProcessorNanoException
 	 * 		設定スクリプトの読み込みエラーなどで失敗した場合にスローされます。
 	 */
-	private final SettingContainer createInitializedSettingContainer(boolean debug)
+	private final SettingContainer createInitializedSettingContainer(boolean isGuiMode, boolean debug)
 			throws RinearnProcessorNanoException {
 
 		SettingContainer setting = new SettingContainer();
@@ -232,7 +232,8 @@ public final class RinearnProcessorNano {
 		// 設定スクリプトを実行して設定値を書き込む（スクリプトエンジンはメソッド内で生成）
 		setting.evaluateSettingScript(
 			SettingContainer.SETTING_SCRIPT_PATH,
-			LIBRARY_LIST_FILE, PLUGIN_LIST_FILE, debug
+			LIBRARY_LIST_FILE, PLUGIN_LIST_FILE,
+			isGuiMode, debug
 		);
 
 		return setting;

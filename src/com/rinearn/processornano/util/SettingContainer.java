@@ -82,7 +82,7 @@ public final class SettingContainer implements Cloneable {
 
 	public synchronized final void evaluateSettingScript(
 			String settingScriptFilePath,
-			String libraryListFilePath, String pluginListFilePath, boolean debug)
+			String libraryListFilePath, String pluginListFilePath, boolean isGuiMode, boolean debug)
 					throws RinearnProcessorNanoException {
 
 		String localeCode = LocaleCode.getDefaultLocaleCode();
@@ -136,6 +136,7 @@ public final class SettingContainer implements Cloneable {
 		optionMap.put("EVAL_SCRIPT_NAME", settingScriptFile.getName());
 		optionMap.put("DUMPER_ENABLED", debug);
 		optionMap.put("ACCELERATOR_ENABLED", false);
+		optionMap.put("UI_MODE", isGuiMode ? "GUI" : "CUI");
 		settingVnanoEngine.put("___VNANO_OPTION_MAP", optionMap);
 
 		if (debug) {
