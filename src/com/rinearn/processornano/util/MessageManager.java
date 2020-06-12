@@ -73,11 +73,13 @@ public final class MessageManager {
 		int lineBegin = 0;
 		while (lineBegin < messageLength) {
 
-			// 次の最も近い句読点を探して lienEnd にインデックスを格納
+			// 次の最も近い句読点（や区切りのいい文字）を探して lienEnd にインデックスを格納
 			int lineEnd = messageLength - 1;
 			int[] lineEndCandidates = new int[] {
 				message.indexOf("、", lineBegin + 1),
-				message.indexOf("。", lineBegin + 1)
+				message.indexOf("。", lineBegin + 1),
+				message.indexOf("：", lineBegin + 1),
+				message.indexOf(": ", lineBegin + 1),
 			};
 			for (int candidate: lineEndCandidates) {
 				if (candidate != -1 && candidate < lineEnd) {
@@ -108,11 +110,12 @@ public final class MessageManager {
 		int lineBegin = 0;
 		while (lineBegin < messageLength) {
 
-			// 次の最も近い句読点を探して lienEnd にインデックスを格納
+			// 次の最も近い句読点（や区切りのいい文字）を探して lienEnd にインデックスを格納
 			int lineEnd = messageLength - 1;
 			int[] lineEndCandidates = new int[] {
 				message.indexOf(", ", lineBegin + 1),
-				message.indexOf(". ", lineBegin + 1)
+				message.indexOf(". ", lineBegin + 1),
+				message.indexOf(": ", lineBegin + 1)
 			};
 			for (int candidate: lineEndCandidates) {
 				if (candidate != -1 && candidate < lineEnd) {
