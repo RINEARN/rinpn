@@ -238,7 +238,7 @@ public final class CalculatorModel {
 		optionMap.put("LOCALE", LocaleCode.toLocale(setting.localeCode));
 		optionMap.put("DUMPER_ENABLED", setting.dumperEnabled);
 		optionMap.put("DUMPER_TARGET", setting.dumperTarget);
-		optionMap.put("TERMINAL_IO_UI", isGuiMode ? "GUI" : "CUI");
+		optionMap.put("UI_MODE", isGuiMode ? "GUI" : "CUI");
 		optionMap.put("FILE_IO_ENCODING", DEFAULT_FILE_IO_ENCODING);
 		if (scriptFileInputted) {
 			optionMap.put("MAIN_SCRIPT_NAME", scriptFile.getName());
