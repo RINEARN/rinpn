@@ -512,7 +512,7 @@ You can embed the scripting/calculation engine used in the RINPn,
 the "<a href="https://www.vcssl.org/en-us/vnano/">Vnano Engine</a>", 
 into your applications written in Java&reg;.
 The Vnano Engine is an open source software released under the MIT License, 
-so you can use it for free in both of commercial/non commercial purposes,
+so you can use it for free in both of commercial/non-commercial purposes,
 the same as the RINPn.
 
 RINPn で使用しているスクリプト/計算実行エンジンの「
@@ -547,8 +547,8 @@ An example code calculating a value of the expression "1.2 + 3.4" under the same
 			optionMap.put("EVAL_NUMBER_AS_FLOAT", true);  // See: Setting.vnano: evalNumberAsFloat
 			optionMap.put("EVAL_ONLY_FLOAT",      true);  // See: Setting.vnano: evalOnlyFloat
 			optionMap.put("EVAL_ONLY_EXPRESSION", true);  // See: Setting.vnano: evalOnlyExpression
-			optionMap.put("TERMINAL_IO_UI", "CUI");       // For CUI applications
-			// optionMap.put("TERMINAL_IO_UI", "GUI");    // For GUI applications
+			optionMap.put("UI_MODE", "CUI");              // For CUI applications
+			// optionMap.put("UI_MODE", "GUI");           // For GUI applications
 			engine.put("___VNANO_OPTION_MAP", optionMap);
 
 			// Settings for loading libraries/plugins

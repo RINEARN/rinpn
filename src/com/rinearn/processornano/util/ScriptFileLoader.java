@@ -78,7 +78,6 @@ public class ScriptFileLoader {
 			loadingFailed = true;
 			loadingFailedCauseInfo = ioe.getClass().getCanonicalName() + ": " + ioe.getMessage();
 		}
-		String scriptCode = String.join("\n", lineList.toArray(new String[0]));
 
 		// 読み込み過程でエラーが発生していた場合
 		if (loadingFailed) {
@@ -86,18 +85,33 @@ public class ScriptFileLoader {
 				throw new RinearnProcessorNanoException(
 					"The script file could not be loaded: " + file.getPath()
 					+ "\n\n" +
-					"(Cause: " + loadingFailedCauseInfo + ")"
+					"The encoding might be incorrect. Try again with changing the encoding, "
+					+
+					"or describe the encoding declaration \"coding encodingName;\" "
+					+
+					"at the top line of the script file."
+					+ "\n\n" +
+					"(Cause error: " + loadingFailedCauseInfo + ")"
 				);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
 				throw new RinearnProcessorNanoException(
-					"スクリプトファイルの読み込みに失敗しました： " + file.getPath()
+					"スクリプトファイルの読み込みに失敗しました: " + file.getPath()
 					+ "\n\n" +
-					"(原因: " + loadingFailedCauseInfo + ")"
+					"文字コードが想定と異なる可能性があります。"
+					+
+					"ファイル保存時の文字コードを UTF-8 に変更するか、"
+					+
+					"先頭行に文字コード宣言（ coding 文字コード名; ）"
+					+
+					"を記述すると解決するかもしれません。"
+					+ "\n\n" +
+					"(原因エラー：" + loadingFailedCauseInfo + ")"
 				);
 			}
 		}
 
+		String scriptCode = String.join("\n", lineList.toArray(new String[0]));
 		return scriptCode;
 	}
 }
