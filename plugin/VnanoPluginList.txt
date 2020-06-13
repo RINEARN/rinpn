@@ -10,28 +10,28 @@
 
 
 # Provides environment-related variables - 環境関連の変数を提供します
-org/vcssl/nano/plugin/system/SystemEnvironmentXnci1Plugin.class
+org/vcssl/nano/plugin/system/xnci1/SystemEnvironmentXnci1Plugin.class
 
 # Provides data-type-utility functions/variables - データ型関連のユーティリティ変数/関数を提供します
-org/vcssl/nano/plugin/system/SystemDataTypeXnci1Plugin.class
+org/vcssl/nano/plugin/system/xnci1/SystemDataTypeXnci1Plugin.class
 
 # Provides terminal-I/O functions - 端末への入出力関数を提供します
-org/vcssl/nano/plugin/system/SystemTerminalIOXnci1Plugin.class
+org/vcssl/nano/plugin/system/xnci1/SystemTerminalIOXnci1Plugin.class
 
 # Provides time-utility functions - 時間関連のユーティリティ関数を提供します
-org/vcssl/nano/plugin/system/SystemTimeXnci1Plugin.class
+org/vcssl/nano/plugin/system/xnci1/SystemTimeXnci1Plugin.class
 
 # Provides functions for terminating scripts - スクリプトを終了させる関数を提供します
-org/vcssl/nano/plugin/system/SystemTerminationXnci1Plugin.class
+org/vcssl/nano/plugin/system/xnci1/SystemTerminationXnci1Plugin.class
 
 # Provides utility functions for testing - テスト用のユーティリティ関数を提供します
-org/vcssl/nano/plugin/system/SystemTestXnci1Plugin.class
+org/vcssl/nano/plugin/system/xnci1/SystemTestXnci1Plugin.class
 
 # Provides elementary math functions - 初等的な数学関数を提供します
-org/vcssl/nano/plugin/math/MathElementaryXnci1Plugin.class
+org/vcssl/nano/plugin/math/xnci1/MathElementaryXnci1Plugin.class
 
 # Provides statistical functions - 統計関数を提供します
-org/vcssl/nano/plugin/math/MathStatisticalXnci1Plugin.class
+org/vcssl/nano/plugin/math/xnci1/MathStatisticalXnci1Plugin.class
 
 
 # A simple example for implementing a new plug-in - プラグインを自作するための簡単なサンプルです
