@@ -26,6 +26,13 @@ public final class MessageManager {
 	}
 
 	public static final void showErrorMessage(String message, String title) {
+		if (message == null) {
+			// message を持ってない Throwable 等も存在し、
+			// その場合はエラーが発生した事だけでも通知するため、ウィンドウタイトルと同内容で代用する
+			// （詳細は必要に応じて、呼び出し元でコマンドラインにスタックトレース等を出力する）
+			message = title;
+		}
+
 		switch (displayMode) {
 			case GUI : {
 				int messageLength = message.length();
