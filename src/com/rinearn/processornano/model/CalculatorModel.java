@@ -109,7 +109,10 @@ public final class CalculatorModel {
 		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
 		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
 		} catch (Exception e) {
-			String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			String message = e.getMessage();
+			if (e.getCause() != null && e.getCause().getMessage() != null) {
+					message = e.getCause().getMessage();
+			}
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error");
 			}
@@ -135,7 +138,10 @@ public final class CalculatorModel {
 
 		// shutdown に失敗しても上層ではどうしようも無いため、ここで通知し、さらに上には投げない。
 		} catch (Exception e) {
-			String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			String message = e.getMessage();
+			if (e.getCause() != null && e.getCause().getMessage() != null) {
+					message = e.getCause().getMessage();
+			}
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(message, "Plug-in Finalization Error");
 			}
@@ -216,7 +222,10 @@ public final class CalculatorModel {
 		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
 		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
 		} catch (Exception e) {
-			String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			String message = e.getMessage();
+			if (e.getCause() != null && e.getCause().getMessage() != null) {
+					message = e.getCause().getMessage();
+			}
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error");
 			}

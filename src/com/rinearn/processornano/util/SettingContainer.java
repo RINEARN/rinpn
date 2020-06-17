@@ -116,7 +116,10 @@ public final class SettingContainer implements Cloneable {
 		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
 		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
 		} catch (Exception e) {
-			String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			String message = e.getMessage();
+			if (e.getCause() != null && e.getCause().getMessage() != null) {
+					message = e.getCause().getMessage();
+			}
 			if (localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error");
 			}
@@ -177,7 +180,10 @@ public final class SettingContainer implements Cloneable {
 
 		// 設定の読み込みは完了しているため、本体側を落とさないため、例外をさらに上には投げない。通知のみ行う。
 		} catch (Exception e) {
-			String message = e.getCause() != null ? e.getCause().getMessage() : e.getMessage();
+			String message = e.getMessage();
+			if (e.getCause() != null && e.getCause().getMessage() != null) {
+					message = e.getCause().getMessage();
+			}
 			if (localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(message, "Plug-in Finalization Error");
 			}
