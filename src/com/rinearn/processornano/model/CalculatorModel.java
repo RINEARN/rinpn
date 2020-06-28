@@ -169,11 +169,17 @@ public final class CalculatorModel {
 		boolean scriptFileInputted = false;  // スクリプトの場合は true, 計算式の場合は false
 		File scriptFile = null;
 
-		// 入力内容がスクリプトの拡張子で終わっている場合は、実行対象スクリプトファイルのパスと見なす
-		if (inputtedContent.endsWith(SCRIPT_EXTENSION)) {
+		// 前後の空白やダブルクォーテーションを詰めた内容を用意（内容の判定で使用）
+		String trimmedContent = inputtedContent.trim();
+		if (trimmedContent.startsWith("\"") && trimmedContent.endsWith("\"")) {
+			trimmedContent = trimmedContent.substring(1, trimmedContent.length()-1);
+		}
 
+		// 詰めた入力内容がスクリプトの拡張子で終わっている場合は、実行対象スクリプトファイルのパスと見なす
+		// ( ファイルパスはダブルクォーテーションで囲われている場合もある )
+		if (trimmedContent.endsWith(SCRIPT_EXTENSION)) {
 			scriptFileInputted = true;
-			scriptFile = new File(inputtedContent);
+			scriptFile = new File(trimmedContent);
 
 			// 指定内容がフルパスでなかった場合は、dirPath のディレクトリ基準の相対パスと見なす
 			if (!scriptFile.isAbsolute()) {
