@@ -10,19 +10,19 @@ RINPn (RINEARN Processor nano、発音「りんぷん」) は、シンプルで�
   <img src="https://github.com/RINEARN/rinpn/blob/master/signboard.jpg" alt="" width="890" />
 </div>
 
-### The Official Website - 公式サイト
+**Note: This README is for users who want to build this software from source code by yourself.
+You can also get prebuilt-packages of this software from the following official website.**
+
+**※ このREADMEの内容は、このソフトウェアをソースコードからビルドしたい方のためのものです。
+下記公式サイトから、ビルド済みのパッケージも入手できます。**
+
+### The RINPn Official Website - RINPn 公式サイト
 
 - English: <a href="https://www.rinearn.com/en-us/rinpn/">https://www.rinearn.com/en-us/rinpn/</a>
 - 日本語:   <a href="https://www.rinearn.com/ja-jp/rinpn/">https://www.rinearn.com/ja-jp/rinpn/</a>
 
 <hr />
 
-
-This README is for users who want to build this software from source code by yourself.
-You can also get prebuilt-packages of this software from the above official website.
-
-このREADMEの内容は、このソフトウェアをソースコードからビルドしたい方のためのものです。
-上記公式サイトから、ビルド済みのパッケージも入手できます。
 
 
 ## Index - 目次
@@ -185,7 +185,7 @@ In addition, on the repository of RINEARN, some plug-ins are provided officially
 <a id="how-to-compile-official-plugins"></a>
 #### 3-1. Get and Compile Vnano Standard Plug-Ins - Vnano 標準プラグインの入手とコンパイル
 
-Let's get and compile <a href="https://github.com/RINEARN/vnano-standard-plugin">Vnano standard plug-ins</a>: 
+Let's get and compile <a href="https://github.com/RINEARN/vnano-standard-plugin">Vnano Standard Plug-ins</a>: 
 
 <a href="https://github.com/RINEARN/vnano-standard-plugin">Vnano 標準プラグイン</a>を入手してコンパイルします：
 
@@ -612,9 +612,17 @@ For more details, see
 
 <a id="built-in-functions"></a>
 
-On this software, following functions and variables are available by default.
+On this software, some functions and variables are available by default.
+Among them, frequently used functions/variables are shown in the following list.
 
-このソフトウェアでは、以下の関数および変数が標準で利用できます。
+このソフトウェアでは、いくつかの関数および変数が標準で利用できます。
+以下では、それらの中で特によく使うものをリストアップして紹介します。
+
+Note that, most of following functions/variables are provided by Vnano Standard Plug-ins which were introduced in "<a href="#how-to-compile-plugins">Compile Plug-Ins</a>" section, so please check and retry steps in the above section, if you can not use following functions/variables.
+Also, for the full list of available functions/variables, and for more detailed specifications of them, see <a href="https://www.vcssl.org/en-us/vnano/plugin/">specification documents of Vnano Standard Plug-ins</a>.
+
+ただし、以下に挙げる関数/変数の大半は、「 <a href="#how-to-compile-plugins">プラグインのコンパイル</a> 」の項目で導入した、Vnano 標準プラグインが提供しています。従って、もし以下の関数/変数を使用できない場合は、上記の導入手順を再度見直してみてください。なお、全ての関数/変数のリスト、およびより詳細な仕様については、<a href="https://www.vcssl.org/ja-jp/vnano/plugin/">Vnano 標準プラグインの仕様書</a>をご参照ください。
+
 
 ### Built-in Functions - 組み込み関数
 
