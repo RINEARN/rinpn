@@ -1,3 +1,5 @@
+coding UTF-8;
+
 /*
  * This script file is to specify values of various setting parameters of RINEARN Processor nano.
  * This code is written in the C-like simple scripting language "Vnano (VCSSL nano)".
