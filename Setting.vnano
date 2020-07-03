@@ -217,22 +217,52 @@ textFieldForegroundColorB = 180;     // Blue  - 青成分 (0 ~ 255)
 
 
 // **************************************************************************************************************
+//         - Library/Plug-in Settings -
+//         - ライブラリ/プラグイン関連の設定 -
+// **************************************************************************************************************
+
+// Note: When you want to add new library scripts or plug-ins, modify following files:
+// 新しいライブラリスクリプトやプラグインを追加するには、以下のファイルを編集してください:
+//   * lib/VnanoLibraryList.txt
+//   * plugin/VnanoPluginList.txt
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify whether reload plug-ins for each calculation (or execution of a script) or not.
+// When you are developing a new plug-in and testing/debugguing it on the GUI mode, this option might be helpful.
+// Please note that, if you enable (set "true") this option, behaviour of plug-ins having internal states change, 
+// because internal states will be re-initialized for each calculation. 
+// Therefore, we recommend to set this option to "false" after when you have finished to develop new plug-ins.
+// 計算（またはスクリプトの実行）毎に、プラグインを再読み込みするかどうかを指定します。
+// このオプションは、新しいプラグインを開発し、それをGUIモードでテスト/デバッグする際に役立つかもしれません。
+// ただし、このオプションを有効化（true に設定）すると、内部で何らかの状態を保持するようなプラグインの挙動は、
+// 計算毎に内部状態がリセットされるため、通常とは変化してしまう事に注意してください。
+// そのため、新規プラグインの開発完了後は、このオプションの値を false に戻しておく事が推奨されます。
+// --------------------------------------------------------------------------------------------------------------
+
+reloadPlugin = false;     // Don't reload - 再読み込みしない
+// reloadPlugin = true;   // Reload       - 再読み込みする
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify whether reload contents of library scripts for each calculation (or execution of a script) or not.
+// If you disable (set "false") this option, responses of calculations may going to be little quick.
+// However, on the current version, disabling this option have very little effect for responses.
+// 計算（またはスクリプトの実行）毎に、ライブラリスクリプトの内容を再読み込みするかどうかを指定します。
+// このオプションを無効化（false に設定）すると、計算の応答が若干早くなる可能性があります。
+// ただし、現状のバージョンでは、有効/無効でレスポンスに大差は生じません。
+// --------------------------------------------------------------------------------------------------------------
+
+reloadLibrary = true;       // Reload       - 再読み込みする
+// reloadLibrary = false;   // Don't reload - 再読み込みしない
+
+
+
+
+
+// **************************************************************************************************************
 //         - Script Settings -
 //         - スクリプト関連の設定 -
 // **************************************************************************************************************
-
-// --------------------------------------------------------------------------------------------------------------
-// Specify of library scripts and plug-ins to be loaded.
-// 読み込むライブラリスクリプトやプラグインを指定します。
-// --------------------------------------------------------------------------------------------------------------
-
-// Settings for loading library scripts was moved to: lib/VnanoLibraryList.txt
-// ライブラリの読み込み設定は下記ファイルに移動されました:
-//     lib/VnanoLibraryList.txt
-
-// Settings for loading plug-ins was moved to:
-// プラグインの読み込み設定は下記ファイルに移動されました:
-//     plugin/VnanoPluginList.txt
 
 
 // --------------------------------------------------------------------------------------------------------------

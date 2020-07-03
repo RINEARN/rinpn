@@ -222,8 +222,12 @@ public final class CalculatorModel {
 
 		// ライブラリ/プラグインの再読み込み
 		try {
-			this.engine.put("___VNANO_COMMAND", "RELOAD_LIBRARY");
-			this.engine.put("___VNANO_COMMAND", "RELOAD_PLUGIN");
+			if (setting.reloadLibrary) {
+				this.engine.put("___VNANO_COMMAND", "RELOAD_LIBRARY");
+			}
+			if (setting.reloadPlugin) {
+				this.engine.put("___VNANO_COMMAND", "RELOAD_PLUGIN");
+			}
 
 		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
 		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）

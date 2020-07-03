@@ -57,6 +57,9 @@ public final class SettingContainer implements Cloneable {
 	public String roundingTarget = "SIGNIFICAND";
 	public int roundingLength = 10;
 
+	public boolean reloadPlugin = false;
+	public boolean reloadLibrary = true;
+
 	public boolean acceleratorEnabled = true;
 	public boolean evalNumberAsFloat = true;
 	public boolean evalOnlyFloat = true;
