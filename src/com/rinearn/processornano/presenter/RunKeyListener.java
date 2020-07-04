@@ -8,9 +8,6 @@ package com.rinearn.processornano.presenter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import javax.swing.SwingUtilities;
-
-import com.rinearn.processornano.model.AsynchronousCalculationListener;
 import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.util.SettingContainer;
 import com.rinearn.processornano.view.ViewInterface;
@@ -27,24 +24,15 @@ public final class RunKeyListener implements KeyListener {
 		this.setting = setting;
 	}
 
+	// 「INPUT」欄でキーが押されると呼ばれる
 	@Override
 	public final void keyPressed(KeyEvent e) {
+
+		// 押されたのがEnter キーの場合
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 
-			// 「OUTPUT」欄に計算実行中を表すメッセージを表示
-			this.view.setOutputText("RUNNING...");
-
-			// 計算完了時に、結果を OUTPUT 欄に表示するためのイベントリスナーを用意
-			AsynchronousCalculationListener asyncCalcListener = new AsynchronousCalculationListener() {
-				public void calculationFinished(String outputText) {
-					// 計算およびリスナー呼び出しは別スレッド上で行われるため、
-					// OUTPUT 欄の更新処理は OutputFieldUpdater 経由でUIスレッドに投げる
-					SwingUtilities.invokeLater(new OutputFieldUpdater(view, outputText));
-				}
-			};
-
-			// 別スレッドで計算を実行
-			calculator.calculateAsynchronously(this.view.getInputText(), this.setting, asyncCalcListener);
+			// 「 = 」ボタンが押された際と全く同じ処理を行うので、RunButtonListener の内部処理に投げる
+			RunButtonListener.handleEvent(this.view, this.calculator, this.setting);
 		}
 	}
 
