@@ -155,7 +155,7 @@ public final class CalculatorModel {
 	}
 
 
-	// CUIモードでは RinearnProcessorNano.calculate、GUIモードでは AsynchronousCalculationListener.run から呼ばれて実行される
+	// CUIモードでは RinearnProcessorNano.calculate、GUIモードでは AsynchronousCalculationRunner.run から呼ばれて実行される
 	public final synchronized String calculate(String inputtedContent, boolean isGuiMode, SettingContainer setting)
 			throws ScriptException, RinearnProcessorNanoException {
 
@@ -316,6 +316,7 @@ public final class CalculatorModel {
 	}
 
 
+	// GUIモードの場合に、Enterキーや実行ボタンを押した際、RunButtonListener や RunKeyListener から呼ばれる
 	public final synchronized void calculateAsynchronously(
 			String inputExpression, SettingContainer setting, AsynchronousCalculationListener scriptListener) {
 

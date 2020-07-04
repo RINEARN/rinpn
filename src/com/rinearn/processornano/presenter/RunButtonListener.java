@@ -29,11 +29,20 @@ public final class RunButtonListener implements ActionListener {
 
 	@Override
 	public final void actionPerformed(ActionEvent e) {
+
+		// 「OUTPUT」欄に計算実行中を表すメッセージを表示
+		this.view.setOutputText("RUNNING...");
+
+		// 計算完了時に、結果を OUTPUT 欄に表示するためのイベントリスナーを用意
 		AsynchronousCalculationListener asyncCalcListener = new AsynchronousCalculationListener() {
 			public void calculationFinished(String outputText) {
+				// 計算およびリスナー呼び出しは別スレッド上で行われるため、
+				// OUTPUT 欄の更新処理は OutputFieldUpdater 経由でUIスレッドに投げる
 				SwingUtilities.invokeLater(new OutputFieldUpdater(view, outputText));
 			}
 		};
+
+		// 別スレッドで計算を実行
 		calculator.calculateAsynchronously(this.view.getInputText(), this.setting, asyncCalcListener);
 	}
 }
