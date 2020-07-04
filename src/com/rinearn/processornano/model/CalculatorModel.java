@@ -159,6 +159,12 @@ public final class CalculatorModel {
 	public final synchronized String calculate(String inputtedContent, boolean isGuiMode, SettingContainer setting)
 			throws ScriptException, RinearnProcessorNanoException {
 
+		// 入力が空の場合は、何もせず空の出力を返す
+		//（そうしないと、入力が式文ではないため評価結果の値が無いし、オプションによっては入力が式文ではない時点でエラーになる）
+		if (inputtedContent.trim().length() == 0) {
+			return "";
+		}
+
 		// 計算中の状態にする（AsynchronousCalculationRunner から参照する）
 		this.calculating = true;
 
