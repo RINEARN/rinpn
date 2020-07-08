@@ -16,6 +16,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import com.rinearn.processornano.RinearnProcessorNanoException;
+import com.rinearn.processornano.RinearnProcessorNanoFatalException;
 import com.rinearn.processornano.util.LocaleCode;
 import com.rinearn.processornano.util.MessageManager;
 import com.rinearn.processornano.util.ScriptFileLoader;
@@ -76,10 +77,11 @@ public final class CalculatorModel {
 	}
 
 
-	// AsynchronousCalculationRunner から参照する
+	// AsynchronousCalculationRunner や ExitButtonListener から参照する
 	public final boolean isCalculating() {
 		return this.calculating;
 	}
+
 
 	// 初期化処理
 	public final void initialize(
@@ -156,17 +158,29 @@ public final class CalculatorModel {
 
 
 	// CUIモードでは RinearnProcessorNano.calculate、GUIモードでは AsynchronousCalculationRunner.run から呼ばれて実行される
-	public final synchronized String calculate(String inputtedContent, boolean isGuiMode, SettingContainer setting)
+	public final String calculate(String inputtedContent, boolean isGuiMode, SettingContainer setting)
 			throws ScriptException, RinearnProcessorNanoException {
 
-		// 入力が空の場合は、何もせず空の出力を返す
-		//（そうしないと、入力が式文ではないため評価結果の値が無いし、オプションによっては入力が式文ではない時点でエラーになる）
-		if (inputtedContent.trim().length() == 0) {
-			return "";
+		// 注意:
+		// このメソッドを synchronized にすると、スクリプト内容が重い場合に Enter キーや実行ボタンが連打された場合、
+		// 処理がどんどん積もっていって全部消化されるまで待たなければいけなくなってしまう。従って synchronized は付けない。
+		// 代わりに、GUIモードにおけるこのメソッドの呼び出し元である AsynchronousCalculationRunner 側で、
+		// isCalculating() を呼んで現在実行中かどうか検査し、実行中なら追加の計算リクエストを弾くようにする。
+
+		if (this.calculating) {
+			// それでも追加の計算リクエストが来た場合は、呼び出し元での検査不備や処理フローの不備なので Fatal エラー扱いにする
+			throw new RinearnProcessorNanoFatalException("The previous calculation has not finished yet");
 		}
 
 		// 計算中の状態にする（AsynchronousCalculationRunner から参照する）
 		this.calculating = true;
+
+		// 入力が空の場合は、何もせず空の出力を返す
+		//（そうしないと、入力が式文ではないため評価結果の値が無いし、オプションによっては入力が式文ではない時点でエラーになる）
+		if (inputtedContent.trim().length() == 0) {
+			calculating = false;
+			return "";
+		}
 
 		// スクリプト内から output 関数に渡した内容を控える変数をクリア
 		this.lastOutputContent = null;
@@ -314,18 +328,4 @@ public final class CalculatorModel {
 
 		return outputText;
 	}
-
-
-	// GUIモードの場合に、Enterキーや実行ボタンを押した際、RunButtonListener や RunKeyListener から呼ばれる
-	public final synchronized void calculateAsynchronously(
-			String inputExpression, SettingContainer setting, AsynchronousCalculationListener scriptListener) {
-
-		// 計算実行スレッドを生成して実行（中でこのクラスの calculate が呼ばれて実行される）
-		AsynchronousCalculationRunner asyncCalcRunner
-				= new AsynchronousCalculationRunner(inputExpression, scriptListener, this, setting);
-
-		Thread calculatingThread = new Thread(asyncCalcRunner);
-		calculatingThread.start();
-	}
-
 }

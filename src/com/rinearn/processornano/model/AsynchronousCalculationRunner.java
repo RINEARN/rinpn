@@ -20,7 +20,7 @@ public final class AsynchronousCalculationRunner implements Runnable {
 	private SettingContainer setting = null;
 	private String inputExpression = null;
 
-	protected AsynchronousCalculationRunner(
+	public AsynchronousCalculationRunner(
 			String inputExpression, AsynchronousCalculationListener scriptListener,
 			CalculatorModel calculator, SettingContainer setting) {
 
@@ -39,7 +39,7 @@ public final class AsynchronousCalculationRunner implements Runnable {
 
 		if (this.calculator.isCalculating()) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage("The previous calculation have not finished yet!", "!");
+				MessageManager.showErrorMessage("The previous calculation has not finished yet!", "!");
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage("まだ前の計算を実行中です !", "!");

@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 
 import com.rinearn.processornano.model.AsynchronousCalculationListener;
+import com.rinearn.processornano.model.AsynchronousCalculationRunner;
 import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.util.SettingContainer;
 import com.rinearn.processornano.view.ViewInterface;
@@ -51,7 +52,10 @@ public final class RunButtonListener implements ActionListener {
 			}
 		};
 
-		// 別スレッドで計算を実行
-		calculator.calculateAsynchronously(view.getInputText(), setting, asyncCalcListener);
+		// 計算実行スレッドを生成して実行（中でこのクラスの calculate が呼ばれて実行される）
+		AsynchronousCalculationRunner asyncCalcRunner
+				= new AsynchronousCalculationRunner(view.getInputText(), asyncCalcListener, calculator, setting);
+		Thread calculatingThread = new Thread(asyncCalcRunner);
+		calculatingThread.start();
 	}
 }
