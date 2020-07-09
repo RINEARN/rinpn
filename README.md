@@ -303,7 +303,7 @@ In the CUI mode, you can take calculations on the command-line terminal, whithou
 To use the CUI mode, execute the "RINPn.jar" with passing an expression as a command-line argument as follows:
 
 CUIモードでは、コマンドライン端末上で、電卓画面を起動せずにその場で計算を行う事ができます。
-CUIモードを使用するには、コマンドラインで以下のように、計算式を引数として「 RinearnProcessor.jar 」を実行してください：
+CUIモードを使用するには、コマンドラインで以下のように、計算式を引数として「 RINPn.jar 」を実行してください：
 
 	cd <working-directory>/rinpn/
 	java -jar RINPn.jar "(1 + 2 ) / 3 - 4 + 5"
