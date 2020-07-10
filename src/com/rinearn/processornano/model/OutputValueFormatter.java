@@ -20,21 +20,66 @@ public final class OutputValueFormatter {
 			RoundingMode mode = RoundingMode.valueOf(setting.roundingMode);
 			RoundingTarget target = RoundingTarget.valueOf(setting.roundingTarget);
 			int digits = setting.roundingLength;
-			return round(inputValue, mode, target, digits);
+			boolean performsImplicitRounding = setting.performImplicitRoundingBeforeRounding;
+			return round(inputValue, mode, target, digits, performsImplicitRounding);
 		} else {
 			return new BigDecimal(inputValue);
 		}
 	}
 
 	protected static final BigDecimal round(
-			double inputValue, RoundingMode mode, RoundingTarget target, int digits) {
+			double inputValue, RoundingMode mode, RoundingTarget target, int digits,
+			boolean performsImplicitRounding) {
 
-		BigDecimal bdValue = new BigDecimal(inputValue);
+		// 注意:
+		// 「 INPUT 」欄に入力された値をそのまま丸めて表示するような場合で、
+		// 入力値を格納する double 値が10進数の有限桁で表現できない場合に、
+		// その2進-10進変換誤差が丸め結果にクリティカルに効く場合がある。
+
+		// 例えば 1.005 を代入した double 値（2進表現）は、理論上は10進表現でちょうど 1.005 にはならないため、
+		// 素直に BigDecimal に（コンストラクタ引数に渡して）変換すると 1.00499... になる。
+		// これを、有効桁数3桁（小数点以下2桁）に HALF_UP すると、小数部は .005 に足らないため切り捨てられて 1.00 になる。
+		// （これはこれである意味正しい挙動）
+
+		// 対して、事前に String に変換すると、double の有効精度を考慮してほどほどに丸められた10進表現が得られるので、
+		// 少なくとも代入直後の状態では、上述の2進-10進変換誤差を（限定的ではあるが）そこそこ吸収する作用が見込める。
+		// 例えば 1.005 を代入した double 値では "1.005" が得られる。これを BigDecimal に変換して、
+		// 先と同様に有効桁数3桁（小数点以下2桁）に HALF_UP すると、今度は .005 が切り上げられて 1.01 が得られる。
+
+		// ただし完全ではないし、代入後の状態から演算を行うと誤差が（文字列変換時に丸める冗長範囲を超えて）表面化もするし、
+		// その程度の効果のために丸め処理の内容を複雑にしたいかどうかも恐らく場面によるので、
+		// オプションで有効/無効を切り替え可能にしている（このメソッドの引数 performsImplicitRounding に渡される）。
+
+
+		// 丸めを行うために、double から BigDecimal に変換する
+		BigDecimal bdValue = null;
+
+		// 丸め前の暗黙丸めオプションが有効な場合
+		if (performsImplicitRounding) {
+
+			// まず普通に10進数の文字列表現に変換する（精度範囲付近または超過するような桁に、ある程度の暗黙的な丸めが作用する）
+			String strValue = Double.toString(inputValue);
+
+			// その後に BigDecimal に変換する
+			bdValue = new BigDecimal(strValue);
+
+		// 丸め前の暗黙丸めオプションが無効な場合
+		} else {
+
+			// 直接的に BigDecimal に変換する（10進表現で割り切れない値などは、double の精度範囲以降に変換誤差が乗った値になる）
+			bdValue = new BigDecimal(inputValue);
+		}
+
+		// 丸め処理を実行
 		switch (target) {
+
+			// 「小数点以下何桁」などの基準で丸める場合
 			case AFTER_FIXED_POINT : {
 				bdValue = bdValue.setScale(digits, mode);
 				break;
 			}
+
+			// 有効桁数基準で丸める場合（いわゆる数値の精度）
 			case SIGNIFICAND : {
 				MathContext mathContext = new java.math.MathContext(digits, mode);
 				bdValue = bdValue.round(mathContext);

@@ -53,6 +53,7 @@ public final class SettingContainer implements Cloneable {
 
 	public boolean inputNormalizerEnabled = true;
 	public boolean outputRounderEnabled = true;
+	public boolean performImplicitRoundingBeforeRounding = true;
 	public String roundingMode = "HALF_UP";
 	public String roundingTarget = "SIGNIFICAND";
 	public int roundingLength = 10;
