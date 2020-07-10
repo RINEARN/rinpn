@@ -140,7 +140,7 @@ public final class SettingContainer implements Cloneable {
 		// スクリプトエンジンに渡すオプションを用意
 		//（エラーメッセージ用にスクリプト名し、アクセラレータも無効化する）
 		Map<String, Object> optionMap = new HashMap<String, Object>();
-		optionMap.put("EVAL_SCRIPT_NAME", settingScriptFile.getName());
+		optionMap.put("MAIN_SCRIPT_NAME", settingScriptFile.getName());
 		optionMap.put("DUMPER_ENABLED", debug);
 		optionMap.put("ACCELERATOR_ENABLED", false);
 		optionMap.put("UI_MODE", isGuiMode ? "GUI" : "CUI");
