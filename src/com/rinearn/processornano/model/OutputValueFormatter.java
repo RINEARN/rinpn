@@ -16,12 +16,31 @@ import com.rinearn.processornano.util.SettingContainer;
 public final class OutputValueFormatter {
 
 	protected static final BigDecimal round(double inputValue, SettingContainer setting) {
+
+		// オプションで丸めが有効化されている場合
 		if (setting.outputRounderEnabled) {
-			RoundingMode mode = RoundingMode.valueOf(setting.roundingMode);
+
+			// 丸めモード名を取得し、"HALF_TO_EVEN" の場合は "HALF_EVEN" に変換
+			//（ Vnano の組み込み関数への指定では HALF_TO_EVEN 表記（にする予定）なので、
+			//   Vnano 実行をサポートしている RINPn でも統一性のために同名にしたいが、
+			//   以下で使う RoundingMode の enum 要素名は HALF_EVEN であるため。）
+			String roundingModeName = setting.roundingMode;
+			if (roundingModeName.equals("HALF_TO_EVEN")) {
+				roundingModeName = "HALF_EVEN";
+			}
+
+			// 丸めモード名を RoundingMode enum の要素に変換
+			RoundingMode mode = RoundingMode.valueOf(roundingModeName);
+
+			// その他の設定値を取得/変換
 			RoundingTarget target = RoundingTarget.valueOf(setting.roundingTarget);
 			int digits = setting.roundingLength;
 			boolean performsImplicitRounding = setting.performImplicitRoundingBeforeRounding;
+
+			// 丸め処理を実行して返す
 			return round(inputValue, mode, target, digits, performsImplicitRounding);
+
+		// オプションで丸めが無効化されている場合
 		} else {
 			return new BigDecimal(inputValue);
 		}

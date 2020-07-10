@@ -347,7 +347,12 @@ public final class SettingContainer implements Cloneable {
 
 
 		try {
-			RoundingMode.valueOf(this.roundingMode);
+			// RoundingMode enum の要素名でなければエラーとするが、
+			// "HALF_TO_EVEN" は丸め時に "HALF_EVEN" に変換するため、特例的に許可
+			// （OutputValueFormatter内コメント参照）
+			if (!this.roundingMode.equals("HALF_TO_EVEN")) {
+				RoundingMode.valueOf(this.roundingMode);
+			}
 		} catch (IllegalArgumentException e) {
 			if (this.localeCode.equals(LocaleCode.EN_US)) {
 				errorMessage = "Invalid value of \"roundingMode\": " + this.roundingMode;

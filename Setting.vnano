@@ -61,7 +61,7 @@ outputRounderEnabled = true;        // Round       - 丸める
 
 roundingMode = "HALF_UP";
 // roundingMode = "HALF_DOWN";
-// roundingMode = "HALF_EVEN";
+// roundingMode = "HALF_TO_EVEN";
 // roundingMode = "UP";
 // roundingMode = "DOWN";
 
