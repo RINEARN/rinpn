@@ -13,11 +13,16 @@ import com.rinearn.processornano.RinearnProcessorNanoFatalException;
 import com.rinearn.processornano.util.RoundingTarget;
 import com.rinearn.processornano.util.SettingContainer;
 
+// メモ：暗黙丸めと明示的丸めは独立に効くようにしてもいいかもしれない。
+//       現状の仕様では、明示的丸めが OFF の場合に暗黙丸めも OFF にできない。
+//       できても、内部データが double である時点でその精度以上を表示する必要は無いけれど、
+//       オプションの効き方としては単純化できるので、検討の余地はあるかも。
+
 public final class OutputValueFormatter {
 
 	protected static final BigDecimal round(double inputValue, SettingContainer setting) {
 
-		// オプションで丸めが有効化されている場合
+		// オプションで丸め（設定内容に基づく明示的丸め）が有効化されている場合
 		if (setting.outputRounderEnabled) {
 
 			// 丸めモード名を取得し、"HALF_TO_EVEN" の場合は "HALF_EVEN" に変換
@@ -40,11 +45,15 @@ public final class OutputValueFormatter {
 			// 丸め処理を実行して返す
 			return round(inputValue, mode, target, digits, performsImplicitRounding);
 
-		// オプションで丸めが無効化されている場合
+		// オプションで丸め（設定内容に基づく明示的丸め）が無効化されている場合
 		} else {
-			return new BigDecimal(inputValue);
+
+			// double の有効精度内の桁数に収めるため、一旦 String を介してから BigDecimal に変換する
+			// （暗黙の丸め： 下に続くメソッド内のコメント参照）
+			return new BigDecimal( Double.toString(inputValue) );
 		}
 	}
+
 
 	protected static final BigDecimal round(
 			double inputValue, RoundingMode mode, RoundingTarget target, int digits,
