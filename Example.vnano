@@ -1,11 +1,11 @@
 coding UTF-8;
 
 /****************************************************************************************************
- * An example script calculating the numerical integration value of cos(x) from B (=0) to A (=1).
+ * An example script calculating the numerical integration value of cos(x) from A (=0) to B (=1).
  * This code is written in the C-like simple scripting language "Vnano (VCSSL nano)".
  * For syntax etc. of Vnano, see:  https://github.com/RINEARN/vnano/#language
  * 
- * スクリプトの記述例として、cos(x) の B (=0) から A (=1) までの数値積分の値を計算します。
+ * スクリプトの記述例として、cos(x) の A (=0) から B (=1) までの数値積分の値を計算します。
  * このコードは、C言語系の文法の簡易スクリプト言語「Vnano (VCSSL nano)」で書かれています。
  * Vnano の文法などについては： https://github.com/RINEARN/vnano/#language
  * 計算アルゴリズムについては： https://www.vcssl.org/ja-jp/code/archive/0001/3200-integral-simpson/

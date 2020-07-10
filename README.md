@@ -10,19 +10,19 @@ RINPn (RINEARN Processor nano、発音「りんぷん」) は、シンプルで�
   <img src="https://github.com/RINEARN/rinpn/blob/master/signboard.jpg" alt="" width="890" />
 </div>
 
-### The Official Website - 公式サイト
+**Note: This README is for users who want to build this software from source code by yourself.
+You can also get prebuilt-packages of this software from the following official website.**
+
+**※ このREADMEの内容は、このソフトウェアをソースコードからビルドしたい方のためのものです。
+下記公式サイトから、ビルド済みのパッケージも入手できます。**
+
+### The RINPn Official Website - RINPn 公式サイト
 
 - English: <a href="https://www.rinearn.com/en-us/rinpn/">https://www.rinearn.com/en-us/rinpn/</a>
 - 日本語:   <a href="https://www.rinearn.com/ja-jp/rinpn/">https://www.rinearn.com/ja-jp/rinpn/</a>
 
 <hr />
 
-
-This README is for users who want to build this software from source code by yourself.
-You can also get prebuilt-packages of this software from the above official website.
-
-このREADMEの内容は、このソフトウェアをソースコードからビルドしたい方のためのものです。
-上記公式サイトから、ビルド済みのパッケージも入手できます。
 
 
 ## Index - 目次
@@ -185,7 +185,7 @@ In addition, on the repository of RINEARN, some plug-ins are provided officially
 <a id="how-to-compile-official-plugins"></a>
 #### 3-1. Get and Compile Vnano Standard Plug-Ins - Vnano 標準プラグインの入手とコンパイル
 
-Let's get and compile <a href="https://github.com/RINEARN/vnano-standard-plugin">Vnano standard plug-ins</a>: 
+Let's get and compile <a href="https://github.com/RINEARN/vnano-standard-plugin">Vnano Standard Plug-ins</a>: 
 
 <a href="https://github.com/RINEARN/vnano-standard-plugin">Vnano 標準プラグイン</a>を入手してコンパイルします：
 
@@ -303,7 +303,7 @@ In the CUI mode, you can take calculations on the command-line terminal, whithou
 To use the CUI mode, execute the "RINPn.jar" with passing an expression as a command-line argument as follows:
 
 CUIモードでは、コマンドライン端末上で、電卓画面を起動せずにその場で計算を行う事ができます。
-CUIモードを使用するには、コマンドラインで以下のように、計算式を引数として「 RinearnProcessor.jar 」を実行してください：
+CUIモードを使用するには、コマンドラインで以下のように、計算式を引数として「 RINPn.jar 」を実行してください：
 
 	cd <working-directory>/rinpn/
 	java -jar RINPn.jar "(1 + 2 ) / 3 - 4 + 5"
@@ -612,9 +612,17 @@ For more details, see
 
 <a id="built-in-functions"></a>
 
-On this software, following functions and variables are available by default.
+On this software, some functions and variables are available by default.
+Among them, frequently used functions/variables are shown in the following list.
 
-このソフトウェアでは、以下の関数および変数が標準で利用できます。
+このソフトウェアでは、いくつかの関数および変数が標準で利用できます。
+以下では、それらの中で特によく使うものをリストアップして紹介します。
+
+Note that, most of following functions/variables are provided by Vnano Standard Plug-ins which were introduced in "<a href="#how-to-compile-plugins">Compile Plug-Ins</a>" section, so please check and retry steps in the above section, if you can not use following functions/variables.
+Also, for the full list of available functions/variables, and for more detailed specifications of them, see <a href="https://www.vcssl.org/en-us/vnano/plugin/">specification documents of Vnano Standard Plug-ins</a>.
+
+ただし、以下に挙げる関数/変数の大半は、「 <a href="#how-to-compile-plugins">プラグインのコンパイル</a> 」の項目で導入した、Vnano 標準プラグインが提供しています。従って、もし以下の関数/変数を使用できない場合は、上記の導入手順を再度見直してみてください。なお、全ての関数/変数のリスト、およびより詳細な仕様については、<a href="https://www.vcssl.org/ja-jp/vnano/plugin/">Vnano 標準プラグインの仕様書</a>をご参照ください。
+
 
 ### Built-in Functions - 組み込み関数
 
@@ -1022,21 +1030,24 @@ class.
 クラスの "link" メソッドによって Model と View の間に接続された後は、個々にイベント駆動で動作します。
 
 
-The action to the UI by the user to take a calculation will be catched by UI event listeners ( e.g. 
+The action to the UI by the user to perform a calculation will be catched by UI event listeners ( e.g. 
 <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/RunKeyListener.java">RunKeyListener</a> 
 class, 
 <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/RunButtonListener.java">RunButtonListener</a> 
 class, and so on
 ) in this component.
-Then the listener will request to the Model to take the calculation asynchronously on an other thread, by calling "calculateAsynchronously" method of 
-<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a>. 
-Also, as an argument of the method, the lisner will create and passe an new event listener which implements
+Then those listeners create a new thread and an instance of 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationRunner.java">AsynchronousCalculationRunner</a> 
+class of "model" package, to run calculation asynchronously on the created thread. 
+AsynchronousCalculationRunner class executes the calculation by calling "calculate" 
+method of 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
+class, and notify the result to a calculation event listener (defined in RunButton class) which imprementing 
 <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationListener.java">AsynchronousCalculationListener</a> 
-interface, to catch the event notifying the finishing of the calculation 
-and invoke subsequent procedures.
-After the calculation will have been finished, view updaters ( e.g. 
-<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/OutputFieldUpdater.java">OutputFieldUpdater</a>, and so on	
-) will update the UI on the event-dispatching thread  (by using the feature of "SwingUtilities.invokeAndWait" method).
+interface.
+Finally, the calculation event listener requests to the event-dispatching thread
+to update the UI on by using view updater classes ( e.g. 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/OutputFieldUpdater.java">OutputFieldUpdater</a>, and so on).
 
 
 
@@ -1046,15 +1057,17 @@ After the calculation will have been finished, view updaters ( e.g.
 クラスや
 <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/RunButtonListener.java">RunButtonListener</a> 
 クラスなど ）が反応します。
-そこから、別スレッドで非同期に計算を行うリクエストが、Model 内の
-<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
-クラスの calculateAsynchronously メソッドに投げられます。
-その際、計算完了時に通知を受け取って、後に続く処理を行うために、
-<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationListener.java">AsynchronousCalculationListener</a> インターフェースを実装したイベントリスナが引数として渡されます。
-計算完了後は、（"SwingUtilities.invokeAndWait" メソッドの機能を介して）イベントディスパッチスレッド上で、ビューアップデータ（ 
+その処理で新しいスレッドが生成され、その上で非同期に計算を実行するために、model パッケージの 
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationRunner.java">AsynchronousCalculationRunner</a> 
+クラスのインスタンスが生成されます。
+AsynchronousCalculationRunner クラスは、
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a>
+クラスの calculate メソッドを呼び出して計算を実行し、その結果を
+<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationListener.java">AsynchronousCalculationListener</a> インターフェースを実装した計算イベントリスナ（RunButtonクラス内で定義）に通知します。
+すると、その計算イベントリスナが、ビューアップデータ（ 
 <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/presenter/OutputFieldUpdater.java">OutputFieldUpdater</a> 
 クラスなど 
-）がUIの表示を更新します。
+）を介して、イベントディスパッチスレッド上でUIの表示を更新します。
 
 
 
@@ -1075,7 +1088,7 @@ Therefore, for details of this component itself, see the document of: <a href="h
 
 
 This component is accessed from the Model through javax.script.ScriptEngine interface of Java&reg; Scripting API.
-In the CUI mode, "eval" method of the script engine is simply called in the processing of the "calculate" method of 
+On the CUI mode, "eval" method of the script engine is simply called in the processing of the "calculate" method of 
 <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> class.
 The "eval" method takes a calculation expression (or script) as an argument, and returns the calculated result as a return-value.
 
@@ -1085,16 +1098,13 @@ CUIモードでは、
 クラスの calculate メソッド内の処理において、スクリプトエンジンの eval メソッドが単純に呼び出されます。
 この eval メソッドは、引数として渡された式（やスクリプト）の値を計算して、その結果を戻り値として返します。
 
-In the GUI mode, in the processing of "calculateAsynchronously" method of
-<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
-class, an instance of <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationRunner.java">AsynchronousCalculationRunner</a> class will be created, and "run" method of the class will be invoked on an other thread.
+On the GUI mode, when an calculation is requested by the user,
+an instance of <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationRunner.java">AsynchronousCalculationRunner</a> class will be created, and "run" method of the class will be invoked on an other thread.
 From there, "calculate" method of 
 <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a>
 class which we mentioned above will be called, and "eval" method of the script engine will be called in there (see also: <a href="#architecture-presenter">the explanation of the Presenter</a>).
 
-GUIモードでは、
-<a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> 
-クラスの calculateAsynchronously メソッド内において、まず 
+GUIモードでは、ユーザーによって計算がリクエストされた際に 
 <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/AsynchronousCalculationRunner.java">AsynchronousCalculationRunner</a> 
 クラスのインスタンスが生成され、その run メソッドが別スレッドで実行されます。
 そこから、先ほども述べた <a href="https://github.com/RINEARN/rinpn/blob/master/src/com/rinearn/processornano/model/CalculatorModel.java">CalculatorModel</a> クラスの calculate メソッドが実行され、その中でスクリプトエンジンの eval メソッドが呼び出されます

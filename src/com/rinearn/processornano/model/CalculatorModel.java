@@ -16,6 +16,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import com.rinearn.processornano.RinearnProcessorNanoException;
+import com.rinearn.processornano.RinearnProcessorNanoFatalException;
 import com.rinearn.processornano.util.LocaleCode;
 import com.rinearn.processornano.util.MessageManager;
 import com.rinearn.processornano.util.ScriptFileLoader;
@@ -76,10 +77,11 @@ public final class CalculatorModel {
 	}
 
 
-	// AsynchronousCalculationRunner から参照する
+	// AsynchronousCalculationRunner や ExitButtonListener から参照する
 	public final boolean isCalculating() {
 		return this.calculating;
 	}
+
 
 	// 初期化処理
 	public final void initialize(
@@ -155,12 +157,30 @@ public final class CalculatorModel {
 	}
 
 
-	// CUIモードでは RinearnProcessorNano.calculate、GUIモードでは AsynchronousCalculationListener.run から呼ばれて実行される
-	public final synchronized String calculate(String inputtedContent, boolean isGuiMode, SettingContainer setting)
+	// CUIモードでは RinearnProcessorNano.calculate、GUIモードでは AsynchronousCalculationRunner.run から呼ばれて実行される
+	public final String calculate(String inputtedContent, boolean isGuiMode, SettingContainer setting)
 			throws ScriptException, RinearnProcessorNanoException {
+
+		// 注意:
+		// このメソッドを synchronized にすると、スクリプト内容が重い場合に Enter キーや実行ボタンが連打された場合、
+		// 処理がどんどん積もっていって全部消化されるまで待たなければいけなくなってしまう。従って synchronized は付けない。
+		// 代わりに、GUIモードにおけるこのメソッドの呼び出し元である AsynchronousCalculationRunner 側で、
+		// isCalculating() を呼んで現在実行中かどうか検査し、実行中なら追加の計算リクエストを弾くようにする。
+
+		if (this.calculating) {
+			// それでも追加の計算リクエストが来た場合は、呼び出し元での検査不備や処理フローの不備なので Fatal エラー扱いにする
+			throw new RinearnProcessorNanoFatalException("The previous calculation has not finished yet");
+		}
 
 		// 計算中の状態にする（AsynchronousCalculationRunner から参照する）
 		this.calculating = true;
+
+		// 入力が空の場合は、何もせず空の出力を返す
+		//（そうしないと、入力が式文ではないため評価結果の値が無いし、オプションによっては入力が式文ではない時点でエラーになる）
+		if (inputtedContent.trim().length() == 0) {
+			calculating = false;
+			return "";
+		}
 
 		// スクリプト内から output 関数に渡した内容を控える変数をクリア
 		this.lastOutputContent = null;
@@ -169,11 +189,17 @@ public final class CalculatorModel {
 		boolean scriptFileInputted = false;  // スクリプトの場合は true, 計算式の場合は false
 		File scriptFile = null;
 
-		// 入力内容がスクリプトの拡張子で終わっている場合は、実行対象スクリプトファイルのパスと見なす
-		if (inputtedContent.endsWith(SCRIPT_EXTENSION)) {
+		// 前後の空白やダブルクォーテーションを詰めた内容を用意（内容の判定で使用）
+		String trimmedContent = inputtedContent.trim();
+		if (trimmedContent.startsWith("\"") && trimmedContent.endsWith("\"")) {
+			trimmedContent = trimmedContent.substring(1, trimmedContent.length()-1);
+		}
 
+		// 詰めた入力内容がスクリプトの拡張子で終わっている場合は、実行対象スクリプトファイルのパスと見なす
+		// ( ファイルパスはダブルクォーテーションで囲われている場合もある )
+		if (trimmedContent.endsWith(SCRIPT_EXTENSION)) {
 			scriptFileInputted = true;
-			scriptFile = new File(inputtedContent);
+			scriptFile = new File(trimmedContent);
 
 			// 指定内容がフルパスでなかった場合は、dirPath のディレクトリ基準の相対パスと見なす
 			if (!scriptFile.isAbsolute()) {
@@ -216,8 +242,12 @@ public final class CalculatorModel {
 
 		// ライブラリ/プラグインの再読み込み
 		try {
-			this.engine.put("___VNANO_COMMAND", "RELOAD_LIBRARY");
-			this.engine.put("___VNANO_COMMAND", "RELOAD_PLUGIN");
+			if (setting.reloadLibrary) {
+				this.engine.put("___VNANO_COMMAND", "RELOAD_LIBRARY");
+			}
+			if (setting.reloadPlugin) {
+				this.engine.put("___VNANO_COMMAND", "RELOAD_PLUGIN");
+			}
 
 		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
 		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
@@ -298,17 +328,4 @@ public final class CalculatorModel {
 
 		return outputText;
 	}
-
-
-	public final synchronized void calculateAsynchronously(
-			String inputExpression, SettingContainer setting, AsynchronousCalculationListener scriptListener) {
-
-		// 計算実行スレッドを生成して実行（中でこのクラスの calculate が呼ばれて実行される）
-		AsynchronousCalculationRunner asyncCalcRunner
-				= new AsynchronousCalculationRunner(inputExpression, scriptListener, this, setting);
-
-		Thread calculatingThread = new Thread(asyncCalcRunner);
-		calculatingThread.start();
-	}
-
 }

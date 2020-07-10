@@ -1,3 +1,5 @@
+coding UTF-8;
+
 /*
  * This script file is to specify values of various setting parameters of RINEARN Processor nano.
  * This code is written in the C-like simple scripting language "Vnano (VCSSL nano)".
@@ -39,7 +41,11 @@ localeCode = "AUTO";         // Set automatically based on your environment.
 
 // --------------------------------------------------------------------------------------------------------------
 // Specify whether round the calculated value or not.
+// Note that, even when this option is disabled, a kind of rounding will be performed implicitly, for converting 
+// internal binary data to finite decimal value (see: description of "performImplicitRoundingBeforeRounding").
 // 計算結果を丸めて表示するかどうかを指定します。
+// ただし、このオプションを無効（false）にした場合でも、2進数の内部データを10進数の有限桁の値に変換するために、
+// 一種の暗黙的な丸めは行われる事に留意してください（「 performImplicitRoundingBeforeRounding 」の説明参照）。
 // (Type: bool)
 // --------------------------------------------------------------------------------------------------------------
 
@@ -55,7 +61,7 @@ outputRounderEnabled = true;        // Round       - 丸める
 
 roundingMode = "HALF_UP";
 // roundingMode = "HALF_DOWN";
-// roundingMode = "HALF_EVEN";
+// roundingMode = "HALF_TO_EVEN";
 // roundingMode = "UP";
 // roundingMode = "DOWN";
 
@@ -77,6 +83,29 @@ roundingTarget = "SIGNIFICAND";           // Significand of the floating point n
 // --------------------------------------------------------------------------------------------------------------
 
 roundingLength = 10;
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify whether perform the "implicit rounding" before round the calculated value or not. 
+// The "implicit rounding" is the rounding for converting a binary internal data (64bit float) to a decimal value 
+// within the finite digits (the theoritical converted result might have infinite digits).
+// The implicit rounding are always performed when "outputRounderEnabled" option is disabled. In addition, 
+// when the following option is enabled (set true), the implicit rounding will be performed even when the 
+// "outputRounderEnabled" option is enabled, before the "explicit" rounding specified above is performed.
+// For example, if you input 1.005, the internal unrounded output value will be 1.00499..., so when you round it
+// into 3 digit on HALF_UP mode, you get 1 without the implicit rounding, and get 1.01 with the implicit rounding.
+// 計算結果を丸める前に、暗黙的な丸めを行うかどうかを指定します。
+// 暗黙的な丸めは、このソフトウェア内において2進数で扱われる内部データ（64bit float）を、表示用に10進変換する際、
+// その結果が一般に無限桁になり得るため、精度的な限界付近（または以降）の桁を丸めるために行われる丸め処理です。
+// outputRounderEnabled オプションが無効の際は常に作用します。加えて、以下のオプションが有効（true）な場合は、
+// outputRounderEnabled オプション有効時にも作用するようになります（暗黙的な丸め後に、設定に応じて丸められます）。
+// 例えば「 1.005 」を入力した場合、丸め前の内部データの値は、10進数表現で 1.00499... になります。これを HALF_UP
+// モードで3桁に丸めた結果は、暗黙的な丸め無しでは 1 に、暗黙的な丸めありでは 1.01 になります。
+// (Type: bool)
+// --------------------------------------------------------------------------------------------------------------
+
+performImplicitRoundingBeforeRounding = true;        // With implicit rounding    - 暗黙的な丸めあり
+// performImplicitRoundingBeforeRounding = false;    // Without implicit rounding - 暗黙的な丸めなし
 
 
 // --------------------------------------------------------------------------------------------------------------
@@ -217,22 +246,52 @@ textFieldForegroundColorB = 180;     // Blue  - 青成分 (0 ~ 255)
 
 
 // **************************************************************************************************************
+//         - Library/Plug-in Settings -
+//         - ライブラリ/プラグイン関連の設定 -
+// **************************************************************************************************************
+
+// Note: When you want to add new library scripts or plug-ins, modify following files:
+// 新しいライブラリスクリプトやプラグインを追加するには、以下のファイルを編集してください:
+//   * lib/VnanoLibraryList.txt
+//   * plugin/VnanoPluginList.txt
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify whether reload plug-ins for each calculation (or execution of a script) or not.
+// When you are developing a new plug-in and testing/debugguing it on the GUI mode, this option might be helpful.
+// Please note that, if you enable (set "true") this option, behaviour of plug-ins having internal states change, 
+// because internal states will be re-initialized for each calculation. 
+// Therefore, we recommend to set this option to "false" after when you have finished to develop new plug-ins.
+// 計算（またはスクリプトの実行）毎に、プラグインを再読み込みするかどうかを指定します。
+// このオプションは、新しいプラグインを開発し、それをGUIモードでテスト/デバッグする際に役立つかもしれません。
+// ただし、このオプションを有効化（true に設定）すると、内部で何らかの状態を保持するようなプラグインの挙動は、
+// 計算毎に内部状態がリセットされるため、通常とは変化してしまう事に注意してください。
+// そのため、新規プラグインの開発完了後は、このオプションの値を false に戻しておく事が推奨されます。
+// --------------------------------------------------------------------------------------------------------------
+
+reloadPlugin = false;     // Don't reload - 再読み込みしない
+// reloadPlugin = true;   // Reload       - 再読み込みする
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify whether reload contents of library scripts for each calculation (or execution of a script) or not.
+// If you disable (set "false") this option, responses of calculations may going to be little quick.
+// However, on the current version, disabling this option have very little effect for responses.
+// 計算（またはスクリプトの実行）毎に、ライブラリスクリプトの内容を再読み込みするかどうかを指定します。
+// このオプションを無効化（false に設定）すると、計算の応答が若干早くなる可能性があります。
+// ただし、現状のバージョンでは、有効/無効でレスポンスに大差は生じません。
+// --------------------------------------------------------------------------------------------------------------
+
+reloadLibrary = true;       // Reload       - 再読み込みする
+// reloadLibrary = false;   // Don't reload - 再読み込みしない
+
+
+
+
+
+// **************************************************************************************************************
 //         - Script Settings -
 //         - スクリプト関連の設定 -
 // **************************************************************************************************************
-
-// --------------------------------------------------------------------------------------------------------------
-// Specify of library scripts and plug-ins to be loaded.
-// 読み込むライブラリスクリプトやプラグインを指定します。
-// --------------------------------------------------------------------------------------------------------------
-
-// Settings for loading library scripts was moved to: lib/VnanoLibraryList.txt
-// ライブラリの読み込み設定は下記ファイルに移動されました:
-//     lib/VnanoLibraryList.txt
-
-// Settings for loading plug-ins was moved to:
-// プラグインの読み込み設定は下記ファイルに移動されました:
-//     plugin/VnanoPluginList.txt
 
 
 // --------------------------------------------------------------------------------------------------------------

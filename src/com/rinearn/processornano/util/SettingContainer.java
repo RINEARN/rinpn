@@ -53,9 +53,13 @@ public final class SettingContainer implements Cloneable {
 
 	public boolean inputNormalizerEnabled = true;
 	public boolean outputRounderEnabled = true;
+	public boolean performImplicitRoundingBeforeRounding = true;
 	public String roundingMode = "HALF_UP";
 	public String roundingTarget = "SIGNIFICAND";
 	public int roundingLength = 10;
+
+	public boolean reloadPlugin = false;
+	public boolean reloadLibrary = true;
 
 	public boolean acceleratorEnabled = true;
 	public boolean evalNumberAsFloat = true;
@@ -136,7 +140,7 @@ public final class SettingContainer implements Cloneable {
 		// スクリプトエンジンに渡すオプションを用意
 		//（エラーメッセージ用にスクリプト名し、アクセラレータも無効化する）
 		Map<String, Object> optionMap = new HashMap<String, Object>();
-		optionMap.put("EVAL_SCRIPT_NAME", settingScriptFile.getName());
+		optionMap.put("MAIN_SCRIPT_NAME", settingScriptFile.getName());
 		optionMap.put("DUMPER_ENABLED", debug);
 		optionMap.put("ACCELERATOR_ENABLED", false);
 		optionMap.put("UI_MODE", isGuiMode ? "GUI" : "CUI");
@@ -343,7 +347,12 @@ public final class SettingContainer implements Cloneable {
 
 
 		try {
-			RoundingMode.valueOf(this.roundingMode);
+			// RoundingMode enum の要素名でなければエラーとするが、
+			// "HALF_TO_EVEN" は丸め時に "HALF_EVEN" に変換するため、特例的に許可
+			// （OutputValueFormatter内コメント参照）
+			if (!this.roundingMode.equals("HALF_TO_EVEN")) {
+				RoundingMode.valueOf(this.roundingMode);
+			}
 		} catch (IllegalArgumentException e) {
 			if (this.localeCode.equals(LocaleCode.EN_US)) {
 				errorMessage = "Invalid value of \"roundingMode\": " + this.roundingMode;

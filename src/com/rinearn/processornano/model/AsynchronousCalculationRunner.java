@@ -20,7 +20,7 @@ public final class AsynchronousCalculationRunner implements Runnable {
 	private SettingContainer setting = null;
 	private String inputExpression = null;
 
-	protected AsynchronousCalculationRunner(
+	public AsynchronousCalculationRunner(
 			String inputExpression, AsynchronousCalculationListener scriptListener,
 			CalculatorModel calculator, SettingContainer setting) {
 
@@ -39,7 +39,7 @@ public final class AsynchronousCalculationRunner implements Runnable {
 
 		if (this.calculator.isCalculating()) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage("The previous calculation have not finished yet!", "!");
+				MessageManager.showErrorMessage("The previous calculation has not finished yet!", "!");
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage("まだ前の計算を実行中です !", "!");
@@ -47,12 +47,19 @@ public final class AsynchronousCalculationRunner implements Runnable {
 			return;
 		}
 
-		// 入力フィールドの計算式を実行し、結果の値を取得
-		String outputText = "";
 		try {
-			outputText = this.calculator.calculate(this.inputExpression, true, this.setting);
+			// 入力フィールドの計算式を実行し、結果の値を取得
+			String outputText = this.calculator.calculate(this.inputExpression, true, this.setting);
+
+			// 計算リクエスト元に計算完了を通知
+			this.calculationListener.calculationFinished(outputText);
 
 		} catch (ScriptException | RinearnProcessorNanoException e) {
+
+			// 計算結果の代わりに、エラーの発生を示すメッセージを通知（ OUTPUT 欄に表示される ）
+			this.calculationListener.calculationFinished("ERROR");
+
+			//エラー内容をユーザーに表示
 			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(errorMessage, "Expression/Script Error");
@@ -63,10 +70,6 @@ public final class AsynchronousCalculationRunner implements Runnable {
 			if (setting.exceptionStackTracerEnabled) {
 				MessageManager.showExceptionStackTrace(e);
 			}
-			return;
 		}
-
-		// 計算リクエスト元に計算完了を通知
-		this.calculationListener.calculationFinished(outputText);
 	}
 }

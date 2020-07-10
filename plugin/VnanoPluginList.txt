@@ -1,11 +1,7 @@
+# coding UTF-8;
+
 # For loading plug-ins, write relative-paths (from this file) of them in this file.
-# ( Describe 1-path per line as follows. )
-# Also, encoding of this file should be UTF-8.
-
 # プラグインを読み込むには、以下にこのファイルから見たプラグインの相対パスを記述してください。
-# ( このファイルには、以下のように、1行につき1プラグインファイルのパスを記述してください。)
-# なお、このファイルの文字コードはUTF-8で保存してください。
-
 # ----------------------------------------------------------------------------------------------------
 
 

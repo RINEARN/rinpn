@@ -54,8 +54,8 @@ public class EmbedUseExample {
 		optionMap.put("EVAL_NUMBER_AS_FLOAT", true);  // See: Setting.vnano: evalNumberAsFloat
 		optionMap.put("EVAL_ONLY_FLOAT",      true);  // See: Setting.vnano: evalOnlyFloat
 		optionMap.put("EVAL_ONLY_EXPRESSION", true);  // See: Setting.vnano: evalOnlyExpression
-		optionMap.put("TERMINAL_IO_UI", "CUI");       // For CUI applications
-		// optionMap.put("TERMINAL_IO_UI", "GUI");    // For GUI applications
+		optionMap.put("UI_MODE", "CUI");              // For CUI applications
+		// optionMap.put("UI_MODE", "GUI");           // For GUI applications
 		engine.put("___VNANO_OPTION_MAP", optionMap);
 
 		// Settings for loading libraries/plugins
