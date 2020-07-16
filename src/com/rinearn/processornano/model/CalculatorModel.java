@@ -95,10 +95,16 @@ public final class CalculatorModel {
 		this.engine = manager.getEngineByName("vnano");
 		if (engine == null) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage("Please put Vnano.jar in the same directory as RinearnProcessorNano.jar.", "Engine Loading Error");
+				MessageManager.showErrorMessage(
+					"Please put Vnano.jar in the same directory as RinearnProcessorNano.jar.",
+					"Engine Loading Error", setting.localeCode
+				);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage("Vnano.jar を RinearnProcessorNano.jar と同じフォルダ内に配置してください。", "エンジン読み込みエラー");
+				MessageManager.showErrorMessage(
+					"Vnano.jar を RinearnProcessorNano.jar と同じフォルダ内に配置してください。",
+					"エンジン読み込みエラー", setting.localeCode
+				);
 			}
 			throw new RinearnProcessorNanoException("ScriptEngine of the Vnano could not be loaded.");
 		}
@@ -116,14 +122,14 @@ public final class CalculatorModel {
 					message = e.getCause().getMessage();
 			}
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error");
+				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error", setting.localeCode);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー");
+				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー", setting.localeCode);
 			}
 			// プラグインエラーはスクリプトの構文エラーよりも深いエラーなため、常にスタックトレースを出力する
 			System.err.println("\n" + message);
-			MessageManager.showExceptionStackTrace(e);
+			MessageManager.showExceptionStackTrace(e, setting.localeCode);
 		}
 
 		// 組み込み関数「 output 」を提供するプラグイン（このクラス内に内部クラスとして実装）を登録
@@ -145,14 +151,14 @@ public final class CalculatorModel {
 					message = e.getCause().getMessage();
 			}
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in Finalization Error");
+				MessageManager.showErrorMessage(message, "Plug-in Finalization Error", setting.localeCode);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン終了時処理エラー");
+				MessageManager.showErrorMessage(message, "プラグイン終了時処理エラー", setting.localeCode);
 			}
 			// プラグインエラーはスクリプトの構文エラーよりも深いエラーなため、常にスタックトレースを出力する
 			System.err.println("\n" + message);
-			MessageManager.showExceptionStackTrace(e);
+			MessageManager.showExceptionStackTrace(e, setting.localeCode);
 		}
 	}
 
@@ -257,14 +263,14 @@ public final class CalculatorModel {
 					message = e.getCause().getMessage();
 			}
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error");
+				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error", setting.localeCode);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー");
+				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー", setting.localeCode);
 			}
 			// プラグインエラーはスクリプトの構文エラーよりも深いエラーなため、常にスタックトレースを出力する
 			System.err.println("\n" + message);
-			MessageManager.showExceptionStackTrace(e);
+			MessageManager.showExceptionStackTrace(e, setting.localeCode);
 		}
 
 

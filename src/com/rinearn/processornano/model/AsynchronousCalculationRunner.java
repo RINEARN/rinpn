@@ -39,10 +39,10 @@ public final class AsynchronousCalculationRunner implements Runnable {
 
 		if (this.calculator.isCalculating()) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage("The previous calculation has not finished yet!", "!");
+				MessageManager.showErrorMessage("The previous calculation has not finished yet!", "!", setting.localeCode);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage("まだ前の計算を実行中です !", "!");
+				MessageManager.showErrorMessage("まだ前の計算を実行中です !", "!", setting.localeCode);
 			}
 			return;
 		}
@@ -62,13 +62,13 @@ public final class AsynchronousCalculationRunner implements Runnable {
 			//エラー内容をユーザーに表示
 			String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(errorMessage, "Expression/Script Error");
+				MessageManager.showErrorMessage(errorMessage, "Expression/Script Error", setting.localeCode);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(errorMessage, "計算式やスクリプトのエラー");
+				MessageManager.showErrorMessage(errorMessage, "計算式やスクリプトのエラー", setting.localeCode);
 			}
 			if (setting.exceptionStackTracerEnabled) {
-				MessageManager.showExceptionStackTrace(e);
+				MessageManager.showExceptionStackTrace(e, setting.localeCode);
 			}
 		}
 	}

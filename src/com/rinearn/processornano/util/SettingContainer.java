@@ -100,13 +100,15 @@ public final class SettingContainer implements Cloneable {
 			if (localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(
 					"Please put Vnano.jar in the same directory as RinearnProcessorNano.jar.",
-					"Engine Loading Error"
+					"Engine Loading Error",
+					localeCode
 				);
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(
 					"Vnano.jar を、RinearnProcessorNano.jar と同じフォルダ内に配置してください。",
-					"エンジン読み込みエラー"
+					"エンジン読み込みエラー",
+					localeCode
 				);
 			}
 			throw new RinearnProcessorNanoException("ScriptEngine of the Vnano could not be loaded.");
@@ -125,13 +127,13 @@ public final class SettingContainer implements Cloneable {
 					message = e.getCause().getMessage();
 			}
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error");
+				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error", localeCode);
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー");
+				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー", localeCode);
 			}
 			System.err.println("\n" + message);
-			MessageManager.showExceptionStackTrace(e);
+			MessageManager.showExceptionStackTrace(e, localeCode);
 		}
 
 		// 設定値をスクリプトから読み書きするため、このインスタンスをスクリプトエンジンにバインディング
@@ -169,10 +171,10 @@ public final class SettingContainer implements Cloneable {
 		} catch (ScriptException se) {
 			String errorMessage = MessageManager.customizeExceptionMessage(se.getMessage());
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(errorMessage, "Setting Error");
+				MessageManager.showErrorMessage(errorMessage, "Setting Error", localeCode);
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(errorMessage, "設定スクリプトのエラー");
+				MessageManager.showErrorMessage(errorMessage, "設定スクリプトのエラー", localeCode);
 			}
 			throw new RinearnProcessorNanoException(se);
 		}
@@ -189,13 +191,13 @@ public final class SettingContainer implements Cloneable {
 					message = e.getCause().getMessage();
 			}
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in Finalization Error");
+				MessageManager.showErrorMessage(message, "Plug-in Finalization Error", localeCode);
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン終了時処理エラー");
+				MessageManager.showErrorMessage(message, "プラグイン終了時処理エラー", localeCode);
 			}
 			System.err.println("\n" + message);
-			MessageManager.showExceptionStackTrace(e);
+			MessageManager.showExceptionStackTrace(e, localeCode);
 		}
 
 		// 読み込んだ設定値を検査する
@@ -395,7 +397,7 @@ public final class SettingContainer implements Cloneable {
 			if (this.localeCode.equals(LocaleCode.JA_JP)) {
 				errorTitle = "設定エラー";
 			}
-			MessageManager.showErrorMessage(errorMessage, errorTitle);
+			MessageManager.showErrorMessage(errorMessage, errorTitle, localeCode);
 			throw new RinearnProcessorNanoException(errorMessage);
 		}
 	}

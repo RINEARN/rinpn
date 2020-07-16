@@ -56,6 +56,7 @@ public final class RinearnProcessorNano {
 
 			} else if (args[argIndex].equals(OPTION_NAME_DIR)) {
 				if (argLength <= argIndex + 1) {
+					// ここのエラーメッセージのロケールは、理想的には設定ファイルから取得したいが、そうすると設定の読み込みタイミングを変える必要がある。後々で要検討
 					if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
 						System.err.println("オプション「 " + OPTION_NAME_DIR + " 」の後に値が必要です。");
 					}
@@ -73,6 +74,7 @@ public final class RinearnProcessorNano {
 
 				// 既に計算式が控えられている場合は、引数が多すぎるのでエラー
 				} else {
+					// ここのエラーメッセージのロケールは、理想的には設定ファイルから取得したいが、そうすると設定の読み込みタイミングを変える必要がある。後々で要検討
 					if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
 						System.err.println("コマンドライン引数の数が多すぎます。");
 					}
@@ -136,7 +138,8 @@ public final class RinearnProcessorNano {
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
 			if (setting==null || setting.exceptionStackTracerEnabled) {
-				MessageManager.showExceptionStackTrace(e);
+				String localeCode = (setting==null) ? LocaleCode.getDefaultLocaleCode() : setting.localeCode;
+				MessageManager.showExceptionStackTrace(e, localeCode);
 			}
 			return;
 		}
@@ -150,11 +153,10 @@ public final class RinearnProcessorNano {
 			}
 
 		} catch (ScriptException | RinearnProcessorNanoException e) {
-			e.printStackTrace();
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
-			MessageManager.showErrorMessage(message, "!");
-			if (setting==null || setting.exceptionStackTracerEnabled) {
-				MessageManager.showExceptionStackTrace(e);
+			MessageManager.showErrorMessage(message, "!", setting.localeCode);
+			if (setting.exceptionStackTracerEnabled) {
+				MessageManager.showExceptionStackTrace(e, setting.localeCode);
 			}
 		}
 
@@ -180,7 +182,8 @@ public final class RinearnProcessorNano {
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
 		} catch (RinearnProcessorNanoException e) {
 			if (setting==null || setting.exceptionStackTracerEnabled) {
-				MessageManager.showExceptionStackTrace(e);
+				String localeCode = (setting==null) ? LocaleCode.getDefaultLocaleCode() : setting.localeCode;
+				MessageManager.showExceptionStackTrace(e, localeCode);
 			}
 			return;
 		}
@@ -197,16 +200,16 @@ public final class RinearnProcessorNano {
 
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(
-					"Unexpected exception occurred: " + e.getClass().getCanonicalName(), "Error"
+					"Unexpected exception occurred: " + e.getClass().getCanonicalName(), "Error", setting.localeCode
 				);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(
-					"予期しない例外が発生しました: " + e.getClass().getCanonicalName(), "エラー"
+					"予期しない例外が発生しました: " + e.getClass().getCanonicalName(), "エラー", setting.localeCode
 				);
 			}
 			if (setting.exceptionStackTracerEnabled) {
-				MessageManager.showExceptionStackTrace(e);
+				MessageManager.showExceptionStackTrace(e, setting.localeCode);
 			}
 			return; // この例外が発生する場合はまだUI構築が走っていないので、破棄するUIリソースはない
 		}
