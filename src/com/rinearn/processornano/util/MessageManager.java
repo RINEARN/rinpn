@@ -21,6 +21,21 @@ public final class MessageManager {
 	private static final int GUI_MESSAGE_LINE_FEEDING_THRESHOLD_JAJP = 60; // 日本語は全角で幅をとるので少なめ
 	private static final int GUI_MESSAGE_LINE_FEEDING_THRESHOLD_ENUS = 120; // 英語は半角で省スペースなので多め
 
+	// ユーザーにとって詳細情報が必要そうな場合に、エラーメッセージ内に登場する語句
+	private static final String[] KEYWORDS_FOR_MOR_DETAILS_JA_JP = {
+		"予期しない", "不明な", "外部関数", "外部変数", "プラグイン"
+	};
+	private static final String[] KEYWORDS_FOR_MOR_DETAILS_EN_US = {
+		"unexpected", "unknown", "external function", "external variable", "plug-in"
+	};
+
+	private static final String MESSAGE_FOR_MORE_DETAILS_JA_JP
+		= "\n\n( 詳細は「 " + SettingContainer.SETTING_SCRIPT_PATH + " 」内のデバッグ項目類を有効にしてください。 )" ;
+
+	private static final String MESSAGE_FOR_MORE_DETAILS_EN_US
+		= "\n\n( For more details, enable debugging options in \"" + SettingContainer.SETTING_SCRIPT_PATH + "\" )";
+
+
 	public static final void setDisplayType(DISPLAY_MODE mode) {
 		displayMode = mode;
 	}
@@ -49,6 +64,28 @@ public final class MessageManager {
 						message = getLineFeededMessageEnUS(message);
 					}
 				}
+
+				// ややこしいエラーに対しては、詳細を表示したい場合のための補足説明を追記
+				if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
+					// ややこしそうなメッセージに含まれる語句を検索
+					for (String keyword: KEYWORDS_FOR_MOR_DETAILS_JA_JP) {
+						if (message.contains(keyword)) {
+							message += MESSAGE_FOR_MORE_DETAILS_JA_JP;
+							break;
+						}
+					}
+				}
+				if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
+					String lowerCaseMessage = message.toLowerCase();
+					for (String keyword: KEYWORDS_FOR_MOR_DETAILS_EN_US) {
+						String lowerCaseKeyword = keyword.toLowerCase();
+						if (lowerCaseMessage.contains(lowerCaseKeyword)) {
+							message += MESSAGE_FOR_MORE_DETAILS_EN_US;
+							break;
+						}
+					}
+				}
+
 				JDialog messageWindow = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE).createDialog(null, title);
 				messageWindow.setAlwaysOnTop(true);
 				messageWindow.setVisible(true);

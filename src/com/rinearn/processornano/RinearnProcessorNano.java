@@ -150,6 +150,7 @@ public final class RinearnProcessorNano {
 			}
 
 		} catch (ScriptException | RinearnProcessorNanoException e) {
+			e.printStackTrace();
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
 			MessageManager.showErrorMessage(message, "!");
 			if (setting==null || setting.exceptionStackTracerEnabled) {
