@@ -109,32 +109,32 @@ performImplicitRoundingBeforeRounding = true;        // With implicit rounding  
 
 
 // --------------------------------------------------------------------------------------------------------------
-// The option to handle numbers (including integers) in inputted expressions as floating-point numbers (64bit).
+// The option to handle integers written in inputted expressions as floating-point numbers (64bit).
 // IF YOU DISABLE THIS OPTION, PLEASE BE AWARE THAT THE RESULT OF DIVISION BETWEEN INTEGERS WILL BE AN INTEGER.
 // This option does not affect to the interpretation of the code in script files.
-// INPUT欄に入力された数式内で、数字（整数を含む）を浮動小数点数（64bit精度）として扱うオプションです。
+// INPUT欄に入力された数式内に記述された整数を、浮動小数点数（64bit精度）として扱うオプションです。
 // このオプションを無効化した場合、整数同士の割り算の結果は整数になる事にご注意ください。
 // なお、このオプションは、スクリプトファイル内のコード内容の解釈には影響しません。
 // (Type: bool)
 // --------------------------------------------------------------------------------------------------------------
 
-evalNumberAsFloat = true;          // Enable  - 有効化する
-// evalNumberAsFloat = false;      // Disable - 無効化する
+evalIntLiteralAsFloat = true;          // Enable  - 有効化する
+// evalIntLiteralAsFloat = false;      // Disable - 無効化する
 
 
 // --------------------------------------------------------------------------------------------------------------
 // The option to forbid using non-float type values/variables/functions(return value) in inputted expressions.
-// This option is strongly recommended to be enabled when "evalNumberAsFloat" option is enabled, to prevent 
+// This option is strongly recommended to be enabled when "evalIntLiteralAsFloat" option is enabled, to prevent 
 // overlooking "contermination" of integer values, which can cause of unexpected integer divisions.
 // This option does not affect to the interpretation of the code in script files.
 // INPUT欄に入力された数式内で、浮動小数点数以外の値/変数/関数（戻り値）の使用を不可能にするオプションです。
-// 「 evalNumberAsFloat 」オプションが有効な場合、計算式への整数の混入（意図しない整数除算などの原因になり得ます）
+// 「 evalIntLiteralAsFloat 」オプションが有効な場合、計算式への整数の混入（意図しない整数除算などの原因になり得ます）
 // の見落としを防ぐために、このオプションも併せて有効化する事が強く推奨されます。
 // なお、このオプションは、スクリプトファイル内のコード内容の解釈には影響しません。
 // (Type: bool)
 // --------------------------------------------------------------------------------------------------------------
 
-evalOnlyFloat = evalNumberAsFloat;
+evalOnlyFloat = evalIntLiteralAsFloat;
 
 
 // --------------------------------------------------------------------------------------------------------------

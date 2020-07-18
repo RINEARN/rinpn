@@ -62,7 +62,7 @@ public final class SettingContainer implements Cloneable {
 	public boolean reloadLibrary = true;
 
 	public boolean acceleratorEnabled = true;
-	public boolean evalNumberAsFloat = true;
+	public boolean evalIntLiteralAsFloat = true;
 	public boolean evalOnlyFloat = true;
 	public boolean evalOnlyExpression = true;
 

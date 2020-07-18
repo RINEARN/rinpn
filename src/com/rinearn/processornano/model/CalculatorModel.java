@@ -223,7 +223,7 @@ public final class CalculatorModel {
 			// 設定の一部をスクリプト用に書き換え（整数をfloatと見なすオプションなどは、式の計算には良くても、スクリプトの場合は不便なので）
 			try {
 				setting = setting.clone();
-				setting.evalNumberAsFloat = false;
+				setting.evalIntLiteralAsFloat = false;
 				setting.evalOnlyFloat = false;
 				setting.evalOnlyExpression = false;
 			} catch (CloneNotSupportedException e) {
@@ -277,7 +277,7 @@ public final class CalculatorModel {
 		// スクリプトエンジン関連の設定値を Map（オプションマップ）に格納し、エンジンに渡して設定
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("ACCELERATOR_ENABLED", setting.acceleratorEnabled);
-		optionMap.put("EVAL_NUMBER_AS_FLOAT", setting.evalNumberAsFloat);
+		optionMap.put("EVAL_INT_LITERAL_AS_FLOAT", setting.evalIntLiteralAsFloat);
 		optionMap.put("EVAL_ONLY_FLOAT", setting.evalOnlyFloat);
 		optionMap.put("EVAL_ONLY_EXPRESSION", setting.evalOnlyExpression);
 		optionMap.put("LOCALE", LocaleCode.toLocale(setting.localeCode));
