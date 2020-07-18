@@ -287,7 +287,7 @@ public final class CalculatorModel {
 		optionMap.put("FILE_IO_ENCODING", DEFAULT_FILE_IO_ENCODING);
 		if (scriptFileInputted) {
 			optionMap.put("MAIN_SCRIPT_NAME", scriptFile.getName());
-			optionMap.put("MAIN_DIRECTORY_PATH", scriptFile.getParentFile().getAbsolutePath());
+			optionMap.put("MAIN_SCRIPT_DIRECTORY", scriptFile.getParentFile().getAbsolutePath());
 		}
 		engine.put("___VNANO_OPTION_MAP", optionMap);
 
