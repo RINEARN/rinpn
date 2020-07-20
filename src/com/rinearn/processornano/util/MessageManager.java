@@ -21,11 +21,26 @@ public final class MessageManager {
 	private static final int GUI_MESSAGE_LINE_FEEDING_THRESHOLD_JAJP = 60; // 日本語は全角で幅をとるので少なめ
 	private static final int GUI_MESSAGE_LINE_FEEDING_THRESHOLD_ENUS = 120; // 英語は半角で省スペースなので多め
 
+	// ユーザーにとって詳細情報が必要そうな場合に、エラーメッセージ内に登場する語句
+	private static final String[] KEYWORDS_FOR_MOR_DETAILS_JA_JP = {
+		"予期しない", "不明な", "外部関数", "外部変数", "プラグイン"
+	};
+	private static final String[] KEYWORDS_FOR_MOR_DETAILS_EN_US = {
+		"unexpected", "unknown", "external function", "external variable", "plug-in"
+	};
+
+	private static final String MESSAGE_FOR_MORE_DETAILS_JA_JP
+		= "\n( 詳細は「 " + SettingContainer.SETTING_SCRIPT_PATH + " 」内のデバッグ項目類を有効にしてください )" ;
+
+	private static final String MESSAGE_FOR_MORE_DETAILS_EN_US
+		= "\n( Enable debugging options in \"" + SettingContainer.SETTING_SCRIPT_PATH + "\" for more details )";
+
+
 	public static final void setDisplayType(DISPLAY_MODE mode) {
 		displayMode = mode;
 	}
 
-	public static final void showErrorMessage(String message, String title) {
+	public static final void showErrorMessage(String message, String title, String localeCode) {
 		if (message == null) {
 			// message を持ってない Throwable 等も存在し、
 			// その場合はエラーが発生した事だけでも通知するため、ウィンドウタイトルと同内容で代用する
@@ -33,22 +48,45 @@ public final class MessageManager {
 			message = title;
 		}
 
+		// ややこしいエラーに対しては、詳細を表示したい場合のための補足説明を追記
+		if (localeCode.equals(LocaleCode.JA_JP)) {
+			// ややこしそうなメッセージに含まれる語句を検索
+			for (String keyword: KEYWORDS_FOR_MOR_DETAILS_JA_JP) {
+				if (message.contains(keyword)) {
+					message += MESSAGE_FOR_MORE_DETAILS_JA_JP;
+					break;
+				}
+			}
+		}
+		if (localeCode.equals(LocaleCode.EN_US)) {
+			String lowerCaseMessage = message.toLowerCase();
+			for (String keyword: KEYWORDS_FOR_MOR_DETAILS_EN_US) {
+				String lowerCaseKeyword = keyword.toLowerCase();
+				if (lowerCaseMessage.contains(lowerCaseKeyword)) {
+					message += MESSAGE_FOR_MORE_DETAILS_EN_US;
+					break;
+				}
+			}
+		}
+
+		// 画面の種類（GUI/CUI）に応じて表示する
 		switch (displayMode) {
 			case GUI : {
 				int messageLength = message.length();
 
 				// メッセージが長い場合は改行を挟む
 				// (あまり長くないメッセージの場合はそのまま一行で表示する)
-				if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
+				if (localeCode.equals(LocaleCode.JA_JP)) {
 					if (GUI_MESSAGE_LINE_FEEDING_THRESHOLD_JAJP < messageLength) {
 						message = getLineFeededMessageJaJP(message);
 					}
 				}
-				if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
+				if (localeCode.equals(LocaleCode.EN_US)) {
 					if (GUI_MESSAGE_LINE_FEEDING_THRESHOLD_ENUS < messageLength) {
 						message = getLineFeededMessageEnUS(message);
 					}
 				}
+
 				JDialog messageWindow = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE).createDialog(null, title);
 				messageWindow.setAlwaysOnTop(true);
 				messageWindow.setVisible(true);
@@ -56,10 +94,10 @@ public final class MessageManager {
 				return;
 			}
 			case CUI : {
-				if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
+				if (localeCode.equals(LocaleCode.JA_JP)) {
 					System.err.println("エラー : " + message);
 				}
-				if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
+				if (localeCode.equals(LocaleCode.EN_US)) {
 					System.err.println("Error: " + message);
 				}
 				return;
@@ -139,15 +177,15 @@ public final class MessageManager {
 		return lineFeededMessageBuilder.toString();
 	}
 
-	public static final void showExceptionStackTrace(Exception e) {
-		if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
+	public static final void showExceptionStackTrace(Exception e, String localeCode) {
+		if (localeCode.equals(LocaleCode.JA_JP)) {
 			System.err.println();
 			System.err.println("--------------------------------------------------------------------------------");
 			System.err.println("スタックトレース : ");
 			System.err.println();
 			e.printStackTrace();
 		}
-		if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.EN_US)) {
+		if (localeCode.equals(LocaleCode.EN_US)) {
 			System.err.println();
 			System.err.println("--------------------------------------------------------------------------------");
 			System.err.println("Stack Trace: ");

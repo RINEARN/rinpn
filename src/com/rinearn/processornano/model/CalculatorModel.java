@@ -95,10 +95,16 @@ public final class CalculatorModel {
 		this.engine = manager.getEngineByName("vnano");
 		if (engine == null) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage("Please put Vnano.jar in the same directory as RinearnProcessorNano.jar.", "Engine Loading Error");
+				MessageManager.showErrorMessage(
+					"Please put Vnano.jar in the same directory as RinearnProcessorNano.jar.",
+					"Engine Loading Error", setting.localeCode
+				);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage("Vnano.jar を RinearnProcessorNano.jar と同じフォルダ内に配置してください。", "エンジン読み込みエラー");
+				MessageManager.showErrorMessage(
+					"Vnano.jar を RinearnProcessorNano.jar と同じフォルダ内に配置してください。",
+					"エンジン読み込みエラー", setting.localeCode
+				);
 			}
 			throw new RinearnProcessorNanoException("ScriptEngine of the Vnano could not be loaded.");
 		}
@@ -116,14 +122,14 @@ public final class CalculatorModel {
 					message = e.getCause().getMessage();
 			}
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error");
+				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error", setting.localeCode);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー");
+				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー", setting.localeCode);
 			}
 			// プラグインエラーはスクリプトの構文エラーよりも深いエラーなため、常にスタックトレースを出力する
 			System.err.println("\n" + message);
-			MessageManager.showExceptionStackTrace(e);
+			MessageManager.showExceptionStackTrace(e, setting.localeCode);
 		}
 
 		// 組み込み関数「 output 」を提供するプラグイン（このクラス内に内部クラスとして実装）を登録
@@ -145,14 +151,14 @@ public final class CalculatorModel {
 					message = e.getCause().getMessage();
 			}
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in Finalization Error");
+				MessageManager.showErrorMessage(message, "Plug-in Finalization Error", setting.localeCode);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン終了時処理エラー");
+				MessageManager.showErrorMessage(message, "プラグイン終了時処理エラー", setting.localeCode);
 			}
 			// プラグインエラーはスクリプトの構文エラーよりも深いエラーなため、常にスタックトレースを出力する
 			System.err.println("\n" + message);
-			MessageManager.showExceptionStackTrace(e);
+			MessageManager.showExceptionStackTrace(e, setting.localeCode);
 		}
 	}
 
@@ -217,7 +223,7 @@ public final class CalculatorModel {
 			// 設定の一部をスクリプト用に書き換え（整数をfloatと見なすオプションなどは、式の計算には良くても、スクリプトの場合は不便なので）
 			try {
 				setting = setting.clone();
-				setting.evalNumberAsFloat = false;
+				setting.evalIntLiteralAsFloat = false;
 				setting.evalOnlyFloat = false;
 				setting.evalOnlyExpression = false;
 			} catch (CloneNotSupportedException e) {
@@ -257,21 +263,21 @@ public final class CalculatorModel {
 					message = e.getCause().getMessage();
 			}
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error");
+				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error", setting.localeCode);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー");
+				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー", setting.localeCode);
 			}
 			// プラグインエラーはスクリプトの構文エラーよりも深いエラーなため、常にスタックトレースを出力する
 			System.err.println("\n" + message);
-			MessageManager.showExceptionStackTrace(e);
+			MessageManager.showExceptionStackTrace(e, setting.localeCode);
 		}
 
 
 		// スクリプトエンジン関連の設定値を Map（オプションマップ）に格納し、エンジンに渡して設定
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("ACCELERATOR_ENABLED", setting.acceleratorEnabled);
-		optionMap.put("EVAL_NUMBER_AS_FLOAT", setting.evalNumberAsFloat);
+		optionMap.put("EVAL_INT_LITERAL_AS_FLOAT", setting.evalIntLiteralAsFloat);
 		optionMap.put("EVAL_ONLY_FLOAT", setting.evalOnlyFloat);
 		optionMap.put("EVAL_ONLY_EXPRESSION", setting.evalOnlyExpression);
 		optionMap.put("LOCALE", LocaleCode.toLocale(setting.localeCode));
@@ -281,7 +287,7 @@ public final class CalculatorModel {
 		optionMap.put("FILE_IO_ENCODING", DEFAULT_FILE_IO_ENCODING);
 		if (scriptFileInputted) {
 			optionMap.put("MAIN_SCRIPT_NAME", scriptFile.getName());
-			optionMap.put("MAIN_DIRECTORY_PATH", scriptFile.getParentFile().getAbsolutePath());
+			optionMap.put("MAIN_SCRIPT_DIRECTORY", scriptFile.getParentFile().getAbsolutePath());
 		}
 		engine.put("___VNANO_OPTION_MAP", optionMap);
 
