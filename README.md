@@ -544,11 +544,11 @@ An example code calculating a value of the expression "1.2 + 3.4" under the same
 			// Set options of the script engine
 			// スクリプトエンジンのオプション設定
 			Map<String, Object> optionMap = new HashMap<String, Object>();
-			optionMap.put("EVAL_NUMBER_AS_FLOAT", true);  // See: Setting.vnano: evalNumberAsFloat
-			optionMap.put("EVAL_ONLY_FLOAT",      true);  // See: Setting.vnano: evalOnlyFloat
-			optionMap.put("EVAL_ONLY_EXPRESSION", true);  // See: Setting.vnano: evalOnlyExpression
-			optionMap.put("UI_MODE", "CUI");              // For CUI applications
-			// optionMap.put("UI_MODE", "GUI");           // For GUI applications
+			optionMap.put("EVAL_INT_LITERAL_AS_FLOAT", true); // See: Setting.vnano: evalIntLiteralAsFloat
+			optionMap.put("EVAL_ONLY_FLOAT",      true);      // See: Setting.vnano: evalOnlyFloat
+			optionMap.put("EVAL_ONLY_EXPRESSION", true);      // See: Setting.vnano: evalOnlyExpression
+			optionMap.put("UI_MODE", "CUI");                  // For CUI applications
+			// optionMap.put("UI_MODE", "GUI");               // For GUI applications
 			engine.put("___VNANO_OPTION_MAP", optionMap);
 
 			// Settings for loading libraries/plugins
