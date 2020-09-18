@@ -134,6 +134,19 @@ public final class CalculatorModel {
 
 		// 組み込み関数「 output 」を提供するプラグイン（このクラス内に内部クラスとして実装）を登録
 		this.engine.put("OutputPlugin", new CalculatorModel.OutputPlugin(setting, isGuiMode));
+
+		// プラグインからのパーミッション要求の扱いを設定するため、パーミッションの項目名と値を格納するマップを用意
+		Map<String, String> permissionMap = new HashMap<String, String>();
+		permissionMap.put("DEFAULT", "ASK");           // 全パーミッション項目のデフォルト挙動を、ユーザーに尋ねて決める挙動に設定（ASK）
+		//permissionMap.put("DEFAULT", "DENY");        // デフォルト挙動を、何も訪ねずに拒否する挙動（DENY）にしたい場合はこちら
+		permissionMap.put("FILE_READ", "ALLOW");       // ファイルの読み込みは、電卓ソフト的には安全なので許可（ALLOW）
+		permissionMap.put("DIRECTORY_LIST", "ALLOW");  // フォルダ内のファイル一覧取得も、電卓ソフト的には安全なので許可（ALLOW）
+		permissionMap.put("PROGRAM_EXIT", "ALLOW");    // exit 関数によるスクリプトの終了も、電卓ソフト的には安全なので許可（ALLOW）
+		////////// 他に、個別に別挙動に設定したいパーミッション項目があれば、項目名をキーとしてここで続けて put する
+		////////// (とりあえず現状では設定ファイルから読み込んだりはしない方針)
+
+		// パーミッション設定を反映させる
+		this.engine.put("___VNANO_PERMISSION_MAP", permissionMap);
 	}
 
 
