@@ -3,34 +3,32 @@ coding UTF-8;
 /****************************************************************************************************
  * An example script calculating the numerical integration value of cos(x) from A (=0) to B (=1).
  * This code is written in the C-like simple scripting language "Vnano (VCSSL nano)".
- * For syntax etc. of Vnano, see:  https://github.com/RINEARN/vnano/#language
+ * For calculation algorithm, see:  https://www.vcssl.org/en-us/code/archive/0001/7800-vnano-integral-output/
+ * For syntax etc. of Vnano, see:   https://www.vcssl.org/en-us/vnano/doc/tutorial/language
  * 
  * スクリプトの記述例として、cos(x) の A (=0) から B (=1) までの数値積分の値を計算します。
  * このコードは、C言語系の文法の簡易スクリプト言語「Vnano (VCSSL nano)」で書かれています。
- * Vnano の文法などについては： https://github.com/RINEARN/vnano/#language
- * 計算アルゴリズムについては： https://www.vcssl.org/ja-jp/code/archive/0001/3200-integral-simpson/
+ * 計算アルゴリズムについては： https://www.vcssl.org/ja-jp/code/archive/0001/7800-vnano-integral-output/
+ * Vnano の文法などについては： https://www.vcssl.org/ja-jp/vnano/doc/tutorial/language
  * 
  * License: CC0
  ****************************************************************************************************/
 
-// Note: The precision of "float" type in the Vnano is 64-bit, same with "double".
-// 備考: Vnano での「 float 」型は、いわゆる「 double 」型と同様の64bit精度です。
-
 // Integration parameters - 積分パラメータ
-float A = 0.0;
-float B = 1.0;
+double A = 0.0;
+double B = 1.0;
 int N = 100000;
 
 // Integrant function - 被積分関数
-float f(float x) {
+double f(double x) {
     return cos(x);
 }
 
 // Perform integration by using simpson's rule - シンプソン法による近似を用いて積分値を求める
-float delta = (B - A) / N;
-float value = 0.0;
+double delta = (B - A) / N;
+double value = 0.0;
 for(int i=0; i<N; ++i) {
-    float x = A + i * delta;
+    double x = A + i * delta;
     value += ( f(x) + f(x+delta) + 4.0 * f(x+delta/2.0) ) * delta / 6.0;
 }
 

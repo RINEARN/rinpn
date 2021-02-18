@@ -3,11 +3,11 @@ coding UTF-8;
 /*
  * This script file is to specify values of various setting parameters of RINEARN Processor nano.
  * This code is written in the C-like simple scripting language "Vnano (VCSSL nano)".
- * For the syntax, see: https://github.com/RINEARN/vnano/#language
+ * For the syntax, see: https://www.vcssl.org/en-us/vnano/doc/tutorial/language
  * 
  * このスクリプトファイルでは、リニアンプロセッサー nano の各種設定パラメータの値を指定できます。
  * このコードは、C言語系の文法の簡易スクリプト言語「Vnano (VCSSL nano)」で書かれています。
- * 文法などについては： https://github.com/RINEARN/vnano/#language
+ * 文法などについては： https://www.vcssl.org/en-us/vnano/doc/tutorial/language
  * 
  * License: CC0
  */

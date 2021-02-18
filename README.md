@@ -346,25 +346,31 @@ This example script calculates the numerical integration value of cos(x) from 0 
 	( in Example.vnano )
 
 	// Integration parameters - 積分パラメータ
-	float A = 0.0;
-	float B = 1.0;
+	double A = 0.0;
+	double B = 1.0;
 	int N = 100000;
 
 	// Integrant function - 被積分関数
-	float f(float x) {
+	double f(double x) {
     	return cos(x);
 	}
 
 	// Perform integration - 積分を実行
-	float delta = (B - A) / N;
-	float value = 0.0;
+	double delta = (B - A) / N;
+	double value = 0.0;
 	for(int i=0; i<N; ++i) {
-    	float x = A + i * delta;
+    	double x = A + i * delta;
     	value += ( f(x) + f(x+delta) + 4.0 * f(x+delta/2.0) ) * delta / 6.0;
 	}
 
 	// Output result - 結果を出力
 	output(value);
+
+For detailed explanations about the above code, see:
+<a href="https://www.vcssl.org/en-us/code/archive/0001/7800-vnano-integral-output/">https://www.vcssl.org/en-us/code/archive/0001/7800-vnano-integral-output/</a>
+
+上記コード内容の詳しい解説については、こちらをご参照ください：
+<a href="https://www.vcssl.org/ja-jp/code/archive/0001/7800-vnano-integral-output/">https://www.vcssl.org/ja-jp/code/archive/0001/7800-vnano-integral-output/</a>
 
 To execute this script, input the script file name (or path) into "INPUT" text-field as follows, and press Enter key. 
 Then the script will be executed and its output value will be displayed on "OUTPUT" text-field: 
@@ -415,6 +421,10 @@ For example, the default content of "ExampleLibrary.vnano" is as follows:
 		float result = libvar * x + 1;
 		return result;
 	}
+
+As a side note, in the Vnano, the precision of "float" type is 64-bit, as same as the "double".
+
+なお、Vnano における float 型の精度は、double 型と同様の 64 bit なため、どちらを使っても同じです。
 
 In the the expression/script inputted to the the calculator (see Step-1, 2, and 3), you can use variables and functions defined in the above "ExampleLibrary.vnano", as the following example:
 
