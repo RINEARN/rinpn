@@ -3,11 +3,11 @@ coding UTF-8;
 /****************************************************************************************************
  * In this script file, You can define variables and functions for use in calculations.
  * This code is written in the C-like simple scripting language "Vnano (VCSSL nano)".
- * For the syntax, see: https://github.com/RINEARN/vnano/#language
+ * For the syntax, see: https://www.vcssl.org/en-us/vnano/doc/tutorial/language
  * 
  * このスクリプトファイル内では、電卓の計算で使用する変数や関数を定義できます。
  * このコードは、C言語系の文法の簡易スクリプト言語「Vnano (VCSSL nano)」で書かれています。
- * 文法などについては： https://github.com/RINEARN/vnano/#language
+ * 文法などについては： https://www.vcssl.org/en-us/vnano/doc/tutorial/language
  * 
  * License: CC0
  ****************************************************************************************************/
