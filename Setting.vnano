@@ -289,8 +289,8 @@ reloadLibrary = true;       // Reload       - 再読み込みする
 
 
 // **************************************************************************************************************
-//         - Script Settings -
-//         - スクリプト関連の設定 -
+//         - Script Process Settings -
+//         - スクリプト処理関連の設定 -
 // **************************************************************************************************************
 
 
@@ -338,6 +338,20 @@ dumperTarget = "ALL";                  // All of the following contents - 下記
 // (Type: bool)
 // --------------------------------------------------------------------------------------------------------------
 
-acceleratorEnabled = true;         // Enable  - 有効化する  (Performance: About 400 MFLOPS ~ 5 GFLOPS)
-// acceleratorEnabled = false;     // Disable - 無効化する  (Performance: About 10 MFLOPS)
+acceleratorEnabled = true;         // Enable  - 有効化する  (Max performance: About 700 MFLOPS ~ 10 GFLOPS)
+// acceleratorEnabled = false;     // Disable - 無効化する  (Max performance: About 20 MFLOPS)
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify the optimization level of the high-speed VM.
+// The larger level make the processing speed faster, but chance of encountering unknown bugs might increase.
+// 高速版VMにおける最適化レベルを指定します。
+// 値が大きいほど高速ですが、より多くの最適化が施されるため、未知のバグに会う確率も上がってしまうかもしれません。
+// (Type: int)
+// --------------------------------------------------------------------------------------------------------------
+
+acceleratorOptimizationLevel = 0;
+// acceleratorOptimizationLevel = 1; // Optimize data access for reducing overhead costs - データアクセスのオーバーヘッドを削減する最適化を適用
+// acceleratorOptimizationLevel = 2; // Optimize instructions with keeping code structures - コード構造が保たれるレベルでの命令列の最適化を適用
+// acceleratorOptimizationLevel = 3; // Optimize with modifying code structures (inline expansion, etc.) - コードの構造変更を伴う最適化を適用(インライン展開など)
 

@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2021 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
@@ -62,6 +62,8 @@ public final class SettingContainer implements Cloneable {
 	public boolean reloadLibrary = true;
 
 	public boolean acceleratorEnabled = true;
+	public int acceleratorOptimizationLevel = 0;
+
 	public boolean evalIntLiteralAsFloat = true;
 	public boolean evalOnlyFloat = true;
 	public boolean evalOnlyExpression = true;

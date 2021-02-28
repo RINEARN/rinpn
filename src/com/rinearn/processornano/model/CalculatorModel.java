@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2021 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
@@ -290,6 +290,7 @@ public final class CalculatorModel {
 		// スクリプトエンジン関連の設定値を Map（オプションマップ）に格納し、エンジンに渡して設定
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("ACCELERATOR_ENABLED", setting.acceleratorEnabled);
+		optionMap.put("ACCELERATOR_OPTIMIZATION_LEVEL", setting.acceleratorOptimizationLevel);
 		optionMap.put("EVAL_INT_LITERAL_AS_FLOAT", setting.evalIntLiteralAsFloat);
 		optionMap.put("EVAL_ONLY_FLOAT", setting.evalOnlyFloat);
 		optionMap.put("EVAL_ONLY_EXPRESSION", setting.evalOnlyExpression);

@@ -403,6 +403,14 @@ where \<folder\> is the path of the folder in which Example.vnano (or your scrip
 
 ここで上記の \<folder\> は、Example.vnano （または実行したいスクリプトファイル）があるフォルダのパスを表しています。
 
+By the way, when processing of a script is heavy, it might be helpful to raise the optimization level specified in "Setting.vnano" as "acceleratorOptimizationLevel", to make the processing faster.
+Even when the value of the optimization level is 0, probably the processing speed is enough to use the RINPn in the standard way of a calculator software, so the default value of the optimization level is set to 0.
+However, if you execute numerical calculation programs frequently on the RINPn, the processing speed might not be sufficient with the default optimization level.
+
+ところで、スクリプトの実行処理が重い場合は、「 Setting.vnano 」内で「 acceleratorOptimizationLevel 」として設定されている最適化レベルの値を上げると、処理が速くなります。
+最適化レベルを最低の 0 に設定しても、恐らく一般的な電卓の用途としては十分な性能が得られるため、標準では安定性を優先し、最適化レベルは 0 に設定されています。
+ただ、RINPN で数値計算プログラムを頻繁に実行される方には、標準の最適化レベルではややパフォーマンスが不足気味かもしれません。
+
 
 <a id="how-to-use-library"></a>
 ### Step-4. How to Define Variables and Functions as Script Code - スクリプトで変数や関数を定義する
