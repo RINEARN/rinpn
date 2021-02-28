@@ -403,11 +403,11 @@ where \<folder\> is the path of the folder in which Example.vnano (or your scrip
 
 ここで上記の \<folder\> は、Example.vnano （または実行したいスクリプトファイル）があるフォルダのパスを表しています。
 
-By the way, when processing of a script is heavy, it might be helpful to raise the optimization level specified in "Setting.vnano" as "acceleratorOptimizationLevel", to make the processing faster.
+By the way, when processing of a script is heavy, it might be helpful to raise the optimization level specified in "Settings.txt" as "acceleratorOptimizationLevel", to make the processing faster.
 Even when the value of the optimization level is 0, probably the processing speed is enough to use the RINPn in the standard way of a calculator software, so the default value of the optimization level is set to 0.
 However, if you execute numerical calculation programs frequently on the RINPn, the processing speed might not be sufficient with the default optimization level.
 
-ところで、スクリプトの実行処理が重い場合は、「 Setting.vnano 」内で「 acceleratorOptimizationLevel 」として設定されている最適化レベルの値を上げると、処理が速くなります。
+ところで、スクリプトの実行処理が重い場合は、「 Settings.txt 」内で「 acceleratorOptimizationLevel 」として設定されている最適化レベルの値を上げると、処理が速くなります。
 最適化レベルを最低の 0 に設定しても、恐らく一般的な電卓の用途としては十分な性能が得られるため、標準では安定性を優先し、最適化レベルは 0 に設定されています。
 ただ、RINPN で数値計算プログラムを頻繁に実行される方には、標準の最適化レベルではややパフォーマンスが不足気味かもしれません。
 
@@ -562,11 +562,13 @@ An example code calculating a value of the expression "1.2 + 3.4" under the same
 			// Set options of the script engine
 			// スクリプトエンジンのオプション設定
 			Map<String, Object> optionMap = new HashMap<String, Object>();
-			optionMap.put("EVAL_INT_LITERAL_AS_FLOAT", true); // See: Setting.vnano: evalIntLiteralAsFloat
-			optionMap.put("EVAL_ONLY_FLOAT",      true);      // See: Setting.vnano: evalOnlyFloat
-			optionMap.put("EVAL_ONLY_EXPRESSION", true);      // See: Setting.vnano: evalOnlyExpression
+			optionMap.put("EVAL_INT_LITERAL_AS_FLOAT", true); // See: Settings.txt: evalIntLiteralAsFloat
+			optionMap.put("EVAL_ONLY_FLOAT",      true);      // See: Settings.txt: evalOnlyFloat
+			optionMap.put("EVAL_ONLY_EXPRESSION", true);      // See: Settings.txt: evalOnlyExpression
 			optionMap.put("UI_MODE", "CUI");                  // For CUI applications
 			// optionMap.put("UI_MODE", "GUI");               // For GUI applications
+			optionMap.put("ACCELERATOR_ENABLED", true);          // Enable the high-speed VM
+			optionMap.put("ACCELERATOR_OPTIMIZATION_LEVEL", 0);  // Specify the optimization level
 			engine.put("___VNANO_OPTION_MAP", optionMap);
 
 			// Settings for loading libraries/plugins

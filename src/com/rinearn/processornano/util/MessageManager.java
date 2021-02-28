@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2021 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
@@ -30,10 +30,10 @@ public final class MessageManager {
 	};
 
 	private static final String MESSAGE_FOR_MORE_DETAILS_JA_JP
-		= "\n( 詳細は「 " + SettingContainer.SETTING_SCRIPT_PATH + " 」内のデバッグ項目類を有効にしてください )" ;
+		= "\n( 詳細は「 " + SettingContainer.SETTING_SCRIPT_PATH_TXT + " (or .vnano) 」内のデバッグ項目類を有効にしてください )" ;
 
 	private static final String MESSAGE_FOR_MORE_DETAILS_EN_US
-		= "\n( Enable debugging options in \"" + SettingContainer.SETTING_SCRIPT_PATH + "\" for more details )";
+		= "\n( Enable debugging options in \"" + SettingContainer.SETTING_SCRIPT_PATH_TXT + " (or .vnano)\" for more details )";
 
 
 	public static final void setDisplayType(DISPLAY_MODE mode) {

@@ -25,7 +25,11 @@ public final class SettingContainer implements Cloneable {
 	public static final Font BUTTON_FONT = new Font("Dialog", Font.BOLD, 14);
 	public static final Font EXIT_BUTTON_FONT = new Font("Dialog", Font.BOLD, 14);
 
-	public static final String SETTING_SCRIPT_PATH = "Setting.vnano";
+	// 設定ファイルは、拡張子 .txt と .vnano のどちらか存在する方（vnano優先）が読まれる
+	//（新規導入環境での開きやすさを確保するため、標準では .txt で、.vnano に変えても参照される、という仕様）
+	public static final String SETTING_SCRIPT_PATH_TXT = "Settings.txt";
+	public static final String SETTING_SCRIPT_PATH_VNANO = "Settings.vnano";
+
 	public static final String DEFAULT_SETTING_SCRIPT_ENCODING = "UTF-8";
 
 	public static final int MAX_ROUNDING_LENGTH = 100;

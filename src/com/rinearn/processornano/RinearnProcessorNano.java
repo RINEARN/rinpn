@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2021 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
@@ -9,6 +9,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.SwingUtilities;
@@ -233,11 +234,41 @@ public final class RinearnProcessorNano {
 
 		SettingContainer setting = new SettingContainer();
 
+		// 設定ファイルは、拡張子 .txt と .vnano のどちらか存在する方（vnano優先）が読まれる
+		//（新規導入環境での開きやすさを確保するため、標準では .txt で、.vnano に変えても参照される、という仕様）
+		String settingScriptPath = SettingContainer.SETTING_SCRIPT_PATH_VNANO;
+		if (!new File(settingScriptPath).exists()) {
+			settingScriptPath = SettingContainer.SETTING_SCRIPT_PATH_TXT;
+
+			// それでもファイルが存在しない場合はエラー
+			if (!new File(settingScriptPath).exists()) {
+				String errorMessage = null;
+
+				if (setting.localeCode.equals(LocaleCode.JA_JP)) {
+					errorMessage =
+						"設定ファイル「 "
+						+ SettingContainer.SETTING_SCRIPT_PATH_TXT
+						+ " 」または「 "
+						+ SettingContainer.SETTING_SCRIPT_PATH_VNANO
+						+ " 」が見つかりません。";
+					MessageManager.showErrorMessage(errorMessage, "設定ファイル読み込みエラー", LocaleCode.JA_JP);
+				} else {
+					errorMessage =
+						"The setting file \""
+						+ SettingContainer.SETTING_SCRIPT_PATH_TXT
+						+ "\" or \""
+						+ SettingContainer.SETTING_SCRIPT_PATH_VNANO
+						+ "\" is not found.";
+					MessageManager.showErrorMessage(errorMessage, "Setting File Loading Error", LocaleCode.EN_US);
+				}
+
+				throw new RinearnProcessorNanoException(errorMessage);
+			}
+		}
+
 		// 設定スクリプトを実行して設定値を書き込む（スクリプトエンジンはメソッド内で生成）
 		setting.evaluateSettingScript(
-			SettingContainer.SETTING_SCRIPT_PATH,
-			LIBRARY_LIST_FILE, PLUGIN_LIST_FILE,
-			isGuiMode, debug
+			settingScriptPath, LIBRARY_LIST_FILE, PLUGIN_LIST_FILE, isGuiMode, debug
 		);
 
 		return setting;

@@ -1,16 +1,35 @@
 coding UTF-8;
 
-/*
- * This script file is to specify values of various setting parameters of RINEARN Processor nano.
- * This code is written in the C-like simple scripting language "Vnano (VCSSL nano)".
- * For the syntax, see: https://www.vcssl.org/en-us/vnano/doc/tutorial/language
- * 
- * このスクリプトファイルでは、リニアンプロセッサー nano の各種設定パラメータの値を指定できます。
- * このコードは、C言語系の文法の簡易スクリプト言語「Vnano (VCSSL nano)」で書かれています。
- * 文法などについては： https://www.vcssl.org/en-us/vnano/doc/tutorial/language
- * 
- * License: CC0
- */
+// License: CC0
+
+// **************************************************************************************************************
+// * This file is to specify values of various setting parameters of the RINPn.
+// * This code in this file is written in the C-like simple scripting language "Vnano".
+// * ( If you want, you can change the extension of this file to ".vnano" from ".txt". )
+// * Please note following points when you modify the content in this file:
+// * 
+// *    * Right side of "//" will be ignored (used for or disabling a setting line, or for writing a comment).
+// *    * Content of each setting line (excluding a comment part) must be end with ";".
+// * 
+// * For more details about the syntax of the Vnano, see the following page:
+// * 
+// *    https://www.vcssl.org/en-us/vnano/doc/tutorial/language
+// *
+// **************************************************************************************************************
+// **************************************************************************************************************
+// * このファイルでは、リニアンプロセッサー nano の各種設定パラメータの値を指定できます。
+// * ファイルの内容は、C言語系の文法の簡易スクリプト言語「 Vnano 」で書かれています。
+// * ( 初見での開きやすさ優先で、拡張子が「.txt」になっていますが、「 .vnano 」に変えても読み込まれます。)
+// * 設定内容を編集する際は、以下の点にご注意ください:
+// * 
+// *   ・各行の「 // 」よりも右側は読み飛ばされます（設定行の無効化や、コメントの記述のために使用されます）。
+// *   ・各設定行の内容（コメント記述部分を除く）は、「 ; 」記号で終わっている必要があります。
+// * 
+// * その他、Vnano の詳しい文法については、以下をご参照ください：
+// * 
+// *    https://www.vcssl.org/ja-jp/vnano/doc/tutorial/language
+// * 
+// **************************************************************************************************************
 
 
 // **************************************************************************************************************
