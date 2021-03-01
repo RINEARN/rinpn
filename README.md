@@ -23,7 +23,7 @@ You can also get prebuilt-packages of this software from the following official 
 
 
 ## Index - 目次
-- <a href="#caution">Note - 留意事項</a>
+- <a href="#version-note">Note - 留意事項</a>
 - <a href="#license">License - ライセンス</a>
 - <a href="#how-to-build">How to Build - ビルド方法</a>
 - <a href="#how-to-use">How to Use - 使用方法</a>
@@ -32,7 +32,7 @@ You can also get prebuilt-packages of this software from the following official 
 
 
 
-<a id="caution"></a>
+<a id="version-note"></a>
 ## Note - 留意事項
 
 The RINPn has not officially released yet. 
