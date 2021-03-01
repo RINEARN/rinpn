@@ -1,0 +1,1473 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>RINPn User Guide</title>
+	<meta charset="UTF-8">
+	<style type="text/css">
+		h1 { border-width: 0px 0px 0px 24px; border-color: #000000; border-style: solid; margin: 10px 0px 10px 0px; padding: 5px 0px 0px 10px; line-height: 135%; }
+		h2 { border-width: 0px 0px 2px 15px; border-color: #3822ee; border-style: solid; margin: 20px 0px 20px 0px; padding: 0px 0px 0px 8px; }
+		h3 { border-width: 0px 0px 0px 8px; border-color: #aaaaaa; border-style: solid; padding: 0px 0px 0px 8px; }
+		h4:before { content:'・ ' }
+
+		hr { margin-top: 40px; }
+
+		dl { line-height:120%; }
+		dt { display:list-item; list-style-position:outside; margin-left:1.5em; list-style-type:disc; font-weight: bold; }
+		dd { margin-bottom: 10px; }
+		ul { margin: 0 0 0 1.5em; padding: 0px; }
+		li { line-height:120%; margin-bottom: 8px; list-style-type:disc; }
+		
+		img { border: none; margin: 0; padding: 0; vertical-align: bottom; page-break-inside: avoid; }
+
+		.program { margin:0 0px; padding: 10px 10px 10px 10px; width:95%; line-height: 150%; font-weight: bold; border: 1px #000000 solid; color: #000000; background-color: #eeeeee; }
+		.console { margin:0 0px; padding: 10px 10px 10px 10px; width:95%; font-weight: bold; color: #aaaaaa; background-color: #000000; border: 1px #000000 solid; }
+		.error { margin:0 0px; padding: 10px 10px 10px 10px; width:95%; font-weight: bold; color: #aaaaaa; background-color: #0000ff; border: 1px #000000 solid; }
+
+		.bold { font-weight:bold; }
+		.highlight { font-weight:bold; color: #7760ff; }
+		.stronghighlight { font-weight:bold; color: #ff4000; }
+		.orange { color:#ff5500; }
+		.smalltext { font-size:80%; line-height:140%; word-break:break-all; }
+
+		.box { margin:0 0px; padding: 10px 10px 10px 10px; width:95%; border: 1px #000000 solid; background-color:#eeeeee; }
+		.note { margin:0 0px; padding: 10px 10px 10px 10px; width:95%; border: 1px #332288 solid; color: #332288; background-color:#eeeeff; border-radius: 8px; }
+		.smallsup { font-size:70%; vertical-align: super; }
+		.smallsub { font-size:70%; vertical-align: sub; }
+	</style>
+</head>
+
+<body style="width: 90%; padding-left:5%; padding-right:5%;">
+
+
+
+<div style="font-size: 200%; color: #0000ff; font-weight: bold; padding-top: 20px;">
+RINEARN
+</div>
+
+<div style="width: 100%; font-size: 300%; margin-top: 10px; margin-bottom: 10px; padding-left: 10px;">
+	- RINPn User Guide -
+</div>
+
+<div style="width: 100%; text-align: center; background-color: #aaaaaa;">
+	<img src="./img/signboard.jpg" style="width:100%;" />
+</div>
+
+<div style="width: 100%; border-radius: 8px; background-color: #eeeeee; border: 1px #888888 solid; line-height: 150%; margin-top: 24px; margin-bottom: 24px; padding: 10px;">
+	This document is the official user guide of the compact scientific calculator software &quot;RINPn&quot;.
+</div>
+<div style="width: 100%; border-radius: 8px; background-color: #eeeeee; border: 1px #ff5500 solid; line-height: 150%; margin-top: 24px; margin-bottom: 24px; padding: 10px; color: #ff5500;">
+	Note for using this version: The RINPn has not officially released yet. 
+	We consider that the current quality of the RINPn is close to the practical quality, 
+	but evaluations by general users on practical purpose are necessary before releasing the RINPn officially.
+	For the above reason, we are publishing the current version of the RINPn as an &quot;open beta&quot; version.
+</div>
+
+<div style="margin-bottom: 50px;">
+	- Index -
+	<ul style="margin-top: 10px; margin-left: 34px;">
+		<li><a href="#start">Introduction</a></li>
+		<li><a href="#how-to-use-gui">Step 1 - How to Use in GUI Mode (on the Calculator Window)</a></li>
+		<li><a href="#how-to-use-cui">Step 2 - How to Use in CUI Mode (on the Command-Line Terminal)</a></li>
+		<li><a href="#how-to-use-script">Step 3 - How to Execute Scripts</a></li>
+		<li><a href="#how-to-use-library">Step 4 - How to Add Functions/Variables by Scripts (Library Scripts)</a></li>
+		<li><a href="#how-to-use-plugin">Step 5 - Implement Functions/Variables in Java&reg; (Plug-in Development)</a></li>
+		<li><a href="#how-to-embed">Step 6 - How to Embed into Other Software</a></li>
+		<li><a href="#built-in">Step 7 - List of Built-in Functions/Variables</a></li>
+		<li><a href="#about-us">About Us</a></li>
+		<li><a href="#credit">Trademarks/Credits</a></li>
+	</ul>
+</div>
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="start">Introduction</h1>
+
+
+<h2 id="start-about">What is the &quot;RINPn&quot; ?</h2>
+
+<p>
+The RINPn is a free scientific calculator software. 
+The calculator window of the RINPn is designed under the concept of 
+&quot;<span class="highlight">Simple & Compact</span>&quot;.
+</p>
+
+<div style="width: 100%; text-align: center;">
+	<img src="./img/gui_expression.png" style="width:100%; max-width:450px;">
+</div>
+
+<p>
+In addition, the RINPn may be &quot;<span class="highlight">Powerful</span>&quot; than you imagined from its tiny window.
+You can input the whole of expression (formula) to calculate, and you can use various math functions and parentheses in it.
+Also, you can define your own functions, or take automatic processing, by writing scripts (programs).
+The processing speed of the RINPn (max: hundreds MFLOPS ~ several GFLOPS) 
+is not so slow compared with interpreters of general scripting languages, 
+and it may be far faster than you imagined.
+</p>
+
+<p>
+Thus, the RINPn is a &quot;Simple &amp; Compact&quot; but &quot;Powerful&quot; calculator, 
+like a small car with a turbo engine!
+</p>
+
+
+
+<div class="note" style="margin-top: 35px;">
+If you want to maximize the processing speed of the RINPn, raize the optimization level specified in &quot;Settings.txt&quot;.
+</div>
+
+
+
+<h2 id="start-license" style="margin-top: 35px;">Available in Free - Open Source &amp; MIT License</h2>
+
+<p>
+The RINPn is an open source software, so users can get source code of the RINPn, and can customize/improve/divert it, if want.
+The repository managing/providing source code is: <a href="https://github.com/RINEARN/rinpn">https://github.com/RINEARN/rinpn</a>.
+</p>
+
+<p>
+Of course, you can also use the RINPn as it is, like as other general software. 
+All kinds of users are very welcome!
+</p>
+
+<p>
+The license of the RINPn is the &quot;MIT License&quot;, which is one of popular open source licenses.
+Under that license, users can use the RINPn in free, in both of commertial and non-commertial purposes. 
+For details, search on the web with keywords &quot;MIT License&quot; and so on.
+Probably, you can find many many webpages explaining details of MIT License.
+</p>
+
+<p>
+Also, the license document of the RINPn is attached into &quot;License&quot; folder as &quot;MIT_License.txt&quot; in the distribution package. 
+In the source code repository, the license document is attatched as the text file with the name &quot;LICENSE&quot;.
+</p>
+
+<div class="note" style="margin-bottom: 30px;">
+	- Disclaimer -
+	
+	<p style="margin-top: 5px; margin-bottom: 8px;">
+	The RINPn is provided without any kind of warranties. 
+	</p>
+	
+	<p style="margin-top: 8px; margin-bottom: 8px;">
+	The developer of the RINPn assume no responsibility or liability for results of use (containing any errors, any damages, and so on) of the RINPn. 
+	</p>
+	
+	<p style="margin-top: 8px; margin-bottom: 0px;">
+	Please agree with the above point (and terms of the MIT License) before using the RINPn.
+	</p>
+</div>
+
+
+
+<h2 id="start-ready">Let's Download and Prepare for Using</h2>
+
+<h3>Download the Latest Version of the RINPn from the Official Website</h3>
+
+<p>
+This document is attached in the package of the RINPn, so readers might already have the package.
+If you haven't gotten it yet, you can download the package of the latest version of the RINPn anytime, 
+from the following official website:
+</p>
+
+<dl>
+	<dt>The RINPn Official Website</dt>
+		<dd><a href="https://www.rinearn.com/en-us/rinpn/">https://www.rinearn.com/en-us/rinpn/</a></dd>
+</dl>
+
+<p>
+To download, click &quot;Download Now&quot; button at near the top of the above page.
+Then the compressed ZIP file <span class="highlight">rinpn_?_?_?_en.zip</span> (?_?_? are version numbers) will be downloaded.
+</p>
+
+<div class="note">
+The package downloaded from the above button is a &quot;pre-built&quot; package.
+The pre-built package is ready to use, so it is convenient for most users.
+However, if you want to build the RINPn by yourself, get the source code package from the following repository:
+	<dl>
+		<dt>The RINPn Source Code Repository</dt>
+			<dd><a href="https://github.com/RINEARN/rinpn">https://github.com/RINEARN/rinpn</a></dd>
+	</dl>
+Clone the above repository, and build as described in README.
+</div>
+
+
+<h3>Extract the Downloaded Package (Compressed)</h3>
+
+<p>
+As mentioned above, the downloaded package &quot;rinpn_?_?_?_en.zip&quot; is compressed as a ZIP format file.
+It is necessary to extract the ZIP file before using the RINPn.
+</p>
+
+<p>
+If you are using Microsoft&reg; Windows&reg;, at first, 
+<span class="stronghighlight">right-click the ZIP file and choose &quot;Properties&quot; from the menu, 
+and enable &quot;Unblock&quot; checkbox at the right-bottom (in the line of &quot;Security&quot;) 
+of the properties-window.</span> 
+( Otherwise, when you extract the ZIP file or when you execute the RINPn, security warning messages may pop up and the extraction/execution may fail. )
+Then, to extract, <span class="highlight">right-click the ZIP file again, and select &quot;Extract All&quot; and so on from the menu</span>.
+</p>
+
+
+<p>
+If you are using other OS (Linux&reg;, etc.), you probably can extract the ZIP file from the right-click menu.
+</p>
+
+<div class="note">
+	<p style="margin-top: 0px;">
+	Also, if you are using Linux&reg; and so on, you can extract the downloaded zip file on the command-line terminal as follows:
+	</p>
+	<div class="console">
+	cd (The folder in which the download ZIP file is)
+	<br />
+	unzip -O cp932 rinpn_?_?_?_en.zip &nbsp;&nbsp; (?_?_? are version numbers)
+	</div>
+	<p style="margin-bottom: 0px;">
+	This way might be helpful when you want to use the Japanese edition of the RINPn.
+	In such case, on some environments, &quot;mojibake&quot; may occurr for names of extracted files, 
+	when you extract the downloaded ZIP file from right-click menu.
+	</p>
+</div>
+
+<p>
+When the extraction of the downloaded ZIP file has completed successfully, 
+a folder &quot;rinpn_?_?_?_en&quot; will be generated.
+All contents of the package of the RINPn (containing this document) are in that folder.
+<span class="highlight">Note that, if you double-click the downloaded ZIP file, 
+you can also browse files in the package without extraction, 
+but the RINPn probably don't work expectedly in such unextracted condition.
+</span>
+Please extract the ZIP file before using the RINPn.
+</p>
+
+
+
+<h3>Put the Extracted Folder on/in the Desktop, USB Memories, or Anywhere Convenient for You (Available Without Installation)</h3>
+
+<p>
+The RINPn is available without installation, 
+so put the extracted folder on anywhere convenient for you (e.g.: Desktop). 
+If you want to use the RINPn on multiple computers, it might be useful for putting the extracted folder of the RINPn in a USB memory.
+</p>
+
+
+<p>
+Now we are ready to use the RINPn.
+Let's launch and use the RINPn in next chapters: <a href="#how-to-use-gui">Step-1 (GUI mode)</a> and <a href="#how-to-use-cui">Step-2 (CUI mode)</a> !
+</p>
+
+
+
+
+
+<hr style="page-break-before: always" />
+
+
+<h1 id="how-to-use-gui">Step 1 - How to Use in GUI Mode (on the Calculator Window)</h2>
+
+<p>
+The RINPn has two mode - GUI mode and CUI mode. 
+On the GUI mode, you can use the RINPn on a simple calculator window, so it is easy to use for everyone.
+Therefore, as a first step, Let's try to use GUI mode!
+</p>
+
+<h2 id="how-to-use-gui-execute">How to Launch the RINPn</h2>
+
+<p>
+How to launch the RINPn depends on the type of your environment.
+</p>
+
+
+<h3>For Microsoft&reg; Windows&reg;</h3>
+
+<p>
+Double-click the batch file &quot;<span class="highlight">RINPn_?.?.?.bat</span>&quot; (?.?.? are version numbers)
+to launch the RINPn.
+Also, you can launch the RINPn by inputting &quot;rinpn&quot; command with no argumuments on the command-line terminal, 
+if you registered &quot;bin&quot; folder of the RINPn in the environment variable &quot;Path&quot;
+(&raquo <a href="#how-to-use-cui-with-path-setting">More details</a>).
+</p>
+
+<div class="note">
+	At the first time you launched the RINPn, 
+	some preparation/configuration steps may run.
+	Please do it as guided by messages.
+</div>
+
+
+<h3>For Other OS (Linux&reg;, etc.)</h3>
+
+<p>
+Launch on the command-line terminal as follows:
+</p>
+
+<div class="console">
+	cd (The folder of the RINPn)
+	<br />
+	java -jar RINPn.jar
+</div>
+
+<p>
+Also, you can launch the RINPn by inputting only &quot;rinpn&quot; command with no argumuments, 
+if you registered &quot;bin&quot; folder of the RINPn in the environment variable &quot;PATH&quot;
+(&raquo <a href="#how-to-use-cui-with-path-setting">More details</a>).
+</p>
+
+<div class="note">
+	<p style="margin-top: 0px;">
+	When you execute the above command line, if an error occurred with the error message indicating that 
+	&quot;java&quot; command is not found, Java&reg; Runtime Environment(JRE) is required separately. 
+	There are some ways to install it.
+	</p>
+	
+	<p>
+	Probably, one of most adaptable way on various OSes is, to install the <span class="highlight">OpenJDK</span> 
+	which is a development environment of Java&reg; including the runtime environment.
+	For details, search on the web with keywords &quot;OpenJDK &nbsp; install &nbsp; (name of your OS)&quot;.
+	The OpenJDK might be helpful too, 
+	<a href="#how-to-use-plugin">when you want to call new functions (methods) written in Java&reg; from the RINPn</a>, 
+	because you are required to compile the code written in Java&reg; in such case.
+	</p>
+	
+	<p style="margin-bottom: 0px;">
+	Also, on some Linux&reg; distributions, you might be able to install only JRE easily, by using &quot;apt&quot; command.
+	For details, search on the web with keywords &quot;JRE &nbsp; install &nbsp; (name of your OS)&quot;.
+	Please note that, in the list of JREs installable by apt command, 
+	perhaps there are some packages of which names end with &quot;<span class="highlight">-headless</span>&quot;,
+	but the RINPn will <span class="highlight">NOT</span> work on such -headless versions.
+	</p>
+</div>
+
+
+<h2 id="how-to-use-gui-window">Calculator Window</h2>
+
+<p>
+When you succeeded to launch the RINPn, the following calculator window will be displayed:
+</p>
+
+<div style="width: 100%; text-align: center;">
+	<img src="./img/gui_expression.png" style="width:100%; max-width:450px;">
+</div>
+
+<p>
+As the above, the calculator window of the RINPn is very simple and compact.
+By default, the calculator window will be displayed at the top-layer of all other windows in translucent color.
+The size, the color, and behaviour (whether the window should always be at the top-layer or not) of the calculator window are customizable.
+For customizing them, open the file &quot;Settings.txt&quot; by a text editor, and edit the content of the file, and overwrite it.
+</p>
+
+
+<h2 id="how-to-use-calculate">How to Calculate</h2>
+
+<p>
+To take calculations, input the expression into the &quot;INPUT&quot; text-field, 
+and press the Enter key of your key board.
+Then the calculated value of the expression will be output on the &quot;OUTPUT&quot; text-field.
+For example:
+</p>
+
+<div class="box">
+	INPUT:
+	<br />
+	( 1 + 2 ) / 3 - 4 + 5
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	2
+</div>
+
+<p>
+As the above, parentheses &quot;<span class="highlight">( )</span>&quot; 
+and orders of operations (multiplication &amp; division are prior than addition &amp; subtraction) 
+are considered correctly. Also, you can use functions/variables as:
+</p>
+
+<div class="box">
+	INPUT:
+	<br />
+	sqrt ( sin( PI / 2 ) + 1 )
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	1.414213562
+</div>
+
+<p>
+Available functions/variables by default are listed in the section: <a href="#built-in">Appendix - List of Built-in Functions/Variables</a>.
+In addition, you can create and use new function/variables as <a href="#how-to-use-library">Step-4</a>, <a href="#how-to-use-plugin">Step-5</a>.
+</p>
+
+
+<div class="note">
+	<p style="margin-top: 0px; margin-bottom: 8px;">
+	- About Precision and Roundings -
+	</p>
+	<p style="margin-top: 8px; margin-bottom: 0px;">
+	In internal processing of the RINPn, numerical values are handled as double-precision (64-bit) binary floating-point number.
+	Hence, some type of numerical errors are contained in some digits at tails of calculation results.
+	Therefore, the RINPn rounds a calculation result in 10-digits by default (customizable by &quot;Settings.txt&quot;), before displaying it.
+	When you use the RINPn, please note that above things, and thereby 
+	the RINPn may be unusable for some purposes (for example, calculations requiring perfect precision).
+	</p>
+</div>
+
+
+
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="how-to-use-cui">Step 2 - How to Use in CUI Mode (on the Command-Line Terminal)</h1>
+
+<p>
+In this section, Let's try to use another mode of the RINPn: CUI mode.
+In the CUI mode, you can take calculations on the command-line terminal, whithout launching the calculator window.
+</p>
+
+
+<h2 id="how-to-use-cui-calculate">How to Calculate in CUI Mode (Without Any Settings)</h2>
+
+<p>
+To use the CUI mode without any additional settings, 
+execute the &quot;RINPn.jar&quot; with passing an expression as a command-line argument as follows:
+</p>
+
+<div class="console">
+	cd (The folder of the RINPn)
+	<br />
+	<br />
+	java -jar RINPn.jar &nbsp; &quot;(1 + 2 ) / 3 - 4 + 5&quot;
+	<br />
+	(Result) 
+	2
+	<br />
+	<br />
+	java -jar RINPn.jar &nbsp; &quot;sqrt ( sin( PI / 2 ) + 1 )&quot;
+	<br />
+	(Result) 
+	1.414213562
+</div>
+
+<p>
+As the above, we can take the same calculation as the example we took in GUI mode, without launching the calculator window.
+</p>
+
+
+<h2 id="how-to-use-cui-with-path-setting">How to Calculate in CUI Mode (With The Path-Setting)</h2>
+
+<p>
+It may be hassle to input the above long command-line with setting the current directory to the folder of the RINPn every time.
+To make it easy, it is helpful to register <span class="highlight">the path of &quot;bin&quot; folder of the RINPn</span> 
+to the environment variable &quot;PATH&quot; (or &quot;Path&quot;) of your OS.
+If you do it, after then, wherever the current directory is, you can take calculations more simply by using &quot;rinpn&quot; command as follows:
+</p>
+
+<div class="console">
+	rinpn &quot;(1 + 2 ) / 3 - 4 + 5&quot;
+	<br />
+	(Result)
+	2
+	<br />
+	<br />
+	rinpn &quot;sqrt ( sin( PI / 2 ) + 1 )&quot;
+	<br />
+	(Result)
+	1.414213562
+</div>
+
+
+<p>
+How to modify the environment variable PATH/Path depends on the OS you are using.
+For details, please search on the web with keywords 
+&quot;<span class="highlight">how to set path</span> (+ the name OS you are using)&quot; and so on.
+<span class="stronghighlight">
+Please note that, 
+if you deleted the current value of the environment variable &quot;PATH&quot;/&quot;Path&quot; by mistake, 
+or if you modify it to invalid value, 
+serious problems may occurred on your PC.
+Be careful when you are modifying it.
+If you have never modified it, and if you can ask to someone for helping/supervising you, we recommend to ask.
+</span>
+</p>
+
+
+<p>
+Also, on the Linux&reg; and so on, 
+an error message related with permissions may occur at the first time you use &quot;rinpn&quot; command.
+In that case, add a permission as follows:
+</p>
+
+<div class="console">
+cd (The folder of the RINPn)/bin
+<br />
+chmod +x rinpn &nbsp;&nbsp;&nbsp; (or, if necessary: &nbsp;sudo chmod +x rinpn )
+</div>
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="how-to-use-script">Step 3 - How to Execute Scripts</h2>
+
+<p>
+The RINPn can execute a script file written in the 
+"<a href="https://www.vcssl.org/en-us/vnano/">Vnano</a>", 
+to perform procedural, algorithmic, or other complicated calculations.
+</p>
+
+
+<div style="width: 100%; text-align: center;">
+	<img src="./img/vnano.png" style="width:100%; max-width:380px;">
+</div>
+
+<h2 id="how-to-use-script-about-vnano">What is the Vnano?</h2>
+
+<p>
+The vnano is a compact script engine &amp; language for embedded use in applications.
+The vnano has simple C-like syntax.
+For details of syntax of the Vnano, see: 
+&quot;<a href="https://www.vcssl.org/en-us/vnano/doc/tutorial/language">Features of the Vnano as a Language</a>&quot;
+in the Vnano Official Website.
+To create a script of the Vnano, no development environments (e.g.: compiler) is required. 
+Simply create a text file of which name ends with the extention &quot;.vnano&quot;, and write code in there.
+</p>
+
+
+<h2 id="how-to-use-script-example-code">Example Script</h2>
+
+<p>
+There is an example script file &quot;Example.vnano&quot; in the folder of the RINPn.
+This example script calculates the numerical integration value of cos(x) from 0 to 1:
+</p>
+
+
+<div class="program">
+	(The content of &quot;Example.vnano&quot;)
+	<br />
+	<br />
+	// Integration parameters
+	<br />
+	double A = 0.0;
+	<br />
+	double B = 1.0;
+	<br />
+	int N = 100000;
+	<br />
+	<br />
+	// Integrant function
+	<br />
+	double f(double x) {
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;return cos(x);
+		<br />
+	}
+	<br />
+	<br />
+	// Perform integration
+	<br />
+	double delta = (B - A) / N;
+	<br />
+	double value = 0.0;
+	<br />
+	for(int i=0; i&lt;N; ++i) {
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;double x = A + i * delta;
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;value += ( f(x) + f(x+delta) + 4.0 * f(x+delta/2.0) ) * delta / 6.0;
+		<br />
+	}
+	<br />
+	<br />
+	output(value);
+</div>
+
+<p>
+For detailed explanations about the above code, see:
+<a href="https://www.vcssl.org/en-us/code/archive/0001/7800-vnano-integral-output/">https://www.vcssl.org/en-us/code/archive/0001/7800-vnano-integral-output/</a>
+</p>
+
+
+<h2 id="how-to-use-script-execute-gui">How to Execute a Script in GUI mode</h2>
+
+<p>
+To execute this script in the GUI mode, 
+input the script file name (or path) into &quot;INPUT&quot; text-field as follows, and press Enter key. 
+Then the script will be executed and its output value will be displayed on &quot;OUTPUT&quot; text-field: 
+</p>
+
+<p>
+For example, input the name of the above example script &quot;Example.vnano&quot; and press Enter key:
+</p>
+
+<div style="width: 100%; text-align: center;">
+	<img src="./img/gui_script.png" style="width:100%; max-width:450px;">
+</div>
+
+<p>
+As the above, the output value of the script will be displayed on the &quot;OUTPUT&quot; text-field.
+The output value &quot;0.8414709848&quot; is matched well with the value of sin(1) 
+which is the theoretical integration value of cos(x) from 0 to 1, 
+so it indicates that the above example script has run correctly.
+</p>
+
+<p>
+By the way, if you want to execute a script file in the different folder with the folder at which you has launched the RINPn, 
+it is necessary to input the absolute file path 
+(&quot;C:\...\Example.vnano&quot;, &quot;/home/.../Example.vnano&quot;, etc.) 
+of the script to execute it.
+(If you are using Microsoft&reg; Windows&reg;, right-click the script file with pressing Shift key, 
+and then you can copy the file path from the right-click menu.)
+</p>
+
+
+<h2 id="how-to-use-script-execute-cui">How to Execute a Script in CUI mode</h2>
+
+<p>
+As same as the GUI mode, you can execute a script on CUI mode, by inputting the name or the path of the script file.
+</p>
+
+<div class="note">
+Here we assume that the path of &quot;bin&quot; folder of the RINPn 
+is registered in the environment variable &quot;PATH&quot;/&quot;Path&quot; of your PC (&raquo; <a href="#how-to-use-cui-with-path-setting">More details</a>), 
+and &quot;rinpn&quot; command is available.
+</div>
+
+<p>
+For executing a script file in the current directory, 
+pass only name of the script file to the &quot;rinpn&quot; command:
+</p>
+
+<div class="console">
+	cd (The directory in which the script file is)
+	<br />
+	<br />
+	rinpn Example.vnano
+	<br />
+	(Result)
+	0.8414709848
+</div>
+
+<p>
+When a script file is in a different directory with the current directory,
+you can specify the relative file path of it, instead of the file name:
+</p>
+
+<div class="console">
+	rinpn ../Example.vnano &nbsp;&nbsp;&nbsp; (Execute a script in the parent directory)
+	<br />
+	rinpn ./example/Example.vnano &nbsp;&nbsp;&nbsp; (Execute a script in &quot;example&quot; directory)
+</div>
+
+<p>
+Also, if necessary, you can specify the absolute file path as follows,
+</p>
+
+<div class="console" style="margin-bottom: 30px;">
+	rinpn &quot;C:\...\Example.vnano&quot; &nbsp;&nbsp;&nbsp; (For Microsoft&reg; Windows&reg;)
+	<br />
+	rinpn &quot;/home/.../Example.vnano&quot; &nbsp;&nbsp;&nbsp; (For Linux&reg;, etc.)
+</div>
+
+
+
+<h2 id="how-to-use-script-optimization-level">About Optimization Levels:<br/>When Processing of a Script Is Heavy ...</h2>
+
+<p>
+By the way, when processing of a script is heavy, it might be helpful to raise the optimization level 
+specified in &quot;Settings.txt&quot; as &quot;acceleratorOptimizationLevel&quot;, to make the processing faster.
+</p>
+
+<p>
+Even when the value of the optimization level is 0, probably the processing speed is enough to use the RINPn 
+in the standard way of a calculator software, so the default value of the optimization level is set to 0.
+However, if you execute numerical calculation programs frequently on the RINPn, 
+the processing speed might not be sufficient with the default optimization level.
+</p>
+
+
+<h2 id="how-to-use-script-archive">Get New Scripts from the Code Archive</h2>
+
+<p>
+You can write new scripts from scratch, 
+but sometimes the code archive in the official website of the VCSSL/Vnano may be helpful:
+</p>
+
+<dl>
+	<dt>Code Archive &raquo; Vnano</dt>
+		<dd><a href="https://www.vcssl.org/en-us/code/#vnano">https://www.vcssl.org/en-us/code/#vnano</a></dd>
+</dl>
+
+<p>
+Useful scripts are being distributed on the code archive, with commentary articles explaining algorithms, background knowledge, and so on.
+</p>
+
+
+<div class="box">
+<div style="margin-top: 5px; margin-bottom: 5px; font-weight: bold;">
+- Examples of Scripts Distributed in the Code Archive -
+</div>
+
+<TABLE border="0" cellpadding="5" >
+	<TBODY>
+		<TR>
+			<TD colspan="2" style="vertical-align:top">
+				<SPAN style="word-break:break-all; font-weight:bold"><A href="https://www.vcssl.org/en-us/code/archive/0001/8000-vnano-lorenz-attractor/">Solve The Lorenz Equations Numerically</A></SPAN><BR>
+			</TD>
+		</TR>
+		<TR>
+			<TD style="vertical-align:top">
+				<A href="https://www.vcssl.org/en-us/code/archive/0001/8000-vnano-lorenz-attractor/"><IMG src="./img/code_icon_lorenz_attractor.jpg"></A><BR>
+			</TD>
+			<TD style="vertical-align:top; line-height:135%;">
+				<SPAN style="word-break:break-all;">Solve the Lorenz equations, and output data to plot the solution curve (well-known as the &quot;Lorenz Attractor&quot;) on a 3D graph.</SPAN><BR>
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan="2" style="vertical-align:top">
+				<SPAN style="word-break:break-all; font-weight:bold"><A href="https://www.vcssl.org/en-us/code/archive/0001/7900-vnano-integral-for-plot-graph/">Output Data of Numerical Integration For Plotting Graph</A></SPAN><BR>
+			</TD>
+		</TR>
+		<TR>
+			<TD style="vertical-align:top">
+				<A href="https://www.vcssl.org/en-us/code/archive/0001/7900-vnano-integral-for-plot-graph/"><IMG src="./img/code_icon_integral_for_plot_graph.jpg"></A><BR>
+			</TD>
+			<TD style="vertical-align:top; line-height:135%;">
+				<SPAN style="word-break:break-all;">Example code computing integrated values numerically, and output data for plotting the integrated functions into graphs.</SPAN><BR>
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan="2" style="vertical-align:top">
+				<SPAN style="word-break:break-all; font-weight:bold"><A href="https://www.vcssl.org/en-us/code/archive/0001/7800-vnano-integral-output/">Compute Integral Value Numerically</A></SPAN><BR>
+			</TD>
+		</TR>
+		<TR>
+			<TD style="vertical-align:top">
+				<A href="https://www.vcssl.org/en-us/code/archive/0001/7800-vnano-integral-output/"><IMG src="./img/code_icon_integral_output.jpg"></A><BR>
+			</TD>
+			<TD style="vertical-align:top; line-height:135%;">
+				<SPAN style="word-break:break-all;">Example code computing integral values numerically by using rectangular method, trapezoidal method, and Simpson's rule.</SPAN><BR>
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+
+</div>
+
+
+
+
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="how-to-use-library">Step 4 - How to Add Functions/Variables by Scripts (Library Scripts)</h1>
+
+<p>
+You can define variables and functions in script files in &quot;lib&quot; folder, 
+and use them in expressions of the 
+<a href="#how-to-use-gui">Step-1</a> and <a href="#how-to-use-cui">Step-2</a>, and in scripts of the <a href="#how-to-use-script">Step-3</a>. 
+Scripts for providing functions/variables is referred as &quot;<span class="highlight">library scripts</span>&quot; on the RINPn and the Vnano. 
+</p>
+
+<h2 id="how-to-use-library-example">How to Use Library Scripts</h2>
+
+<p>
+There is an example library script &quot;ExampleLibrary.vnano&quot; in &quot;lib&quot; folder, 
+and it is set to be loaded by default.
+</p>
+<p>
+An example library script &quot;ExampleLibrary.vnano&quot; is in &quot;lib&quot; folder, 
+and it is set to be loaded by default.
+The content of this example script is as follows:
+</p>
+
+<div class="program">
+	(The content of &quot;ExampleLibrary.vnano&quot; in &quot;lib&quot; folder)
+	<br />
+	<br />
+	float libvar = 2.0;
+	<br />
+	<br />
+	float libfun(float x) {
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;float result = libvar * x + 1;
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;return result;
+		<br />
+	}
+	<br />
+</div>
+
+<div class="note" style="margin-top: 15px;">
+As a side note, in the Vnano, the precision of &quot;float&quot; type is 64-bit, as same as the &quot;double&quot;.
+</div>
+
+<p>
+In the expression/script inputted to the RINPn 
+(see <a href="#how-to-use-gui">Step-1</a>, <a href="#how-to-use-cui">Step-2</a>, and <a href="#how-to-use-script">Step-3</a>), 
+you can use variables and functions defined in the above &quot;ExampleLibrary.vnano&quot;, 
+as the following example:
+</p>
+
+<div class="console">
+	INPUT:
+	<br />
+	1 + libvar
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	3
+	<br />
+	<br />
+	INPUT:
+	<br />
+	libfun(1.23)
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	3.46
+</div>
+
+
+
+<h2 id="how-to-use-library-new">How to Add New Library Scripts</h2>
+
+<p>
+If you want, you can create other (new) library script files, and define functions/variables in it.
+</p>
+
+<p>
+When you have created/appended new library script files, 
+describe its file path in the content of the text file 
+&quot;VnanoLibraryList.txt&quot; in &quot;lib&quot; folder, for loading it.
+</p>
+
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="how-to-use-plugin">Step 5 - Implement Functions/Variables in Java&reg; (Plug-in Development)</h1>
+
+<p>
+You can implement new built-in variables and function in the Java&reg; programming language.
+On the RINPn and the Vnano, we refer a Java&reg; program to provide built-in functions/variables as 
+&quot;<span class="highlight">plug-in</span>&quot;.
+</p>
+
+<p>
+In this way, compared to defining variables/functions as script code (in the <a href="#how-to-use-library">step-4</a>), 
+high-functionality of Java&reg; might be the great merit.
+</p>
+
+<p>
+On the other hand, <span class="highlight">it requres Java&reg; Development Kit (JDK) to compile implemented code.</span>
+Here we assume that JDK(s) is installed in your PC and &quot;javac&quot; command is available on it.
+For details of how to install a JDK, as an example, search on the web with keywords &quot;OpenJDK &nbsp; install &nbsp; (name of your OS)&quot; and so on.
+</p>
+
+
+<h2 id="how-to-use-plugin-example">How to Use Plug-Ins</h2>
+
+<p>
+For using on the RINPn, plug-ins should be put in the &quot;plugin&quot; folder of the RINPn.
+In the folder, a simple example of a plug-in &quot;ExamplePlugin.java&quot; exists:
+</p>
+
+<div class="program">
+	(The content of &quot;ExamplePlugin.java&quot; in &quot;plugin&quot; folder)
+	<br />
+	<br />
+	public class ExamplePlugin {
+		<br />
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;public double pivar = 1.0;
+		<br />
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;public double pifun(double arg) {
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return arg * 2.0;
+			<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;}
+		<br />
+	}
+</div>
+
+<p>
+This plug-in is compiled by default, and is set to be loaded (how we set it will be explained later).
+</p>
+
+<p>
+The field &quot;pivar&quot; and the method &quot;pifun(arg)&quot; are available as a built-in variable/function
+inputted to the calculator (see <a href="#how-to-use-gui">Step-1</a> and <a href="#how-to-use-cui">Step-2</a>), 
+and in the script code (see <a href="#how-to-use-script">step-3</a> and <a href="#how-to-use-library">Step-4</a>).
+</p>
+
+<p>
+For example:
+</p>
+
+<div class="console">
+	INPUT:
+	<br />
+	1 + pivar
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	2
+	<br />
+	<br />
+	INPUT:
+	<br />
+	pifun(2)
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	4
+</div>
+
+
+
+<h2 id="how-to-use-plugin-compile">How to Compile Plug-ins</h2>
+
+<p>
+When you modify code of the plug-in, it requires to be re-compiled as follows:
+</p>
+
+<div class="console">
+cd (folder of the RINPn)
+<br />
+javac ExamplePlugin.vnano
+</div>
+
+<p>
+By the way, some compiled class files of special plug-in-interfaces (XFCI1, XNCI1, and so on) supported by the Vnano Engine 
+are bundled in the &quot;plugin/org/vcssl/connect&quot; folder.
+If you want, you can import them from your plug-in 
+(see &quot;<a href="https://www.vcssl.org/en-us/vnano/doc/tutorial/plugin">Plugin Development</a>&quot; section in the document of the Vnano) 
+and you can compile it in the same way as the above example.
+</p>
+
+
+<h2 id="how-to-use-plugin-new">How to Add New Plug-ins</h2>
+<p>
+If you want to add a new plug-in, put it in the &quot;plugin&quot; folder and compile it.
+Then, describe (append) the path of the compiled class file 
+into the content of the text file &quot;VnanoPluginList.txt&quot; in &quot;plugin&quot; folder.
+All plug-ins specified in &quot;VnanoPluginList.txt&quot; will be loaded by the RINPn.
+</p>
+
+
+<h2 id="how-to-use-plugin-standard">Vnano Standard Plug-ins</h2>
+
+<p>
+In &quot;plugin/org/vcssl/nano/plugin&quot; folder,
+&quot;Vnano Standard Plug-ins&quot; which provide basic features (math functions, utility functions, and so on) 
+are bundled.
+They will be loaded by default (specified in &quot;VnanoPluginList.txt&quot;), 
+so you can use their functions/variables by default.
+</p>
+
+<p>
+For browsing the full list and detailed specification documents of Vnano Standard Plug-ins, 
+see &quot;<a href="https://www.vcssl.org/en-us/vnano/plugin/">Vnano Standard Plug-ins</a>&quot; page in the official website of the Vnano.
+</p>
+
+<p>
+Also, frequently-used functions/variables on the RINPn and simplified explanations of them are listed in the page: 
+<a href="#builtin-functions">Appendix - List of Built-in Functions/Variables</a>.
+</p>
+
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="how-to-embed">Step 6 - How to Embed into Other Software</h1>
+
+<p>
+You can embed the scripting/calculation engine used in the RINPn, 
+the &quot;<a href="https://www.vcssl.org/en-us/vnano/">Vnano Engine</a>&quot;, 
+into your applications written in Java&reg;. Let's try!
+</p>
+
+
+<h2 id="how-to-embed-example">Example Code</h2>
+
+<p>
+In the package of the RINPn, an example code calculating a value of the expression &quot;1.2 + 3.4&quot; 
+under almost the same engine-settings with the RINPn is attached as &quot;EmbedUseExample.java&quot;:
+</p>
+
+
+<div class="program" style="font-size: 80%;">
+	import javax.script.ScriptEngine;
+	<br />
+	import javax.script.ScriptException;
+	<br />
+	import java.util.Map;
+	<br />
+	import java.util.HashMap;
+	<br />
+	<br />
+	public class EmbedUseExample {
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;public static void main(String[] args) {
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;////////// Preparation of the Vnano Engine: Begin //////////
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Get the script engine (Vnano Engine) used in the RINPn for calculations.
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ScriptEngine engine = new ScriptEngineManager.getEngineByName(&quot;vnano&quot;);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (engine == null) {
+				<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.err.println(&quot;Script engine loading error&quot;);
+				<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+				<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Set ptions of the script engine (for details, see Settings.txt)
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map<String, Object> optionMap = new HashMap<String, Object>();
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;EVAL_INT_LITERAL_AS_FLOAT&quot;, true);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;EVAL_ONLY_FLOAT&quot;,      true);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;EVAL_ONLY_EXPRESSION&quot;, true);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;UI_MODE&quot;, &quot;CUI&quot;); &nbsp;&nbsp;&nbsp;&nbsp; // For CUI applications
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// optionMap.put(&quot;UI_MODE&quot;, &quot;GUI&quot;);  // For GUI applications
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;ACCELERATOR_ENABLED&quot;, true);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;ACCELERATOR_OPTIMIZATION_LEVEL&quot;, 0);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_OPTION_MAP&quot;, optionMap);
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Set permissions referred from plug-ins supporting permission features. 
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map<String, String> permissionMap = new HashMap<String, String>();
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;permissionMap.put(&quot;DEFAULT&quot;, &quot;ASK&quot;); &nbsp; // For asking to users by default
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// permissionMap.put(&quot;DEFAULT&quot;, &quot;DENY&quot;); // For denying by default
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// (Here add permission items you want to allow, as follows)
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// permissionMap.put(&quot;FILE_READ&quot;, &quot;ALLOW&quot;);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_PERMISSION_MAP&quot;, permissionMap);
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Settings for loading libraries/plugins
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_LIBRARY_LIST_FILE&quot;, &quot;lib/VnanoLibraryList.txt&quot;);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_PLUGIN_LIST_FILE&quot;, &quot;plugin/VnanoPluginList.txt&quot;);
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;////////// Preparation of the Vnano Engine: End //////////
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Calculate the value of &quot;1.2 + 3.4&quot; by the script engine, and output
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try{
+				<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String input = &quot;1.2 + 3.4&quot;;
+				<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double x = (double) engine.eval(input + &quot;;&quot;);
+				<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(&quot;Output of the Vnano Engine: &quot; + x);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} catch (ScriptException e) {
+			<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();
+				<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Unload libraries/plugins
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_COMMAND&quot;, &quot;REMOVE_LIBRARY&quot;);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_COMMAND&quot;, &quot;REMOVE_PLUGIN&quot;);
+			<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;}
+		<br />
+	}
+</div>
+
+
+<h2 id="how-to-embed-compile">How to Compile &amp; Execute</h2>
+
+<p>
+How to compile:
+</p>
+
+<div class="console">
+	javac -encoding UTF-8 EmbedUseExample.java
+</div>
+
+<p>
+When the compilation is succeeded, a class file &quot;EmbedUseExample.class&quot; will be generated.
+Execute it with adding the Jar file of the Vnano Engine &quot;<span class="highlight">Vnano.jar</span>&quot; 
+(bundled in the package of the RINPn)
+to the class path:
+</o>
+
+<div>
+<div class="console">
+	java -cp ".;Vnano.jar" EmbedUseExample &nbsp;&nbsp;&nbsp; (For Microsoft&reg; Windows&reg;)
+	<br />
+	java -cp ".:Vnano.jar" EmbedUseExample &nbsp;&nbsp;&nbsp; (For Linux&reg;, etc.)
+	<br />
+	<br />
+	(Result) Output of the Vnano Engine: 4.6
+</div>
+
+<p>
+As the above, we get the correct value &quot;4.6&quot; of the expression &quot;1.2 + 3.4&quot;.
+In the expression, you can use functions of libraries/plug-ins.
+In addition, to the eval(...) method of the script engine, 
+you can pass the content(code) of a Vnano script instead of an expression.
+</p>
+
+<h2 id="how-to-embed-details">License &amp; More Detailed Information about the Vnano Engine</h2>
+
+<p>
+The Vnano Engine is an open source software released under the MIT License, 
+so you can use it for free in both of commercial/non-commercial purposes,
+the same as the RINPn.
+</p>
+
+<p>
+More detailed information (guide/specification documents and so on) are provided on the official website of the Vnano:
+</p>
+
+
+<dl style="margin-bottom: 40px;">
+	<dt>Vnano Official Website</dt>
+		<dd><a href="https://www.vcssl.org/en-us/vnano/">https://www.vcssl.org/en-us/vnano/</a></dd>
+</dl>
+
+
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="built-in">Appendix - List of Built-in Functions/Variables</h1>
+
+<p>
+On the RINPn, some functions and variables are available by default.
+Among them, frequently used functions/variables are shown in the following list.
+</p>
+
+
+<div class="note">
+	Most of following functions/variables are provided by Vnano Standard Plug-ins.
+	For the full list of available functions/variables and more detailed specifications of them, see <a href="https://www.vcssl.org/en-us/vnano/plugin/">specification documents of Vnano Standard Plug-ins</a>.
+</div>
+
+
+<h2 id="built-in-functions">Built-in Functions</h2>
+
+<dl>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#rad">rad</a>( degree )</dt>
+	<dd>
+		<p>
+		The conversion function from degree to radian.
+		</p>
+		<p>
+		Example:  rad( 180.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#deg">deg</a>( radian )</dt>
+	<dd>
+		<p>
+		The conversion function from radian to degree.
+		</p>
+		<p>
+		Example:  deg( 2.0 * PI )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#sin">sin</a>( x )</dt>
+	<dd>
+		<p>
+		The sine function. The unit of the argument &quot;x&quot; is radian.
+		</p>
+		<p>
+		Example:  sin( PI / 2.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#cos">cos</a>( x )</dt>
+	<dd>
+		<p>
+		The cosine function. The unit of the argument &quot;x&quot; is radian.
+		</p>
+		<p>
+		Example:  cos( 2.0 * PI )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#tan">tan</a>( x )</dt>
+	<dd>
+		<p>
+		The tangent function. The unit of the argument &reg;x&reg; is radian.
+		</p>
+		<p>
+		Example:  tan( PI / 4.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#asin">asin</a>( x )</dt>
+	<dd>
+		<p>
+		The inverse function of sine (arc-sine). The unit of the result is radian.
+		</p>
+		<p>
+		Example:  asin( 1.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#acos">acos</a>( x )</dt>
+	<dd>
+		<p>
+		The inverse function of cosine (arc-cosine). The unit of the result is radian.  
+		</p>
+		<p>
+		Example:  acos( 1.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#atan">atan</a>( x )</dt>
+	<dd>
+		<p>
+		The inverse function of tangent (arc-tangent). The unit of the result is radian. 
+		</p>
+		<p>
+		Example:  atan( 1.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#sqrt">sqrt</a>( x )</dt>
+	<dd>
+		<p>
+		The square-root function. 
+		</p>
+		<p>
+		Example:  sqrt( 4.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#ln">ln</a>( x )</dt>
+	<dd>
+		<p>
+		The logarithm function with the base &quot;e&quot; (napier number).
+		</p>
+		<p>
+		Example:  ln( 10.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#log10">log10</a>( x )</dt>
+	<dd>
+		<p>
+		The logarithm function with the base &quot;10&quot;.
+		</p>
+		<p>
+		Example:  log10( 1000.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#pow">pow</a>( x, exponent )</dt>
+	<dd>
+		<p>
+		The function which returns the value of &quot;x&quot; to &quot;exponent&quot;-power.
+		</p>
+		<p>
+		Example:  pow( 2.0, 3.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#exp">exp</a>( exponent )</dt>
+	<dd>
+		<p>
+		The function which returns the value of &quot;e&quot; (napier number) to &quot;exponent&quot;-power.
+		</p>
+		<p>
+		Example:  exp( 1.2 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#abs">abs</a>( x )</dt>
+	<dd>
+		<p>
+		The absolute-value function.
+		</p>
+		<p>
+		Example:  abs( -1.23 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#sum">sum</a>( ... )</dt>
+	<dd>
+		<p>
+		The summation function.
+		</p>
+		<p>
+		Example:  sum( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#mean">mean</a>( ... )</dt>
+	<dd>
+		<p>
+		The mean-value (arithmetic mean) function.
+		</p>
+		<p>
+		Example:  mean( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#van">van</a>( ... )</dt>
+	<dd>
+		<p>
+		The variance function ( denominator : n ).
+		</p>
+		<p>
+		Example:  van( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#van1">van1</a>( ... )</dt>
+	<dd>
+		<p>
+		The variance function ( denominator : n-1 ).
+		</p>
+		<p>
+		Example:  van1( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#sdn">sdn</a>( ... )</dt>
+	<dd>
+		<p>
+		The standard-deviation function ( denominator : n ).
+		</p>
+		<p>
+		Example:  sdn( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#sdn1">sdn1</a>( ... )</dt>
+	<dd>
+		<p>
+		The standard-deviation function ( denominator : n-1 ). 
+		</p>
+		<p>
+		Example:  sdn1( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/system/#length">length</a>( array, dim )</dt>
+	<dd>
+		<p>
+		The function which returns length of the &quot;dim&quot;-th dimension of an &quot;array&quot;.
+		</p>
+		<p>
+		Example:  length( array, 0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/system/#output">output</a>( value )</dt>
+	<dd>
+		<p>
+		The function to display the calculated value of scripts.
+		On GUI mode, the value will be displayed on &quot;OUTPUT&quot; text-field (so when this function is called multiple times, the displayed value will be overwritten).
+		On CUI mode, the value will be outputted on the standard-output as a line.
+		</p>
+		<p>
+		Example:  output( 1.23 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/system/#print">print</a>( value )</dt>
+	<dd>
+		<p>
+		The function to display long and multiple-line texts in general purpose.
+		This function can display contents of arbitrary number of any type values/arrays 
+		with delimitting tab-spaces.
+		On GUI mode, the value will be appended to the content of a text-area on an independent window, without line-feedings.
+		On CUI mode, the value will be outputted to the standard-output, without 
+		</p>
+		<p>
+		Example:  print( 1.2 , 3.4 , 5.6 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/system/#println">println</a>( value )</dt>
+	<dd>
+		<p>
+		Almost the same with the above &quot;print&quot; function, 
+		but this function displays/outputs the content with line-feedings.
+		</p>
+		<p>
+		Example:  println( 1.2 , 3.4 , 5.6 )
+		</p>
+	</dd>
+</dl>
+
+
+<h2 id="built-in-variables">Built-in Variables</h2>
+
+<dl>
+	<dt><a href="https://www.vcssl.org/en-us/vnano/plugin/math/#PI">PI</a></dt>
+	<dd>
+		<p>
+		The constant variable storing the value of the circle ratio &#x03C0.
+		</p>
+		<p>
+		Value:  3.141592653589793
+		</p>
+	</dd>
+</dl>
+
+
+
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="about-us">About Us</h1>
+
+<p>
+This software is developed by <a href="https://www.rinearn.com/">RINEARN</a> 
+which is a studio in Japan developing software for data-analysis, visualization, computation, and so on.
+Please feel free to contact us if you have any questions/feedbacks about this software.
+</p>
+
+<dl>
+	<dt>RINEARN Official Website</dt>
+		<dd><a href="https://www.rinearn.com/">https://www.rinearn.com/</a></dd>
+	<dt>Contact Us</dt>
+		<dd><a href="https://www.rinearn.com/en-us/#contact">https://www.rinearn.com/en-us/#contact</a></dd>
+</dl>
+
+
+<hr style="margin-top: 50px;" />
+
+<h1 id="credit">Trademarks/Credits</h1>
+
+
+<ul>
+	<li>Oracle and Java are registered trademarks of Oracle and/or its affiliates.</li>
+	<li>Microsoft Windows is either a registered trademarks or trademarks of Microsoft Corporation in the United States and/or other countries.</li>
+	<li>Linux is a trademark of linus torvalds in the United States and/or other countries.</li>
+	<li>Other names may be either a registered trademarks or trademarks of their respective owners.</li>
+</ul>
+
+
+<hr style="margin-top: 100px;" />
+<p style="text-align: right;">
+RINPn User Guide &nbsp;(Last Updated: 2021/03/01)
+<br />
+Text &amp; Illustration: &nbsp;Fumihiro Matsui
+</p>
+
+
+
+</body>
+</html>
+
