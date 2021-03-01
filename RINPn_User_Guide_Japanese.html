@@ -1,0 +1,1494 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+	<title>RINPn ユーザーガイド</title>
+	<meta charset="UTF-8">
+	<style type="text/css">
+		h1 { border-width: 0px 0px 0px 24px; border-color: #000000; border-style: solid; margin: 10px 0px 10px 0px; padding: 5px 0px 0px 10px; line-height: 135%; }
+		h2 { border-width: 0px 0px 2px 15px; border-color: #3822ee; border-style: solid; margin: 20px 0px 20px 0px; padding: 0px 0px 0px 8px; }
+		h3 { border-width: 0px 0px 0px 8px; border-color: #aaaaaa; border-style: solid; padding: 0px 0px 0px 8px; }
+		h4:before { content:'・ ' }
+
+		hr { margin-top: 40px; }
+
+		dl { line-height:120%; }
+		dt { display:list-item; list-style-position:outside; margin-left:1.5em; list-style-type:disc; font-weight: bold; }
+		dd { margin-bottom: 10px; }
+		ul { margin: 0 0 0 1.5em; padding: 0px; }
+		li { line-height:120%; margin-bottom: 8px; list-style-type:disc; }
+		
+		img { border: none; margin: 0; padding: 0; vertical-align: bottom; page-break-inside: avoid; }
+
+		.program { margin:0 0px; padding: 10px 10px 10px 10px; width:95%; line-height: 150%; font-weight: bold; border: 1px #000000 solid; color: #000000; background-color: #eeeeee; }
+		.console { margin:0 0px; padding: 10px 10px 10px 10px; width:95%; font-weight: bold; color: #aaaaaa; background-color: #000000; border: 1px #000000 solid; }
+		.error { margin:0 0px; padding: 10px 10px 10px 10px; width:95%; font-weight: bold; color: #aaaaaa; background-color: #0000ff; border: 1px #000000 solid; }
+
+		.bold { font-weight:bold; }
+		.highlight { font-weight:bold; color: #7760ff; }
+		.stronghighlight { font-weight:bold; color: #ff4000; }
+		.orange { color:#ff5500; }
+		.smalltext { font-size:80%; line-height:140%; word-break:break-all; }
+
+		.box { margin:0 0px; padding: 10px 10px 10px 10px; width:95%; border: 1px #000000 solid; background-color:#eeeeee; }
+		.note { margin:0 0px; padding: 10px 10px 10px 10px; width:95%; border: 1px #332288 solid; color: #332288; background-color:#eeeeff; border-radius: 8px; }
+		.smallsup { font-size:70%; vertical-align: super; }
+		.smallsub { font-size:70%; vertical-align: sub; }
+	</style>
+</head>
+
+<body style="width: 90%; padding-left:5%; padding-right:5%;">
+
+
+
+
+<div style="font-size: 200%; color: #0000ff; font-weight: bold; padding-top: 20px;">
+RINEARN
+</div>
+
+<div style="width: 100%; font-size: 300%; margin-top: 10px; margin-bottom: 10px; padding-left: 10px;">
+	- RINPn ユーザーガイド -
+</div>
+
+<div style="width: 100%; text-align: center; background-color: #aaaaaa;">
+	<img src="./img/signboard.jpg" style="width:100%;" />
+</div>
+
+<div style="width: 100%; border-radius: 8px; background-color: #eeeeee; border: 1px #888888 solid; line-height: 150%; margin-top: 24px; margin-bottom: 24px; padding: 10px;">
+	この文書は、小型プログラマブル関数電卓ソフト「 <a href="https://www.rinearn.com/ja-jp/rinpn/">RINPn</a> (りんぷん) 」の公式な取扱説明書です。
+</div>
+<div style="width: 100%; border-radius: 8px; background-color: #eeeeee; border: 1px #ff5500 solid; line-height: 150%; margin-top: 24px; margin-bottom: 24px; padding: 10px; color: #ff5500;">
+	<p style="color: #ff5500; margin-top: 0px; margin-bottom: 0px;">
+		ご使用前の留意事項: RINPn は、まだ正式リリース前のソフトウェアです。
+		開発側にとっては、概ね正式リリースに準ずる品質になっていますが、まだ一般のユーザー様の実際の使用による検証が不十分です。
+		そのため、現在はいわゆる「 オープンベータ版 」として公開しています。あらかじめご了承ください。
+	</p>
+</div>
+
+
+<div style="margin-bottom: 50px;">
+	- 目次 -
+	<ul style="margin-top: 10px; margin-left: 34px;">
+		<li><a href="#start">はじめに</a></li>
+		<li><a href="#how-to-use-gui">ステップ 1 - GUIモードで使ってみる（電卓画面での使用）</a></li>
+		<li><a href="#how-to-use-cui">ステップ 2 - CUIモードで使ってみる（コマンドでの使用）</a></li>
+		<li><a href="#how-to-use-script">ステップ 3 - スクリプトを実行する</a></li>
+		<li><a href="#how-to-use-library">ステップ 4 - スクリプトで関数/変数を追加する (ライブラリスクリプトの使用)</a></li>
+		<li><a href="#how-to-use-plugin">ステップ 5 - Java&reg;言語で関数/変数を実装する (プラグイン開発)</a></li>
+		<li><a href="#how-to-embed">ステップ 6 - 別のソフトウェア内に組み込んで使う</a></li>
+		<li><a href="#built-in">付録 - 主な組み込み関数/変数</a></li>
+		<li><a href="#about-us">開発元について</a></li>
+		<li><a href="#credit">本文書内の商標などについて</a></li>
+	</ul>
+</div>
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="intro">はじめに</h1>
+
+
+<h2 id="start-about">RINPn ってどんな電卓？</h2>
+
+<p>
+RINPn（りんぷん）は、「 <span class="highlight">シンプル ＆ コンパクト</span> 」な方向性を目指した、小さな電卓ソフトです。
+</p>
+
+<div style="width: 100%; text-align: center;">
+	<img src="./img/gui_expression.png" style="width:100%; max-width:450px;">
+</div>
+
+<p>
+でも、その画面の小ささの割に、中身は意外とパワフルです。
+RINPn をもう少し細かいカテゴリーに分類すると、かっこ ( ) や数学関数などを用いた式を、そのままの形で書いて計算できる「 関数電卓 」に属します。
+加えて、スクリプト（簡易プログラム）によって関数の自作や自動処理などを行える「 プログラマブル電卓 」にも属します。
+処理速度面では、最大で数億(数百メガ)～数十億(数ギガ)回/秒クラスの数値演算が可能で、
+一般的なスクリプト言語環境と比べてもそう見劣りしない程度の速さがあります。
+</p>
+
+<p>
+そう、小さいのに、意外とパワフルなんです。
+クルマで例えるなら、小型軽量で取り回しがいいのにパワフルでキビキビ走る、コンパクトカーのターボ付きモデルのようなものを目指した電卓ソフトです。
+</p>
+
+
+<div class="note" style="margin-top: 35px;">
+※ 最大処理速度を発揮させるには、設定ファイル「 Settings.txt 」内で、最適化レベルの値を最大に設定する必要があります。
+</div>
+
+
+<h2 id="start-license" style="margin-top: 35px;">商用・非商用問わず無償で利用可能な、<br />オープンソースでMITライセンス採用のフリーソフト</h2>
+
+
+<p>
+RINPn は、必要に応じて、ユーザーがソースコード（ソフトの「元」のようなものです）を入手して改造・改良・流用する事なども可能な、
+オープンソースのフリーソフトです。実際に、ソースコードリポジトリ <a href="https://github.com/RINEARN/rinpn">https://github.com/RINEARN/rinpn</a> 
+からソースコードを取得/参照できます。
+</p>
+
+<p>
+もちろん、そんな面倒な事は考えずに、入手したまま普通のソフトとして使う事もできますし、それも開発側としては大歓迎です !
+</p>
+
+<p>
+RINPn のライセンスは、いくつかの有名なライセンスの一つである「 MITライセンス 」を採用しています。
+これにより、RINPn は商用・非商用問わず無償で利用できる上に、ソースコード流用時などの諸条件も緩いものとなっています。
+詳細については、必要に応じて「 MITライセンス 」などでWeb検索すると、
+日本語で解説したページがたくさん出てくると思います。
+</p>
+
+<p>
+なお、ライセンス文書そのものは、RINPn の通常版では「 License 」フォルダ内に「 MIT_License.txt 」として同梱されています（内容は英語です）。
+ソースコードリポジトリでは直下に「 LICENSE 」というファイル名で同梱されています。
+</p>
+
+<div class="note" style="margin-bottom: 30px;">
+	- 免責事項 -
+	
+	<p style="margin-top: 5px; margin-bottom: 8px;">
+	RINPn はどなたでも無償で利用できるソフトウェアですが、動作は完全に無保証です。
+	</p>
+	
+	<p style="margin-top: 8px; margin-bottom: 8px;">
+	RINPn の開発元は、RINPn の利用の結果（不具合や損害などを含む）に関して、
+	一切の責任および補償等を負担いたしかねます。何卒ご了承ください。
+	</p>
+	
+	<p style="margin-top: 8px; margin-bottom: 0px;">
+	ご使用の前に、上記の点およびMITライセンスの条件に、あらかじめご同意ください。
+	</p>
+</div>
+
+
+
+<h2 id="start-ready">早速ダウンロードして、使う準備をしてみよう！</h2>
+
+<h3>RINPn の公式サイトにアクセスし、最新版を入手</h3>
+
+<p>
+このガイドは RINPn の配布パッケージ内にも同梱されているため、この文をお読みの方は既に RINPn を入手済みかもしれません。
+一方、RINPn を未入手の場合や、入手したものが少し古い場合などは、公式サイトからいつでも最新版を入手できます：
+</p>
+
+<dl>
+	<dt>RINPn 公式サイト（日本語版）</dt>
+		<dd><a href="https://www.rinearn.com/ja-jp/rinpn/">https://www.rinearn.com/ja-jp/rinpn/</a></dd>
+	<dt>RINPn 公式サイト（英語版）</dt>
+		<dd><a href="https://www.rinearn.com/en-us/rinpn/">https://www.rinearn.com/en-us/rinpn/</a></dd>
+</dl>
+
+<p>
+上記ページのすぐ先頭付近にある、「 いますぐダウンロード 」と書かれたボタンのリンク先ページから、
+RINPn の配布パッケージ「 <span class="highlight">rinpn_?_?_?_ja.zip</span> (種類はZIP形式圧縮ファイル、?_?_? の箇所はバージョンの数字) 」をダウンロードできます。
+</p>
+
+<div class="note">
+上記でダウンロードされるのは、すぐに使える状態で配布されている「 ビルド済み版 」です。
+ソースコードから自力でビルドしたいという場合は、下記リポジトリからご入手ください：
+	<dl>
+		<dt>RINPn ソースコード リポジトリ</dt>
+			<dd><a href="https://github.com/RINEARN/rinpn">https://github.com/RINEARN/rinpn</a></dd>
+	</dl>
+リポジトリを clone 後、READMEの記述の通りにビルドしてください。
+</div>
+
+
+<h3>配布パッケージは圧縮されているため、まず展開しよう</h3>
+
+<p>
+上でも触れた通り、RINPn の配布パッケージ「 rinpn_?_?_?_ja.zip 」はZIP形式で圧縮されて 1 つのファイルになっているため、
+まずは展開しましょう。
+</p>
+
+<p>
+Microsoft&reg; Windows&reg; をご使用の方は、
+最初に<span class="stronghighlight">ZIPファイルを右クリックして「プロパティ」を選択し、 
+プロパティ画面の下にあるセキュリティ項目の「許可する」にチェックを入れて「OK」</span>します。
+（ これを行わないと、展開の途中や RINPn の起動時に、警告メッセージが表示されて失敗する場合があります。） 
+その後、<span class="highlight">ZIPファイルを右クリックして、メニューから「 すべて展開 」や「 ここに展開 」や「 解凍 」などの項目を選択</span>すると展開できます。
+</p>
+
+<p>
+Linux&reg; などをご使用の方も、大抵の環境では右クリックメニューから展開できます。
+</p>
+
+<div class="note">
+<p style="margin-top: 0px;">
+Linux&reg; などで、展開後のファイル名が文字化けしてしまう場合は、コマンドラインで下記のように、文字コードを指定して展開してみてください：
+</p>
+<div class="console">
+cd 配布パッケージのある場所(パス)
+<br />
+unzip -O cp932 rinpn_?_?_?_ja.zip &nbsp;&nbsp; (?_?_? はバージョンの数字)
+</div>
+</div>
+
+<p>
+展開が完了すると、同じ場所に、同じ名前の「 rinpn_?_?_?_ja 」というフォルダが作成され、
+その中に RINPn のプログラム本体やその他色々なファイル（このガイドも）が入っています。
+なお、<span class="highlight">ZIPファイルを展開しないままダブルクリックしても、一応は中を見る事ができますが、
+その状態で RINPn を使おうとすると正しく動作しない可能性がある</span>ため、
+展開して普通のフォルダになった状態でご使用ください。
+</p>
+
+
+<h3>展開してできたフォルダを、デスクトップやUSBメモリーなど、使いやすい場所に置いておくだけでOK (インストール不要)</h3>
+
+<p>
+あとは、展開してできたフォルダを、デスクトップ等のどこか使いやすい場所に置いておくと、そのままインストール不要で使えます。
+USB メモリー等に入れて、持ち運んで使う事もできます。
+</p>
+
+<p>
+具体的な起動方法や使用方法は、次の <a href="#how-to-use-gui">ステップ 1 (GUIモード)</a> や <a href="#how-to-use-cui">ステップ 2 (CUIモード)</a> で詳しく説明します。
+</p>
+
+
+<hr style="page-break-before: always" />
+
+
+<h1 id="how-to-use-gui">ステップ 1 - GUIモードで使ってみる<br />(電卓画面での使用)</h2>
+
+<p>
+RINPn には2つのモードがあり、ここで扱うGUIモードでは、グラフィカルな電卓画面上で計算を行う事ができます。
+このGUIモードは、恐らくどなたでも簡単に扱う事ができるはずです。
+という事で、まずはGUIモードで起動してみましょう！
+</p>
+
+<h2 id="how-to-use-gui-execute">起動方法</h2>
+
+
+<p>
+起動方法はご使用の環境によって異なりますので、下記の二通りのうち、適した方をお試しください。
+</p>
+
+<h3>Microsoft&reg; Windows&reg; をご使用の場合</h2>
+
+<p>
+<a href="#start-ready">ダウンロード・展開したフォルダ内</a>にある、
+「 <span class="highlight">RINPn_?.?.?.bat</span> (種類はバッチファイル、?の箇所はバージョンの数字) 」
+を<span class="highlight">ダブルクリックして起動</span>してください。
+なお、<a href="#how-to-use-cui">ステップ 2</a> で説明するように「 bin 」フォルダのパスを環境変数 Path に登録しておくと、
+コマンドライン端末上で「 rinpn 」と打って起動する事も可能になります。
+</p>
+
+<div class="note">
+	初回起動時には、必要に応じて色々な準備処理などが始まりますが、
+	一手一手メッセージで案内されますので、その通りに進めればOKです。
+	完了すると、RINPn のウィンドウが立ち上がります。
+</div>
+
+
+<h3>Linux&reg; やその他の環境をご使用の場合</h2>
+
+<p>
+この場合には、以下のようにコマンドライン端末から入力して起動してください：
+</p>
+
+<div class="console">
+	cd ここにRINPnのフォルダの場所(パス)を記述
+	<br />
+	java -jar RINPn.jar
+</div>
+
+<p>
+なお、<a href="#how-to-use-cui">ステップ 2</a> で説明するように「 bin 」フォルダのパスを環境変数 PATH に登録しておくと、
+より単純に「 rinpn 」と打って起動する事も可能になります。
+</p>
+
+<div class="note">
+	<p style="margin-top: 0px;">
+	上記コマンドを実行した際に、java コマンドが使えない等のエラーが表示される場合は、別途 Java&reg; 言語の実行環境(JRE)の導入が必要です。
+	その方法は、下記のようにいくつかあります。
+	</p>
+	
+	<p>
+	色々なOSで共通して行える方法としては、
+	<span class="highlight">OpenJDK</span> という開発環境（実行環境も含まれています）を導入する事が挙げられます。
+	詳しい導入手順については、「 OpenJDK &nbsp; インストール &nbsp; (ここにOSの名前) 」などでWeb検索してみてください。
+	実行環境目当てで入れるには少し大げさなのですが、<a href="#how-to-use-plugin">RINPn では Java&reg; 言語で自作した処理を呼ぶ事も可能</a>で、
+	その際には開発環境も必要になるため、入れておくと後々で便利かもしれません。
+	</p>
+	
+	<p style="margin-bottom: 0px;">
+	なお、一部のLinux&reg;ディストリビューションなどでは、apt コマンドなどで、簡単に実行環境のみを導入できる場合もあります。
+	詳しい手順は 「 JRE &nbsp; インストール &nbsp; (ここにOSの名前) 」などでWeb検索してみてください。
+	<span class="highlight">ただし、apt コマンド等でJREを導入する場合、名前の末尾に -headless が付いたバージョンを選ぶと RINPn が動作しないので、ご注意ください</span>。
+	</p>
+</div>
+
+
+<h2 id="how-to-use-gui-window">起動した電卓画面の様子</h2>
+
+<p>
+上で述べた通りに RINPn を起動すると、以下のような電卓画面が起動します: 
+</p>
+
+<div style="width: 100%; text-align: center;">
+	<img src="./img/gui_expression.png" style="width:100%; max-width:450px;">
+</div>
+
+<p>
+上図の通り、RINPn のウィンドウはシンプルで小型なため、
+計算を要する作業時に、起動して画面の端などに置いておくと便利です。
+そういった使い方を想定して、RINPn は標準で、他の全てのウィンドウよりも手前に、半透明で表示されるようになっています
+（両者とも設定で無効化できます）。
+</p>
+
+<p>
+なお、画面サイズや色などは、設定で好きなようにカスタマイズできます。
+それには<span class="highlight">設定ファイル「 Settings.txt 」をテキストエディタで開いて編集・上書き保存</span>してください。
+</p>
+
+<h2 id="how-to-use-gui-calculate">計算方法</h2>
+
+<p>
+計算を行うには、「 INPUT 」欄に計算式を入力し、そのままPCのキーボードの Enter キーを押してください。
+すると、計算された値が「 OUTPUT 」欄に表示されます。
+例えば：
+</p>
+
+<div class="box">
+	INPUT:
+	<br />
+	( 1 + 2 ) / 3 - 4 + 5
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	2
+</div>
+
+<p>
+この通り、かっこ「 <span class="highlight">( )</span> 」や四則演算の順序（かけ算と割り算は、足し算と引き算よりも先に計算されます）などを踏まえた、正しい計算結果が表示されます。
+各種の関数/変数を使った式も計算できます：
+</p>
+
+<div class="box">
+	INPUT:
+	<br />
+	sqrt ( sin( PI / 2 ) + 1 )
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	1.414213562
+</div>
+
+<p>
+RINPn で標準で使える主な関数/変数については、
+本文書の「 <a href="#built-in">主な組み込み関数/変数</a> 
+」のページでリストアップして解説しています。
+また、<a href="#how-to-use-library">ステップ-4</a> や <a href="#how-to-use-plugin">ステップ-5</a> の通り、関数/変数を自作する事もできます。
+</p>
+
+
+<div class="note">
+	<p style="margin-top: 0px; margin-bottom: 8px;">
+	- 演算精度と丸めについて -
+	</p>
+	<p style="margin-top: 8px; margin-bottom: 0px;">
+	RINPn の内部では、数値は2進数の倍精度浮動小数点数として扱われます。
+	この事により、表示される計算結果の精度は、多くの場合に有効数字で十数桁程度が目安で、それ以降の桁には各種の誤差が含まれます。
+	そのため標準では、RINPn は結果を10桁以内に丸めて表示するようになっています（丸め設定は「 Settings.txt 」内で変更できます）。
+	RINPn をご使用の際は、このような点にご留意ください。
+	用途や必要な精度によっては、RINPn の使用が適さない場合もあります。
+	</p>
+</div>
+
+
+
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="how-to-use-cui">ステップ 2 - CUIモードで使ってみる<br />(コマンドでの使用)</h1>
+
+<p>
+RINPn には、<a href="#how-to-use-gui">ステップ 1</a> で扱ったGUIモードの他にも、CUIモードというモードがあります。
+CUIモードでは、コマンドライン端末上で、電卓画面を起動せずにその場で計算を行う事ができます。
+</p>
+
+<h2 id="how-to-use-cui-calculate">CUIモードでの計算方法（パス登録なしの場合）</h2>
+
+<p>
+とりあえず何の追加作業も無しにCUIモードを使用するには、コマンドラインで以下のように、計算式を引数として「 RINPn.jar 」を実行してください：
+</p>
+
+<div class="console">
+	cd RINPnのフォルダの場所
+	<br />
+	<br />
+	java -jar RINPn.jar &nbsp; &quot;(1 + 2 ) / 3 - 4 + 5&quot;
+	<br />
+	(結果)
+	2
+	<br />
+	<br />
+	java -jar RINPn.jar &nbsp; &quot;sqrt ( sin( PI / 2 ) + 1 )&quot;
+	<br />
+	(結果)
+	1.414213562
+</div>
+
+<p>
+このように、GUIモードで行ったのと同じ計算を、電卓画面を起動せずに行う事ができました。
+</p>
+
+
+<h2 id="how-to-use-cui-with-path-setting">CUIモードでの計算方法（パス登録ありの場合）</h2>
+
+<p>
+ただ、毎回上のように RINPn のフォルダに cd しつつ長いコマンドを打つのは、少し面倒ですね。
+そこでOSの環境変数 PATH (または Path) に、RINPn の「 bin 」フォルダのパスを登録 (すぐ下で説明) すると、
+カレントディレクトリがどこであっても「 rinpn 」コマンドで手短に計算できるようになります：
+</p>
+
+<div class="console">
+	rinpn &quot;(1 + 2 ) / 3 - 4 + 5&quot;
+	<br />
+	(結果)
+	2
+	<br />
+	<br />
+	rinpn &quot;sqrt ( sin( PI / 2 ) + 1 )&quot;
+	<br />
+	(結果)
+	1.414213562
+</div>
+
+<p>
+パスの登録方法は、ご使用の環境に応じて異なりますので、下記の二通りのうち、適した方を行ってみてください。
+<span class="stronghighlight">
+なお、パスの登録作業は、誤って既存の登録内容を消してしまうと、
+PCがこれまで通りに使用できなくなるなどの危険がありますので、
+慎重に行ってください。
+パス登録が初めての方で、熟練者の方に作業のガイドやご助力などを頼める場合には、ご依頼される事をお勧めします。
+</span>
+</p>
+
+<h3>Microsoft&reg; Windows&reg; 10 でのパス登録方法</h3>
+
+<p>
+RINPn のフォルダを、PC内のどこか定位置に配置した上で、以下の手順でパスを登録します：
+</p>
+
+<div class="box">
+スタートボタンを押す &raquo; 歯車アイコン(設定)を選択 &raquo; 「環境変数を編集」と検索して移動 &raquo; 
+開かれた画面で「ユーザー環境変数」の一覧から「Path」(無ければ作成)を選び「編集」ボタンを押す &raquo; 
+開いた画面の「新規」ボタンを押し、
+RINPn の「 bin 」フォルダのパス<span class="smallsup">※</span>を入力してください。
+その後、開いている画面を「OK」で閉じれば完了です。
+<br />
+<span style="font-size: 86%;">※ Shiftキーを押しながら bin フォルダを右クリックすると、メニューからパスのコピーを行えます。</span>
+</div>
+
+<p>
+なお、RINPn のフォルダの配置場所を移動した際には、登録したパスも修正する必要があります。
+</p>
+
+
+<h3>Linux&reg; やその他の環境でのパス登録方法</h3>
+
+<p>
+まず、RINPn のフォルダを、PC内のどこか定位置に配置してください。ここでは例として、以下の場所に配置したものとします：
+</p>
+
+<div class="box">
+/usr/local/bin/rinpn/rinpn_?_?_?/<br />(?_?_?の箇所はバージョンの数字)
+</div>
+
+<p>
+次に、cd コマンドで上記ディレクトリ内の「 bin 」ディレクトリに移動して、
+その中にある「 rinpn 」というファイル（拡張子無し）に、以下のように実行権限を付加します：
+</p>
+
+<div class="console">
+chmod +x rinpn
+<br />
+(権限エラーが出る場合は「 sudo chmod +x rinpn 」とします)
+</div>
+
+<p>
+最後に、ユーザーのホームディレクトリにある、「 .bashrc(隠しファイル)」または「 .bash_profile 」もしくは「 .profile 」
+（どのファイルが有効かはOSやディストリビューションによって異なります）をテキストエディタで開き、最終行に下記の一行を追記します：
+</p>
+
+<div class="box">
+export PATH=$PATH:/usr/local/bin/rinpn/rinpn_?_?_?/bin/
+<br />
+(?_?_?の箇所はバージョン番号で置き換えてください)
+</div>
+
+<p>
+これで完了です。
+</p>
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="how-to-use-script">ステップ 3 - スクリプトを実行する</h2>
+
+<p>
+RINPn では、手続き的な自動計算やアルゴリズム的な計算、またはその他の複雑な処理を行いたい場合のために、
+「 <a href="https://www.vcssl.org/ja-jp/vnano/">Vnano</a> 」
+という言語で記述したスクリプト（簡易プログラム）を実行する事もできます。
+</p>
+
+<div style="width: 100%; text-align: center;">
+	<img src="./img/vnano.png" style="width:100%; max-width:380px;">
+</div>
+
+<h2 id="how-to-use-script-about-vnano">Vnano とは？</h2>
+
+<p>
+Vnano は、C言語系の文法を持つ、ソフトウェア内組み込み用のスクリプト言語＆エンジンです。
+具体的な書き方については、Vnano 公式サイト内の 
+「 <a href="https://www.vcssl.org/ja-jp/vnano/doc/tutorial/language">言語としてのVnano</a> 」
+のページをご参照ください。
+Vnano のスクリプトを作成するには、好きなエディタで拡張子「 .vnano 」で終わる名前のテキストファイルを作成し、その中にコードを書くだけでOKです。
+文字コードは標準では UTF-8 で読まれます。
+</p>
+
+<h2 id="how-to-use-script-example-code">サンプルスクリプト</h2>
+
+<p>
+記述例として、RINPn のフォルダ直下に以下のスクリプトファイル「 Example.vnano 」が同梱されています。
+このスクリプトは、cos(x) の 0 から 1 までの数値積分値を計算する内容になっています：
+</p>
+
+<div class="program">
+	(Example.vnano をテキストエディタで開いた内容)
+	<br />
+	<br />
+	// 積分パラメータ
+	<br />
+	double A = 0.0;
+	<br />
+	double B = 1.0;
+	<br />
+	int N = 100000;
+	<br />
+	<br />
+	// 被積分関数
+	<br />
+	double f(double x) {
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;return cos(x);
+		<br />
+	}
+	<br />
+	<br />
+	// 積分を実行
+	<br />
+	double delta = (B - A) / N;
+	<br />
+	double value = 0.0;
+	<br />
+	for(int i=0; i&lt;N; ++i) {
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;double x = A + i * delta;
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;value += ( f(x) + f(x+delta) + 4.0 * f(x+delta/2.0) ) * delta / 6.0;
+		<br />
+	}
+	<br />
+	<br />
+	// 結果を出力
+	<br />
+	output(value);
+</div>
+
+<p>
+上記コード内容の詳しい解説については、こちらをご参照ください：
+<a href="https://www.vcssl.org/ja-jp/code/archive/0001/7800-vnano-integral-output/">https://www.vcssl.org/ja-jp/code/archive/0001/7800-vnano-integral-output/</a>
+</p>
+
+
+
+<h2 id="how-to-use-script-execute-gui">GUIモードでのスクリプト実行方法</h2>
+
+<p>
+GUIモードでスクリプトを実行するには、スクリプトファイルの名前（またはパス）を、
+電卓画面の「 INPUT 」欄に下図のように入力し、PCのキーボードの Enter キーを押します。
+</p>
+
+<p>
+例として、上のサンプルスクリプトのファイル名「 Example.vnano 」を入力して Enter キーを押すと：
+</p>
+
+<div style="width: 100%; text-align: center;">
+	<img src="./img/gui_script.png" style="width:100%; max-width:450px;">
+</div>
+
+<p>
+上図のように「 OUTPUT 」欄にスクリプトの出力値が表示されます。
+この出力値「 0.8414709848 」は、cos(x) の 0 から 1 までの積分の理論値である sin(1) とよく一致しており、
+サンプルスクリプトの内容が正しく解釈・実行された事がわかります。
+</p>
+
+<p>
+なお、GUIモードでは、RINPn のフォルダ直下とは別の場所にあるスクリプトを実行したい場合、
+通常はそのスクリプトファイルの絶対パス（
+例えば &quot;C:\...\Example.vnano&quot; や &quot;/home/.../Example.vnano&quot; など
+）を入力する必要があります。
+Microsoft&reg; Windows&reg; をご使用の場合は、
+Shiftキーを押しながらスクリプトファイルを右クリックすると、メニューからパスをコピーできるので、
+その後 RINPn の INPUT 欄に貼り付けると便利です。
+</p>
+
+
+<h2 id="how-to-use-script-execute-cui">CUIモードでのスクリプト実行方法</h2>
+
+<p>
+CUIモードでも、計算式の代わりにスクリプトファイルを指定する事で、そのスクリプトを実行できます。
+</p>
+
+<div class="note">
+この使い方では、RINPn の「 bin 」フォルダのパスをOSに登録せずに使う事は現実的に考え辛いため（
+<a href="#how-to-use-cui-with-path-setting">パス登録の利点と方法についてはこちら</a>
+）、以下ではあらかじめパスは登録されていて、rinpn コマンドが使用可能である事を前提に説明します。
+</div>
+
+<p>
+コマンドライン入力端末の<span class="highlight">カレントディレクトリ内にあるスクリプトファイル</span>は、
+以下のように、rinpn コマンドの引数に<span class="highlight">ファイル名のみを指定して実行可能</span>です：
+</p>
+
+<div class="console">
+	cd 実行したいスクリプトファイル(Example.vnano)のある場所
+	<br />
+	<br />
+	rinpn Example.vnano
+	<br />
+	(結果)
+	0.8414709848
+</div>
+
+<p>
+また、<span class="highlight">カレントディレクトリを基準とする相対パス</span> でスクリプトファイルを指定する事もできます。
+これは、カレントディレクトリ内には無いものの、
+近い場所（すぐ上や下の階層など）にあるスクリプトファイルを実行したい場合に便利です：
+</p>
+
+<div class="console">
+	rinpn ../Example.vnano &nbsp;&nbsp;&nbsp; (上の階層にあるスクリプトを実行)
+	<br />
+	rinpn ./example/Example.vnano &nbsp;&nbsp;&nbsp; (exampleフォルダ内のスクリプトを実行)
+</div>
+
+<p>
+加えて、以下のように<span class="highlight">絶対パス</span>でスクリプトファイルを指定する事も可能です：
+</p>
+
+<div class="console">
+	rinpn &quot;C:\...\Example.vnano&quot; &nbsp;&nbsp;&nbsp; (Microsoft&reg; Windows&reg; をご使用の場合など)
+	<br />
+	rinpn &quot;/home/.../Example.vnano&quot; &nbsp;&nbsp;&nbsp; (Linux&reg; をご使用の場合など)
+</div>
+
+<p>
+以上の通り、CUIモードでは3通りの方法でスクリプトファイルの指定が可能です。
+場面に応じて、便利に思える指定方法を使い分けてください。
+</p>
+
+
+
+<h2 id="how-to-use-script-optimization-level">最適化レベルについて:<br />スクリプトの実行が重い時は…</h2>
+
+<p>
+ところで、スクリプトの実行処理が重い場合は、
+「 Settings.txt 」内で「 acceleratorOptimizationLevel 」として設定されている最適化レベルの値を上げると、処理が速くなります。
+</p>
+
+<p>
+最適化レベルを最低の 0 に設定しても、恐らく一般的な電卓の用途としては十分な性能が得られるため、標準では安定性を優先し、最適化レベルは 0 に設定されています。
+ただ、RINPN で数値計算プログラムを頻繁に実行される方には、標準の最適化レベルではややパフォーマンスが不足気味かもしれません。
+</p>
+
+
+<h2 id="how-to-use-script-archive">コードアーカイブからスクリプトを入手しよう！</h2>
+
+<p>
+スクリプトは、もちろん自分で書くこともできますが、VCSSL/Vnano公式サイト内の、下記コードアーカイブでも配信しています：
+</p>
+
+<dl>
+	<dt>コードアーカイブ &raquo; Vnano版のコード</dt>
+		<dd><a href="https://www.vcssl.org/ja-jp/code/#vnano">https://www.vcssl.org/ja-jp/code/#vnano</a></dd>
+</dl>
+
+<p>
+コード内容の解説記事も掲載していますので、別のスクリプトを書く際の参考や、改造/流用のベースとしても使えます。ぜひご活用ください！
+</p>
+
+<div class="box">
+<div style="margin-top: 5px; margin-bottom: 5px; font-weight: bold;">
+- 配信プログラム例 -
+</div>
+
+<TABLE border="0" cellpadding="5" >
+	<TBODY>
+		<TR>
+			<TD colspan="2" style="vertical-align:top">
+				<SPAN style="word-break:break-all; font-weight:bold"><A href="https://www.vcssl.org/ja-jp/code/archive/0001/8000-vnano-lorenz-attractor/">ローレンツ方程式を数値的に解くスクリプト</A></SPAN><BR>
+			</TD>
+		</TR>
+		<TR>
+			<TD style="vertical-align:top">
+				<A href="https://www.vcssl.org/ja-jp/code/archive/0001/8000-vnano-lorenz-attractor/"><IMG src="./img/code_icon_lorenz_attractor.jpg"></A><BR>
+			</TD>
+			<TD style="vertical-align:top; line-height:135%;">
+				<SPAN style="word-break:break-all;">ローレンツ方程式を4次ルンゲ=クッタ法によって解き、グラフ描画用のデータを出力するスクリプトです。</SPAN><BR>
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan="2" style="vertical-align:top">
+				<SPAN style="word-break:break-all; font-weight:bold"><A href="https://www.vcssl.org/ja-jp/code/archive/0001/7900-vnano-integral-for-plot-graph/">積分値のグラフ描画用データを出力するスクリプト</A></SPAN><BR>
+			</TD>
+		</TR>
+		<TR>
+			<TD style="vertical-align:top">
+				<A href="https://www.vcssl.org/ja-jp/code/archive/0001/7900-vnano-integral-for-plot-graph/"><IMG src="./img/code_icon_integral_for_plot_graph.jpg"></A><BR>
+			</TD>
+			<TD style="vertical-align:top; line-height:135%;">
+				<SPAN style="word-break:break-all;">数値的に積分を行い、結果の関数をグラフに描くためのデータを出力するスクリプトです。</SPAN><BR>
+			</TD>
+		</TR>
+		<TR>
+			<TD colspan="2" style="vertical-align:top">
+				<SPAN style="word-break:break-all; font-weight:bold"><A href="https://www.vcssl.org/ja-jp/code/archive/0001/7800-vnano-integral-output/">積分値を求めるスクリプト (数値積分)</A></SPAN><BR>
+			</TD>
+		</TR>
+		<TR>
+			<TD style="vertical-align:top">
+				<A href="https://www.vcssl.org/ja-jp/code/archive/0001/7800-vnano-integral-output/"><IMG src="./img/code_icon_integral_output.jpg"></A><BR>
+			</TD>
+			<TD style="vertical-align:top; line-height:135%;">
+				<SPAN style="word-break:break-all;">矩形法/台形法/シンプソン法を用いて、積分の値を数値的に求めるスクリプトです。</SPAN><BR>
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+
+</div>
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="how-to-use-library">ステップ 4 - スクリプトで関数/変数を追加する<br />(ライブラリ スクリプト の使用)</h1>
+
+<p>
+スクリプトは、単体で実行するためだけでなく、
+計算式や別スクリプト内で使用するための関数や変数を、定義して提供するためにも役立ちます。
+そのような目的のスクリプトの事を、
+RINPn および Vnano では「 <span class="highlight">ライブラリ スクリプト</span> 」と呼びます。
+</p>
+
+<h2 id="how-to-use-library-example">ライブラリ スクリプトの使用方法</h2>
+
+<p>
+例えば、RINPn の「 lib 」フォルダ内にある「 ExampleLibrary.vnano 」は、
+ライブラリスクリプトのサンプルで、標準で読み込まれるようになっています。
+その記述内容は以下の通りです：
+</p>
+
+<div class="program">
+	(lib フォルダ内の ExampleLibrary.vnano をテキストエディタで開いた内容)
+	<br />
+	<br />
+	float libvar = 2.0;
+	<br />
+	<br />
+	float libfun(float x) {
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;float result = libvar * x + 1;
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;return result;
+		<br />
+	}
+	<br />
+</div>
+
+<div class="note" style="margin-top: 15px;">
+なお、Vnano における float 型の精度は、double 型と同様の 64 bit なため、どちらを使っても同じです。
+一応は float が標準の型名で、double は他言語との間の移植性や可読性に配慮して使える別名、という扱いとなっています。
+</div>
+
+
+<p>
+上記の「 ExampleLibrary.vnano 」内で定義されている変数「 libvar 」や関数「 libfun(x) 」は、
+例えば <a href="#how-to-use-gui">ステップ 1</a> で扱った、電卓に入力する計算式の中で、
+以下の例のように使用できます：
+</p>
+
+<div class="console">
+	INPUT:
+	<br />
+	1 + libvar
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	3
+	<br />
+	<br />
+	INPUT:
+	<br />
+	libfun(1.23)
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	3.46
+</div>
+
+<p>
+同様に、<a href="#how-to-use-cui">ステップ 2</a> でコマンドライン引数に指定している計算式の中や、
+<a href="#how-to-use-script">ステップ 3</a> でのスクリプト内でも使用できます。
+<p>
+
+
+<h2 id="how-to-use-library-new">新しいライブラリスクリプトの追加方法（読み込み登録）</h2>
+
+<p>
+必要に応じて、別の新しいライブラリ スクリプトのファイルを作成し、その中で変数や関数を定義する事もできます。
+</p>
+
+<p>
+新しいライブラリ スクリプト ファイルを作成した際は、
+そのファイルを RINPn の「 lib 」フォルダ内（またはその子孫階層のフォルダ内）に置き、
+そのファイルパスを、「 lib 」フォルダ直下にあるテキストファイル「 VnanoLibraryList.txt 」内に記載（追記）してください。
+そうすると、そのライブラリ スクリプトが読み込まれるようになります。
+</p>
+
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="how-to-use-plugin">ステップ 5 - Java&reg;言語で関数/変数を実装する<br />(プラグイン開発)</h1>
+
+<p>
+ライブラリ スクリプトによる方法以外にも、Java&reg;言語を用いて、新しい組み込み関数/変数を実装する事もできます。
+RINPn および Vnano では、組み込み関数/変数を提供する事を目的とした、
+Java&reg; 言語で記述されたプログラムの事を「 <span class="highlight">プラグイン</span> 」と呼びます。
+</p>
+
+<p>
+プラグインによる関数/変数定義は、
+<a href="#how-to-use-library">ステップ 4</a> のようにライブラリ スクリプトで関数や変数を定義する方法と比べて、
+Java&reg; 言語の高い機能性を利用できる事が大きなメリットになるかもしれません。
+</p>
+
+<p>
+<span class="highlight">半面、実装したコードをコンパイルする際には、 別途 Java&reg; 言語の開発環境 (JDK) が必要です。</span>
+ここでは、ご使用のPCに既に何らかのJDKが導入されていて、javac コマンドが使用可能になっている事を前提として解説します。
+JDK の導入方法については、例えば「 OpenJDK &nbsp; インストール &nbsp; (ここにOSの名前) 」などでWeb検索してみてください。 
+</p>
+
+
+<h2 id="how-to-use-plugin-example">プラグインの使用方法</h2>
+
+<p>
+RINPn では、プラグインは「 plugin 」フォルダ内に置きます。
+このフォルダ内には、標準で、以下のようなプラグインのサンプル「 ExamplePlugin.java 」が同梱されています：
+</p>
+
+<div class="program">
+	(plugin フォルダ内の ExamplePlugin.java をテキストエディタで開いた内容)
+	<br />
+	<br />
+	public class ExamplePlugin {
+		<br />
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;public double pivar = 1.0;
+		<br />
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;public double pifun(double arg) {
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return arg * 2.0;
+			<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;}
+		<br />
+	}
+</div>
+
+<p>
+このプラグインは標準でコンパイルされており、読み込まれるよう設定されています（それぞれの方法はすぐ後で説明します）。
+</p>
+
+<p>
+上のプラグインで定義しているフィールド「 pivar 」やメソッド「 pifun(arg) 」は、
+例えば <a href="#how-to-use-gui">ステップ 1</a> で扱った、電卓に入力する計算式の中で、
+以下のように関数/変数として使用できます：
+</p>
+
+<div class="console">
+	INPUT:
+	<br />
+	1 + pivar
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	2
+	<br />
+	<br />
+	INPUT:
+	<br />
+	pifun(2)
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	4
+</div>
+
+<p>
+同様に、<a href="#how-to-use-cui">ステップ 2</a> でコマンドライン引数に指定している計算式の中や、
+<a href="#how-to-use-script">ステップ 3</a> でのスクリプト内でも使用できます。
+<p>
+
+
+<h2 id="how-to-use-plugin-compile">プラグインのコンパイル方法</h2>
+
+<p>
+プラグインのコード内容を編集した場合には、コンパイルする必要があります。
+以下のように、普通の Java&reg; 言語のプログラムと同様にコンパイルできます：
+</p>
+
+<div class="console">
+cd RINPnのpluginフォルダの場所(パス)
+<br />
+javac ExamplePlugin.vnano
+</div>
+
+<p>
+なお、「 plugin 」フォルダ内のさらに org/vcssl/connect フォルダ内には、
+Vnano のプラグイン開発に有用なインターフェース類 ( XFCI1 や XNCI1 など ) が、
+標準で配置されています。
+そのため、必要に応じて、それらのインターフェース類をプラグインから import して使用できます
+（詳細は Vnanoのドキュメント内の「 <a href="https://www.vcssl.org/ja-jp/vnano/doc/tutorial/plugin">プラグインの開発</a> 」をご参照ください）。
+その場合でも、特に何かを用意したり、コンパイラにオプション等を指定したりする必要はありません。
+</p>
+
+
+<h2 id="how-to-use-plugin-new">新しいプラグインの追加方法（読み込み登録）</h2>
+
+<p>
+新しいプラグインを作成した際は、まず、そのファイルを RINPn の「 plugin 」フォルダ内に置いてコンパイルしてください。
+子孫階層のフォルダに置きたい場合は、それに整合する階層のパッケージをプラグインのコード先頭で宣言して、
+普通のパッケージ所属クラスと同様の方法でコンパイルしてください。
+<p>
+
+</p>
+続いて、そのプラグインのクラスファイルのパスを、「 plugin 」フォルダ直下にあるテキストファイル「 VnanoPluginList.txt 」内に記載（追記）してください。
+そうすると、そのプラグインが読み込まれるようになります。
+</p>
+
+
+<h2 id="how-to-use-plugin-standard">Vnano 標準プラグイン</h2>
+
+<p>
+「 plugin 」フォルダ内のさらに org/vcssl/nano/plugin フォルダ内には、
+基本的な機能群（数学関数やユーティリティ関数など）を提供する「 Vnano 標準プラグイン 」が配置されており、
+標準で読み込まれるよう設定されています。
+</p>
+
+<p>
+標準プラグインによって提供される機能の一覧や詳細仕様については、
+<a href="https://www.vcssl.org/ja-jp/vnano/plugin/">Vnano 公式サイト内の、標準プラグインの仕様書ページ</a>
+をご参照ください。
+なお、RINPn において特によく使いそうな関数や変数については、
+本文書の「 <a href="#built-in">主な組み込み関数/変数</a> 
+」のページでもリストアップし、簡略化した機能説明文を掲載しています。
+</p>
+
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="how-to-embed">ステップ 6 - 別のソフトウェア内に組み込んで使う</h1>
+
+<p>
+RINPn が使用している計算＆スクリプト処理エンジンである「
+<a href="https://www.vcssl.org/ja-jp/vnano/">Vnanoエンジン</a>
+」は、Java&reg; 言語で記述した別のソフトウェア内に組み込んで使う事ができます。
+開発元は RINPn と同じで、組み込み方や使い方も意外と簡単なので、ここで実際に試してみましょう！
+</p>
+
+<h2 id="how-to-embed-example">サンプルコード</h2>
+
+<p>
+Vnanoエンジンを用いて、RINPn と同じようなエンジン設定で式「 1.2 + 3.4 」の値を計算する単純なサンプルコードが、
+RINPn のフォルダ直下に「 EmbedUseExample.java 」として同梱されています：
+</p>
+
+
+<div class="program" style="font-size: 80%;">
+	import javax.script.ScriptEngine;
+	<br />
+	import javax.script.ScriptException;
+	<br />
+	import java.util.Map;
+	<br />
+	import java.util.HashMap;
+	<br />
+	<br />
+	public class EmbedUseExample {
+		<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;public static void main(String[] args) {
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;////////// Vnano エンジンの準備 ここから //////////
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// RINPn で計算に用いているスクリプトエンジン（Vnanoエンジン）を取得
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ScriptEngine engine = new ScriptEngineManager.getEngineByName(&quot;vnano&quot;);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (engine == null) {
+				<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.err.println(&quot;スクリプトエンジンが見つかりません&quot;);
+				<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+				<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Vnano エンジンのオプション設定（詳細は Settings.txt 内の説明参照）
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map<String, Object> optionMap = new HashMap<String, Object>();
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;EVAL_INT_LITERAL_AS_FLOAT&quot;, true);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;EVAL_ONLY_FLOAT&quot;,      true);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;EVAL_ONLY_EXPRESSION&quot;, true);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;UI_MODE&quot;, &quot;CUI&quot;); &nbsp;&nbsp;&nbsp;&nbsp; // CUIベースソフト用
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// optionMap.put(&quot;UI_MODE&quot;, &quot;GUI&quot;);  // GUIベースのソフト用
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;ACCELERATOR_ENABLED&quot;, true);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;ACCELERATOR_OPTIMIZATION_LEVEL&quot;, 0);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_OPTION_MAP&quot;, optionMap); // エンジンに登録
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// パーミッション機能に対応したプラグインに通知するパーミッション設定
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map<String, String> permissionMap = new HashMap<String, String>();
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;permissionMap.put(&quot;DEFAULT&quot;, &quot;ASK&quot;); &nbsp; // ユーザーに尋ねる挙動をデフォルト化
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// permissionMap.put(&quot;DEFAULT&quot;, &quot;DENY&quot;); // デフォルトを拒否挙動にしたい場合
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// (ここで個別に設定したい許可項目を追加設定 / 例は以下)
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// permissionMap.put(&quot;FILE_READ&quot;, &quot;ALLOW&quot;);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_PERMISSION_MAP&quot;, permissionMap); // エンジンに登録
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ライブラリ/プラグインの読み込み設定
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_LIBRARY_LIST_FILE&quot;, &quot;lib/VnanoLibraryList.txt&quot;);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_PLUGIN_LIST_FILE&quot;, &quot;plugin/VnanoPluginList.txt&quot;);
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;////////// Vnano エンジンの準備 ここまで //////////
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Vnano エンジンで「 1.2 + 3.4 」の値を計算して表示
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try{
+				<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String input = &quot;1.2 + 3.4&quot;;
+				<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double x = (double) engine.eval(input + &quot;;&quot;);
+				<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(&quot;Vnano エンジンの出力値: &quot; + x);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} catch (ScriptException e) {
+			<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();
+				<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ライブラリ/プラグインの解放/接続解除（ソフトウェアの終了前などに行います）
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_COMMAND&quot;, &quot;REMOVE_LIBRARY&quot;);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_COMMAND&quot;, &quot;REMOVE_PLUGIN&quot;);
+			<br />
+		&nbsp;&nbsp;&nbsp;&nbsp;}
+		<br />
+	}
+</div>
+
+
+<h2 id="how-to-embed-compile">コンパイル・実行方法</h2>
+
+<p>
+上記のサンプルコードのコンパイル方法は、下記の通りです：
+</p>
+
+<div class="console">
+	javac -encoding UTF-8 EmbedUseExample.java
+</div>
+
+<p>
+コンパイルに成功すると、「 EmbedUseExample.class 」が生成されます。
+これを、Vnano エンジンのJarファイル「 Vnano.jar (RINPnのフォルダ内に既に存在) 」をクラスパスに指定しつつ実行します：
+</o>
+
+<div>
+<div class="console">
+	java -cp ".;Vnano.jar" EmbedUseExample &nbsp;&nbsp;&nbsp; (Microsoft&reg; Windows&reg; をご使用の場合)
+	<br />
+	java -cp ".:Vnano.jar" EmbedUseExample &nbsp;&nbsp;&nbsp; (Linux&reg; やその他の環境をご使用の場合)
+	<br />
+	<br />
+	(結果) スクリプトエンジンの出力値: 4.6
+</div>
+<span class="orange">※ 最初の2行は、-cp 直後の &quot;～&quot; 内の区切り文字が、「 ; 」か「 : 」かという点が異なります。</span>
+</div>
+
+<p>
+この通り、計算式「 1.2 + 3.4 」の値「 4.6 」を Vnano エンジンで求める事ができました。
+式の中でライブラリ/プラグインの関数を呼んだり、式の代わりに Vnano で記述したスクリプトのコードを渡す事もできます。
+</p>
+
+<h2 id="how-to-embed-details">Vnanoエンジンのライセンス、その他詳しい情報など</h2>
+
+<p>
+RINPn 同様に、VnanoエンジンもMITライセンスのオープンソースソフトウェアで、商用・非商用問わず無償で利用できます。
+</p>
+
+<p>
+その他、より詳しい情報や、ガイド・仕様書などのドキュメント類などについては、
+下記 Vnano エンジンの公式サイトで整備されていますので、ご参照ください。
+</p>
+
+
+
+<dl style="margin-bottom: 40px;">
+	<dt>Vnano 公式サイト（日本語版）</dt>
+		<dd><a href="https://www.vcssl.org/ja-jp/vnano/">https://www.vcssl.org/ja-jp/vnano/</a></dd>
+	<dt>Vnano 公式サイト（英語版）</dt>
+		<dd><a href="https://www.vcssl.org/en-us/vnano/">https://www.vcssl.org/en-us/vnano/</a></dd>
+</dl>
+
+
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="built-in">付録 - 主な組み込み関数/変数</h1>
+
+<p>
+ここでは、RINPn で標準で利用できる関数および変数の中から、特によく使うものをリストアップして紹介します。
+</p>
+
+<div class="note">
+以下に挙げる関数/変数の大半は、「 <a href="#how-to-use-plugin">プラグイン</a> 」の項目でも触れた、
+<span class="highlight">Vnano 標準プラグイン</span>が提供しています。
+従って、全ての関数/変数のリスト、およびより詳細な仕様については、<a href="https://www.vcssl.org/ja-jp/vnano/plugin/">Vnano 標準プラグインの仕様書</a>をご参照ください。
+ここでは、説明内容を簡略化して掲載しています。
+</div>
+
+
+
+
+
+<h2 id="built-in-functions">組み込み関数</h2>
+
+<dl>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#rad">rad</a>( degree )</dt>
+	<dd>
+		<p>
+		度からラジアンへの変換関数です。
+		</p>
+		<p>
+		例： rad( 180.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#deg">deg</a>( radian )</dt>
+	<dd>
+		<p>
+		ラジアンから度への変換関数です。
+		</p>
+		<p>
+		例： deg( 2.0 * PI )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#sin">sin</a>( x )</dt>
+	<dd>
+		<p>
+		正弦（サイン）関数です。引数 x の単位はラジアンです。
+		</p>
+		<p>
+		例： sin( PI / 2.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#cos">cos</a>( x )</dt>
+	<dd>
+		<p>
+		余弦（コサイン）関数です。引数 x の単位はラジアンです。
+		</p>
+		<p>
+		例： cos( 2.0 * PI )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#tan">tan</a>( x )</dt>
+	<dd>
+		<p>
+		正接（タンジェント）関数です。引数 x の単位はラジアンです。
+		</p>
+		<p>
+		例： tan( PI / 4.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#asin">asin</a>( x )</dt>
+	<dd>
+		<p>
+		正弦関数の逆関数（アークサイン）です。結果の単位はラジアンです。
+		</p>
+		<p>
+		例： asin( 1.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#acos">acos</a>( x )</dt>
+	<dd>
+		<p>
+		余弦関数の逆関数（アークコサイン）です。結果の単位はラジアンです。
+		</p>
+		<p>
+		例： acos( 1.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#atan">atan</a>( x )</dt>
+	<dd>
+		<p>
+		正接関数の逆関数（アークタンジェント）です。結果の単位はラジアンです。
+		</p>
+		<p>
+		例： atan( 1.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#sqrt">sqrt</a>( x )</dt>
+	<dd>
+		<p>
+		平方根を求める関数です。
+		</p>
+		<p>
+		例： sqrt( 4.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#ln">ln</a>( x )</dt>
+	<dd>
+		<p>
+		自然数 e を底とする対数関数です。
+		</p>
+		<p>
+		例： ln( 10.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#log10">log10</a>( x )</dt>
+	<dd>
+		<p>
+		10 を底とする対数関数です。
+		</p>
+		<p>
+		例： log10( 1000.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#pow">pow</a>( x, exponent )</dt>
+	<dd>
+		<p>
+		x の exponent 乗を求める関数です。
+		</p>
+		<p>
+		例： pow( 2.0, 3.0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#exp">exp</a>( exponent )</dt>
+	<dd>
+		<p>
+		自然数 e の exponent 乗を求める関数です。
+		</p>
+		<p>
+		例： exp( 1.2 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#abs">abs</a>( x )</dt>
+	<dd>
+		<p>
+		絶対値関数です。
+		</p>
+		<p>
+		例： abs( -1.23 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#sum">sum</a>( ... )</dt>
+	<dd>
+		<p>
+		和を求める関数です。
+		</p>
+		<p>
+		例： sum( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#rad">mean</a>( ... )</dt>
+	<dd>
+		<p>
+		平均値（算術平均）を求める関数です。
+		</p>
+		<p>
+		例： mean( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#van">van</a>( ... )</dt>
+	<dd>
+		<p>
+		分散（ 分母： n ）を求める関数です。
+		</p>
+		<p>
+		例： van( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#van1">van1</a>( ... )</dt>
+	<dd>
+		<p>
+		分散（ 分母： n-1 ）を求める関数です。
+		</p>
+		<p>
+		例： van1( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#sdn">sdn</a>( ... )</dt>
+	<dd>
+		<p>
+		標準偏差（ 分母： n ）を求める関数です。
+		</p>
+		<p>
+		例： sdn( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#sdn1">sdn1</a>( ... )</dt>
+	<dd>
+		<p>
+		標準偏差（ 分母： n-1 ）を求める関数です。
+		</p>
+		<p>
+		例： sdn1( 1.23 , &nbsp; 4.56 , &nbsp; 7.89 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/system/#length">length</a>( array, dim )</dt>
+	<dd>
+		<p>
+		配列 array における、dim 番目の次元の要素数を返す関数です。
+		</p>
+		<p>
+		例： length( array, 0 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/system/#output">output</a>( value )</dt>
+	<dd>
+		<p>
+		スクリプトの計算結果の値を表示するための関数です。
+		GUIモードでは、値は「 OUTPUT」 テキストフィールドに表示されます（複数回呼ぶと、表示内容は単純に上書きされます）。
+		CUIモードでは、値は標準出力に 1 行で出力されます。
+		</p>
+		<p>
+		例： output( 1.23 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/system/#print">print</a>( value )</dt>
+	<dd>
+		<p>
+		スクリプト内で、長い内容や複数行の内容を表示するために、汎用的に用いる関数です。
+		任意個数・任意次元・任意型の値を表示可能で、値は 1 個ずつ（ 1 要素ずつ）タブ空白区切りで表示されます。
+		GUIモードでは、値は独立なウィンドウ上に、自動改行なしで追記されていきます。
+		CUIモードでは、値は標準出力に自動改行なしで追記されていきます。
+		</p>
+		<p>
+		例： print( 1.2 , 3.4 , 5.6 )
+		</p>
+	</dd>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/system/#println">println</a>( value )</dt>
+	<dd>
+		<p>
+		上記の print 関数とほぼ同様ですが、この関数は内容を自動改行付きで表示/出力します。
+		</p>
+		<p>
+		例： println( 1.2 , 3.4 , 5.6 )
+		</p>
+	</dd>
+</dl>
+
+
+<h2 id="built-in-variables">組み込み変数</h2>
+
+<dl>
+	<dt><a href="https://www.vcssl.org/ja-jp/vnano/plugin/math/#PI">PI</a></dt>
+	<dd>
+		<p>
+		円周率 π の値を保持する変数（定数）です。
+		</p>
+		<p>
+		値： 3.141592653589793
+		</p>
+	</dd>
+</dl>
+
+
+
+
+
+<hr style="page-break-before: always" />
+
+<h1 id="about-us">開発元について</h1>
+
+<p>
+RINPn および Vnano は、日本の開発スタジオである <a href="https://www.rinearn.com/">RINEARN</a> が開発しています。
+RINEARNでは、データ解析や可視化・計算向けのものをはじめ、各種のソフトウェアを開発しています。
+このソフトウェアに関するご質問やご意見・ご感想、その他お気づきの点などがございましたら、どうぞご気軽にお問い合せください。
+</p>
+
+<dl>
+	<dt>RINEARN 公式サイト</dt>
+		<dd><a href="https://www.rinearn.com/">https://www.rinearn.com/</a></dd>
+	<dt>お問い合せページ</dt>
+		<dd><a href="https://www.rinearn.com/ja-jp/contact/">https://www.rinearn.com/ja-jp/contact/</a></dd>
+</dl>
+
+
+<hr style="margin-top: 50px;" />
+
+<h1 id="credit">本文書内の商標などについて</h1>
+
+<ul>
+	<li>OracleとJavaは、Oracle Corporation 及びその子会社、関連会社の米国及びその他の国における登録商標です。文中の社名、商品名等は各社の商標または登録商標である場合があります。</li>
+	<li>Windows は、米国 Microsoft Corporation の米国およびその他の国における登録商標です。</li>
+	<li>Linux は、Linus Torvalds 氏の米国およびその他の国における商標または登録商標です。 </li>
+	<li>その他、文中に使用されている商標は、その商標を保持する各社の各国における商標または登録商標です。</li>
+</ul>
+
+
+<hr style="margin-top: 100px;" />
+<p style="text-align: right;">
+RINPn ユーザーガイド&nbsp;&nbsp; (最終更新: 2021/03/01)
+<br />
+文章・イラスト: &nbsp;&nbsp; 松井文宏
+</p>
+
+
+
+</body>
+</html>
+

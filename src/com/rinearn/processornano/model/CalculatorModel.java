@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2021 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
@@ -137,11 +137,18 @@ public final class CalculatorModel {
 
 		// プラグインからのパーミッション要求の扱いを設定するため、パーミッションの項目名と値を格納するマップを用意
 		Map<String, String> permissionMap = new HashMap<String, String>();
-		permissionMap.put("DEFAULT", "ASK");           // 全パーミッション項目のデフォルト挙動を、ユーザーに尋ねて決める挙動に設定（ASK）
-		//permissionMap.put("DEFAULT", "DENY");        // デフォルト挙動を、何も訪ねずに拒否する挙動（DENY）にしたい場合はこちら
-		permissionMap.put("FILE_READ", "ALLOW");       // ファイルの読み込みは、電卓ソフト的には安全なので許可（ALLOW）
-		permissionMap.put("DIRECTORY_LIST", "ALLOW");  // フォルダ内のファイル一覧取得も、電卓ソフト的には安全なので許可（ALLOW）
-		permissionMap.put("PROGRAM_EXIT", "ALLOW");    // exit 関数によるスクリプトの終了も、電卓ソフト的には安全なので許可（ALLOW）
+
+		// 全パーミッション項目のデフォルト挙動を、ユーザーに尋ねて決める挙動に設定（ASK）
+		permissionMap.put("DEFAULT", "ASK");
+		//permissionMap.put("DEFAULT", "DENY"); // デフォルト挙動を、何も訪ねずに拒否する挙動（DENY）にしたい場合はこちら
+
+		// 以下、電卓ソフト的には安全な操作を許可（ALLOW）に設定する
+		permissionMap.put("FILE_READ", "ALLOW");         // ファイルの読み込み
+		permissionMap.put("FILE_WRITE", "ALLOW");        // 新規ファイルへの書き込み（上書きは除く）
+		permissionMap.put("FILE_CREATE", "ALLOW");       // 新規ファイルの作成（上書きは除く）
+		permissionMap.put("DIRECTORY_LIST", "ALLOW");    // フォルダ内のファイル一覧取得
+		permissionMap.put("DIRECTORY_CREATE", "ALLOW");  // 新規フォルダの作成
+		permissionMap.put("PROGRAM_EXIT", "ALLOW");      // exit 関数によるスクリプトの終了
 		////////// 他に、個別に別挙動に設定したいパーミッション項目があれば、項目名をキーとしてここで続けて put する
 		////////// (とりあえず現状では設定ファイルから読み込んだりはしない方針)
 
@@ -290,6 +297,7 @@ public final class CalculatorModel {
 		// スクリプトエンジン関連の設定値を Map（オプションマップ）に格納し、エンジンに渡して設定
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("ACCELERATOR_ENABLED", setting.acceleratorEnabled);
+		optionMap.put("ACCELERATOR_OPTIMIZATION_LEVEL", setting.acceleratorOptimizationLevel);
 		optionMap.put("EVAL_INT_LITERAL_AS_FLOAT", setting.evalIntLiteralAsFloat);
 		optionMap.put("EVAL_ONLY_FLOAT", setting.evalOnlyFloat);
 		optionMap.put("EVAL_ONLY_EXPRESSION", setting.evalOnlyExpression);

@@ -1,16 +1,35 @@
 coding UTF-8;
 
-/*
- * This script file is to specify values of various setting parameters of RINEARN Processor nano.
- * This code is written in the C-like simple scripting language "Vnano (VCSSL nano)".
- * For the syntax, see: https://www.vcssl.org/en-us/vnano/doc/tutorial/language
- * 
- * このスクリプトファイルでは、リニアンプロセッサー nano の各種設定パラメータの値を指定できます。
- * このコードは、C言語系の文法の簡易スクリプト言語「Vnano (VCSSL nano)」で書かれています。
- * 文法などについては： https://www.vcssl.org/en-us/vnano/doc/tutorial/language
- * 
- * License: CC0
- */
+// License: CC0
+
+// **************************************************************************************************************
+// * This file is to specify values of various setting parameters of the RINPn.
+// * This code in this file is written in the C-like simple scripting language "Vnano".
+// * ( If you want, you can change the extension of this file to ".vnano" from ".txt". )
+// * Please note following points when you modify the content in this file:
+// * 
+// *    * Right side of "//" will be ignored (used for or disabling a setting line, or for writing a comment).
+// *    * Content of each setting line (excluding a comment part) must be end with ";".
+// * 
+// * For more details about the syntax of the Vnano, see the following page:
+// * 
+// *    https://www.vcssl.org/en-us/vnano/doc/tutorial/language
+// *
+// **************************************************************************************************************
+// **************************************************************************************************************
+// * このファイルでは、RINPn の各種設定パラメータの値を指定できます。
+// * ファイルの内容は、C言語系の文法の簡易スクリプト言語「 Vnano 」で書かれています。
+// * ( 初見での開きやすさ優先で、拡張子が「.txt」になっていますが、「 .vnano 」に変えても読み込まれます。)
+// * 設定内容を編集する際は、以下の点にご注意ください:
+// * 
+// *   ・各行の「 // 」よりも右側は読み飛ばされます（設定行の無効化や、コメントの記述のために使用されます）。
+// *   ・各設定行の内容（コメント記述部分を除く）は、「 ; 」記号で終わっている必要があります。
+// * 
+// * その他、Vnano の詳しい文法については、以下をご参照ください：
+// * 
+// *    https://www.vcssl.org/ja-jp/vnano/doc/tutorial/language
+// * 
+// **************************************************************************************************************
 
 
 // **************************************************************************************************************
@@ -25,9 +44,89 @@ coding UTF-8;
 // (Type: string)
 // --------------------------------------------------------------------------------------------------------------
 
-localeCode = "AUTO";         // Set automatically based on your environment.
-// localeCode = "en-US";     // US English
-// localeCode = "ja-JP";     // Japanese
+localeCode = "AUTO";         // Set automatically based on your environment - 環境に応じて自動設定
+// localeCode = "en-US";     // US English - アメリカ英語
+// localeCode = "ja-JP";     // Japanese - 日本語
+
+
+
+
+
+// **************************************************************************************************************
+//         - User Interface Settings -
+//         - 画面関連の設定 -
+// **************************************************************************************************************
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify the size of the window.
+// ウィンドウの大きさを指定します。
+// (Type: int)
+// --------------------------------------------------------------------------------------------------------------
+
+windowWidth = 400;     // Width (px) - 幅  (ピクセル)
+windowHeight = 160;    // Height(px) - 高さ(ピクセル)
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specity the font size of INPUT/OUTPUT text fields.
+// INPUT/OUTPUT テキストフィールドで使用するフォントの大きさを指定します。
+// (Type: int)
+// --------------------------------------------------------------------------------------------------------------
+
+textFieldFontSize = 18;
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify whether display the window of the RINPn on the top of all other windows or not.
+// RINPn のウィンドウを、常に最前面に表示するかどうかを指定します。
+// (Type: bool)
+// --------------------------------------------------------------------------------------------------------------
+
+stayOnTopOfAllWindows = true;        // Yes, display on the top - 最前面に表示する
+// stayOnTopOfAllWindows = false;    // No, not necessary       - 最前面の必要は無い
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify the opacity of the window.
+// ウィンドウの不透明度を指定します。
+// (Type: float)
+// --------------------------------------------------------------------------------------------------------------
+
+windowOpacity = 0.76;     // 0.0 ~ 1.0
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify the background color of the window.
+// ウィンドウの背景色を指定します。
+// (Type: int)
+// --------------------------------------------------------------------------------------------------------------
+
+windowBackgroundColorR = 180;        // Red   - 赤成分 (0 ~ 255)
+windowBackgroundColorG = 220;        // Green - 緑成分 (0 ~ 255)
+windowBackgroundColorB = 255;        // Blue  - 青成分 (0 ~ 255)
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify the background color of INPUT/OUTPUT text fields.
+// INPUT/OUTPUT テキストフィールドの背景色を指定します。
+// (Type: int)
+// --------------------------------------------------------------------------------------------------------------
+
+textFieldBackgroundColorR = 100;     // Red   - 赤成分 (0 ~ 255)
+textFieldBackgroundColorG = 100;     // Green - 緑成分 (0 ~ 255)
+textFieldBackgroundColorB = 100;     // Blue  - 青成分 (0 ~ 255)
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify the foreground color (the color of characters) of INPUT/OUTPUT text fields.
+// INPUT/OUTPUT テキストフィールドの前景色（文字の色）を指定します。
+// (Type: int)
+// --------------------------------------------------------------------------------------------------------------
+
+textFieldForegroundColorR = 140;     // Red   - 赤成分 (0 ~ 255)
+textFieldForegroundColorG = 255;     // Green - 緑成分 (0 ~ 255)
+textFieldForegroundColorB = 180;     // Blue  - 青成分 (0 ~ 255)
 
 
 
@@ -149,7 +248,7 @@ evalOnlyFloat = evalIntLiteralAsFloat;
 // --------------------------------------------------------------------------------------------------------------
 
 evalOnlyExpression = true;          // Enable  - 有効化する
-// evalOnlyExpression = false;      // Enable  - 有効化する
+// evalOnlyExpression = false;      // Disable - 無効化する
 
 
 // --------------------------------------------------------------------------------------------------------------
@@ -166,92 +265,12 @@ inputNormalizerEnabled = true;        // Normalize       - 正規化する
 
 
 // **************************************************************************************************************
-//         - User Interface Settings -
-//         - 画面関連の設定 -
-// **************************************************************************************************************
-
-
-// --------------------------------------------------------------------------------------------------------------
-// Specify whether display the window of RINEARN Processor nano on the top of all other windows or not.
-// リニアンプロセッサー nano のウィンドウを、常に最前面に表示するかどうかを指定します。
-// (Type: bool)
-// --------------------------------------------------------------------------------------------------------------
-
-stayOnTopOfAllWindows = true;        // Yes, display on the top - 最前面に表示する
-// stayOnTopOfAllWindows = false;    // No, not necessary       - 最前面の必要は無い
-
-
-// --------------------------------------------------------------------------------------------------------------
-// Specity the font size of INPUT/OUTPUT text fields.
-// INPUT/OUTPUT テキストフィールドで使用するフォントの大きさを指定します。
-// (Type: int)
-// --------------------------------------------------------------------------------------------------------------
-
-textFieldFontSize = 18;
-
-
-// --------------------------------------------------------------------------------------------------------------
-// Specify the size of the window.
-// ウィンドウの大きさを指定します。
-// (Type: int)
-// --------------------------------------------------------------------------------------------------------------
-
-windowWidth = 400;     // Width (px) - 幅  (ピクセル)
-windowHeight = 160;    // Height(px) - 高さ(ピクセル)
-
-
-// --------------------------------------------------------------------------------------------------------------
-// Specify the opacity of the window.
-// ウィンドウの不透明度を指定します。
-// (Type: float)
-// --------------------------------------------------------------------------------------------------------------
-
-windowOpacity = 0.76;     // 0.0 ~ 1.0
-
-
-// --------------------------------------------------------------------------------------------------------------
-// Specify the background color of the window.
-// ウィンドウの背景色を指定します。
-// (Type: int)
-// --------------------------------------------------------------------------------------------------------------
-
-windowBackgroundColorR = 180;        // Red   - 赤成分 (0 ~ 255)
-windowBackgroundColorG = 220;        // Green - 緑成分 (0 ~ 255)
-windowBackgroundColorB = 255;        // Blue  - 青成分 (0 ~ 255)
-
-
-// --------------------------------------------------------------------------------------------------------------
-// Specify the background color of INPUT/OUTPUT text fields.
-// INPUT/OUTPUT テキストフィールドの背景色を指定します。
-// (Type: int)
-// --------------------------------------------------------------------------------------------------------------
-
-textFieldBackgroundColorR = 100;     // Red   - 赤成分 (0 ~ 255)
-textFieldBackgroundColorG = 100;     // Green - 緑成分 (0 ~ 255)
-textFieldBackgroundColorB = 100;     // Blue  - 青成分 (0 ~ 255)
-
-
-// --------------------------------------------------------------------------------------------------------------
-// Specify the foreground color (the color of characters) of INPUT/OUTPUT text fields.
-// INPUT/OUTPUT テキストフィールドの前景色（文字の色）を指定します。
-// (Type: int)
-// --------------------------------------------------------------------------------------------------------------
-
-textFieldForegroundColorR = 140;     // Red   - 赤成分 (0 ~ 255)
-textFieldForegroundColorG = 255;     // Green - 緑成分 (0 ~ 255)
-textFieldForegroundColorB = 180;     // Blue  - 青成分 (0 ~ 255)
-
-
-
-
-
-// **************************************************************************************************************
 //         - Library/Plug-in Settings -
 //         - ライブラリ/プラグイン関連の設定 -
 // **************************************************************************************************************
 
 // Note: When you want to add new library scripts or plug-ins, modify following files:
-// 新しいライブラリスクリプトやプラグインを追加するには、以下のファイルを編集してください:
+// 備考: 新しいライブラリスクリプトやプラグインを追加するには、以下のファイルを編集してください:
 //   * lib/VnanoLibraryList.txt
 //   * plugin/VnanoPluginList.txt
 
@@ -266,6 +285,7 @@ textFieldForegroundColorB = 180;     // Blue  - 青成分 (0 ~ 255)
 // ただし、このオプションを有効化（true に設定）すると、内部で何らかの状態を保持するようなプラグインの挙動は、
 // 計算毎に内部状態がリセットされるため、通常とは変化してしまう事に注意してください。
 // そのため、新規プラグインの開発完了後は、このオプションの値を false に戻しておく事が推奨されます。
+// (Type: bool)
 // --------------------------------------------------------------------------------------------------------------
 
 reloadPlugin = false;     // Don't reload - 再読み込みしない
@@ -279,6 +299,7 @@ reloadPlugin = false;     // Don't reload - 再読み込みしない
 // 計算（またはスクリプトの実行）毎に、ライブラリスクリプトの内容を再読み込みするかどうかを指定します。
 // このオプションを無効化（false に設定）すると、計算の応答が若干早くなる可能性があります。
 // ただし、現状のバージョンでは、有効/無効でレスポンスに大差は生じません。
+// (Type: bool)
 // --------------------------------------------------------------------------------------------------------------
 
 reloadLibrary = true;       // Reload       - 再読み込みする
@@ -289,8 +310,8 @@ reloadLibrary = true;       // Reload       - 再読み込みする
 
 
 // **************************************************************************************************************
-//         - Script Settings -
-//         - スクリプト関連の設定 -
+//         - Script Process Settings -
+//         - スクリプト処理関連の設定 -
 // **************************************************************************************************************
 
 
@@ -338,6 +359,20 @@ dumperTarget = "ALL";                  // All of the following contents - 下記
 // (Type: bool)
 // --------------------------------------------------------------------------------------------------------------
 
-acceleratorEnabled = true;         // Enable  - 有効化する  (Performance: About 400 MFLOPS ~ 5 GFLOPS)
-// acceleratorEnabled = false;     // Disable - 無効化する  (Performance: About 10 MFLOPS)
+acceleratorEnabled = true;         // Enable  - 有効化する  (Max performance: About 700 MFLOPS ~ 10 GFLOPS)
+// acceleratorEnabled = false;     // Disable - 無効化する  (Max performance: About 20 MFLOPS)
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify the optimization level of the high-speed VM.
+// The larger level make the processing speed faster, but chance of encountering unknown bugs might increase.
+// 高速版VMにおける最適化レベルを指定します。
+// 値が大きいほど高速ですが、より多くの最適化が施されるため、未知のバグに会う確率も上がってしまうかもしれません。
+// (Type: int)
+// --------------------------------------------------------------------------------------------------------------
+
+acceleratorOptimizationLevel = 0;
+// acceleratorOptimizationLevel = 1; // Optimize data access for reducing overhead costs - データアクセスのオーバーヘッドを削減する最適化を適用
+// acceleratorOptimizationLevel = 2; // Optimize instructions with keeping code structures - コード構造が保たれるレベルでの命令列の最適化を適用
+// acceleratorOptimizationLevel = 3; // Optimize with modifying code structures (inline expansion, etc.) - コードの構造変更を伴う最適化を適用(インライン展開など)
 

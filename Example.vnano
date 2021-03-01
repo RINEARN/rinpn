@@ -1,18 +1,30 @@
 coding UTF-8;
 
+// License: CC0
+
 /****************************************************************************************************
  * An example script calculating the numerical integration value of cos(x) from A (=0) to B (=1).
  * This code is written in the C-like simple scripting language "Vnano (VCSSL nano)".
- * For calculation algorithm, see:  https://www.vcssl.org/en-us/code/archive/0001/7800-vnano-integral-output/
- * For syntax etc. of Vnano, see:   https://www.vcssl.org/en-us/vnano/doc/tutorial/language
+ * 
+ *   For calculation algorithm, see:  https://www.vcssl.org/en-us/code/archive/0001/7800-vnano-integral-output/
+ *   For syntax etc. of Vnano, see:   https://www.vcssl.org/en-us/vnano/doc/tutorial/language
+ * 
+ * Also, when you set the value N larger or or set the integrant function more complex,
+ * if the processing of this script is heavy, it might be helpful to raise the optimization level 
+ * specified in "Setting.vnano" as "acceleratorOptimizationLevel", to make the processing faster.
+ * 
+ * ==================================================================================================
  * 
  * スクリプトの記述例として、cos(x) の A (=0) から B (=1) までの数値積分の値を計算します。
  * このコードは、C言語系の文法の簡易スクリプト言語「Vnano (VCSSL nano)」で書かれています。
- * 計算アルゴリズムについては： https://www.vcssl.org/ja-jp/code/archive/0001/7800-vnano-integral-output/
- * Vnano の文法などについては： https://www.vcssl.org/ja-jp/vnano/doc/tutorial/language
  * 
- * License: CC0
+ *   計算アルゴリズムについては： https://www.vcssl.org/ja-jp/code/archive/0001/7800-vnano-integral-output/
+ *   Vnano の文法などについては： https://www.vcssl.org/ja-jp/vnano/doc/tutorial/language
+ * 
+ * なお、Nの値を大きくしたり、被積分関数の複雑化などで、処理が重くなった場合は、「 Setting.vnano 」
+ * 内で「 acceleratorOptimizationLevel 」として設定されている最適化レベルの値を上げると速くなります。
  ****************************************************************************************************/
+
 
 // Integration parameters - 積分パラメータ
 double A = 0.0;
