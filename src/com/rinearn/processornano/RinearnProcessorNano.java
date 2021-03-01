@@ -25,7 +25,7 @@ import com.rinearn.processornano.view.ViewInitializer;
 
 public final class RinearnProcessorNano {
 
-	private static final String VERSION = "0.9.0";
+	private static final String VERSION = "0.9.1";
 	private static final String OPTION_NAME_VERSION = "--version";
 	private static final String OPTION_NAME_DEBUG = "--debug";
 	private static final String OPTION_NAME_DIR = "--dir";
