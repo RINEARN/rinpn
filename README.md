@@ -180,7 +180,7 @@ On the above window, you can calculate the value of the inputted expression by t
 The window size, color, opacity, and so on are customizable by modifying values in "Settings.txt".
 
 上の電卓画面上で、計算式を入力して Enter キーを押すか、または「 = 」ボタンを押すと、その式の値を計算できます。式の中では、sin や cos などの各種数学関数も標準で使用できます。
-画面の大きさや色、透明度、その他色々は「 Settings.vnano 」内の設定値を変更してカスタマイズできます。
+画面の大きさや色、透明度、その他色々は「 Settings.txt 」内の設定値を変更してカスタマイズできます。
 
 In addition, the RINPn support the scripting language ["Vnano"](https://www.vcssl.org/en-us/vnano/). You can define new functions in the Vnano script file "ExampleLibrary.vnano" in "lib" folder, and use them in the expression inputted to the RINPn.
 You also can execute a Vnano script file performing complicated numerical calculations and so on, by inputting the name / path of the script file.
@@ -196,7 +196,7 @@ Also, if the path of "bin" folder of the RINPn is registered to the environment 
     rinpn "1 + 2"
 	> 3
 
-	rinpn "sin( PI / 2 ) + 23/ 2"
+	rinpn "sin( PI / 2 ) + ( 3 / 2 )"
 	> 2.5
 
 	rinpn "Example.vnano"
