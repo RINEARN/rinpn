@@ -17,6 +17,9 @@ org/vcssl/nano/plugin/system/xnci1/SystemDataTypeXnci1Plugin.class
 # Provides terminal-I/O functions - 端末への入出力関数を提供します
 org/vcssl/nano/plugin/system/xnci1/SystemTerminalIOXnci1Plugin.class
 
+# Provides user-I/O functions - ユーザーと間の入出力関数を提供します
+org/vcssl/nano/plugin/system/xnci1/SystemUserIOXnci1Plugin.class
+
 # Provides time-utility functions - 時間関連のユーティリティ関数を提供します
 org/vcssl/nano/plugin/system/xnci1/SystemTimeXnci1Plugin.class
 
