@@ -1,11 +1,10 @@
 # RINPn
 
+&raquo; [English README](./README.md)
 
 ![Concept Image](./img/signboard.jpg)
 
 RINPn（RINEARN Processor nano, 発音：りんぷん）は、単純でわかりやすい画面デザインを採用した関数電卓ソフトです。GUIとコマンドラインの両方で利用可能です。標準でいろいろな数学・統計関数が利用でき、ユーザー独自の関数を自作する事も可能です。また、複雑な計算処理をスクリプトとして書いて実行する事もできます。
-
-&raquo; [English README](./README.md)
 
 **※ このREADMEの内容は、このソフトウェアをソースコードからビルドしたい方のためのものです。
 下記公式サイトから、ビルド済みのパッケージも入手できます。**
@@ -149,7 +148,8 @@ RINPn は、まだ正式リリース前のソフトウェアであり、現在�
 <a id="how-to-use"></a>
 ## 使用方法
 
-Microsoft&reg; Windows&reg;上では、バッチファイル "RINPN_\*.\*.\*.bat" をダブルクリックすると起動します。
+Microsoft&reg; Windows&reg;上では、**バッチファイル "RINPN_\*.\*.\*.bat" をダブルクリックすると起動します。**
+
 その他のOS（Linux&reg;など）では、以下のようにコマンドで起動します：
 
     java -jar RINPn.jar

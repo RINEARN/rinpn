@@ -1,10 +1,10 @@
 # RINPn
 
+&raquo; [Japanese README](./README_JAPANESE.md)
+
 ![Concept Image](./img/signboard.jpg)
 
 RINPn (RINEARN Processor nano) is a free scientific calculator software, having very simple window. The RINPn is available in both GUI (window) and command-lines, and various math functions are available by default. In addition, you can define new functions, and you can also write/execute scripts for taking complex calculations.
-
-&raquo; [Japanese README](./README_JAPANESE.md)
 
 **Note: This README is for users who want to build this software from source code by yourself.
 You can also get prebuilt-packages of this software from the following official website.**
@@ -18,7 +18,7 @@ You can also get prebuilt-packages of this software from the following official 
 
 
 
-## Index - 目次
+## Index
 - <a href="#version-note">Note</a>
 - <a href="#license">License</a>
 - <a href="#how-to-build">How to Build</a>
@@ -148,7 +148,9 @@ This software is released under the MIT License.
 <a id="how-to-use"></a>
 ## How to Use
 
-On Microsoft&reg; Windows&reg;, double-click the batch file "RINPN_\*.\*.\*.bat" (\*: numbers) to execute the RINPn. On other OS (Linux&reg;, etc.), execute by the following command:
+On Microsoft&reg; Windows&reg;, **double-click the batch file "RINPN_\*.\*.\*.bat" (\*: numbers) to execute the RINPn**. 
+
+On other OS (Linux&reg;, etc.), execute by the following command:
 
     java -jar RINPn.jar
 
