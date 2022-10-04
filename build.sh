@@ -36,3 +36,14 @@ cd ..
 
 jar cvfm RINPn.jar src/com/rinearn/processornano/meta/main.mf -C bin com
 
+
+# --------------------------------------------------
+# create plug-ins
+# --------------------------------------------------
+
+cd plugin
+javac -encoding UTF-8 @org/vcssl/connect/sourcelist.txt
+javac -encoding UTF-8 @org/vcssl/nano/plugin/sourcelist.txt
+javac -encoding UTF-8 ExamplePlugin.java
+cd ..
+
