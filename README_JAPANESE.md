@@ -47,101 +47,31 @@ RINPn は、まだ正式リリース前のソフトウェアであり、現在�
 
 ### 必要なもの
 
-1. Java&reg; Development Kit (JDK) 8 or later
+1. Java&reg;
 
 1. Git
 
 
-### Microsoft&reg; Windows&reg; を使用している場合:
+### ビルド手順
 
-1. リポジトリをローカルに複製
+1. このリポジトリを clone します。
 
-		cd <working-directory>
-		git clone https://github.com/RINEARN/vnano.git
-		git clone https://github.com/RINEARN/vnano-standard-plugin.git
+		cd <作業フォルダ>
 		git clone https://github.com/RINEARN/rinpn.git
-
-1. Vnanoスクリプトエンジンのビルドとコピー
-
-		cd vnano
-		.\build.bat
-		(または:  ant -f build.xml )
-
-		cd ..
-		copy .\vnano\Vnano.jar .\rinpn\Vnano.jar
-
-1. Vnano標準プラグインのビルドとコピー
-
-		cd vnano-standard-plugin
-		.\build.bat
-		
-		cd ..
-		xcopy /s .\vnano-standard-plugin\plugin\* .\rinpn\plugin\
-		xcopy .\vnano-standard-plugin\*.html .\rinpn\
-
-1. RINPn のビルド
-
 		cd rinpn
-		.\build.bat
-		(または:  ant -f build.xml )
 
-		cd plugin
-		javac -encoding UTF-8 ExamplePlugin.java
-		cd ..
+1. ビルドします。
 
-1. 確認
+
+		.\build.bat      # Microsoft Windows を使用している場合
+		./build.sh       # Linux 等を使用している場合
+
+		(or, if you are using Apache Ant:  ant -f build.xml )
+
+1. ビルド結果が実行可能な事を確認します。
 
 		java -jar RINPn.jar --version
-		> RINPn Ver.?.?.?  / with Vnano Ver.?.?.?  (?: numbers)
-
-
-### その他のOSを使用している場合 (Linux&reg; 等) :
-
-
-1. リポジトリをローカルに複製
-
-		cd <working-directory>
-		git clone https://github.com/RINEARN/vnano.git
-		git clone https://github.com/RINEARN/vnano-standard-plugin.git
-		git clone https://github.com/RINEARN/rinpn.git
-
-1. Vnanoスクリプトエンジンのビルドとコピー
-
-		cd vnano
-		chmod +x ./build.sh          # 必要に応じて: sudo ...
-		./build.sh                   # または:  ant -f build.xml
-		
-		cd ..
-		cp ./vnano/Vnano.jar ./rinpn/Vnano.jar
-
-1. Vnano標準プラグインのビルドとコピー
-
-		cd vnano-standard-plugin
-		chmod +x ./build.sh          # 必要に応じて: sudo ...
-		./build.sh
-		
-		cd ..
-		cp -r ./vnano-standard-plugin/plugin/* ./rinpn/plugin/
-		cp ./vnano-standard-plugin/*.html ./rinpn/
-
-1. RINPn のビルド
-
-		cd rinpn
-		chmod +x ./build.sh          # 必要に応じて: sudo ...
-		./build.sh                   # または:  ant -f build.xml
-
-		cd plugin
-		javac -encoding UTF-8 ExamplePlugin.java
-		cd ..
-
-		cd bin
-		chmod +x ./rinpn             # 必要に応じて: sudo ...
-		cd ..
-
-1. 確認
-
-		java -jar RINPn.jar --version
-		> RINPn Ver.?.?.?  / with Vnano Ver.?.?.?  (?: numbers)
+		> RINPn Ver.?.?.?  / with Vnano Ver.?.?.?  (? はバージョン番号)
 
 
 

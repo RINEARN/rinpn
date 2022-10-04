@@ -1,0 +1,125 @@
+coding UTF-8;
+
+
+// Test of INT_MAX
+{
+	print("INT_MAX: ");
+	assert( INT_MAX == 9223372036854775807 );
+	println("OK.");
+}
+
+
+// Test of INT_MIN
+{
+	print("INT_MIN: ");
+	
+	// The min value of 64-bit integer is -9223372036854775808.
+	// However, in code of the Vnano, "-9223372036854775808" will be parsed as 
+	// "-" (unary minus operator) and "9223372036854775808" (int literal), 
+	// and "9223...808" exceeds the max value of 64-bit integer (9223...807), 
+	// so we can't write the min value in code directly.
+	// Instead, write "-(max_value) - 1" as follows.
+	
+	int minValue = -9223372036854775807 - 1;
+	assert( INT_MIN == minValue );
+	println("OK.");
+}
+
+
+// Test of FLOAT_MAX
+{
+	print("FLOAT_MAX: ");
+	assert( FLOAT_MAX == 1.7976931348623157E308 );
+	println("OK.");
+}
+
+
+// Test of FLOAT_MIN_ABS_NORMAL
+{
+	print("FLOAT_MIN_ABS_NORMAL: ");
+	assert( FLOAT_MIN_ABS_NORMAL == 2.2250738585072014E-308 );
+	println("OK.");
+}
+
+
+// Test of FLOAT_MIN_ABS_DENORMAL
+{
+	print("FLOAT_MIN_ABS_DENORMAL: ");
+	assert( FLOAT_MIN_ABS_DENORMAL == 4.9E-324 );
+	println("OK.");
+}
+
+
+// Test of NAN
+{
+	print("NAN: ");
+	assert( nan(NAN) );
+	println("OK.");
+}
+
+
+// Test of INF
+{
+	print("INF: ");
+	assert( INF == 1.0/0.0 );
+	println("OK.");
+}
+
+
+// Test of nan(value)
+{
+	print("nan(value): ");
+	assert( nan( 0.0 / 0.0 ) );
+	assert( !nan( 1.0 ) );
+	println("OK.");
+}
+
+
+// Test of inf(value)
+{
+	print("nan(value): ");
+	assert( inf( 1.0 / 0.0 ) );
+	assert( !inf( 1.0 ) );
+	println("OK.");
+}
+
+
+// Test of length(value)
+{
+	print("length(array, dimIndex): ");
+	
+	int array1d[10];
+	assert( length(array1d, 0) == 10 );
+	
+	int array2d[10][11];
+	assert( length(array2d, 0) == 10 );
+	assert( length(array2d, 1) == 11 );
+	
+	int array3d[10][11][12];
+	assert( length(array3d, 0) == 10 );
+	assert( length(array3d, 1) == 11 );
+	assert( length(array3d, 2) == 12 );
+	
+	println("OK.");
+}
+
+
+// Test of arrayrank(value)
+{
+	print("arrayrank(array): ");
+	
+	int scalar;
+	assert( arrayrank(scalar) == 0 );
+	
+	int array1d[10];
+	assert( arrayrank(array1d) == 1 );
+	
+	int array2d[10][11];
+	assert( arrayrank(array2d) == 2 );
+	
+	int array3d[10][11][12];
+	assert( arrayrank(array3d) == 3 );
+	
+	println("OK.");
+}
+
