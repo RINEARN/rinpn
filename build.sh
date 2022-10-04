@@ -13,4 +13,4 @@ cd ..
 # create a JAR file
 # --------------------------------------------------
 
-jar cvfm RINPn.jar src/main.mf -C bin com
+jar cvfm RINPn.jar src/com/rinearn/processornano/meta/main.mf -C bin com
