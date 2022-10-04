@@ -1,0 +1,6 @@
+* com:
+    Stores the source code of the RINPn.
+
+* org:
+    Stores the source code of the scripting engine of the Vnano.
+
