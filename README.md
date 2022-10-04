@@ -47,96 +47,26 @@ This software is released under the MIT License.
 
 ### Requirements
 
-1. Java&reg; Development Kit (JDK) 8 or later
+1. Java&reg;
 
 1. Git
 
 
-### For Microsoft&reg; Windows&reg; :
+### Building Steps
 
-1. Clone repositories
-
-		cd <working-directory>
-		git clone https://github.com/RINEARN/vnano.git
-		git clone https://github.com/RINEARN/vnano-standard-plugin.git
-		git clone https://github.com/RINEARN/rinpn.git
-
-1. Build & copy the Vnano Script Engine
-
-		cd vnano
-		.\build.bat
-		(or:  ant -f build.xml )
-
-		cd ..
-		copy .\vnano\Vnano.jar .\rinpn\Vnano.jar
-
-1. Build & copy the Vnano Standard Plug-ins
-
-		cd vnano-standard-plugin
-		.\build.bat
-		
-		cd ..
-		xcopy /s .\vnano-standard-plugin\plugin\* .\rinpn\plugin\
-		xcopy .\vnano-standard-plugin\*.html .\rinpn\
-
-1. Build the RINPn
-
-		cd rinpn
-		.\build.bat
-		(or:  ant -f build.xml )
-
-		cd plugin
-		javac -encoding UTF-8 ExamplePlugin.java
-		cd ..
-
-1. Check
-
-		java -jar RINPn.jar --version
-		> RINPn Ver.?.?.?  / with Vnano Ver.?.?.?  (?: numbers)
-
-
-### For Other OS (Linux&reg;, etc.) :
-
-
-1. Clone repositories
+1. Clone this repository
 
 		cd <working-directory>
-		git clone https://github.com/RINEARN/vnano.git
-		git clone https://github.com/RINEARN/vnano-standard-plugin.git
 		git clone https://github.com/RINEARN/rinpn.git
-
-1. Build & copy the Vnano Script Engine
-
-		cd vnano
-		chmod +x ./build.sh          # if necessary: sudo ...
-		./build.sh                   # or:  ant -f build.xml
-		
-		cd ..
-		cp ./vnano/Vnano.jar ./rinpn/Vnano.jar
-
-1. Build & copy Vnano Standard Plug-ins
-
-		cd vnano-standard-plugin
-		chmod +x ./build.sh          # if necessary: sudo ...
-		./build.sh
-		
-		cd ..
-		cp -r ./vnano-standard-plugin/plugin/* ./rinpn/plugin/
-		cp ./vnano-standard-plugin/*.html ./rinpn/
-
-1. Build the RINPn
-
 		cd rinpn
-		chmod +x ./build.sh          # if necessary: sudo ...
-		./build.sh                   # or:  ant -f build.xml
 
-		cd plugin
-		javac -encoding UTF-8 ExamplePlugin.java
-		cd ..
+1. Build
 
-		cd bin
-		chmod +x ./rinpn             # if necessary: sudo ...
-		cd ..
+
+		.\build.bat      # For Microsoft Windows
+		./build.sh       # For Linux, etc.
+
+		(or, if you are using Apache Ant:  ant -f build.xml )
 
 1. Check
 
