@@ -1,23 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<project name="RinearnProcessorNano" basedir="." default="archive">
+<project name="RinearnProcessorNano" basedir="." default="main">
 	
-	<property name="build.srcdir"  value="src"/>
-	<property name="build.bindir"  value="bin"/>
-	<property name="build.jarname" value="RINPn.jar"/>
+	<target name="main" depends="compile-vnano,archive-vnano,compile-rinpn,archive-rinpn,compile-plugin">
+	</target>
 	
-	<target name="archive" depends="compile">
-		<jar jarfile="${build.jarname}" basedir="${build.bindir}">
+	<target name="archive-vnano" depends="compile-vnano">
+		<jar jarfile="Vnano.jar" basedir="bin_vnano">
 			<manifest>
-				<attribute name="Main-Class" value="com.rinearn.processornano.RinearnProcessorNanoMain" />
-				<attribute name="Class-Path" value=". Vnano.jar" />
+				<attribute name="Main-Class" value="org.vcssl.nano.main.VnanoCommandLineApplication" />
 			</manifest>
+			<fileset dir="src_vnano/org/vcssl/nano/meta">
+				<include name="META-INF/services/*" />
+			</fileset>
 		</jar>
 	</target>
 	
-	<target name="compile">
+	<target name="compile-vnano">
 		<mkdir dir="bin" />
-		<javac srcdir="${build.srcdir}" destdir="${build.bindir}" encoding="UTF-8" includeantruntime="false" debug="true">
+		<javac srcdir="src_vnano" destdir="bin_vnano" encoding="UTF-8" includeantruntime="false" debug="true">
+			<exclude name="**/*Test.java"/>
+		</javac>
+	</target>
+	
+	<target name="archive-rinpn" depends="compile-rinpn">
+		<jar jarfile="RINPn.jar" basedir="bin">
+			<manifest>
+				<attribute name="Main-Class" value="com.rinearn.processornano.RinearnProcessorNano" />
+				<attribute name="Class-Path" value=". Vnano.jar" />
+			</manifest>
+			<exclude name="rinpn.bat"/>
+			<exclude name="rinpn"/>
+		</jar>
+	</target>
+	
+	<target name="compile-rinpn">
+		<mkdir dir="bin" />
+		<javac srcdir="src" destdir="bin" encoding="UTF-8" includeantruntime="false" debug="true">
+			<exclude name="**/*Test.java"/>
+		</javac>
+	</target>
+	
+	<target name="compile-plugin">
+		<mkdir dir="plugin" />
+		<javac srcdir="plugin" destdir="plugin" encoding="UTF-8" includeantruntime="false" debug="true">
 			<exclude name="**/*Test.java"/>
 		</javac>
 	</target>
