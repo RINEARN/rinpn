@@ -17,7 +17,7 @@
 	</target>
 	
 	<target name="compile-vnano">
-		<mkdir dir="bin" />
+		<mkdir dir="bin_vnano" />
 		<javac srcdir="src_vnano" destdir="bin_vnano" encoding="UTF-8" includeantruntime="false" debug="true">
 			<exclude name="**/*Test.java"/>
 		</javac>
