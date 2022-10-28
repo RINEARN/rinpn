@@ -287,7 +287,7 @@ public class FunctionTable {
 		int[] argumentRanks = new int[argumentLength];
 		String[] argumentDataTypeNames = new String[argumentLength];
 		for (int argumentIndex=0; argumentIndex<argumentLength; argumentIndex++) {
-			argumentRanks[argumentIndex] = childNodes[argumentIndex+1].getRank();
+			argumentRanks[argumentIndex] = childNodes[argumentIndex+1].getArrayRank();
 			argumentDataTypeNames[argumentIndex] = childNodes[argumentIndex+1].getDataTypeName();
 		}
 
@@ -305,16 +305,33 @@ public class FunctionTable {
 
 			// If the number of parameters is arbitrary,
 			// expand the number of information of parameters, depending on the number of actual arguments.
-			if (function.isParameterCountArbitrary() && parameterLength==1) {
+			if (function.isParameterCountArbitrary()) {
+				int unexpandedParameterLength = parameterLength;
 				parameterLength = argumentLength;
 				parameterRanks = Arrays.copyOf(parameterRanks, parameterLength);
 				parameterDataTypeNames = Arrays.copyOf(parameterDataTypeNames, parameterLength);
 				parameterDataTypeArbitrarinesses = Arrays.copyOf(parameterDataTypeArbitrarinesses, parameterLength);
 				parameterArrayRankArbitrarinesses = Arrays.copyOf(parameterArrayRankArbitrarinesses, parameterLength);
-				Arrays.fill(parameterRanks, parameterRanks[0]);
-				Arrays.fill(parameterDataTypeNames, parameterDataTypeNames[0]);
-				Arrays.fill(parameterDataTypeArbitrarinesses, parameterDataTypeArbitrarinesses[0]);
-				Arrays.fill(parameterArrayRankArbitrarinesses, parameterArrayRankArbitrarinesses[0]);
+				Arrays.fill(
+					parameterRanks, // the destination array
+					unexpandedParameterLength - 1, parameterLength, // index of the dest's head, index of the dest's tail + 1
+					parameterRanks[unexpandedParameterLength - 1] // the element to be copied
+				);
+				Arrays.fill(
+					parameterDataTypeNames,
+					unexpandedParameterLength - 1, parameterLength,
+					parameterDataTypeNames[unexpandedParameterLength - 1]
+				);
+				Arrays.fill(
+					parameterDataTypeArbitrarinesses, 
+					unexpandedParameterLength - 1, parameterLength,
+					parameterDataTypeArbitrarinesses[unexpandedParameterLength - 1]
+				);
+				Arrays.fill(
+					parameterArrayRankArbitrarinesses,
+					unexpandedParameterLength - 1, parameterLength,
+					parameterArrayRankArbitrarinesses[unexpandedParameterLength - 1]
+				);
 			}
 
 			// If the number of parameters is different with the number of actual arguments, the function is not callable.
