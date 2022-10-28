@@ -66,6 +66,12 @@ public class AstNode implements Cloneable {
 		/** Represents the node of a return statement. */
 		RETURN,
 
+		/**  Represents the node of a import statement. */
+		IMPORT,
+
+		/**  Represents the node of a include statement. */
+		INCLUDE,
+
 		/** Represents the node at an end-point (leaf) in an expression. */
 		LEAF,
 
@@ -456,12 +462,12 @@ public class AstNode implements Cloneable {
 
 
 	/**
-	 * Gets the array rank which is set as {@link AttributeKey#RANK RANK} attribute.
+	 * Gets the array-rank which is set as {@link AttributeKey#ARRAY_RANK RANK} attribute.
 	 * 
 	 * @return The array rank.
 	 */
-	public int getRank() {
-		String rankWord = this.attributeMap.get(AttributeKey.RANK);
+	public int getArrayRank() {
+		String rankWord = this.attributeMap.get(AttributeKey.ARRAY_RANK);
 		return Integer.parseInt(rankWord);
 	}
 
