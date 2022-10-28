@@ -66,6 +66,17 @@ so same features are also available in scripts of the VCSSL by default.
 			Provides interactive I/O functions from/to the user.
 			<br />
 			Functions: <a href="#popup">popup(message)</a> / <a href="#alert">alert(message)</a> / <a href="#confirm">confirm(message)</a> / <a href="#input">input(message)</a> / <a href="#input-string-any">input(message, defaultValue)</a>
+	<dt><a href="#SystemFileIOXnci1Plugin">SystemFileIOXnci1Plugin</a></dt>
+		<dd>
+			Provides I/O functions from/to files.
+			<br />
+			Variables: <a href="#READ">READ</a> / <a href="#WRITE">WRITE</a> / <a href="#APPEND">APPEND</a> / <a href="#READ_CSV">READ_CSV</a> / <a href="#WRITE_CSV">WRITE_CSV</a> / <a href="#APPEND_CSV">APPEND_CSV</a> / <a href="#READ_TSV">READ_TSV</a> / <a href="#WRITE_TSV">WRITE_TSV</a> / <a href="#APPEND_TSV">APPEND_TSV</a> / <a href="#READ_STSV">READ_STSV</a>
+			<br />
+			Functions: <a href="#open">open(fileName, mode)</a> / <a href="#open3arg">open(fileName, mode, encoding)</a> / <a href="#close">close(fileId)</a> / <a href="#flush">flush(fileId)</a> / 
+			<a href="#write">write(fileId, ...)</a> / <a href="#writeln">writeln(fileId, ...)</a> / <a href="#read">read(fileId)</a> / <a href="#readln">readln(fileId)</a> / <a href="#countln">countln(fileId)</a> / 
+			<a href="#save">save(filePath, value)</a> / <a href="#load">load(filePath)</a> / 
+			<a href="#exists">exists(filePath)</a> / <a href="#isdir">isdir(directoryPath)</a> / <a href="#listdir">listdir(directoryPath)</a> / <a href="#mkdir">mkdir(directoryPath)</a> / 
+		</dd>
 	<dt><a href="#SystemTimeXnci1Plugin">SystemTimeXnci1Plugin</a></dt>
 		<dd>
 			Provides time-utility functions.
@@ -361,7 +372,7 @@ The plug-in providing data-type-utility functions/variables.
 		<td class="rcol">
 			(any type, any arrayrank) array: The array you want to get the length of it.
 			<br />
-			(int型) dimIndex: The index of the array-dimension you want to get the length on it (regarding the most left dimension as 0-th).
+			(int type) dimIndex: The index of the array-dimension you want to get the length on it (regarding the most left dimension as 0-th).
 		</td>
 	</tr>
 	<tr>
@@ -643,6 +654,836 @@ and I/O will be performed interactively by user's actions on the window.
 	<tr>
 		<td class="lcol">Example</td>
 		<td class="rcol">string inputtedValue[] = input( &quot;Please input&quot;, &quot;defaultValue&quot; );</td>
+	</tr>
+</table>
+
+
+
+<!-- ==================================================================================================== -->
+
+<hr style="page-break-before: always" />
+
+<h2 id="SystemFileIOXnci1Plugin">SystemFileIOXnci1Plugin<br /><span class="spec-path">(org.vcssl.nano.plugin.system.xnci1.SystemFileIOXnci1Plugin)</span></h2>
+
+<p>
+Provides I/O functions from/to files.
+</p>
+
+
+<h3>Variables</h3>
+
+
+<table id="READ" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">READ</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">The value of "mode" parameter of <a href="#open">open</a> function, for reading contents from a texit file.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">string (constant)</td>
+	</tr>
+</table>
+
+
+<table id="WRITE" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">WRITE</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">The value of "mode" parameter of <a href="#open">open</a> function, for writing contents to a texit file.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">string (constant)</td>
+	</tr>
+</table>
+
+
+<table id="APPEND" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">APPEND</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">The value of "mode" parameter of <a href="#open">open</a> function, for appending contents a texit file, without deleting the current contents.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">string (constant)</td>
+	</tr>
+</table>
+
+
+<table id="READ_CSV" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">READ_CSV</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			<p style="margin-top: 0px;">
+			The value of "mode" parameter of <a href="#open">open</a> function, for reading contents from a "numerical CSV" file.
+			</p>
+			<p style="margin-bottom: 0px;">
+			In the above, "numerical CSV" means the format that multiple numerical values are described in each line, delimited by commas: ",".
+			Note that, it assumes that values don't contain commas or other special characters, and they are not enclosed by double-quatations. 
+			Hence, even if they are contained in values, no special handling will be performed to them.
+			This mode reads the values, by splitting each line by commas simply.
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">string (constant)</td>
+	</tr>
+</table>
+
+
+<table id="WRITE_CSV" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">WRITE_CSV</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			<p style="margin-top: 0px;">
+			The value of "mode" parameter of <a href="#open">open</a> function, for writing contents to a "numerical CSV" file.
+			</p>
+			<p style="margin-bottom: 0px;">
+			In the above, "numerical CSV" means the format that multiple numerical values are described in each line, delimited by commas: ",".
+			Note that, it assumes that values don't contain commas or other special characters, and they are not enclosed by double-quatations. 
+			Hence, even if they are contained in values, no special handling will be performed to them.
+			This mode writes the values in a line, by inserting commas between them simply.
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">string (constant)</td>
+	</tr>
+</table>
+
+
+<table id="APPEND_CSV" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">APPEND_CSV</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			<p style="margin-top: 0px;">
+			The value of "mode" parameter of <a href="#open">open</a> function, for appending contents to a "numerical CSV" file, without deleting the current contents.
+			</p>
+			<p style="margin-bottom: 0px;">
+			In the above, "numerical CSV" means the format that multiple numerical values are described in each line, delimited by commas: ",".
+			Note that, it assumes that values don't contain commas or other special characters, and they are not enclosed by double-quatations. 
+			Hence, even if they are contained in values, no special handling will be performed to them.
+			This mode writes the values in a line, by inserting commas between them simply.
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">string (constant)</td>
+	</tr>
+</table>
+
+
+<table id="READ_TSV" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">READ_TSV</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			<p style="margin-top: 0px;">
+			The value of "mode" parameter of <a href="#open">open</a> function, for reading contents from a "numerical TSV" file.
+			</p>
+			<p style="margin-bottom: 0px;">
+			In the above, "numerical TSV" means the format that multiple numerical values are described in each line, delimited by tab characters (tabs).
+			Note that, it assumes that values don't contain tabs or other special characters, and they are not enclosed by double-quatations. 
+			Hence, even if they are contained in values, no special handling will be performed to them.
+			This mode reads the values, by splitting each line by tabs simply.
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">string (constant)</td>
+	</tr>
+</table>
+
+
+<table id="WRITE_TSV" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">WRITE_TSV</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			<p style="margin-top: 0px;">
+			The value of "mode" parameter of <a href="#open">open</a> function, for writing contents to a "numerical TSV" file.
+			</p>
+			<p style="margin-bottom: 0px;">
+			In the above, "numerical TSV" means the format that multiple numerical values are described in each line, delimited by tab characters (tabs).
+			Note that, it assumes that values don't contain tabs or other special characters, and they are not enclosed by double-quatations. 
+			Hence, even if they are contained in values, no special handling will be performed to them.
+			This mode writes the values in a line, by inserting tabs between them simply.
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">string (constant)</td>
+	</tr>
+</table>
+
+
+<table id="APPEND_TSV" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">APPEND_TSV</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			<p style="margin-top: 0px;">
+			The value of "mode" parameter of <a href="#open">open</a> function, for appending contents to a "numerical TSV" file, without deleting the current contents.
+			</p>
+			<p style="margin-bottom: 0px;">
+			In the above, "numerical TSV" means the format that multiple numerical values are described in each line, delimited by tab characters (tabs).
+			Note that, it assumes that values don't contain tabs or other special characters, and they are not enclosed by double-quatations. 
+			Hence, even if they are contained in values, no special handling will be performed to them.
+			This mode writes the values in a line, by inserting tabs between them simply.
+			</p>
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">string (constant)</td>
+	</tr>
+</table>
+
+
+<table id="READ_STSV" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">READ_STSV</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			<p style="margin-top: 0px;">
+			The value of "mode" parameter of <a href="#open">open</a> function, for reading contents from a numerical "Spaces &amp; Tabs Separated Values" file.
+			</p>
+			<p style="margin-bottom: 0px;">
+			In the above, "Spaces &amp; Tabs Separated Values" means the format that multiple numerical values are described in each line, delimited by space or tab characters.
+			Especially, as a delimiter, sometimes multiple consecutive spaces/tabs are used instead of one space/tab, for aligning positions of columns.
+			Note that, the format name "Spaces &amp; Tabs Separated Values" (STSV) is not general. It is the name used only in this document and related docs.
+			However, even though it is not clear what we should call it as, this format is often used in fields in numerical calculations and data analysis.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">string (constant)</td>
+	</tr>
+</table>
+
+
+<h3>Functions</h3>
+
+
+<table id="open" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">open(fileName, mode)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Opens the specified file in the specified mode, and returns the file ID assigned to it. 
+			The character encoding will be set to UTF-8 by default. If "FILE_IO_ENCODING" option exists, the encoding will be set to its value.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">int open(string fileName, string mode)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(string type) fileName: The name of the path of the file to be opened.
+			<br />
+			(string type) mode: The mode representing what kind of I/O will be performed to the file: select from <a href="#READ">READ</a>, <a href="#WRITE">WRITE</a>, and so on.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">
+			(int type) The ID assigned to the opened file, necessary to specify when reading/writing contents from/to the opened file. 
+			<br />
+			Note that, this file ID is different from the file ID assigned by OS. 
+			This file ID will be assigned in ascending order from 1, for the files opened in a script. (The same file ID may be reused after the file was closed.)
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">int fileId = open("example.txt", READ);</td>
+	</tr>
+</table>
+
+
+<table id="open3arg" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">open(fileName, mode, encoding)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">Opens the specified file in the specified mode and the encoding, and returns the file ID assigned to it.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">int open(string fileName, string mode, string encoding)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(string type) fileName: The name of the path of the file to be opened.
+			<br />
+			(string type) mode: The mode representing what kind of I/O will be performed to the file: select from <a href="#READ">READ</a>, <a href="#WRITE">WRITE</a>, and so on.
+			<br />
+			(string type) encoding: The encoding for reading/writing contents from/to the file (e.g.: "UTF-8", "Shift_JIS", and so on).
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">
+			(int type) The ID assigned to the opened file, necessary to specify when reading/writing contents from/to the opened file. 
+			<br />
+			Note that, this file ID is different from the file ID assigned by OS. 
+			This file ID will be assigned in ascending order from 1, for the files opened in a script. (The same file ID may be reused after the file was closed.)
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">int fileId = open("example.txt", READ, "Shift_JIS");</td>
+	</tr>
+</table>
+
+
+<table id="close" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">close(fileId)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">Closes the specified file.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">void close(int fileId)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(int type) fileId: The file ID of the file to be closed. (The file ID is the returned value of <a href="#open">open</a> function.)
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">None</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			int fileId = open("example.txt", READ);
+			<br />
+			...
+			<br />
+			close(fileId);
+		</td>
+	</tr>
+</table>
+
+
+<table id="flush" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">flush(fileId)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Writes (flushes) the temporary stored contents in the writing-buffer, to the file.
+			In most situation, it is not necessary to flush the buffer explicitly by this function, because the buffer will be flushed automatically when the file will be closed.
+			This function is useful when, for example, your script keeps a file opened for a while, and you want to flush the buffer at the arbitrary timing.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">void flush(int fileId)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(int type) fileId: The file ID of the file to be flushed. (The file ID is the returned value of <a href="#open">open</a> function.)
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">None</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			int fileId = open("example.txt", WRITE);
+			<br />
+			...
+			<br />
+			flush(fileId);
+		</td>
+	</tr>
+</table>
+
+
+<table id="write" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">write(fileId, ...)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">Writes the specified value(s) to the specified file.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">void write(int fileId, ...)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(int type) fileId: The file ID of the file to which write values. (The file ID is the returned value of <a href="#open">open</a> function.)
+			<br />
+			(any number/type, after the above param) The value(s) to be written.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">None</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			int fileId = open("example.txt", WRITE);
+			<br />
+			...
+			<br />
+			write(fileId, "abc", 123, 4.56, true);
+		</td>
+	</tr>
+</table>
+
+
+<table id="writeln" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">writeln(fileId, ...)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">Writes the specified value(s) to the specified file, and goes to the next line.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">void write(int fileId, ...)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(int type) fileId: The file ID of the file to which you write values. (The file ID is the returned value of <a href="#open">open</a> function.)
+			<br />
+			(any number/type, after the above param) The value(s) to be written.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">None</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			int fileId = open("example.txt", WRITE);
+			<br />
+			...
+			<br />
+			writeln(fileId, "abc", 123, 4.56, true);
+		</td>
+	</tr>
+</table>
+
+
+<table id="read" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">read(fileId)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">Reads all value(s) from the specified file.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">string[] read(int fileId)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(int type) fileId: The file ID of the file from which you read values. (The file ID is the returned value of <a href="#open">open</a> function.)
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">
+			(string[] type) In <a href="#READ">READ</a> mode, the array of which length is 1, storing all content of the file, will be returned (In this case, you can store it to a scalar variable, by "=" operator simply).
+			In <a href="#READ_CSV">READ_CSV</a> / <a href="#READ_TSV">READ_TSV</a> / <a href="#READ_STSV">READ_STSV</a> modes, an array storing the whole content(s) of the file splitted by the delimiter will be returned.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			int fileId = open("example.txt", READ);
+			<br />
+			...
+			<br />
+			string contentInFile = read(fileId);
+		</td>
+	</tr>
+</table>
+
+
+<table id="readln" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">readln(fileId)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">Reads one line from the specified file.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">string[] readln(int fileId)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(int type) fileId: The file ID of the file from which you read values. (The file ID is the returned value of <a href="#open">open</a> function.)
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">
+			(string[] type) In <a href="#READ">READ</a> mode, the array of which length is 1, storing the content of one line of the file, will be returned (In this case, you can store it to a scalar variable, by "=" operator simply).
+			In <a href="#READ_CSV">READ_CSV</a> / <a href="#READ_TSV">READ_TSV</a> / <a href="#READ_STSV">READ_STSV</a> modes, an array storing the content(s) of one line splitted by the delimiter will be returned.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			int fileId = open("example.txt", READ);
+			<br />
+			...
+			<br />
+			string contentInLine = readln(fileId);
+			<br />
+			<br />
+			&nbsp;( or )
+			<br />
+			<br />
+			int fileId = open("example.txt", READ_CSV);
+			<br />
+			...
+			<br />
+			string valuesInLine[] = readln(fileId);
+		</td>
+	</tr>
+</table>
+
+
+<table id="countln" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">countln(fileId)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Counts up the total number of lines in the specified file.
+			Please note that, this function internally reads all lines from the file, and reopens the file in the same mode.
+			Hence, if you use this function for the file from which some lines were already read, you will get incorrect result, and the reading state (e.g.: pointer to the line to be read next time) for the file will be reset.
+			To prevent the above, use this function only just after opening the file.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">int countln(int fileId)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(int type) fileId: The file ID of the file of which lines should be counted up. (The file ID is the returned value of <a href="#open">open</a> function.)
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">
+			(int type) The total number of lines in the specified file.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			int fileId = open("example.txt", READ);
+			<br />
+			int lineN = countln(fileId);
+		</td>
+	</tr>
+</table>
+
+
+<table id="save" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">save(filePath, value)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Opens the specified file, and writes the specified value, and closes the file.
+			The character encoding will be set to UTF-8 by default. If "FILE_IO_ENCODING" option exists, the encoding will be set to its value.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">void save(string filePath, any value)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(string type) filePath: The name or path of the file to which you write the value.
+			<br />
+			(any type) value: The value to be written.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">なし</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			save("example.txt", 123);
+		</td>
+	</tr>
+</table>
+
+
+<table id="load" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">load(filePath)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Opens the specified file, and reads the whole content, and closes the file.
+			The character encoding for the reading will be set to UTF-8 by default. If "FILE_IO_ENCODING" option exists, the encoding will be set to its value.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">string load(string filePath)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(string type) filePath: The name or path from which you read the content.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">
+			(string type) The content read from the file.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			string content = read("example.txt");
+		</td>
+	</tr>
+</table>
+
+
+<table id="exists" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">exists(filePath)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Checks whether a file or a directory exists at the specified file path.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">bool exists(string filePath)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(string type) filePath: The file path to be checked.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">
+			(bool type) Returns true if a file or a directory exists at the specified file path.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			bool result = exists("./temp/example.txt");
+		</td>
+	</tr>
+</table>
+
+
+<table id="isdir" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">isdir(directoryPath)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Checks whether the element (file or directory) located at the specified path is a directory.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">bool isdir(string directoryPath)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(string type) directoryPath: The directory path to be checked.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">
+			(bool type) Returns true if the element at the specified path is a directory.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			bool result = isdir("./temp/example_folder");
+		</td>
+	</tr>
+</table>
+
+
+<table id="listdir" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">listdir(directoryPath)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Gets the names of all elements (files and subdirectories) in the specified directory.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">string[] listdir(string directoryPath)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(string type) directoryPath: The path of the directory of which names of elements should be gotten.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">
+			(string[] type) The array storing names of the all elements in the specified directory.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			string elementNames[] = listdir("./temp/example_folder");
+		</td>
+	</tr>
+</table>
+
+
+<table id="mkdir" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">mkdir(directoryPath)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Creates the specified directory.
+			Please note that, this function does not create the parent directory automatically, so the parent directory must already exist.
+			If the parent directory does not exist, please create it at first, and then create the (sub)directory.
+			Also, if the specified directory already exist, this function do nothing (does not raise an error).
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">void mkdir(string directoryPath)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(string type) directoryPath: The path of the directory to be created.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">None</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			mkdir("./temp");
+			<br />
+			mkdir("./temp/example_folder");
+			<br />
+			mkdir("./temp/example_folder/example_folder2");
+		</td>
 	</tr>
 </table>
 
