@@ -12,15 +12,12 @@ import javax.script.ScriptException;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
-import javax.swing.SwingUtilities;
-
 import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.presenter.Presenter;
 import com.rinearn.processornano.util.LocaleCode;
 import com.rinearn.processornano.util.MessageManager;
 import com.rinearn.processornano.util.SettingContainer;
 import com.rinearn.processornano.view.ViewImpl;
-import com.rinearn.processornano.view.ViewInitializer;
 
 
 public final class RinearnProcessorNano {

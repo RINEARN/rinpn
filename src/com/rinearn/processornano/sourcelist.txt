@@ -19,7 +19,4 @@ com/rinearn/processornano/util/MessageManager.java
 com/rinearn/processornano/util/RoundingTarget.java
 com/rinearn/processornano/util/ScriptFileLoader.java
 com/rinearn/processornano/util/SettingContainer.java
-com/rinearn/processornano/view/ViewDisposer.java
 com/rinearn/processornano/view/ViewImpl.java
-com/rinearn/processornano/view/ViewInitializer.java
-com/rinearn/processornano/view/ViewInterface.java
