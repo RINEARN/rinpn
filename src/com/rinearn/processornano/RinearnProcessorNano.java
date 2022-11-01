@@ -193,8 +193,7 @@ public final class RinearnProcessorNano {
 		// 電卓画面を生成して初期化
 		ViewImpl view = new ViewImpl();
 		try {
-			ViewInitializer initialiser = new ViewInitializer(view, setting); // 別スレッドで初期化するためのRunnable
-			SwingUtilities.invokeAndWait(initialiser);                        // それをSwingのイベントスレッドで実行
+			view.initialize(setting);
 
 		// 初期化実行スレッドの処理待ち時の割り込みで失敗した場合など（結構異常な場合なので、リトライせず終了する）
 		} catch (InvocationTargetException | InterruptedException e) {

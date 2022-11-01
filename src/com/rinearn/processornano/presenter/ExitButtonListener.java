@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2020 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2022 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -7,21 +7,22 @@ package com.rinearn.processornano.presenter;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JOptionPane;
 
 import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.util.LocaleCode;
 import com.rinearn.processornano.util.SettingContainer;
-import com.rinearn.processornano.view.ViewInterface;
+import com.rinearn.processornano.view.ViewImpl;
 
 public final class ExitButtonListener implements ActionListener {
 
 	private CalculatorModel calculator = null;
-	private ViewInterface view = null;
+	private ViewImpl view = null;
 	private SettingContainer setting = null;
 
-	protected ExitButtonListener(ViewInterface view, CalculatorModel calculator, SettingContainer setting) {
+	protected ExitButtonListener(ViewImpl view, CalculatorModel calculator, SettingContainer setting) {
 		this.calculator = calculator;
 		this.view = view;
 		this.setting = setting;
@@ -30,10 +31,8 @@ public final class ExitButtonListener implements ActionListener {
 	@Override
 	public final void actionPerformed(ActionEvent actionEvent) {
 
-		// スクリプトが実行中の場合は、強制終了するかどうか尋ねて、YESなら強制終了する
+		// If any script is running, ask the user whether terminate it, and terminate it if YES.
 		if (calculator.isCalculating()) {
-
-			// 尋ねるメッセージを用意
 			String message = "";
 			if (this.setting.localeCode.equals(LocaleCode.JA_JP)) {
 				message = "計算処理を実行中ですが、このソフトを強制終了しますか ?";
@@ -41,13 +40,9 @@ public final class ExitButtonListener implements ActionListener {
 			if (this.setting.localeCode.equals(LocaleCode.EN_US)) {
 				message = "The calculation is running. Do you want to force-quit this software ?";
 			}
-
-			// ユーザーに尋ねる
 			int quitOrNot = JOptionPane.showConfirmDialog(
 				null, message, "!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE
 			);
-
-			// YESが選択されていたら強制終了、NOなら何もしない
 			if (quitOrNot == JOptionPane.YES_OPTION) {
 				System.exit(0);
 			} else {
@@ -55,11 +50,14 @@ public final class ExitButtonListener implements ActionListener {
 			}
 		}
 
-		// UIを破棄
-		//（ここはイベントスレッド内なので、ViewDisposer で SwingUtilities.invokeAndWait はせず、破棄メソッドを直接呼ぶ）
-		this.view.dispose();
+		// Dispose the UI resources.
+		try {
+			this.view.dispose();
+		} catch (InvocationTargetException | InterruptedException e) {
+			e.printStackTrace();
+		}
 
-		// 計算機モデルの終了時処理を実行
+		// Invoke the shutdown process of the model.
 		this.calculator.shutdown(this.setting);
 	}
 }

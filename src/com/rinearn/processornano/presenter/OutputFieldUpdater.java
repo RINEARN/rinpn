@@ -1,24 +1,24 @@
 /*
- * Copyright(C) 2019 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2022 RINEARN
  * This software is released under the MIT License.
  */
 
 package com.rinearn.processornano.presenter;
 
-import com.rinearn.processornano.view.ViewInterface;
+import com.rinearn.processornano.view.ViewImpl;
 
 public final class OutputFieldUpdater implements Runnable {
 
-	private ViewInterface view = null;
+	private ViewImpl view = null;
 	private String outputText = null;
 
-	protected OutputFieldUpdater(ViewInterface view, String outputText) {
+	protected OutputFieldUpdater(ViewImpl view, String outputText) {
 		this.view = view;
 		this.outputText = outputText;
 	}
 
 	@Override
 	public final void run() {
-		this.view.setOutputText(this.outputText);
+		this.view.outputField.setText(this.outputText);
 	}
 }

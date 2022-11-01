@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2022 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -9,15 +9,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import com.rinearn.processornano.view.ViewInterface;
+import com.rinearn.processornano.view.ViewImpl;
 
 public final class WindowMouseListener implements MouseListener, MouseMotionListener {
 
-	private ViewInterface view = null;
+	private ViewImpl view = null;
 	private int mousePressedX = -1;
 	private int mousePressedY = -1;
 
-	protected WindowMouseListener(ViewInterface view) {
+	protected WindowMouseListener(ViewImpl view) {
 		this.view = view;
 	}
 
@@ -35,10 +35,10 @@ public final class WindowMouseListener implements MouseListener, MouseMotionList
 		int dx = mouseCurrentX - mousePressedX;
 		int dy = mouseCurrentY - mousePressedY;
 
-		int x = this.view.getLocationX();
-		int y = this.view.getLocationY();
+		int x = this.view.frame.getLocation().x;
+		int y = this.view.frame.getLocation().y;
 
-		this.view.setLocation(x + dx, y + dy);
+		this.view.frame.setLocation(x + dx, y + dy);
 	}
 
 	@Override
