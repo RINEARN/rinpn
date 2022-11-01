@@ -1,7 +1,6 @@
 com/rinearn/rinpn/model/AsynchronousCalculationListener.java
 com/rinearn/rinpn/model/AsynchronousCalculationRunner.java
 com/rinearn/rinpn/model/CalculatorModel.java
-com/rinearn/rinpn/model/OutputValueFormatter.java
 com/rinearn/rinpn/presenter/Presenter.java
 com/rinearn/rinpn/Prototype.java
 com/rinearn/rinpn/RinearnProcessorNano.java
@@ -9,6 +8,7 @@ com/rinearn/rinpn/RinearnProcessorNanoException.java
 com/rinearn/rinpn/RinearnProcessorNanoFatalException.java
 com/rinearn/rinpn/util/LocaleCode.java
 com/rinearn/rinpn/util/MessageManager.java
+com/rinearn/rinpn/util/OutputValueFormatter.java
 com/rinearn/rinpn/util/RoundingTarget.java
 com/rinearn/rinpn/util/ScriptFileLoader.java
 com/rinearn/rinpn/util/SettingContainer.java

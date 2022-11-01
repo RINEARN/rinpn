@@ -19,6 +19,7 @@ import com.rinearn.rinpn.RinearnProcessorNanoException;
 import com.rinearn.rinpn.RinearnProcessorNanoFatalException;
 import com.rinearn.rinpn.util.LocaleCode;
 import com.rinearn.rinpn.util.MessageManager;
+import com.rinearn.rinpn.util.OutputValueFormatter;
 import com.rinearn.rinpn.util.ScriptFileLoader;
 import com.rinearn.rinpn.util.SettingContainer;
 
