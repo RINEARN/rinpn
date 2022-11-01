@@ -105,14 +105,14 @@ public final class SettingContainer implements Cloneable {
 		if (settingVnanoEngine == null) {
 			if (localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(
-					"Please put Vnano.jar in the same directory as RinearnProcessorNano.jar.",
+					"Please put Vnano.jar in the same directory as RINPn.jar.",
 					"Engine Loading Error",
 					localeCode
 				);
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(
-					"Vnano.jar を、RinearnProcessorNano.jar と同じフォルダ内に配置してください。",
+					"Vnano.jar を、RINPn.jar と同じフォルダ内に配置してください。",
 					"エンジン読み込みエラー",
 					localeCode
 				);

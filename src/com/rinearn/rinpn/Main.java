@@ -20,7 +20,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 
-public final class RinearnProcessorNano {
+public final class Main {
 
 	private static final String VERSION = "0.9.3";
 	private static final String OPTION_NAME_VERSION = "--version";
@@ -86,11 +86,11 @@ public final class RinearnProcessorNano {
 
 		// 計算式が渡されなかった場合は電卓画面を起動
 		if (inputtedContent == null) {
-			new RinearnProcessorNano().launchCalculatorWindow(dirPath, debugEnabled);
+			new Main().launchCalculatorWindow(dirPath, debugEnabled);
 
 		// 計算式が渡された場合はCUIモードで計算（結果はコマンドラインに表示）
 		} else {
-			new RinearnProcessorNano().calculate(inputtedContent, dirPath, debugEnabled);
+			new Main().calculate(inputtedContent, dirPath, debugEnabled);
 		}
 	}
 
@@ -109,7 +109,7 @@ public final class RinearnProcessorNano {
 	}
 
 
-	public RinearnProcessorNano() {
+	public Main() {
 		// 電卓画面の起動は、インスタンス生成後に明示的に launchCalculatorWindow() を呼ぶ
 	}
 

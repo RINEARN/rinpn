@@ -1,7 +1,6 @@
+com/rinearn/rinpn/Main.java
 com/rinearn/rinpn/model/Model.java
 com/rinearn/rinpn/presenter/Presenter.java
-com/rinearn/rinpn/Prototype.java
-com/rinearn/rinpn/RinearnProcessorNano.java
 com/rinearn/rinpn/RinearnProcessorNanoException.java
 com/rinearn/rinpn/RinearnProcessorNanoFatalException.java
 com/rinearn/rinpn/util/LocaleCode.java

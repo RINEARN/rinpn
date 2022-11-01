@@ -104,13 +104,13 @@ public final class Model {
 		if (engine == null) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(
-					"Please put Vnano.jar in the same directory as RinearnProcessorNano.jar.",
+					"Please put Vnano.jar in the same directory as RINPn.jar.",
 					"Engine Loading Error", setting.localeCode
 				);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(
-					"Vnano.jar を RinearnProcessorNano.jar と同じフォルダ内に配置してください。",
+					"Vnano.jar を RINPn.jar と同じフォルダ内に配置してください。",
 					"エンジン読み込みエラー", setting.localeCode
 				);
 			}
