@@ -2,14 +2,7 @@ com/rinearn/rinpn/model/AsynchronousCalculationListener.java
 com/rinearn/rinpn/model/AsynchronousCalculationRunner.java
 com/rinearn/rinpn/model/CalculatorModel.java
 com/rinearn/rinpn/model/OutputValueFormatter.java
-com/rinearn/rinpn/presenter/ExitButtonListener.java
-com/rinearn/rinpn/presenter/InputFieldMouseListener.java
-com/rinearn/rinpn/presenter/OutputFieldMouseListener.java
-com/rinearn/rinpn/presenter/OutputFieldUpdater.java
 com/rinearn/rinpn/presenter/Presenter.java
-com/rinearn/rinpn/presenter/RunButtonListener.java
-com/rinearn/rinpn/presenter/RunKeyListener.java
-com/rinearn/rinpn/presenter/WindowMouseListener.java
 com/rinearn/rinpn/Prototype.java
 com/rinearn/rinpn/RinearnProcessorNano.java
 com/rinearn/rinpn/RinearnProcessorNanoException.java
