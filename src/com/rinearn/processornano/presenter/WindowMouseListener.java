@@ -9,15 +9,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import com.rinearn.processornano.view.ViewImpl;
+import com.rinearn.processornano.view.View;
 
 public final class WindowMouseListener implements MouseListener, MouseMotionListener {
 
-	private ViewImpl view = null;
+	private View view = null;
 	private int mousePressedX = -1;
 	private int mousePressedY = -1;
 
-	protected WindowMouseListener(ViewImpl view) {
+	protected WindowMouseListener(View view) {
 		this.view = view;
 	}
 

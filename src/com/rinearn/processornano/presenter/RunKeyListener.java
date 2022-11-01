@@ -10,15 +10,15 @@ import java.awt.event.KeyListener;
 
 import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.util.SettingContainer;
-import com.rinearn.processornano.view.ViewImpl;
+import com.rinearn.processornano.view.View;
 
 public final class RunKeyListener implements KeyListener {
 
 	private CalculatorModel calculator;
-	private ViewImpl view;
+	private View view;
 	private SettingContainer setting;
 
-	protected RunKeyListener(ViewImpl view, CalculatorModel calculator, SettingContainer setting) {
+	protected RunKeyListener(View view, CalculatorModel calculator, SettingContainer setting) {
 		this.calculator = calculator;
 		this.view = view;
 		this.setting = setting;

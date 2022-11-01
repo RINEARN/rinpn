@@ -29,7 +29,7 @@ import com.rinearn.processornano.util.SettingContainer;
 /**
  * The class providing UI components of this application.
  */
-public final class ViewImpl {
+public final class View {
 	
 	/** The flag storing whether the UI components have already been initialized. */
 	private volatile boolean initialized = false;

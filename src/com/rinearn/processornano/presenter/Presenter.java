@@ -7,12 +7,12 @@ package com.rinearn.processornano.presenter;
 
 import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.util.SettingContainer;
-import com.rinearn.processornano.view.ViewImpl;
+import com.rinearn.processornano.view.View;
 
 public final class Presenter {
 
 	public final void link(
-			ViewImpl view, CalculatorModel calculator, SettingContainer setting) {
+			View view, CalculatorModel calculator, SettingContainer setting) {
 
 		WindowMouseListener windowMouseListener = new WindowMouseListener(view);
 		view.frame.addMouseListener(windowMouseListener);

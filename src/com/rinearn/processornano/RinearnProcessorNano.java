@@ -17,7 +17,7 @@ import com.rinearn.processornano.presenter.Presenter;
 import com.rinearn.processornano.util.LocaleCode;
 import com.rinearn.processornano.util.MessageManager;
 import com.rinearn.processornano.util.SettingContainer;
-import com.rinearn.processornano.view.ViewImpl;
+import com.rinearn.processornano.view.View;
 
 
 public final class RinearnProcessorNano {
@@ -188,7 +188,7 @@ public final class RinearnProcessorNano {
 
 
 		// 電卓画面を生成して初期化
-		ViewImpl view = new ViewImpl();
+		View view = new View();
 		try {
 			view.initialize(setting);
 

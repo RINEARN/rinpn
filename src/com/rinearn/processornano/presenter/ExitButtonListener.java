@@ -14,15 +14,15 @@ import javax.swing.JOptionPane;
 import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.util.LocaleCode;
 import com.rinearn.processornano.util.SettingContainer;
-import com.rinearn.processornano.view.ViewImpl;
+import com.rinearn.processornano.view.View;
 
 public final class ExitButtonListener implements ActionListener {
 
 	private CalculatorModel calculator = null;
-	private ViewImpl view = null;
+	private View view = null;
 	private SettingContainer setting = null;
 
-	protected ExitButtonListener(ViewImpl view, CalculatorModel calculator, SettingContainer setting) {
+	protected ExitButtonListener(View view, CalculatorModel calculator, SettingContainer setting) {
 		this.calculator = calculator;
 		this.view = view;
 		this.setting = setting;

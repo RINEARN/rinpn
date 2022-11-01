@@ -5,14 +5,14 @@
 
 package com.rinearn.processornano.presenter;
 
-import com.rinearn.processornano.view.ViewImpl;
+import com.rinearn.processornano.view.View;
 
 public final class OutputFieldUpdater implements Runnable {
 
-	private ViewImpl view = null;
+	private View view = null;
 	private String outputText = null;
 
-	protected OutputFieldUpdater(ViewImpl view, String outputText) {
+	protected OutputFieldUpdater(View view, String outputText) {
 		this.view = view;
 		this.outputText = outputText;
 	}

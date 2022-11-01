@@ -8,13 +8,13 @@ package com.rinearn.processornano.presenter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import com.rinearn.processornano.view.ViewImpl;
+import com.rinearn.processornano.view.View;
 
 public final class OutputFieldMouseListener implements MouseListener {
 
-	private ViewImpl view = null;
+	private View view = null;
 
-	protected OutputFieldMouseListener(ViewImpl view) {
+	protected OutputFieldMouseListener(View view) {
 		this.view = view;
 	}
 

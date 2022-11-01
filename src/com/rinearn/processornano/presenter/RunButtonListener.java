@@ -14,15 +14,15 @@ import com.rinearn.processornano.model.AsynchronousCalculationListener;
 import com.rinearn.processornano.model.AsynchronousCalculationRunner;
 import com.rinearn.processornano.model.CalculatorModel;
 import com.rinearn.processornano.util.SettingContainer;
-import com.rinearn.processornano.view.ViewImpl;
+import com.rinearn.processornano.view.View;
 
 public final class RunButtonListener implements ActionListener {
 
 	private CalculatorModel calculator = null;
-	private ViewImpl view = null;
+	private View view = null;
 	private SettingContainer setting = null;
 
-	protected RunButtonListener(ViewImpl view, CalculatorModel calculator, SettingContainer setting) {
+	protected RunButtonListener(View view, CalculatorModel calculator, SettingContainer setting) {
 		this.calculator = calculator;
 		this.view = view;
 		this.setting = setting;
@@ -33,7 +33,7 @@ public final class RunButtonListener implements ActionListener {
 		handleEvent(this.view, this.calculator, this.setting);
 	}
 
-	protected static void handleEvent(final ViewImpl view, CalculatorModel calculator, SettingContainer setting) {
+	protected static void handleEvent(final View view, CalculatorModel calculator, SettingContainer setting) {
 		view.outputField.setText("RUNNING...");
 
 		// 計算完了時に、結果を OUTPUT 欄に表示するためのイベントリスナーを用意
