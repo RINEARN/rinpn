@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.rinpn.view;
+package com.rinearn.rinpn;
 
 import java.awt.Color;
 import java.awt.FlowLayout;

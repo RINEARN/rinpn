@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.rinpn.presenter;
+package com.rinearn.rinpn;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,10 +17,8 @@ import javax.swing.SwingUtilities;
 
 import java.lang.reflect.InvocationTargetException;
 
-import com.rinearn.rinpn.model.Model;
 import com.rinearn.rinpn.util.LocaleCode;
 import com.rinearn.rinpn.util.SettingContainer;
-import com.rinearn.rinpn.view.View;
 
 
 /**

@@ -9,12 +9,9 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import com.rinearn.rinpn.model.Model;
-import com.rinearn.rinpn.presenter.Presenter;
 import com.rinearn.rinpn.util.LocaleCode;
 import com.rinearn.rinpn.util.MessageManager;
 import com.rinearn.rinpn.util.SettingContainer;
-import com.rinearn.rinpn.view.View;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;

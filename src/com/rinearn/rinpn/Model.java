@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.rinpn.model;
+package com.rinearn.rinpn;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -15,8 +15,6 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import com.rinearn.rinpn.RINPnException;
-import com.rinearn.rinpn.RINPnFatalException;
 import com.rinearn.rinpn.util.LocaleCode;
 import com.rinearn.rinpn.util.MessageManager;
 import com.rinearn.rinpn.util.OutputValueFormatter;
