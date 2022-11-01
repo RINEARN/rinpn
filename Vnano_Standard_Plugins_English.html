@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Vnano Standard Plug-ins Specifications</title>
+	<meta charset="UTF-8">
+	<style type="text/css">
+		.spec-dl { font-weight: bold; }
+		.spec-dl dd { margin-bottom: 14px; }
+		.spec-dl dt { display: list-item; list-style-position: outside; margin-left: 20px; list-style-type: disc; }
+	</style>
+</head>
+
+<body>
+
+
+
+<h1>Vnano Standard Plug-ins Specifications</h1>
+<hr />
+
+<h2>Abstract</h2>
+
+<p>
+Vnano Standard Plug-ins are a set of official plug-ins providing basic utility features as functions/variables available in Vnano (VCSSL nano) scripts.
+</p>
+
+<p>
+These standard plug-ins may be bundled with applications (software) on which scripting features in the Vnano are supported.
+On such applications, features (functions/variables) provided by standard plug-ins are available by default.
+However, depending with the purpose of the scripting feature of the application, some (or all) of standard plug-ing may not be bundled.
+See the document of the application for checking which standard plug-ins are available.
+</p>
+
+
+
+<h2>License</h2>
+
+<p>
+All Vnano Standard Plug-ins are released under <a href="https://creativecommons.org/publicdomain/zero/1.0/deed">CC0</a>.
+</p>
+
+
+<h2>List of Standard Plug-ins and Features</h2>
+
+
+<h3><a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html">System Plug-in Group</a></h3>
+
+<p>
+Plug-ins providing basic features, e.g.: I/O features, utility features, and so on.
+</p>
+
+<dl class="spec-dl">
+	<dt><a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#SystemEnvironmentXnci1Plugin">SystemEnvironmentXnci1Plugin</a></dt>
+		<dd>
+			Provides environment-related variables.
+			<br />
+			Variables:
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#EOL">EOL</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#LF">LF</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#CR">CR</a>
+		</dd>
+	<dt><a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#SystemEnvironmentXnci1Plugin">SystemDataTypeXnci1Plugin</a></dt>
+		<dd>
+			Provides data-type-utility functions/variables.
+			<br />
+			Variables: 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#INT_MAX">INT_MAX</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#INT_MIN">INT_MIN</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#FLOAT_MAX">FLOAT_MAX</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#FLOAT_MIN_ABS_NORMAL">FLOAT_MIN_ABS_NORMAL</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#FLOAT_MIN_ABS_DENORMAL">FLOAT_MIN_ABS_DENORMAL</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#NAN">NAN</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#INF">INF</a>
+			<br />
+			Functions: 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#nan">nan(value)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#inf">inf(value)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#length">length(array, dimIndex)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#rank">rank(array)</a>
+		</dd>
+	<dt><a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#SystemTerminalIOXnci1Plugin">SystemTerminalIOXnci1Plugin</a></dt>
+		<dd>
+			Provides I/O functions from/to the terminal.
+			<br />
+			Variables: 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#print">print(...)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#println">println(...)</a>
+		</dd>
+	<dt><a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#SystemUserIOXnci1Plugin">SystemUserIOXnci1Plugin</a></dt>
+		<dd>
+			Provides interactive I/O functions from/to the user.
+			<br />
+			Variables: 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#popup">popup(message)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#alert">alert(message)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#confirm">confirm(message)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#input">input(message)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#input-string-any">input(message, defaultValue)</a>
+		</dd>
+	<dt><a href="#SystemFileIOXnci1Plugin">SystemFileIOXnci1Plugin</a></dt>
+		<dd>
+			Provides I/O functions from/to files.
+			<br />
+			Variables: 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#READ">READ</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#WRITE">WRITE</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#APPEND">APPEND</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#READ_CSV">READ_CSV</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#WRITE_CSV">WRITE_CSV</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#APPEND_CSV">APPEND_CSV</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#READ_TSV">READ_TSV</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#WRITE_TSV">WRITE_TSV</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#APPEND_TSV">APPEND_TSV</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#READ_STSV">READ_STSV</a>
+			<br />
+			Functions: 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#open">open(fileName, mode)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#open3arg">open(fileName, mode, encoding)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#close">close(fileId)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#flush">flush(fileId)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#write">write(fileId, ...)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#writeln">writeln(fileId, ...)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#read">read(fileId)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#readln">readln(fileId)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#countln">countln(fileId)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#save">save(filePath, value)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#load">load(filePath)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#exists">exists(filePath)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#isdir">isdir(directoryPath)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#listdir">listdir(directoryPath)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#mkdir">mkdir(directoryPath)</a> / 
+		</dd>
+	<dt><a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#SystemTimeXnci1Plugin">SystemTimeXnci1Plugin</a></dt>
+		<dd>
+			Provides time-utility functions.
+			<br />
+			Functions: 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#time">time()</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#sleep">sleep(sleepTime)</a>
+		</dd>
+	<dt><a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#SystemTerminationXnci1Plugin">SystemTerminationXnci1Plugin</a></dt>
+		<dd>
+			Provides functions for terminating scripts.
+			<br />
+			Functions: 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#exit">exit()</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#exit_int">exit(exitStatusCode)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#error">error(errorMessage)</a>
+		</dd>
+	<dt><a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#SystemTestXnci1Plugin">SystemTestXnci1Plugin</a></dt>
+		<dd>
+			Provides utility functions for testing.
+			<br />
+			Functions: <a href="./plugin/org/vcssl/nano/plugin/system/README_ENGLISH.html#assert">assert(expectedCondition)</a>
+		</dd>
+</dl>
+
+
+
+<h3><a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html">Math Plug-in Group</a></h3>
+
+
+
+<p>
+Plug-ins providing elementary math &amp; statistical functions.
+</p>
+
+<dl class="spec-dl">
+	<dt><a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#MathElementaryXnci1Plugin">MathElementaryXnci1Plugin</a></dt>
+		<dd>
+			Provides elementary math functions.
+			<br />
+			Variables: <a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#PI">PI</a>
+			<br />
+			Functons:
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#rad">rad(degree)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#deg">deg(radian)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#sin">sin(x)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#cos">cos(x)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#tan">tan(x)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#asin">asin(x)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#acos">acos(x)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#atan">atan(x)</a> /
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#sqrt">sqrt(x)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#ln">ln(x)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#log10">log10(x)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#pow">pow(x,exponent)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#exp">exp(x)</a> /
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#abs">abs(x)</a>
+		</dd>
+	<dt><a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#MathStatisticalXnci1Plugin">MathStatisticalXnci1Plugin</a></dt>
+		<dd>
+			Provides elementary statistical functions.
+			<br />
+			Functions: 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#sum">sum(...)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#mean">mean(...)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#van">van(...)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#van1">van1(...)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#sdn">sdn(...)</a> / 
+			<a href="./plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#sdn1">sdn1(...)</a>
+		</dd>
+</dl>
+
+
+
+
+
+
+</body>
+</html>
