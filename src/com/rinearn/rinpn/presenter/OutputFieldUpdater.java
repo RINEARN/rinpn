@@ -3,9 +3,9 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.presenter;
+package com.rinearn.rinpn.presenter;
 
-import com.rinearn.processornano.view.View;
+import com.rinearn.rinpn.view.View;
 
 public final class OutputFieldUpdater implements Runnable {
 

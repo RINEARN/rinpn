@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.model;
+package com.rinearn.rinpn.model;
 
 public interface AsynchronousCalculationListener {
 

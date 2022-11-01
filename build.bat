@@ -26,14 +26,14 @@ jar cvfm Vnano.jar src_vnano/org/vcssl/nano/meta/main.mf -C bin_vnano org -C src
 :: --------------------------------------------------
 
 cd src
-javac @com/rinearn/processornano/sourcelist.txt -d ../bin -encoding UTF-8
+javac @com/rinearn/rinpn/sourcelist.txt -d ../bin -encoding UTF-8
 cd ..
 
 :: --------------------------------------------------
 :: create the JAR file of the RINPn (RINPn.jar)
 :: --------------------------------------------------
 
-jar cvfm RINPn.jar src/com/rinearn/processornano/meta/main.mf -C bin com
+jar cvfm RINPn.jar src/com/rinearn/rinpn/meta/main.mf -C bin com
 
 
 :: --------------------------------------------------

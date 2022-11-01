@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.util;
+package com.rinearn.rinpn.util;
 
 public enum RoundingTarget {
 	SIGNIFICAND,

@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.util;
+package com.rinearn.rinpn.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,7 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import com.rinearn.processornano.RinearnProcessorNanoException;
+import com.rinearn.rinpn.RinearnProcessorNanoException;
 
 public class ScriptFileLoader {
 

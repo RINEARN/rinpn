@@ -3,13 +3,13 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.presenter;
+package com.rinearn.rinpn.presenter;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import com.rinearn.processornano.view.View;
+import com.rinearn.rinpn.view.View;
 
 public final class WindowMouseListener implements MouseListener, MouseMotionListener {
 

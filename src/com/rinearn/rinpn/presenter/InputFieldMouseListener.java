@@ -3,25 +3,25 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.presenter;
+package com.rinearn.rinpn.presenter;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import com.rinearn.processornano.view.View;
+import com.rinearn.rinpn.view.View;
 
-public final class OutputFieldMouseListener implements MouseListener {
+public final class InputFieldMouseListener implements MouseListener {
 
 	private View view = null;
 
-	protected OutputFieldMouseListener(View view) {
+	protected InputFieldMouseListener(View view) {
 		this.view = view;
 	}
 
 	@Override
 	public final void mouseClicked(MouseEvent e) {
 		if(javax.swing.SwingUtilities.isRightMouseButton(e)){
-			this.view.textFieldPopupMenu.show(this.view.outputField, e.getX(), e.getY());
+			this.view.textFieldPopupMenu.show(this.view.inputField, e.getX(), e.getY());
 		}
 	}
 

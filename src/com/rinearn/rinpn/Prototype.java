@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano;
+package com.rinearn.rinpn;
 
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptEngine;

@@ -3,21 +3,21 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano;
+package com.rinearn.rinpn;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import com.rinearn.rinpn.model.CalculatorModel;
+import com.rinearn.rinpn.presenter.Presenter;
+import com.rinearn.rinpn.util.LocaleCode;
+import com.rinearn.rinpn.util.MessageManager;
+import com.rinearn.rinpn.util.SettingContainer;
+import com.rinearn.rinpn.view.View;
+
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-
-import com.rinearn.processornano.model.CalculatorModel;
-import com.rinearn.processornano.presenter.Presenter;
-import com.rinearn.processornano.util.LocaleCode;
-import com.rinearn.processornano.util.MessageManager;
-import com.rinearn.processornano.util.SettingContainer;
-import com.rinearn.processornano.view.View;
 
 
 public final class RinearnProcessorNano {

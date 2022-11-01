@@ -3,14 +3,14 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.model;
+package com.rinearn.rinpn.model;
 
 import javax.script.ScriptException;
 
-import com.rinearn.processornano.RinearnProcessorNanoException;
-import com.rinearn.processornano.util.LocaleCode;
-import com.rinearn.processornano.util.MessageManager;
-import com.rinearn.processornano.util.SettingContainer;
+import com.rinearn.rinpn.RinearnProcessorNanoException;
+import com.rinearn.rinpn.util.LocaleCode;
+import com.rinearn.rinpn.util.MessageManager;
+import com.rinearn.rinpn.util.SettingContainer;
 
 
 public final class AsynchronousCalculationRunner implements Runnable {

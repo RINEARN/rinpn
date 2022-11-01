@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.view;
+package com.rinearn.rinpn.view;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -21,9 +21,10 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultEditorKit;
-import javax.swing.SwingUtilities;
 
-import com.rinearn.processornano.util.SettingContainer;
+import com.rinearn.rinpn.util.SettingContainer;
+
+import javax.swing.SwingUtilities;
 
 
 /**

@@ -3,15 +3,15 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.model;
+package com.rinearn.rinpn.model;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import com.rinearn.processornano.RinearnProcessorNanoFatalException;
-import com.rinearn.processornano.util.RoundingTarget;
-import com.rinearn.processornano.util.SettingContainer;
+import com.rinearn.rinpn.RinearnProcessorNanoFatalException;
+import com.rinearn.rinpn.util.RoundingTarget;
+import com.rinearn.rinpn.util.SettingContainer;
 
 // メモ：暗黙丸めと明示的丸めは独立に効くようにしてもいいかもしれない。
 //       現状の仕様では、明示的丸めが OFF の場合に暗黙丸めも OFF にできない。
