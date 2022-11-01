@@ -19,7 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import com.rinearn.rinpn.model.AsynchronousCalculationListener;
 import com.rinearn.rinpn.model.AsynchronousCalculationRunner;
-import com.rinearn.rinpn.model.CalculatorModel;
+import com.rinearn.rinpn.model.Model;
 import com.rinearn.rinpn.util.LocaleCode;
 import com.rinearn.rinpn.util.SettingContainer;
 import com.rinearn.rinpn.view.View;
@@ -34,20 +34,20 @@ public final class Presenter {
 	 * Links the specified View and the specified Model by Presenter's event listeners.
 	 * 
 	 * @param view The view to be linked.
-	 * @param calculator The model to be linked.
+	 * @param model The model to be linked.
 	 * @param settingContainer The container storing setting values.
 	 */
 	public final void link(
-			View view, CalculatorModel calculator, SettingContainer settingContainer) {
+			View view, Model model, SettingContainer settingContainer) {
 
 		WindowMouseListener windowMouseListener = new WindowMouseListener(view);
 		view.frame.addMouseListener(windowMouseListener);
 		view.frame.addMouseMotionListener(windowMouseListener);
-		view.inputField.addKeyListener(new RunKeyListener(view, calculator, settingContainer));
+		view.inputField.addKeyListener(new RunKeyListener(view, model, settingContainer));
 		view.inputField.addMouseListener(new InputFieldMouseListener(view));
 		view.outputField.addMouseListener(new OutputFieldMouseListener(view));
-		view.runButton.addActionListener(new RunButtonListener(view, calculator, settingContainer));
-		view.exitButton.addActionListener(new ExitButtonListener(view, calculator, settingContainer));
+		view.runButton.addActionListener(new RunButtonListener(view, model, settingContainer));
+		view.exitButton.addActionListener(new ExitButtonListener(view, model, settingContainer));
 	}
 
 
@@ -147,22 +147,22 @@ public final class Presenter {
 	 * The listener handling the event of "=" button, for running a calculation or a script.
 	 */
 	private static final class RunButtonListener implements ActionListener {
-		private CalculatorModel calculator = null;
+		private Model model = null;
 		private View view = null;
 		private SettingContainer settingContainer = null;
 
-		protected RunButtonListener(View view, CalculatorModel calculator, SettingContainer settingContainer) {
-			this.calculator = calculator;
+		protected RunButtonListener(View view, Model model, SettingContainer settingContainer) {
+			this.model = model;
 			this.view = view;
 			this.settingContainer = settingContainer;
 		}
 
 		@Override
 		public final void actionPerformed(ActionEvent e) {
-			handleEvent(this.view, this.calculator, this.settingContainer);
+			handleEvent(this.view, this.model, this.settingContainer);
 		}
 
-		protected static void handleEvent(final View view, CalculatorModel calculator, SettingContainer setting) {
+		protected static void handleEvent(final View view, Model model, SettingContainer setting) {
 			view.outputField.setText("RUNNING...");
 
 			// Create a listener for updating the content of the "OUTPUT" text field,
@@ -179,7 +179,7 @@ public final class Presenter {
 			// Create a thread for running the calculation/script, and starts it.
 			// When it will have completed, the above "calculation listener" will be called back. 
 			AsynchronousCalculationRunner asyncCalcRunner
-					= new AsynchronousCalculationRunner(view.inputField.getText(), asyncCalcListener, calculator, setting);
+					= new AsynchronousCalculationRunner(view.inputField.getText(), asyncCalcListener, model, setting);
 			Thread calculatingThread = new Thread(asyncCalcRunner);
 			calculatingThread.start();
 		}
@@ -190,12 +190,12 @@ public final class Presenter {
 	 * The listener handling the event of "=" button, for running a calculation or a script.
 	 */
 	private static final class RunKeyListener extends KeyAdapter {
-		private CalculatorModel calculator;
+		private Model model;
 		private View view;
 		private SettingContainer settingContainer;
 
-		protected RunKeyListener(View view, CalculatorModel calculator, SettingContainer settingContainer) {
-			this.calculator = calculator;
+		protected RunKeyListener(View view, Model model, SettingContainer settingContainer) {
+			this.model = model;
 			this.view = view;
 			this.settingContainer = settingContainer;
 		}
@@ -203,7 +203,7 @@ public final class Presenter {
 		@Override
 		public final void keyPressed(KeyEvent e) {
 			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				RunButtonListener.handleEvent(this.view, this.calculator, this.settingContainer);
+				RunButtonListener.handleEvent(this.view, this.model, this.settingContainer);
 			}
 		}
 	}
@@ -213,12 +213,12 @@ public final class Presenter {
 	 * The listener handling the event of the exit button.
 	 */
 	private static final class ExitButtonListener implements ActionListener {
-		private CalculatorModel calculator = null;
+		private Model model = null;
 		private View view = null;
 		private SettingContainer settingContainer = null;
 
-		protected ExitButtonListener(View view, CalculatorModel calculator, SettingContainer settingContainer) {
-			this.calculator = calculator;
+		protected ExitButtonListener(View view, Model model, SettingContainer settingContainer) {
+			this.model = model;
 			this.view = view;
 			this.settingContainer = settingContainer;
 		}
@@ -227,7 +227,7 @@ public final class Presenter {
 		public final void actionPerformed(ActionEvent actionEvent) {
 
 			// If any script is running, ask the user whether terminate it, and terminate it if YES.
-			if (calculator.isCalculating()) {
+			if (this.model.isCalculating()) {
 				String message = "";
 				if (this.settingContainer.localeCode.equals(LocaleCode.JA_JP)) {
 					message = "計算処理を実行中ですが、このソフトを強制終了しますか ?";
@@ -253,7 +253,7 @@ public final class Presenter {
 			}
 
 			// Invoke the shutdown process of the model.
-			this.calculator.shutdown(this.settingContainer);
+			this.model.shutdown(this.settingContainer);
 		}
 	}
 }

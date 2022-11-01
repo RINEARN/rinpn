@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2021 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2022 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -23,7 +23,7 @@ import com.rinearn.rinpn.util.OutputValueFormatter;
 import com.rinearn.rinpn.util.ScriptFileLoader;
 import com.rinearn.rinpn.util.SettingContainer;
 
-public final class CalculatorModel {
+public final class Model {
 
 	private static final String SCRIPT_EXTENSION = ".vnano";
 	private static final String DEFAULT_SCRIPT_ENCODING = "UTF-8";
@@ -50,7 +50,7 @@ public final class CalculatorModel {
 		public void output(String value) {
 
 			// GUIモード用に値を控える
-			CalculatorModel.this.lastOutputContent = value;
+			Model.this.lastOutputContent = value;
 
 			// CUIモード用に値を標準出力に出力する
 			if (!this.isGuiMode) {
@@ -134,7 +134,7 @@ public final class CalculatorModel {
 		}
 
 		// 組み込み関数「 output 」を提供するプラグイン（このクラス内に内部クラスとして実装）を登録
-		this.engine.put("OutputPlugin", new CalculatorModel.OutputPlugin(setting, isGuiMode));
+		this.engine.put("OutputPlugin", new Model.OutputPlugin(setting, isGuiMode));
 
 		// プラグインからのパーミッション要求の扱いを設定するため、パーミッションの項目名と値を格納するマップを用意
 		Map<String, String> permissionMap = new HashMap<String, String>();

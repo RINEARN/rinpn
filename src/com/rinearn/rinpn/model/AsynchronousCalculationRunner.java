@@ -16,17 +16,17 @@ import com.rinearn.rinpn.util.SettingContainer;
 public final class AsynchronousCalculationRunner implements Runnable {
 
 	private AsynchronousCalculationListener calculationListener = null;
-	private CalculatorModel calculator = null;
+	private Model model = null;
 	private SettingContainer setting = null;
 	private String inputExpression = null;
 
 	public AsynchronousCalculationRunner(
 			String inputExpression, AsynchronousCalculationListener scriptListener,
-			CalculatorModel calculator, SettingContainer setting) {
+			Model model, SettingContainer setting) {
 
 		this.inputExpression = inputExpression;
 		this.calculationListener = scriptListener;
-		this.calculator = calculator;
+		this.model = model;
 		this.setting = setting;
 	}
 
@@ -37,7 +37,7 @@ public final class AsynchronousCalculationRunner implements Runnable {
 		// 処理がどんどん積もっていって全部消化されるまで待たなければいけなくなるので、
 		// 実行中に実行リクエストがあった場合はその場で弾くようにする。
 
-		if (this.calculator.isCalculating()) {
+		if (this.model.isCalculating()) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage("The previous calculation has not finished yet!", "!", setting.localeCode);
 			}
@@ -49,7 +49,7 @@ public final class AsynchronousCalculationRunner implements Runnable {
 
 		try {
 			// 入力フィールドの計算式を実行し、結果の値を取得
-			String outputText = this.calculator.calculate(this.inputExpression, true, this.setting);
+			String outputText = this.model.calculate(this.inputExpression, true, this.setting);
 
 			// 計算リクエスト元に計算完了を通知
 			this.calculationListener.calculationFinished(outputText);
