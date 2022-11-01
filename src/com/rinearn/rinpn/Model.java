@@ -1,9 +1,9 @@
 /*
- * Copyright(C) 2019-2021 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2022 RINEARN
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.model;
+package com.rinearn.rinpn;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -15,14 +15,13 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import com.rinearn.processornano.RinearnProcessorNanoException;
-import com.rinearn.processornano.RinearnProcessorNanoFatalException;
-import com.rinearn.processornano.util.LocaleCode;
-import com.rinearn.processornano.util.MessageManager;
-import com.rinearn.processornano.util.ScriptFileLoader;
-import com.rinearn.processornano.util.SettingContainer;
+import com.rinearn.rinpn.util.LocaleCode;
+import com.rinearn.rinpn.util.MessageManager;
+import com.rinearn.rinpn.util.OutputValueFormatter;
+import com.rinearn.rinpn.util.ScriptFileLoader;
+import com.rinearn.rinpn.util.SettingContainer;
 
-public final class CalculatorModel {
+public final class Model {
 
 	private static final String SCRIPT_EXTENSION = ".vnano";
 	private static final String DEFAULT_SCRIPT_ENCODING = "UTF-8";
@@ -35,6 +34,13 @@ public final class CalculatorModel {
 
 	// スクリプト内から下記の組み込み関数「 output 」を呼んで渡した値を控えておくフィールド（GUIモードでの表示用）
 	private String lastOutputContent = null;
+
+
+	// Presenter層の計算実行処理で実装して用いる、計算完了通知を受け取るためのインターフェース
+	public interface AsyncCalculationListener {
+		public abstract void calculationFinished(String outputText);
+	}
+
 
 	// スクリプトエンジンに組み込み関数「 output 」を提供するプラグインクラス
 	public class OutputPlugin {
@@ -49,7 +55,7 @@ public final class CalculatorModel {
 		public void output(String value) {
 
 			// GUIモード用に値を控える
-			CalculatorModel.this.lastOutputContent = value;
+			Model.this.lastOutputContent = value;
 
 			// CUIモード用に値を標準出力に出力する
 			if (!this.isGuiMode) {
@@ -86,7 +92,7 @@ public final class CalculatorModel {
 	// 初期化処理
 	public final void initialize(
 			SettingContainer setting, boolean isGuiMode, String dirPath, String libraryListFilePath, String pluginListFilePath)
-					throws RinearnProcessorNanoException {
+					throws RINPnException {
 
 		this.dirPath = dirPath;
 
@@ -96,17 +102,17 @@ public final class CalculatorModel {
 		if (engine == null) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(
-					"Please put Vnano.jar in the same directory as RinearnProcessorNano.jar.",
+					"Please put Vnano.jar in the same directory as RINPn.jar.",
 					"Engine Loading Error", setting.localeCode
 				);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(
-					"Vnano.jar を RinearnProcessorNano.jar と同じフォルダ内に配置してください。",
+					"Vnano.jar を RINPn.jar と同じフォルダ内に配置してください。",
 					"エンジン読み込みエラー", setting.localeCode
 				);
 			}
-			throw new RinearnProcessorNanoException("ScriptEngine of the Vnano could not be loaded.");
+			throw new RINPnException("ScriptEngine of the Vnano could not be loaded.");
 		}
 
 		// ライブラリ/プラグインの読み込みリストファイルを登録
@@ -133,7 +139,7 @@ public final class CalculatorModel {
 		}
 
 		// 組み込み関数「 output 」を提供するプラグイン（このクラス内に内部クラスとして実装）を登録
-		this.engine.put("OutputPlugin", new CalculatorModel.OutputPlugin(setting, isGuiMode));
+		this.engine.put("OutputPlugin", new Model.OutputPlugin(setting, isGuiMode));
 
 		// プラグインからのパーミッション要求の扱いを設定するため、パーミッションの項目名と値を格納するマップを用意
 		Map<String, String> permissionMap = new HashMap<String, String>();
@@ -183,9 +189,10 @@ public final class CalculatorModel {
 	}
 
 
-	// CUIモードでは RinearnProcessorNano.calculate、GUIモードでは AsynchronousCalculationRunner.run から呼ばれて実行される
+	// 呼び出しスレッド上で計算処理を実行する
+	// （CUIモードでは直接呼ばれるが、GUIモードでは calculateAsynchronously の方が呼ばれ、そこから別スレッド上でこれが呼ばれる）
 	public final String calculate(String inputtedContent, boolean isGuiMode, SettingContainer setting)
-			throws ScriptException, RinearnProcessorNanoException {
+			throws ScriptException, RINPnException {
 
 		// 注意:
 		// このメソッドを synchronized にすると、スクリプト内容が重い場合に Enter キーや実行ボタンが連打された場合、
@@ -195,7 +202,7 @@ public final class CalculatorModel {
 
 		if (this.calculating) {
 			// それでも追加の計算リクエストが来た場合は、呼び出し元での検査不備や処理フローの不備なので Fatal エラー扱いにする
-			throw new RinearnProcessorNanoFatalException("The previous calculation has not finished yet");
+			throw new RINPnFatalException("The previous calculation has not finished yet");
 		}
 
 		// 計算中の状態にする（AsynchronousCalculationRunner から参照する）
@@ -235,7 +242,7 @@ public final class CalculatorModel {
 			// 入力内容をスクリプトファイルの内容で置き換え
 			try {
 				inputtedContent = ScriptFileLoader.load(scriptFile.getAbsolutePath(), DEFAULT_SCRIPT_ENCODING, setting);
-			} catch (RinearnProcessorNanoException e) {
+			} catch (RINPnException e) {
 				this.calculating = false;
 				throw e;
 			}
@@ -248,7 +255,7 @@ public final class CalculatorModel {
 				setting.evalOnlyExpression = false;
 			} catch (CloneNotSupportedException e) {
 				this.calculating = false;
-				throw new RinearnProcessorNanoException(e);
+				throw new RINPnException(e);
 			}
 
 		// それ以外は計算式と見なす
@@ -355,4 +362,74 @@ public final class CalculatorModel {
 
 		return outputText;
 	}
+
+	
+	// 別スレッドで計算を実行し、完了時に AsyncCalculationListener をコールバックする
+	public void calculateAsynchronously(String inputExpression, 
+			AsyncCalculationListener asyncCalcListener, SettingContainer setting) {
+		
+		AsyncCalculationRunner asyncCalcRunner = new AsyncCalculationRunner(inputExpression, asyncCalcListener, setting);
+		Thread calculatingThread = new Thread(asyncCalcRunner);
+		calculatingThread.start();
+	}
+
+	// 非同期で計算処理を実行するためのRunnable実装
+	private final class AsyncCalculationRunner implements Runnable {
+
+		private AsyncCalculationListener calculationListener = null;
+		private SettingContainer setting = null;
+		private String inputExpression = null;
+
+		public AsyncCalculationRunner(
+				String inputExpression, AsyncCalculationListener scriptListener, SettingContainer setting) {
+
+			this.inputExpression = inputExpression;
+			this.calculationListener = scriptListener;
+			this.setting = setting;
+		}
+
+		@Override
+		public final void run() {
+
+			// スクリプト内容が重い場合に実行ボタンが連打されると、
+			// 処理がどんどん積もっていって全部消化されるまで待たなければいけなくなるので、
+			// 実行中に実行リクエストがあった場合はその場で弾くようにする。
+
+			if (isCalculating()) {
+				if (setting.localeCode.equals(LocaleCode.EN_US)) {
+					MessageManager.showErrorMessage("The previous calculation has not finished yet!", "!", setting.localeCode);
+				}
+				if (setting.localeCode.equals(LocaleCode.JA_JP)) {
+					MessageManager.showErrorMessage("まだ前の計算を実行中です !", "!", setting.localeCode);
+				}
+				return;
+			}
+
+			try {
+				// 入力フィールドの計算式を実行し、結果の値を取得
+				String outputText = calculate(this.inputExpression, true, this.setting);
+
+				// 計算リクエスト元に計算完了を通知
+				this.calculationListener.calculationFinished(outputText);
+
+			} catch (ScriptException | RINPnException e) {
+
+				// 計算結果の代わりに、エラーの発生を示すメッセージを通知（ OUTPUT 欄に表示される ）
+				this.calculationListener.calculationFinished("ERROR");
+
+				//エラー内容をユーザーに表示
+				String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
+				if (setting.localeCode.equals(LocaleCode.EN_US)) {
+					MessageManager.showErrorMessage(errorMessage, "Expression/Script Error", setting.localeCode);
+				}
+				if (setting.localeCode.equals(LocaleCode.JA_JP)) {
+					MessageManager.showErrorMessage(errorMessage, "計算式やスクリプトのエラー", setting.localeCode);
+				}
+				if (setting.exceptionStackTracerEnabled) {
+					MessageManager.showExceptionStackTrace(e, setting.localeCode);
+				}
+			}
+		}
+	}
+
 }

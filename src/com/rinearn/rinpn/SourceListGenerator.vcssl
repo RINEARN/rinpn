@@ -34,7 +34,7 @@ const boolean REMOVES_DOTSLASH = true;
 
 // Specify the prefix which will be appended at the head of each file path, in the output content.
 // 出力内容において、ソースファイルのパスの先頭に付加する文字列を指定します。
-const string OUTPUT_PREFIX = "com/rinearn/processornano/";
+const string OUTPUT_PREFIX = "com/rinearn/rinpn/";
 
 // Specify extensions of compilation-target-files.
 // コンパイル対象ファイルの拡張子を指定します。

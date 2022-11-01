@@ -3,15 +3,13 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.model;
+package com.rinearn.rinpn.util;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-import com.rinearn.processornano.RinearnProcessorNanoFatalException;
-import com.rinearn.processornano.util.RoundingTarget;
-import com.rinearn.processornano.util.SettingContainer;
+import com.rinearn.rinpn.RINPnFatalException;
 
 // メモ：暗黙丸めと明示的丸めは独立に効くようにしてもいいかもしれない。
 //       現状の仕様では、明示的丸めが OFF の場合に暗黙丸めも OFF にできない。
@@ -20,7 +18,7 @@ import com.rinearn.processornano.util.SettingContainer;
 
 public final class OutputValueFormatter {
 
-	protected static final BigDecimal round(double inputValue, SettingContainer setting) {
+	public static final BigDecimal round(double inputValue, SettingContainer setting) {
 
 		// オプションで丸め（設定内容に基づく明示的丸め）が有効化されている場合
 		if (setting.outputRounderEnabled) {
@@ -55,7 +53,7 @@ public final class OutputValueFormatter {
 	}
 
 
-	protected static final BigDecimal round(
+	public static final BigDecimal round(
 			double inputValue, RoundingMode mode, RoundingTarget target, int digits,
 			boolean performsImplicitRounding) {
 
@@ -117,7 +115,7 @@ public final class OutputValueFormatter {
 		return bdValue;
 	}
 
-	protected static final String simplify(BigDecimal inputValue) {
+	public static final String simplify(BigDecimal inputValue) {
 		String fullStr = inputValue.toString().toUpperCase();
 
 		// 指数部と仮数部に分割
@@ -127,7 +125,7 @@ public final class OutputValueFormatter {
 		if (hasExponent) {
 			String[] split = fullStr.split("E");
 			if (split.length != 2) {
-				throw new RinearnProcessorNanoFatalException("Unexpected value format detected.");
+				throw new RINPnFatalException("Unexpected value format detected.");
 			}
 			significandStr = split[0];
 			exponentStr = split[1];
@@ -143,7 +141,7 @@ public final class OutputValueFormatter {
 		if (hasPoint) {
 			String split[] = significandStr.split("\\.");
 			if (split.length != 2) {
-				throw new RinearnProcessorNanoFatalException("Unexpected value format detected.");
+				throw new RINPnFatalException("Unexpected value format detected.");
 			}
 			integerStr = split[0];
 			fractionStr = split[1];

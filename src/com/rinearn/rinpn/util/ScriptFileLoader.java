@@ -3,7 +3,7 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano.util;
+package com.rinearn.rinpn.util;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,23 +17,23 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import com.rinearn.processornano.RinearnProcessorNanoException;
+import com.rinearn.rinpn.RINPnException;
 
 public class ScriptFileLoader {
 
 	public static final String load(
 			String scriptFilePath, String defaultEncoding, SettingContainer setting)
-					throws RinearnProcessorNanoException {
+					throws RINPnException {
 
 		File file = new File(scriptFilePath);
 
 		// ファイルが存在しない場合はエラー
 		if (!file.exists()) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				throw new RinearnProcessorNanoException("The script file not found: " + file.getPath());
+				throw new RINPnException("The script file not found: " + file.getPath());
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				throw new RinearnProcessorNanoException("スクリプトファイルが見つかりません: " + file.getPath());
+				throw new RINPnException("スクリプトファイルが見つかりません: " + file.getPath());
 			}
 		}
 
@@ -82,7 +82,7 @@ public class ScriptFileLoader {
 		// 読み込み過程でエラーが発生していた場合
 		if (loadingFailed) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				throw new RinearnProcessorNanoException(
+				throw new RINPnException(
 					"The script file could not be loaded: " + file.getPath()
 					+ "\n\n" +
 					"The encoding might be incorrect. Try again with changing the encoding, "
@@ -95,7 +95,7 @@ public class ScriptFileLoader {
 				);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				throw new RinearnProcessorNanoException(
+				throw new RINPnException(
 					"スクリプトファイルの読み込みに失敗しました: " + file.getPath()
 					+ "\n\n" +
 					"文字コードが想定と異なる可能性があります。"

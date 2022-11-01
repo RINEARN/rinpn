@@ -3,27 +3,21 @@
  * This software is released under the MIT License.
  */
 
-package com.rinearn.processornano;
+package com.rinearn.rinpn;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import com.rinearn.rinpn.util.LocaleCode;
+import com.rinearn.rinpn.util.MessageManager;
+import com.rinearn.rinpn.util.SettingContainer;
+
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
-import javax.swing.SwingUtilities;
 
-import com.rinearn.processornano.model.CalculatorModel;
-import com.rinearn.processornano.presenter.Presenter;
-import com.rinearn.processornano.util.LocaleCode;
-import com.rinearn.processornano.util.MessageManager;
-import com.rinearn.processornano.util.SettingContainer;
-import com.rinearn.processornano.view.ViewImpl;
-import com.rinearn.processornano.view.ViewInitializer;
-
-
-public final class RinearnProcessorNano {
+public final class Main {
 
 	private static final String VERSION = "0.9.3";
 	private static final String OPTION_NAME_VERSION = "--version";
@@ -89,11 +83,11 @@ public final class RinearnProcessorNano {
 
 		// 計算式が渡されなかった場合は電卓画面を起動
 		if (inputtedContent == null) {
-			new RinearnProcessorNano().launchCalculatorWindow(dirPath, debugEnabled);
+			new Main().launchCalculatorWindow(dirPath, debugEnabled);
 
 		// 計算式が渡された場合はCUIモードで計算（結果はコマンドラインに表示）
 		} else {
-			new RinearnProcessorNano().calculate(inputtedContent, dirPath, debugEnabled);
+			new Main().calculate(inputtedContent, dirPath, debugEnabled);
 		}
 	}
 
@@ -112,7 +106,7 @@ public final class RinearnProcessorNano {
 	}
 
 
-	public RinearnProcessorNano() {
+	public Main() {
 		// 電卓画面の起動は、インスタンス生成後に明示的に launchCalculatorWindow() を呼ぶ
 	}
 
@@ -131,13 +125,13 @@ public final class RinearnProcessorNano {
 
 		// 設定値コンテナと計算機モデルを生成して初期化
 		SettingContainer setting = null;
-		CalculatorModel calculator = null;
+		Model model = null;
 		try {
 			setting = this.createInitializedSettingContainer(false, debug);
-			calculator = this.createInitializedCalculatorModel(dirPath, false, setting);
+			model = this.createInitializedCalculatorModel(dirPath, false, setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
-		} catch (RinearnProcessorNanoException e) {
+		} catch (RINPnException e) {
 			if (setting==null || setting.exceptionStackTracerEnabled) {
 				String localeCode = (setting==null) ? LocaleCode.getDefaultLocaleCode() : setting.localeCode;
 				MessageManager.showExceptionStackTrace(e, localeCode);
@@ -148,12 +142,12 @@ public final class RinearnProcessorNano {
 		// 計算を実行して結果を表示
 		String outputText = null;
 		try {
-			outputText = calculator.calculate(inputtedContent, false, setting);
+			outputText = model.calculate(inputtedContent, false, setting);
 			if (outputText != null) {
 				System.out.println(outputText);
 			}
 
-		} catch (ScriptException | RinearnProcessorNanoException e) {
+		} catch (ScriptException | RINPnException e) {
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
 			MessageManager.showErrorMessage(message, "!", setting.localeCode);
 			if (setting.exceptionStackTracerEnabled) {
@@ -162,7 +156,7 @@ public final class RinearnProcessorNano {
 		}
 
 		// 最後に計算機モデルの終了時処理を実行
-		calculator.shutdown(setting);
+		model.shutdown(setting);
 	}
 
 
@@ -175,13 +169,13 @@ public final class RinearnProcessorNano {
 
 		// 設定値コンテナと計算機モデルを生成して初期化
 		SettingContainer setting = null;
-		CalculatorModel calculator = null;
+		Model calculator = null;
 		try {
 			setting = this.createInitializedSettingContainer(true, debug);
 			calculator = this.createInitializedCalculatorModel(dirPath, true, setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
-		} catch (RinearnProcessorNanoException e) {
+		} catch (RINPnException e) {
 			if (setting==null || setting.exceptionStackTracerEnabled) {
 				String localeCode = (setting==null) ? LocaleCode.getDefaultLocaleCode() : setting.localeCode;
 				MessageManager.showExceptionStackTrace(e, localeCode);
@@ -191,10 +185,9 @@ public final class RinearnProcessorNano {
 
 
 		// 電卓画面を生成して初期化
-		ViewImpl view = new ViewImpl();
+		View view = new View();
 		try {
-			ViewInitializer initialiser = new ViewInitializer(view, setting); // 別スレッドで初期化するためのRunnable
-			SwingUtilities.invokeAndWait(initialiser);                        // それをSwingのイベントスレッドで実行
+			view.initialize(setting);
 
 		// 初期化実行スレッドの処理待ち時の割り込みで失敗した場合など（結構異常な場合なので、リトライせず終了する）
 		} catch (InvocationTargetException | InterruptedException e) {
@@ -226,11 +219,11 @@ public final class RinearnProcessorNano {
 	 *
 	 * @param debug デバッグ情報を出力するかどうか
 	 * @return 初期化済みの設定値コンテナ
-	 * @throws RinearnProcessorNanoException
+	 * @throws RINPnException
 	 * 		設定スクリプトの読み込みエラーなどで失敗した場合にスローされます。
 	 */
 	private final SettingContainer createInitializedSettingContainer(boolean isGuiMode, boolean debug)
-			throws RinearnProcessorNanoException {
+			throws RINPnException {
 
 		SettingContainer setting = new SettingContainer();
 
@@ -262,7 +255,7 @@ public final class RinearnProcessorNano {
 					MessageManager.showErrorMessage(errorMessage, "Setting File Loading Error", LocaleCode.EN_US);
 				}
 
-				throw new RinearnProcessorNanoException(errorMessage);
+				throw new RINPnException(errorMessage);
 			}
 		}
 
@@ -279,16 +272,16 @@ public final class RinearnProcessorNano {
 	 * ライブラリスクリプトや設定値を読み込んで初期化済みの、計算機モデルを生成して返します。
 	 *
 	 * @return 初期化済みの計算機モデル
-	 * @throws RinearnProcessorNanoException
+	 * @throws RINPnException
 	 * 		スクリプトエンジンの接続や、ライブラリの読み込みエラーなどで失敗した場合にスローされます。
 	 */
-	private final CalculatorModel createInitializedCalculatorModel(String dirPath, boolean isGuiMode, SettingContainer setting)
-			throws RinearnProcessorNanoException {
+	private final Model createInitializedCalculatorModel(String dirPath, boolean isGuiMode, SettingContainer setting)
+			throws RINPnException {
 
 		// 計算機のインスタンスを生成、初期化して返す
-		CalculatorModel calculator = new CalculatorModel();
-		calculator.initialize(setting, isGuiMode, dirPath, LIBRARY_LIST_FILE, PLUGIN_LIST_FILE);
-		return calculator;
+		Model model = new Model();
+		model.initialize(setting, isGuiMode, dirPath, LIBRARY_LIST_FILE, PLUGIN_LIST_FILE);
+		return model;
 	}
 
 }
