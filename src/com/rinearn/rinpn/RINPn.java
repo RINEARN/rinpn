@@ -17,7 +17,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 
-public final class Main {
+public final class RINPn {
 
 	private static final String VERSION = "0.9.3";
 	private static final String OPTION_NAME_VERSION = "--version";
@@ -83,11 +83,11 @@ public final class Main {
 
 		// 計算式が渡されなかった場合は電卓画面を起動
 		if (inputtedContent == null) {
-			new Main().launchCalculatorWindow(dirPath, debugEnabled);
+			new RINPn().launchCalculatorWindow(dirPath, debugEnabled);
 
 		// 計算式が渡された場合はCUIモードで計算（結果はコマンドラインに表示）
 		} else {
-			new Main().calculate(inputtedContent, dirPath, debugEnabled);
+			new RINPn().calculate(inputtedContent, dirPath, debugEnabled);
 		}
 	}
 
@@ -106,7 +106,7 @@ public final class Main {
 	}
 
 
-	public Main() {
+	public RINPn() {
 		// 電卓画面の起動は、インスタンス生成後に明示的に launchCalculatorWindow() を呼ぶ
 	}
 
