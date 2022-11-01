@@ -174,12 +174,9 @@ public final class Presenter {
 				}
 			};
 
-			// Create a thread for running the calculation/script, and starts it.
+			// Perform the calculation on the other thread, asynchronously.
 			// When it will have completed, the above "calculation listener" will be called back. 
-			Model.AsyncCalculationRunner asyncCalcRunner
-					= new Model.AsyncCalculationRunner(view.inputField.getText(), asyncCalcListener, model, setting);
-			Thread calculatingThread = new Thread(asyncCalcRunner);
-			calculatingThread.start();
+			model.calculateAsynchronously(view.inputField.getText(), asyncCalcListener, setting);
 		}
 	}
 	

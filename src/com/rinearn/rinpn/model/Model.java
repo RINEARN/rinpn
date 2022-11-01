@@ -191,7 +191,8 @@ public final class Model {
 	}
 
 
-	// CUIモードでは RinearnProcessorNano.calculate、GUIモードでは AsynchronousCalculationRunner.run から呼ばれて実行される
+	// 呼び出しスレッド上で計算処理を実行する
+	// （CUIモードでは直接呼ばれるが、GUIモードでは calculateAsynchronously の方が呼ばれ、そこから別スレッド上でこれが呼ばれる）
 	public final String calculate(String inputtedContent, boolean isGuiMode, SettingContainer setting)
 			throws ScriptException, RinearnProcessorNanoException {
 
@@ -364,22 +365,28 @@ public final class Model {
 		return outputText;
 	}
 
+	
+	// 別スレッドで計算を実行し、完了時に AsyncCalculationListener をコールバックする
+	public void calculateAsynchronously(String inputExpression, 
+			AsyncCalculationListener asyncCalcListener, SettingContainer setting) {
+		
+		AsyncCalculationRunner asyncCalcRunner = new AsyncCalculationRunner(inputExpression, asyncCalcListener, setting);
+		Thread calculatingThread = new Thread(asyncCalcRunner);
+		calculatingThread.start();
+	}
 
 	// 非同期で計算処理を実行するためのRunnable実装
-	public static final class AsyncCalculationRunner implements Runnable {
+	private final class AsyncCalculationRunner implements Runnable {
 
 		private AsyncCalculationListener calculationListener = null;
-		private Model model = null;
 		private SettingContainer setting = null;
 		private String inputExpression = null;
 
 		public AsyncCalculationRunner(
-				String inputExpression, AsyncCalculationListener scriptListener,
-				Model model, SettingContainer setting) {
+				String inputExpression, AsyncCalculationListener scriptListener, SettingContainer setting) {
 
 			this.inputExpression = inputExpression;
 			this.calculationListener = scriptListener;
-			this.model = model;
 			this.setting = setting;
 		}
 
@@ -390,7 +397,7 @@ public final class Model {
 			// 処理がどんどん積もっていって全部消化されるまで待たなければいけなくなるので、
 			// 実行中に実行リクエストがあった場合はその場で弾くようにする。
 
-			if (this.model.isCalculating()) {
+			if (isCalculating()) {
 				if (setting.localeCode.equals(LocaleCode.EN_US)) {
 					MessageManager.showErrorMessage("The previous calculation has not finished yet!", "!", setting.localeCode);
 				}
@@ -402,7 +409,7 @@ public final class Model {
 
 			try {
 				// 入力フィールドの計算式を実行し、結果の値を取得
-				String outputText = this.model.calculate(this.inputExpression, true, this.setting);
+				String outputText = calculate(this.inputExpression, true, this.setting);
 
 				// 計算リクエスト元に計算完了を通知
 				this.calculationListener.calculationFinished(outputText);
