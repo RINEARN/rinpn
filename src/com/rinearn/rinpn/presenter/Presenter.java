@@ -17,8 +17,6 @@ import javax.swing.SwingUtilities;
 
 import java.lang.reflect.InvocationTargetException;
 
-import com.rinearn.rinpn.model.AsynchronousCalculationListener;
-import com.rinearn.rinpn.model.AsynchronousCalculationRunner;
 import com.rinearn.rinpn.model.Model;
 import com.rinearn.rinpn.util.LocaleCode;
 import com.rinearn.rinpn.util.SettingContainer;
@@ -167,7 +165,7 @@ public final class Presenter {
 
 			// Create a listener for updating the content of the "OUTPUT" text field,
 			// which will be called back when the calculation or the scripting will have completed.
-			AsynchronousCalculationListener asyncCalcListener = new AsynchronousCalculationListener() {
+			Model.AsyncCalculationListener asyncCalcListener = new Model.AsyncCalculationListener() {
 				public void calculationFinished(String outputText) {
 					// The calculation/scripting and calling-back will be performed on the other thread.
 					// Hence, use "SwingUtilities.invokeLayer" for updating the content of 
@@ -178,8 +176,8 @@ public final class Presenter {
 
 			// Create a thread for running the calculation/script, and starts it.
 			// When it will have completed, the above "calculation listener" will be called back. 
-			AsynchronousCalculationRunner asyncCalcRunner
-					= new AsynchronousCalculationRunner(view.inputField.getText(), asyncCalcListener, model, setting);
+			Model.AsyncCalculationRunner asyncCalcRunner
+					= new Model.AsyncCalculationRunner(view.inputField.getText(), asyncCalcListener, model, setting);
 			Thread calculatingThread = new Thread(asyncCalcRunner);
 			calculatingThread.start();
 		}

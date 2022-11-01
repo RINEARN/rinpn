@@ -37,6 +37,13 @@ public final class Model {
 	// スクリプト内から下記の組み込み関数「 output 」を呼んで渡した値を控えておくフィールド（GUIモードでの表示用）
 	private String lastOutputContent = null;
 
+
+	// Presenter層の計算実行処理で実装して用いる、計算完了通知を受け取るためのインターフェース
+	public interface AsyncCalculationListener {
+		public abstract void calculationFinished(String outputText);
+	}
+
+
 	// スクリプトエンジンに組み込み関数「 output 」を提供するプラグインクラス
 	public class OutputPlugin {
 
@@ -356,4 +363,68 @@ public final class Model {
 
 		return outputText;
 	}
+
+
+	// 非同期で計算処理を実行するためのRunnable実装
+	public static final class AsyncCalculationRunner implements Runnable {
+
+		private AsyncCalculationListener calculationListener = null;
+		private Model model = null;
+		private SettingContainer setting = null;
+		private String inputExpression = null;
+
+		public AsyncCalculationRunner(
+				String inputExpression, AsyncCalculationListener scriptListener,
+				Model model, SettingContainer setting) {
+
+			this.inputExpression = inputExpression;
+			this.calculationListener = scriptListener;
+			this.model = model;
+			this.setting = setting;
+		}
+
+		@Override
+		public final void run() {
+
+			// スクリプト内容が重い場合に実行ボタンが連打されると、
+			// 処理がどんどん積もっていって全部消化されるまで待たなければいけなくなるので、
+			// 実行中に実行リクエストがあった場合はその場で弾くようにする。
+
+			if (this.model.isCalculating()) {
+				if (setting.localeCode.equals(LocaleCode.EN_US)) {
+					MessageManager.showErrorMessage("The previous calculation has not finished yet!", "!", setting.localeCode);
+				}
+				if (setting.localeCode.equals(LocaleCode.JA_JP)) {
+					MessageManager.showErrorMessage("まだ前の計算を実行中です !", "!", setting.localeCode);
+				}
+				return;
+			}
+
+			try {
+				// 入力フィールドの計算式を実行し、結果の値を取得
+				String outputText = this.model.calculate(this.inputExpression, true, this.setting);
+
+				// 計算リクエスト元に計算完了を通知
+				this.calculationListener.calculationFinished(outputText);
+
+			} catch (ScriptException | RinearnProcessorNanoException e) {
+
+				// 計算結果の代わりに、エラーの発生を示すメッセージを通知（ OUTPUT 欄に表示される ）
+				this.calculationListener.calculationFinished("ERROR");
+
+				//エラー内容をユーザーに表示
+				String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
+				if (setting.localeCode.equals(LocaleCode.EN_US)) {
+					MessageManager.showErrorMessage(errorMessage, "Expression/Script Error", setting.localeCode);
+				}
+				if (setting.localeCode.equals(LocaleCode.JA_JP)) {
+					MessageManager.showErrorMessage(errorMessage, "計算式やスクリプトのエラー", setting.localeCode);
+				}
+				if (setting.exceptionStackTracerEnabled) {
+					MessageManager.showExceptionStackTrace(e, setting.localeCode);
+				}
+			}
+		}
+	}
+
 }

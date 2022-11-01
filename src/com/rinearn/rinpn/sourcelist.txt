@@ -1,5 +1,3 @@
-com/rinearn/rinpn/model/AsynchronousCalculationListener.java
-com/rinearn/rinpn/model/AsynchronousCalculationRunner.java
 com/rinearn/rinpn/model/Model.java
 com/rinearn/rinpn/presenter/Presenter.java
 com/rinearn/rinpn/Prototype.java
