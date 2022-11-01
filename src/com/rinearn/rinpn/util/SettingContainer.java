@@ -15,7 +15,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import com.rinearn.rinpn.RinearnProcessorNanoException;
+import com.rinearn.rinpn.RINPnException;
 
 public final class SettingContainer implements Cloneable {
 
@@ -93,7 +93,7 @@ public final class SettingContainer implements Cloneable {
 	public synchronized final void evaluateSettingScript(
 			String settingScriptFilePath,
 			String libraryListFilePath, String pluginListFilePath, boolean isGuiMode, boolean debug)
-					throws RinearnProcessorNanoException {
+					throws RINPnException {
 
 		String localeCode = LocaleCode.getDefaultLocaleCode();
 		File settingScriptFile = new File(settingScriptFilePath);
@@ -117,7 +117,7 @@ public final class SettingContainer implements Cloneable {
 					localeCode
 				);
 			}
-			throw new RinearnProcessorNanoException("ScriptEngine of the Vnano could not be loaded.");
+			throw new RINPnException("ScriptEngine of the Vnano could not be loaded.");
 		}
 
 		// ライブラリ/プラグインの読み込みリストファイルを登録
@@ -182,7 +182,7 @@ public final class SettingContainer implements Cloneable {
 			if (localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(errorMessage, "設定スクリプトのエラー", localeCode);
 			}
-			throw new RinearnProcessorNanoException(se);
+			throw new RINPnException(se);
 		}
 
 		// ライブラリ/プラグインを接続解除
@@ -212,7 +212,7 @@ public final class SettingContainer implements Cloneable {
 
 
 	private final void checkAndNormalizeSettingValues()
-			throws RinearnProcessorNanoException {
+			throws RINPnException {
 
 		boolean errorOccurred = false;
 		String errorMessage = null;
@@ -404,7 +404,7 @@ public final class SettingContainer implements Cloneable {
 				errorTitle = "設定エラー";
 			}
 			MessageManager.showErrorMessage(errorMessage, errorTitle, localeCode);
-			throw new RinearnProcessorNanoException(errorMessage);
+			throw new RINPnException(errorMessage);
 		}
 	}
 

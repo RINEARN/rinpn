@@ -15,8 +15,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import com.rinearn.rinpn.RinearnProcessorNanoException;
-import com.rinearn.rinpn.RinearnProcessorNanoFatalException;
+import com.rinearn.rinpn.RINPnException;
+import com.rinearn.rinpn.RINPnFatalException;
 import com.rinearn.rinpn.util.LocaleCode;
 import com.rinearn.rinpn.util.MessageManager;
 import com.rinearn.rinpn.util.OutputValueFormatter;
@@ -94,7 +94,7 @@ public final class Model {
 	// 初期化処理
 	public final void initialize(
 			SettingContainer setting, boolean isGuiMode, String dirPath, String libraryListFilePath, String pluginListFilePath)
-					throws RinearnProcessorNanoException {
+					throws RINPnException {
 
 		this.dirPath = dirPath;
 
@@ -114,7 +114,7 @@ public final class Model {
 					"エンジン読み込みエラー", setting.localeCode
 				);
 			}
-			throw new RinearnProcessorNanoException("ScriptEngine of the Vnano could not be loaded.");
+			throw new RINPnException("ScriptEngine of the Vnano could not be loaded.");
 		}
 
 		// ライブラリ/プラグインの読み込みリストファイルを登録
@@ -194,7 +194,7 @@ public final class Model {
 	// 呼び出しスレッド上で計算処理を実行する
 	// （CUIモードでは直接呼ばれるが、GUIモードでは calculateAsynchronously の方が呼ばれ、そこから別スレッド上でこれが呼ばれる）
 	public final String calculate(String inputtedContent, boolean isGuiMode, SettingContainer setting)
-			throws ScriptException, RinearnProcessorNanoException {
+			throws ScriptException, RINPnException {
 
 		// 注意:
 		// このメソッドを synchronized にすると、スクリプト内容が重い場合に Enter キーや実行ボタンが連打された場合、
@@ -204,7 +204,7 @@ public final class Model {
 
 		if (this.calculating) {
 			// それでも追加の計算リクエストが来た場合は、呼び出し元での検査不備や処理フローの不備なので Fatal エラー扱いにする
-			throw new RinearnProcessorNanoFatalException("The previous calculation has not finished yet");
+			throw new RINPnFatalException("The previous calculation has not finished yet");
 		}
 
 		// 計算中の状態にする（AsynchronousCalculationRunner から参照する）
@@ -244,7 +244,7 @@ public final class Model {
 			// 入力内容をスクリプトファイルの内容で置き換え
 			try {
 				inputtedContent = ScriptFileLoader.load(scriptFile.getAbsolutePath(), DEFAULT_SCRIPT_ENCODING, setting);
-			} catch (RinearnProcessorNanoException e) {
+			} catch (RINPnException e) {
 				this.calculating = false;
 				throw e;
 			}
@@ -257,7 +257,7 @@ public final class Model {
 				setting.evalOnlyExpression = false;
 			} catch (CloneNotSupportedException e) {
 				this.calculating = false;
-				throw new RinearnProcessorNanoException(e);
+				throw new RINPnException(e);
 			}
 
 		// それ以外は計算式と見なす
@@ -414,7 +414,7 @@ public final class Model {
 				// 計算リクエスト元に計算完了を通知
 				this.calculationListener.calculationFinished(outputText);
 
-			} catch (ScriptException | RinearnProcessorNanoException e) {
+			} catch (ScriptException | RINPnException e) {
 
 				// 計算結果の代わりに、エラーの発生を示すメッセージを通知（ OUTPUT 欄に表示される ）
 				this.calculationListener.calculationFinished("ERROR");

@@ -7,11 +7,11 @@ package com.rinearn.rinpn;
 
 
 @SuppressWarnings("serial")
-public final class RinearnProcessorNanoFatalException extends RuntimeException {
-	public RinearnProcessorNanoFatalException(Throwable parentThrowable) {
+public final class RINPnFatalException extends RuntimeException {
+	public RINPnFatalException(Throwable parentThrowable) {
 		super(parentThrowable);
 	}
-	public RinearnProcessorNanoFatalException(String errorMessage) {
+	public RINPnFatalException(String errorMessage) {
 		super(errorMessage);
 	}
 }

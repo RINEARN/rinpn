@@ -134,7 +134,7 @@ public final class Main {
 			model = this.createInitializedCalculatorModel(dirPath, false, setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
-		} catch (RinearnProcessorNanoException e) {
+		} catch (RINPnException e) {
 			if (setting==null || setting.exceptionStackTracerEnabled) {
 				String localeCode = (setting==null) ? LocaleCode.getDefaultLocaleCode() : setting.localeCode;
 				MessageManager.showExceptionStackTrace(e, localeCode);
@@ -150,7 +150,7 @@ public final class Main {
 				System.out.println(outputText);
 			}
 
-		} catch (ScriptException | RinearnProcessorNanoException e) {
+		} catch (ScriptException | RINPnException e) {
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
 			MessageManager.showErrorMessage(message, "!", setting.localeCode);
 			if (setting.exceptionStackTracerEnabled) {
@@ -178,7 +178,7 @@ public final class Main {
 			calculator = this.createInitializedCalculatorModel(dirPath, true, setting);
 
 		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
-		} catch (RinearnProcessorNanoException e) {
+		} catch (RINPnException e) {
 			if (setting==null || setting.exceptionStackTracerEnabled) {
 				String localeCode = (setting==null) ? LocaleCode.getDefaultLocaleCode() : setting.localeCode;
 				MessageManager.showExceptionStackTrace(e, localeCode);
@@ -222,11 +222,11 @@ public final class Main {
 	 *
 	 * @param debug デバッグ情報を出力するかどうか
 	 * @return 初期化済みの設定値コンテナ
-	 * @throws RinearnProcessorNanoException
+	 * @throws RINPnException
 	 * 		設定スクリプトの読み込みエラーなどで失敗した場合にスローされます。
 	 */
 	private final SettingContainer createInitializedSettingContainer(boolean isGuiMode, boolean debug)
-			throws RinearnProcessorNanoException {
+			throws RINPnException {
 
 		SettingContainer setting = new SettingContainer();
 
@@ -258,7 +258,7 @@ public final class Main {
 					MessageManager.showErrorMessage(errorMessage, "Setting File Loading Error", LocaleCode.EN_US);
 				}
 
-				throw new RinearnProcessorNanoException(errorMessage);
+				throw new RINPnException(errorMessage);
 			}
 		}
 
@@ -275,11 +275,11 @@ public final class Main {
 	 * ライブラリスクリプトや設定値を読み込んで初期化済みの、計算機モデルを生成して返します。
 	 *
 	 * @return 初期化済みの計算機モデル
-	 * @throws RinearnProcessorNanoException
+	 * @throws RINPnException
 	 * 		スクリプトエンジンの接続や、ライブラリの読み込みエラーなどで失敗した場合にスローされます。
 	 */
 	private final Model createInitializedCalculatorModel(String dirPath, boolean isGuiMode, SettingContainer setting)
-			throws RinearnProcessorNanoException {
+			throws RINPnException {
 
 		// 計算機のインスタンスを生成、初期化して返す
 		Model model = new Model();

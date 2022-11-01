@@ -1,8 +1,8 @@
 com/rinearn/rinpn/Main.java
 com/rinearn/rinpn/model/Model.java
 com/rinearn/rinpn/presenter/Presenter.java
-com/rinearn/rinpn/RinearnProcessorNanoException.java
-com/rinearn/rinpn/RinearnProcessorNanoFatalException.java
+com/rinearn/rinpn/RINPnException.java
+com/rinearn/rinpn/RINPnFatalException.java
 com/rinearn/rinpn/util/LocaleCode.java
 com/rinearn/rinpn/util/MessageManager.java
 com/rinearn/rinpn/util/OutputValueFormatter.java

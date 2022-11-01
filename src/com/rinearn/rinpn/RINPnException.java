@@ -7,11 +7,11 @@ package com.rinearn.rinpn;
 
 
 @SuppressWarnings("serial")
-public final class RinearnProcessorNanoException extends Exception {
-	public RinearnProcessorNanoException(Throwable parentThrowable) {
+public final class RINPnException extends Exception {
+	public RINPnException(Throwable parentThrowable) {
 		super(parentThrowable);
 	}
-	public RinearnProcessorNanoException(String errorMessage) {
+	public RINPnException(String errorMessage) {
 		super(errorMessage);
 	}
 }
