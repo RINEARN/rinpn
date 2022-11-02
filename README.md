@@ -92,12 +92,10 @@ When the RINPn is executed, the calculator window will be displayed:
 
 ![Calculator Window](./img/gui_expression.png)
 
-On the above window, you can calculate the value of the inputted expression by typing the "Enter" key, or pressing "=" button. In the expression, various math functions such as sin, cos, and so on are available by default.
 The window size, color, opacity, and so on are customizable by modifying values in "Settings.txt".
 
-In addition, the RINPn support the scripting language ["Vnano"](https://www.vcssl.org/en-us/vnano/). You can define new functions in the Vnano script file "ExampleLibrary.vnano" in "lib" folder, and use them in the expression inputted to the RINPn.
-You also can execute a Vnano script file performing complicated numerical calculations and so on, by inputting the name / path of the script file.
-
+On the above window, you can calculate the value of the inputted expression by typing the "Enter" key, or pressing "=" button. In the expression, various math functions such as sin, cos, and so on are available by default (and you can define your original functions).
+In addition, by inputting the file name/path of a script written in C-like simple language "[Vnano](https://www.vcssl.org/ja-jp/vnano/)", you can execute it (useful for performing complicated calculations automatically).
 
 Also, if the path of "bin" folder of the RINPn is registered to the environment variable Path/PATH, you can calculate in the command-line as follows:
 
@@ -111,20 +109,81 @@ Also, if the path of "bin" folder of the RINPn is registered to the environment 
 	> 0.8414709848
 
 
-For more details, see **"RINPn_User_Guide_English.html"** which is attached in this repository. Also, you can see the same guide on the web: 
-[https://www.rinearn.com/en-us/rinpn/guide/](https://www.rinearn.com/en-us/rinpn/guide/)</a>
+For more details, see the user guide document **"RINPn_User_Guide_English.html"** which is attached in this repository. Also, you can see the same guide on the web: 
+
+* [RINPn User Guide](https://www.rinearn.com/en-us/rinpn/guide/)</a>
+
+As introduced in the above user guide (and in this README shortly), the RINPn have many features, e.g.:
+
+* Defining your original functions and variables
+* Running scripts written in C-like simple language "[Vnano](https://www.vcssl.org/en-us/vnano/doc/tutorial/language)"
+* Calling processes implemented in Java
+
+and so on. In addition, you can use all built-in functions and variables listed in the following page by default:
+
+* [List of built-In functions and variables, provided by Vnano Standard Plug-ins](https://www.vcssl.org/en-us/vnano/plugin/)</a>
+
+The RINPn is a very powerful calculator app, so we can't introduce all features in this short README. At first, please try using the RINPn! Then, see the above documents as needed.
 
 
 <a id="architecture"></a>
 ## Software Architecture
 
-The architecture of source code of the RINPn adopts the MVP pattern which consists mainly of 3 core components: Model, View, and Presenter.
-Each component is packed as a package.
-Also, the component performing numerical operations and script processings is implemented as ["Vnano Engine"](https://www.vcssl.org/en-us/vnano/) (Vnano.jar) independent of components of the RINPn.
+The software architecture of the source code of the RINPn is a kind of "MVP pattern", which mainly consists of 3 core components: Model, View, and Presenter.
+Each component is implemented as a class, in [com.rinearn.rinpn](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/) package. In addition, although it is independent from the implementation of the RINPn, [the script engine of the Vnano](https://github.com/RINEARN/vnano) is embedded, which performs calculations and scriptings.
 
 
-For details, see ["Architecture.md"](./Architecture.md) in this repository.
-In that document, we explain the internal architecture of this software, which might help you to grasp the global structure of the implementation of this software, before reading source code.
+The following is a block diagram to grasp relationship between components we mentioned above:
+
+![Block Diagram](./img/architecture.jpg)
+
+As in the above diagram, the 
+[RINPn](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/RINPn.java) 
+class is the surface layer of implementation of this software, 
+and in there Model/View/Presenter components are combined and work together.
+In the following, we will explain the role of each component.
+
+
+
+<a id="architecture-model"></a>
+### Model ( [com.rinearn.rinpn.Model](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/Model.java) class )
+
+The Model is the component provides the functional aspects of the calculator, excluding the UI.
+For example, the Model takes a calculation expression as an input, and returns the calculation result (performed by using the script engine) as an output.
+
+In the CUI mode, the RINPn class calls the calculation process of the Model directly, on the main thread.
+On the other hand, In the GUI mode, the calculation process of the Model is called from the Presenter as an event-driven process.
+
+
+<a id="architecture-view"></a>
+### View ( [com.rinearn.rinpn.View](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/View.java) class )
+
+
+The View is the component plays the role of the graphical surface of the UI, which composed of a window, text fields, and so on.
+
+Note that, the View does not handle any events which occur when an user has operated the UI components. Such events are handled by the Presenter, not the View. The role of the View is only having/providing UI components.
+
+
+
+<a id="architecture-presenter"></a>
+### Presenter ( [com.rinearn.rinpn.Presenter](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/Presenter.java) class )
+
+The Presenter is the component mediates between the Model and the View.
+
+The Presenter class has various event listeners as inner classes.
+When an user has operated a View's UI component, the corresponding event listener in the Presenter is called. Then, the listener calls the Model's calculation process, and displays its result by updating the View's UI component.
+
+
+<a id="architecture-engine"></a>
+### Script Engine ( [org.vcssl.nano](https://github.com/RINEARN/vnano/blob/main/src/org/vcssl/nano/) package )
+
+This script engine performs calculations requested by the Model. 
+Executions of scripts, and communications with plug-ins, are also taken by this engine.
+This engine is being developed independently as the "Vnano" script engine, for embedded use in applications.
+For details of this engine, see the document of: 
+[https://github.com/RINEARN/vnano](https://github.com/RINEARN/vnano)
+
+
 
 
 <a id="about-us"></a>
