@@ -92,15 +92,11 @@ RINPn が起動されると、以下のような電卓画面が表示されま�
 
 ![Calculator Window](./img/gui_expression.png)
 
-
-上の電卓画面上で、計算式を入力して Enter キーを押すか、または「 = 」ボタンを押すと、その式の値を計算できます。式の中では、sin や cos などの各種数学関数も標準で使用できます。
 画面の大きさや色、透明度、その他色々は「 Settings.txt 」内の設定値を変更してカスタマイズできます。
 
-加えて、RINPn はスクリプト言語 [Vnano](https://www.vcssl.org/ja-jp/vnano/) をサポートしています。それにより、「 lib 」フォルダ内にあるスクリプトファイル「 ExampleLibrary.vnano 」の中で自作の関数を定義して、それを RINPn の計算式の中で使用する事もできます。
-また、複雑な計算処理などを記述したスクリプトファイルの名前やパスを入力する事で、それを実行する事も可能です。
+上の電卓画面上で、計算式を入力して Enter キーを押すか、または「 = 」ボタンを押すと、その式の値を計算できます。式の中では、sin や cos など、各種の数学関数が標準で使用可能で、自作もできます。また、式の代わりに、C言語風の簡易言語「 [Vnano](https://www.vcssl.org/ja-jp/vnano/doc/tutorial/language) 」で記述したスクリプトのファイル名/パスを入力する事で、それを実行する事もできます（複雑な計算処理を自動化するのに便利です）。
 
-
-なお、RINPn の bin フォルダのパスを環境変数 Path / PATH に登録しておくと、以下のようにコマンドラインでも計算できます：
+ところで、RINPn の bin フォルダのパスを環境変数 Path / PATH に登録しておくと、以下のようにコマンドラインでも計算できます：
 
     rinpn "1 + 2"
 	> 3
@@ -112,11 +108,21 @@ RINPn が起動されると、以下のような電卓画面が表示されま�
 	> 0.8414709848
 
 
-より詳しい使用方法は、リポジトリ内に同梱されている「 **RINPn_User_Guide_Japanese.html** 」をご参照ください。また、同内容のガイドがWeb上でも参照できます：
+より詳しい使用方法は、リポジトリ内に同梱されているユーザーガイド「 **RINPn_User_Guide_Japanese.html** 」をご参照ください。また、同内容のガイドがWeb上でも参照できます：
 
-### - RINPn ユーザーガイド
+* [RINPn ユーザーガイド](https://www.rinearn.com/ja-jp/rinpn/guide/)</a>
 
-- [https://www.rinearn.com/ja-jp/rinpn/guide/](https://www.rinearn.com/ja-jp/rinpn/guide/)</a>
+既に少し触れましたが、上記ガイド内で紹介されているように、RINPn には多くの機能があります。例えば：
+
+* 関数や変数の自作
+* C言語風の簡易言語「 [Vnano](https://www.vcssl.org/ja-jp/vnano/doc/tutorial/language) 」で記述したスクリプトの実行
+* Java言語で実装した処理の呼び出し
+
+等々です。加えて、以下のページに掲載されている、全ての関数と変数を標準で使用できます：
+
+* [組み込み関数と変数の一覧（Vnano標準プラグインによって提供）](https://www.vcssl.org/ja-jp/vnano/plugin/)</a>
+
+このように、RINPn はとても強力な電卓ソフトで、この短い README 内で全ての機能を説明する事はできません。まずはともかく、ぜひ RINPn を使ってみてください！ そして、必要に応じて、上に挙げたドキュメントなどに目を通してみてください。
 
 
 <a id="architecture"></a>

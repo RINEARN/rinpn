@@ -92,12 +92,10 @@ When the RINPn is executed, the calculator window will be displayed:
 
 ![Calculator Window](./img/gui_expression.png)
 
-On the above window, you can calculate the value of the inputted expression by typing the "Enter" key, or pressing "=" button. In the expression, various math functions such as sin, cos, and so on are available by default.
 The window size, color, opacity, and so on are customizable by modifying values in "Settings.txt".
 
-In addition, the RINPn support the scripting language ["Vnano"](https://www.vcssl.org/en-us/vnano/). You can define new functions in the Vnano script file "ExampleLibrary.vnano" in "lib" folder, and use them in the expression inputted to the RINPn.
-You also can execute a Vnano script file performing complicated numerical calculations and so on, by inputting the name / path of the script file.
-
+On the above window, you can calculate the value of the inputted expression by typing the "Enter" key, or pressing "=" button. In the expression, various math functions such as sin, cos, and so on are available by default (and you can define your original functions).
+In addition, by inputting the file name/path of a script written in C-like simple language "[Vnano](https://www.vcssl.org/ja-jp/vnano/)", you can execute it (useful for performing complicated calculations automatically).
 
 Also, if the path of "bin" folder of the RINPn is registered to the environment variable Path/PATH, you can calculate in the command-line as follows:
 
@@ -111,12 +109,21 @@ Also, if the path of "bin" folder of the RINPn is registered to the environment 
 	> 0.8414709848
 
 
-For more details, see **"RINPn_User_Guide_English.html"** which is attached in this repository. Also, you can see the same guide on the web: 
+For more details, see the user guide document **"RINPn_User_Guide_English.html"** which is attached in this repository. Also, you can see the same guide on the web: 
 
-### - RINPn User Guide
+* [RINPn User Guide](https://www.rinearn.com/en-us/rinpn/guide/)</a>
 
-- [https://www.rinearn.com/en-us/rinpn/guide/](https://www.rinearn.com/en-us/rinpn/guide/)</a>
+As introduced in the above user guide (and in this README shortly), the RINPn have many features, e.g.:
 
+* Defining your original functions and variables
+* Running scripts written in C-like simple language "[Vnano](https://www.vcssl.org/en-us/vnano/doc/tutorial/language)"
+* Calling processes implemented in Java
+
+and so on. In addition, you can use all built-in functions and variables listed in the following page by default:
+
+* [List of built-In functions and variables, provided by Vnano Standard Plug-ins](https://www.vcssl.org/en-us/vnano/plugin/)</a>
+
+The RINPn is a very powerful calculator app, so we can't introduce all features in this short README. At first, please try using the RINPn! Then, see the above documents as needed.
 
 
 <a id="architecture"></a>
@@ -130,7 +137,7 @@ The following is a block diagram to grasp relationship between components we men
 
 ![Block Diagram](./img/architecture.jpg)
 
-As in the above diagram, 
+As in the above diagram, the 
 [RINPn](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/RINPn.java) 
 class is the surface layer of implementation of this software, 
 and in there Model/View/Presenter components are combined and work together.
