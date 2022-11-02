@@ -9,7 +9,7 @@
 
 RINPn の本体は、
 Model / View / Presenter の3つの主要コンポーネントを軸に構成される、MVPパターンに基づくアーキテクチャを採用しています。
-各コンポーネントは、<a href="https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/">com.rinearn.rinpn</a> パッケージ内に、それぞれ単一のクラスとして実装されています。
+各コンポーネントは、[com.rinearn.rinpn](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/) パッケージ内に、それぞれ単一のクラスとして実装されています。
 
 また、RINPn 本体の実装とは完全に独立していますが、計算処理を担う Vnano のスクリプトエンジンも、ソフトウェア全体のアーキテクチャの観点では1つの重要なコンポーネントです。
 
@@ -18,23 +18,23 @@ Model / View / Presenter の3つの主要コンポーネントを軸に構成さ
 ![Block Diagram](./img/architecture.jpg)
 
 上図の通り、
-<a href="https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/RINPn.java">RINPn</a> 
+[RINPn](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/RINPn.java) 
 クラスがこのソフトウェアの実装の外枠で、その中で Model/View/Presenter の各コンポーネントが組み合わさって動いています。
 以下では、各コンポーネントの役割を解説します。
 
 
 <a id="architecture-model"></a>
-## Model ( <a href="https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/Model.java">com.rinearn.rinpn.Model</a> クラス )
+## Model ( [com.rinearn.rinpn.Model](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/Model.java) クラス )
 
 Model は、UI部分を除いた、電卓としての機能面を提供するコンポーネントです。
 例えば、計算式が入力されると、その計算結果を出力として返します
 （計算処理そのものについては、さらに下層のスクリプトエンジンに投げて実行します）
 
-Model の処理は、CUIモードでは、RINPn クラスから直接呼ばれます。一方でGUIモードでは、ユーザーのUI操作に応じて、イベント駆動で Presenter から呼ばれます。
+Model の処理は、CUIモードでは、メインスレッド上で RINPn クラスから直接呼ばれます。一方でGUIモードでは、ユーザーのUI操作に応じて、イベント駆動で Presenter から呼ばれます。
 
 
 <a id="architecture-view"></a>
-## View ( <a href="https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/View.java">com.rinearn.rinpn.View</a> クラス )
+## View ( [com.rinearn.rinpn.View](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/View.java) クラス )
 
 View は、GUIモードにおいて、ウィンドウやテキストフィールドなどで構成される、UIのグラフィカルな表面（見える部分）の役割を担うコンポーネントです。
 
@@ -44,7 +44,7 @@ View は、単にUI部品をまとめて保持しているだけで、処理ら�
 
 
 <a id="architecture-presenter"></a>
-## Presenter ( <a href="https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/presenter/">com.rinearn.rinpn.Presenter</a> クラス )
+## Presenter ( [com.rinearn.rinpn.Presenter](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/presenter/) クラス )
 
 Presenter は、GUIモードにおいて、View と Model の間を仲介するコンポーネントです。
 
@@ -53,13 +53,13 @@ Presenter クラスは、内部クラスとして各種のイベントリスナ�
 
 
 <a id="architecture-engine"></a>
-## スクリプトエンジン ( <a href="https://github.com/RINEARN/vnano/blob/master/src/org/vcssl/nano/">org.vcssl.nano</a> パッケージ )
+## スクリプトエンジン ( [org.vcssl.nano](https://github.com/RINEARN/vnano/blob/master/src/org/vcssl/nano/) パッケージ )
 
 スクリプトエンジンは、Model から要求された計算を実行する役割を担います。
 スクリプトの実行や、プラグインとのやり取りも、このコンポーネントによって行われます。
 なお、このコンポーネントは、アプリケーション組み込み用のスクリプトエンジン「 Vnano 」として、このソフトウェアとは独立に開発進行中のものです。
 従って、このコンポーネント自身についての詳細は、そちらのドキュメントをご参照ください： 
-<a href="https://github.com/RINEARN/vnano">https://github.com/RINEARN/vnano</a>
+[https://github.com/RINEARN/vnano](https://github.com/RINEARN/vnano)
 
 
 
