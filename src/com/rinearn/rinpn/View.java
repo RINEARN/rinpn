@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.text.DefaultEditorKit;
+import javax.swing.border.LineBorder;
 
 import com.rinearn.rinpn.util.SettingContainer;
 
@@ -31,12 +32,17 @@ import javax.swing.SwingUtilities;
  * The class providing UI components of this application.
  */
 public final class View {
-	
+
 	/** The flag storing whether the UI components have already been initialized. */
 	private volatile boolean initialized = false;
 
+	public static final int WINDOW_EDGE_WIDTH = 5;
+	public static final int WINDOW_MIN_WIDTH = 200;
+	public static final int WINDOW_MIN_HEIGHT = 100;
+
 	public JFrame frame = null;
 	public JPanel basePanel = null;
+	public JPanel mainPanel = null;
 	public JPanel topPanel = null;
 	public JPanel midPanel = null;
 	public JTextField inputField = null;
@@ -101,15 +107,32 @@ public final class View {
 			frame = new JFrame();
 			frame.setBounds(0, 0, this.settingContainer.windowWidth, this.settingContainer.windowHeight);
 
-			// Create the base panel, on which all UI components will be put.
+			// The base panel, on which the main panel is added.
+			// There are narrow margins at the top/bottom/right/left edges of the base panel, 
+			// and users can resize the window by mouse-dragging one of the margins.
 			basePanel = new JPanel();
-			basePanel.setLayout(new GridLayout(4, 1));
+			basePanel.setBorder(new LineBorder(
+				new Color(
+					this.settingContainer.windowBackgroundColorR,
+					this.settingContainer.windowBackgroundColorG,
+					this.settingContainer.windowBackgroundColorB
+				),
+				WINDOW_EDGE_WIDTH)
+			);
+			basePanel.setLayout(new GridLayout(1, 1));
+			JPanel innerPanel = new JPanel();
+			innerPanel.setLayout(new GridLayout(1, 1));
 			frame.getContentPane().add(basePanel);
+
+			// Create the main panel, on which "INPUT" / "OUTPUT" text fields and so on will be put.
+			mainPanel = new JPanel();
+			mainPanel.setLayout(new GridLayout(4, 1));
+			basePanel.add(mainPanel);
 
 			// Create the top horizontal panel (on which "INPUT" label will be put).
 			topPanel = new JPanel();
 			topPanel.setLayout(new GridLayout(1, 2));
-			basePanel.add(topPanel);
+			mainPanel.add(topPanel);
 
 			// Create the "INPUT" label.
 			inputLabel = new JLabel("  ▼INPUT", JLabel.LEFT);
@@ -126,12 +149,12 @@ public final class View {
 			// Create the "INPUT" text field.
 			inputField = new JTextField();
 			inputField.setFont(textFieldFont);
-			basePanel.add(inputField);
+			mainPanel.add(inputField);
 
 			// Create the mid horizontal panel (on which "OUTPUT" label will be put).
 			midPanel = new JPanel();
 			midPanel.setLayout(new GridLayout(1, 2));
-			basePanel.add(midPanel);
+			mainPanel.add(midPanel);
 
 			// Create the "OUTPUT" label.
 			outputLabel = new JLabel("  ▼OUTPUT   ", JLabel.LEFT);
@@ -141,7 +164,7 @@ public final class View {
 			// Create the "OUTPUT" text field.
 			outputField = new JTextField();
 			outputField.setFont(textFieldFont);
-			basePanel.add(outputField);
+			mainPanel.add(outputField);
 
 			// Create right-clicking menu for the "INPUT" / "OUTPUT" text fields.
 			textFieldPopupMenu = new JPopupMenu();
@@ -189,7 +212,7 @@ public final class View {
 					this.settingContainer.windowBackgroundColorG,
 					this.settingContainer.windowBackgroundColorB
 				);
-				basePanel.setBackground(windowBackgroundColor);
+				mainPanel.setBackground(windowBackgroundColor);
 
 				runButton.setBackground(new Color(255, 255, 255));
 				exitButton.setBackground(new Color(255, 255, 255));
@@ -218,6 +241,8 @@ public final class View {
 			}
 
 			// Make the window visible.
+			mainPanel.setVisible(true);
+			basePanel.setVisible(true);
 			frame.setVisible(true);
 		}
 	}
@@ -254,6 +279,7 @@ public final class View {
 			frame.dispose();
 			frame = null;
 			basePanel = null;
+			mainPanel = null;
 			midPanel = null;
 			inputField = null;
 			outputField = null;

@@ -5,6 +5,7 @@
 
 package com.rinearn.rinpn;
 
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -39,6 +40,11 @@ public final class Presenter {
 		WindowMouseListener windowMouseListener = new WindowMouseListener(view);
 		view.frame.addMouseListener(windowMouseListener);
 		view.frame.addMouseMotionListener(windowMouseListener);
+
+		BasePanelMouseListener basePanelMouseListener = new BasePanelMouseListener(view);
+		view.basePanel.addMouseListener(basePanelMouseListener);
+		view.basePanel.addMouseMotionListener(basePanelMouseListener);
+
 		view.inputField.addKeyListener(new RunKeyListener(view, model, settingContainer));
 		view.inputField.addMouseListener(new InputFieldMouseListener(view));
 		view.outputField.addMouseListener(new OutputFieldMouseListener(view));
@@ -77,6 +83,159 @@ public final class Presenter {
 			int y = this.view.frame.getLocation().y;
 
 			this.view.frame.setLocation(x + dx, y + dy);
+		}
+	}
+
+
+	/**
+	 * The listener handling mouse events on the base panel, for resizing the window.
+	 */
+	private static final class BasePanelMouseListener extends MouseAdapter {
+		private View view = null;
+		private int pressedMouseAbsoluteX = -1;
+		private int pressedMouseAbsoluteY = -1;
+		int pressedWindowX = -1;
+		int pressedWindowY = -1;
+		int pressedWindowWidth = -1;
+		int pressedWindowHeight = -1;
+		WindowEdge pressedWindowEdge = WindowEdge.NONE;
+
+		private enum WindowEdge {
+			TOP,
+			BOTTOM,
+			LEFT,
+			RIGHT,
+			NONE
+		};
+
+		protected BasePanelMouseListener(View view) {
+			this.view = view;
+		}
+
+		private WindowEdge detectWindowEdge(int mouseX, int mouseY, int windowWidth, int windowHeight) {
+			WindowEdge windowEdge = WindowEdge.NONE;
+			int windowEdgeWidth = View.WINDOW_EDGE_WIDTH;
+
+			if (0 <= mouseX && mouseX <= windowEdgeWidth
+					&& windowEdgeWidth <= mouseY && mouseY <= windowHeight - windowEdgeWidth ) {
+				windowEdge = WindowEdge.LEFT;
+			}
+
+			if (windowWidth - windowEdgeWidth <= mouseX && mouseX <= windowWidth
+					&& windowEdgeWidth <= mouseY && mouseY <= windowHeight - windowEdgeWidth ) {
+				windowEdge = WindowEdge.RIGHT;
+			}
+
+			if (windowEdgeWidth <= mouseX && mouseX <= windowWidth - windowEdgeWidth
+					&& 0 <= mouseY && mouseY <= windowEdgeWidth ) {
+				windowEdge = WindowEdge.TOP;
+			}
+
+			if (windowEdgeWidth <= mouseX && mouseX <= windowWidth - windowEdgeWidth
+					&& windowHeight - windowEdgeWidth <= mouseY && mouseY <= windowHeight ) {
+				windowEdge = WindowEdge.BOTTOM;
+			}
+			return windowEdge;
+		}
+
+		@Override
+		public final void mousePressed(MouseEvent e) {
+			this.pressedMouseAbsoluteX = e.getX() + this.view.frame.getLocation().x;
+			this.pressedMouseAbsoluteY = e.getY() + this.view.frame.getLocation().y;
+			this.pressedWindowX = this.view.frame.getLocation().x;
+			this.pressedWindowY = this.view.frame.getLocation().y;
+			this.pressedWindowWidth = this.view.frame.getSize().width;
+			this.pressedWindowHeight = this.view.frame.getSize().height;
+			this.pressedWindowEdge = this.detectWindowEdge(e.getX(), e.getY(), this.pressedWindowWidth, this.pressedWindowHeight);
+		}
+
+		@Override
+		public final void mouseMoved(MouseEvent e) {
+			int mouseX = e.getX();
+			int mouseY = e.getY();
+			int windowWidth = this.view.frame.getSize().width;
+			int windowHeight = this.view.frame.getSize().height;
+			WindowEdge windowEdge = this.detectWindowEdge(mouseX, mouseY, windowWidth, windowHeight);
+
+			switch (windowEdge) {
+				case TOP : {
+					this.view.basePanel.setCursor(Cursor.getPredefinedCursor(Cursor.N_RESIZE_CURSOR));
+					break;
+				}
+				case BOTTOM : {
+					this.view.basePanel.setCursor(Cursor.getPredefinedCursor(Cursor.S_RESIZE_CURSOR));
+					break;
+				}
+				case RIGHT : {
+					this.view.basePanel.setCursor(Cursor.getPredefinedCursor(Cursor.E_RESIZE_CURSOR));
+					break;
+				}
+				case LEFT : {
+					this.view.basePanel.setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
+					break;
+				}
+				case NONE : {
+					this.view.basePanel.setCursor(Cursor.getDefaultCursor());
+					break;
+				}
+				default : {
+					throw new RINPnFatalException("Unexpected window edge: " + windowEdge);
+				}
+			}
+		}
+
+		@Override
+		public final void mouseDragged(MouseEvent e) {
+
+			// Note: Don't use the relative coordinates for the followings,
+			// because they change during we are resizing the window.
+			int mouseAbsoluteX = e.getX() + this.view.frame.getLocation().x;
+			int mouseAbsoluteY = e.getY() + this.view.frame.getLocation().y;
+
+			int dxFromPressedPoint = mouseAbsoluteX - this.pressedMouseAbsoluteX;
+			int dyFromPressedPoint = mouseAbsoluteY - this.pressedMouseAbsoluteY;
+
+			int resizedWindowX = this.pressedWindowX;
+			int resizedWindowY = this.pressedWindowY;
+			int resizedWindowWidth = this.pressedWindowWidth;
+			int resizedWindowHeight = this.pressedWindowHeight;
+
+			switch (this.pressedWindowEdge) {
+				case TOP : {
+					resizedWindowY += dyFromPressedPoint;
+					resizedWindowHeight -= dyFromPressedPoint;
+					break;
+				}
+				case BOTTOM : {
+					resizedWindowHeight += dyFromPressedPoint;
+					break;
+				}
+				case RIGHT : {
+					resizedWindowWidth += dxFromPressedPoint;
+					break;
+				}
+				case LEFT : {
+					resizedWindowX += dxFromPressedPoint;
+					resizedWindowWidth -= dxFromPressedPoint;
+					break;
+				}
+				case NONE : {
+					resizedWindowX = this.pressedWindowX + dxFromPressedPoint;
+					resizedWindowY = this.pressedWindowY + dyFromPressedPoint;
+					break;
+				}
+				default : {
+					throw new RINPnFatalException("Unexpected window edge: " + this.pressedWindowEdge);
+				}
+			}
+			if (resizedWindowHeight < View.WINDOW_MIN_HEIGHT) {
+				resizedWindowHeight = View.WINDOW_MIN_HEIGHT;
+			}
+			if (resizedWindowWidth < View.WINDOW_MIN_WIDTH) {
+				resizedWindowWidth = View.WINDOW_MIN_WIDTH;
+			}
+			this.view.frame.setBounds(resizedWindowX, resizedWindowY, resizedWindowWidth, resizedWindowHeight);
+
 		}
 	}
 
