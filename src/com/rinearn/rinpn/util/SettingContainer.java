@@ -38,6 +38,10 @@ public final class SettingContainer implements Cloneable {
 	// getter/setter で包まずに、外からも public なフィールドとして直接アクセスする
 
 	public int textFieldFontSize = 18;
+	public int numberKeyFontSize = 18;
+	public int actionKeyFontSize = 18;
+	public int functionKeyFontSize = 14;
+
 	public boolean stayOnTopOfAllWindows = true;
 	public int windowWidth = 540;
 	public int windowHeight = 380;

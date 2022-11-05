@@ -59,7 +59,9 @@ public final class View {
 	public JButton exitButton = null;
 	public JPopupMenu textFieldPopupMenu = null;
 
-	public List<JButton> keyPanelButtonList = null;
+	public List<JButton> numberKeyList = null;
+	public List<JButton> functionKeyList = null;
+	public List<JButton> actionKeyList = null;
 
 
 	/**
@@ -316,32 +318,247 @@ public final class View {
 			gridConstraints.insets = new Insets(0, 0, 0, 0);
 			keyPanel.setLayout(layout);
 
-			// Initialize the list for storing the references of all JButtons mounted on the key panel.
-			keyPanelButtonList = new ArrayList<JButton>();
-
 			// Create the panel on which mount function keys.
 			gridConstraints.gridx = 0;
 			gridConstraints.weightx = 5.0;
+			gridConstraints.insets = new Insets(0, 0, 0, 0);
 			JPanel functionPanel = new JPanel();
-			functionPanel.setBackground(Color.RED); // temporary
+			functionPanel.setLayout(new GridLayout(8, 3));
+			functionPanel.setBackground(new Color(0, 0, 0, 0));
 			layout.setConstraints(functionPanel, gridConstraints);
 			keyPanel.add(functionPanel);
+
+			// Create function keys.
+			{
+				// Initialize the list for storing the references of all JButtons mounted on the function key panel.
+				functionKeyList = new ArrayList<JButton>();
+
+				JButton sinButton = new JButton("sin");
+				functionPanel.add(sinButton);
+				functionKeyList.add(sinButton);
+
+				JButton cosButton = new JButton("cos");
+				functionPanel.add(cosButton);
+				functionKeyList.add(cosButton);
+
+				JButton tanButton = new JButton("tan");
+				functionPanel.add(tanButton);
+				functionKeyList.add(tanButton);
+
+				JButton asinButton = new JButton("asin");
+				functionPanel.add(asinButton);
+				functionKeyList.add(asinButton);
+
+				JButton acosButton = new JButton("cos");
+				functionPanel.add(acosButton);
+				functionKeyList.add(acosButton);
+
+				JButton atanButton = new JButton("tan");
+				functionPanel.add(atanButton);
+				functionKeyList.add(atanButton);
+
+				JButton absButton = new JButton("abs");
+				functionPanel.add(absButton);
+				functionKeyList.add(absButton);
+
+				JButton sqrtButton = new JButton("sqrt");
+				functionPanel.add(sqrtButton);
+				functionKeyList.add(sqrtButton);
+
+				JButton powButton = new JButton("pow");
+				functionPanel.add(powButton);
+				functionKeyList.add(powButton);
+
+				JButton expButton = new JButton("exp");
+				functionPanel.add(expButton);
+				functionKeyList.add(expButton);
+
+				JButton lnButton = new JButton("ln");
+				functionPanel.add(lnButton);
+				functionKeyList.add(lnButton);
+
+				JButton log10Button = new JButton("log10");
+				functionPanel.add(log10Button);
+				functionKeyList.add(log10Button);
+
+				JButton sumButton = new JButton("sum");
+				functionPanel.add(sumButton);
+				functionKeyList.add(sumButton);
+
+				JButton vanButton = new JButton("van");
+				functionPanel.add(vanButton);
+				functionKeyList.add(vanButton);
+
+				JButton van1Button = new JButton("van1");
+				functionPanel.add(van1Button);
+				functionKeyList.add(van1Button);
+
+				JButton meanButton = new JButton("mean");
+				functionPanel.add(meanButton);
+				functionKeyList.add(meanButton);
+
+				JButton sdnButton = new JButton("sdn");
+				functionPanel.add(sdnButton);
+				functionKeyList.add(sdnButton);
+
+				JButton sdn1Button = new JButton("sdn1");
+				functionPanel.add(sdn1Button);
+				functionKeyList.add(sdn1Button);
+
+				JButton radButton = new JButton("rad");
+				functionPanel.add(radButton);
+				functionKeyList.add(radButton);
+
+				JButton degButton = new JButton("deg");
+				functionPanel.add(degButton);
+				functionKeyList.add(degButton);
+
+				JButton piButton = new JButton("PI");
+				functionPanel.add(piButton);
+				functionKeyList.add(piButton);
+
+				JButton openParenthesisButton = new JButton("(");
+				functionPanel.add(openParenthesisButton);
+				functionKeyList.add(openParenthesisButton);
+
+				JButton closeParenthesisButton = new JButton(")");
+				functionPanel.add(closeParenthesisButton);
+				functionKeyList.add(closeParenthesisButton);
+
+				JButton spaceButton = new JButton("_");
+				functionPanel.add(spaceButton);
+				functionKeyList.add(spaceButton);
+
+				Font functionKeyFont = new Font("Dialog", Font.BOLD, this.settingContainer.functionKeyFontSize);
+				for (JButton button: functionKeyList) {
+					button.setFont(functionKeyFont);
+				}
+			}
 
 			// Create the panel on which mount number keys.
 			gridConstraints.gridx = 1;
 			gridConstraints.weightx = 3.0;
+			gridConstraints.insets = new Insets(0, 5, 0, 5);
 			JPanel numberPanel = new JPanel();
-			numberPanel.setBackground(Color.GREEN); // temporary
+			numberPanel.setLayout(new GridLayout(4, 4));
+			numberPanel.setBackground(new Color(0, 0, 0, 0));
 			layout.setConstraints(numberPanel, gridConstraints);
 			keyPanel.add(numberPanel);
+
+			// Create number keys.
+			{
+				// Initialize the list for storing the references of all JButtons mounted on the number key panel.
+				numberKeyList = new ArrayList<JButton>();
+
+				JButton num7Button = new JButton("7");
+				numberPanel.add(num7Button);
+				numberKeyList.add(num7Button);
+
+				JButton num8Button = new JButton("8");
+				numberPanel.add(num8Button);
+				numberKeyList.add(num8Button);
+
+				JButton num9Button = new JButton("9");
+				numberPanel.add(num9Button);
+				numberKeyList.add(num9Button);
+
+				JButton divButton = new JButton("/");
+				numberPanel.add(divButton);
+				numberKeyList.add(divButton);
+
+				JButton num4Button = new JButton("4");
+				numberPanel.add(num4Button);
+				numberKeyList.add(num4Button);
+
+				JButton num5Button = new JButton("5");
+				numberPanel.add(num5Button);
+				numberKeyList.add(num5Button);
+
+				JButton num6Button = new JButton("6");
+				numberPanel.add(num6Button);
+				numberKeyList.add(num6Button);
+
+				JButton mulButton = new JButton("*");
+				numberPanel.add(mulButton);
+				numberKeyList.add(mulButton);
+
+				JButton num1Button = new JButton("1");
+				numberPanel.add(num1Button);
+				numberKeyList.add(num1Button);
+
+				JButton num2Button = new JButton("2");
+				numberPanel.add(num2Button);
+				numberKeyList.add(num2Button);
+
+				JButton num3Button = new JButton("3");
+				numberPanel.add(num3Button);
+				numberKeyList.add(num3Button);
+
+				JButton subButton = new JButton("-");
+				numberPanel.add(subButton);
+				numberKeyList.add(subButton);
+
+				JButton num0Button = new JButton("0");
+				numberPanel.add(num0Button);
+				numberKeyList.add(num0Button);
+
+				JButton dotButton = new JButton(".");
+				numberPanel.add(dotButton);
+				numberKeyList.add(dotButton);
+
+				JButton commaButton = new JButton(",");
+				numberPanel.add(commaButton);
+				numberKeyList.add(commaButton);
+
+				JButton addButton = new JButton("+");
+				numberPanel.add(addButton);
+				numberKeyList.add(addButton);
+
+				Font numberKeyFont = new Font("Dialog", Font.BOLD, this.settingContainer.numberKeyFontSize);
+				for (JButton button: numberKeyList) {
+					button.setFont(numberKeyFont);
+				}
+			}
 
 			// Create the panel on which mount action keys.
 			gridConstraints.gridx = 2;
 			gridConstraints.weightx = 1.0;
+			gridConstraints.insets = new Insets(0, 0, 0, 0);
 			JPanel actionPanel = new JPanel();
-			actionPanel.setBackground(Color.BLUE); // temporary
+			actionPanel.setLayout(new GridLayout(4, 1));
+			actionPanel.setBackground(new Color(0, 0, 0, 0));
 			layout.setConstraints(actionPanel, gridConstraints);
 			keyPanel.add(actionPanel);
+
+			// Create action keys.
+			{
+				// Initialize the list for storing the references of all JButtons mounted on the number key panel.
+				actionKeyList = new ArrayList<JButton>();
+
+				JButton numRunButton = new JButton("=");
+				numRunButton.setForeground(Color.BLUE);
+				actionPanel.add(numRunButton);
+				actionKeyList.add(numRunButton);
+
+				JButton clearButton = new JButton("C");
+				clearButton.setForeground(Color.RED);
+				actionPanel.add(clearButton);
+				actionKeyList.add(clearButton);
+
+				JButton backspaceButton = new JButton("BS");
+				clearButton.setForeground(Color.RED);
+				actionPanel.add(backspaceButton);
+				actionKeyList.add(backspaceButton);
+
+				JButton fileButton = new JButton("Script");
+				actionPanel.add(fileButton);
+				actionKeyList.add(fileButton);
+
+				Font actionKeyFont = new Font("Dialog", Font.BOLD, this.settingContainer.actionKeyFontSize);
+				for (JButton button: actionKeyList) {
+					button.setFont(actionKeyFont);
+				}
+			}
 		}
 	}
 
