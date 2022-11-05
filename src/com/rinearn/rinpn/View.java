@@ -169,8 +169,19 @@ public final class View {
 				mainPanel.setBackground(windowBackgroundColor);
 				keyPanel.setBackground(windowBackgroundColor);
 
-				runButton.setBackground(new Color(255, 255, 255));
-				exitButton.setBackground(new Color(255, 255, 255));
+				runButton.setBackground(Color.WHITE);
+				exitButton.setBackground(Color.WHITE);
+				/*
+				for (JButton button: numberKeyList) {
+					button.setBackground(Color.WHITE);
+				}
+				for (JButton button: functionKeyList) {
+					button.setBackground(Color.WHITE);
+				}
+				for (JButton button: functionKeyList) {
+					button.setBackground(Color.WHITE);
+				}
+				*/
 
 				inputLabel.setForeground(new Color(0, 0, 0, 120));
 				outputLabel.setForeground(new Color(0, 0, 0, 120));
@@ -221,7 +232,8 @@ public final class View {
 				// Create the "INPUT" label.
 				gridConstraints.gridx = 0;
 				gridConstraints.anchor = GridBagConstraints.WEST;
-				inputLabel = new JLabel("▼INPUT", JLabel.LEFT);
+				gridConstraints.insets = new Insets(5, 0, 0, 0);
+				inputLabel = new JLabel("INPUT", JLabel.LEFT);
 				layout.setConstraints(inputLabel, gridConstraints);
 				inputLabel.setFont(SettingContainer.LABEL_FONT);
 				mainPanel.add(inputLabel);
@@ -229,7 +241,8 @@ public final class View {
 				// Create the "X" button.
 				gridConstraints.gridx = 1;
 				gridConstraints.anchor = GridBagConstraints.EAST;
-				exitButton = new JButton("×");
+				gridConstraints.insets = new Insets(0, 0, 0, 0);
+				exitButton = new JButton("X");
 				layout.setConstraints(exitButton, gridConstraints);
 				exitButton.setFont(SettingContainer.EXIT_BUTTON_FONT);
 				exitButton.setForeground(Color.RED);
@@ -260,7 +273,8 @@ public final class View {
 				// Create the "OUTPUT" label.
 				gridConstraints.gridx = 0;
 				gridConstraints.anchor = GridBagConstraints.WEST;
-				outputLabel = new JLabel("▼OUTPUT", JLabel.LEFT);
+				gridConstraints.insets = new Insets(5, 0, 0, 0);
+				outputLabel = new JLabel("OUTPUT", JLabel.LEFT);
 				layout.setConstraints(outputLabel, gridConstraints);
 				outputLabel.setFont(SettingContainer.LABEL_FONT);
 				mainPanel.add(outputLabel);
@@ -268,6 +282,7 @@ public final class View {
 				// Create the "run" button.
 				gridConstraints.gridx = 1;
 				gridConstraints.anchor = GridBagConstraints.EAST;
+				gridConstraints.insets = new Insets(0, 0, 0, 0);
 				runButton = new JButton("=");
 				layout.setConstraints(runButton, gridConstraints);
 				runButton.setFont(SettingContainer.BUTTON_FONT);
@@ -288,7 +303,7 @@ public final class View {
 			));
 			mainPanel.add(outputField);
 
-			// The horizontal bar on which the "▼KEY-PANEL" (key-retractor) label is.
+			// The horizontal bar on which the "KEY-PANEL" (key-retractor) label is.
 			gridConstraints.gridx = 0;
 			gridConstraints.gridy = 4;
 			gridConstraints.gridwidth = 1;
@@ -296,7 +311,7 @@ public final class View {
 			gridConstraints.fill = GridBagConstraints.NONE;
 			gridConstraints.anchor = GridBagConstraints.WEST;
 			gridConstraints.insets = new Insets(5, 0, 0, 0);
-			keyRetractorLabel = new JLabel("▼KEY-PANEL", JLabel.LEFT);
+			keyRetractorLabel = new JLabel("▲KEY-PANEL", JLabel.LEFT);
 			layout.setConstraints(keyRetractorLabel, gridConstraints);
 			keyRetractorLabel.setFont(SettingContainer.LABEL_FONT);
 			mainPanel.add(keyRetractorLabel);
