@@ -41,7 +41,7 @@ public final class Presenter {
 		view.frame.addMouseListener(windowMouseListener);
 		view.frame.addMouseMotionListener(windowMouseListener);
 
-		BasePanelMouseListener basePanelMouseListener = new BasePanelMouseListener(view);
+		BasePanelMouseListener basePanelMouseListener = new BasePanelMouseListener(view, settingContainer);
 		view.basePanel.addMouseListener(basePanelMouseListener);
 		view.basePanel.addMouseMotionListener(basePanelMouseListener);
 
@@ -99,6 +99,7 @@ public final class Presenter {
 		int pressedWindowWidth = -1;
 		int pressedWindowHeight = -1;
 		WindowEdge pressedWindowEdge = WindowEdge.NONE;
+		SettingContainer settingContainer;
 
 		private enum WindowEdge {
 			TOP,
@@ -112,8 +113,9 @@ public final class Presenter {
 			NONE
 		};
 
-		protected BasePanelMouseListener(View view) {
+		protected BasePanelMouseListener(View view, SettingContainer settingContainer) {
 			this.view = view;
+			this.settingContainer = settingContainer;
 		}
 
 		private WindowEdge detectWindowEdge(int mouseX, int mouseY, int windowWidth, int windowHeight) {
@@ -272,14 +274,29 @@ public final class Presenter {
 				resizedWindowY = this.pressedWindowY + dyFromPressedPoint;
 			}
 
-			if (resizedWindowHeight < View.WINDOW_MIN_HEIGHT) {
-				resizedWindowHeight = View.WINDOW_MIN_HEIGHT;
+			if (resizedWindowHeight < this.settingContainer.retractedWindowHeight) {
+				resizedWindowHeight = this.settingContainer.retractedWindowHeight;
 			}
 			if (resizedWindowWidth < View.WINDOW_MIN_WIDTH) {
 				resizedWindowWidth = View.WINDOW_MIN_WIDTH;
 			}
+
+			// Resize the window.
 			this.view.frame.setBounds(resizedWindowX, resizedWindowY, resizedWindowWidth, resizedWindowHeight);
 
+			// Resize the main panel.
+			int mainPanelX = View.WINDOW_EDGE_WIDTH;
+			int mainPanelY = View.WINDOW_EDGE_WIDTH;
+			int mainPanelWidth = resizedWindowWidth - 2 * View.WINDOW_EDGE_WIDTH;
+			int mainPanelHeight = this.settingContainer.retractedWindowHeight - View.WINDOW_EDGE_WIDTH;
+			this.view.mainPanel.setBounds(mainPanelX, mainPanelY, mainPanelWidth, mainPanelHeight);
+
+			// Resize the key panel.
+			int keyPanelX = View.WINDOW_EDGE_WIDTH;
+			int keyPanelY = this.settingContainer.retractedWindowHeight;
+			int keyPanelWidth = resizedWindowWidth - 2 * View.WINDOW_EDGE_WIDTH;
+			int keyPanelHeight = resizedWindowHeight - this.settingContainer.retractedWindowHeight - View.WINDOW_EDGE_WIDTH;
+			this.view.keyPanel.setBounds(keyPanelX, keyPanelY, keyPanelWidth, keyPanelHeight);
 		}
 	}
 
