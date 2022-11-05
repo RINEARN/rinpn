@@ -5,6 +5,7 @@
 
 package com.rinearn.rinpn;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -48,8 +49,13 @@ public final class Presenter {
 		view.inputField.addKeyListener(new RunKeyListener(view, model, settingContainer));
 		view.inputField.addMouseListener(new InputFieldMouseListener(view));
 		view.outputField.addMouseListener(new OutputFieldMouseListener(view));
+
 		view.runButton.addActionListener(new RunButtonListener(view, model, settingContainer));
 		view.exitButton.addActionListener(new ExitButtonListener(view, model, settingContainer));
+
+		KeyRetractorMouseListener keyRetractorMouseListener = new KeyRetractorMouseListener(view, settingContainer);
+		view.keyRetractorLabel.addMouseListener(keyRetractorMouseListener);
+		view.keyRetractorLabel.addMouseMotionListener(keyRetractorMouseListener);
 	}
 
 
@@ -86,12 +92,12 @@ public final class Presenter {
 		}
 	}
 
-
 	/**
 	 * The listener handling mouse events on the base panel, for resizing the window.
 	 */
 	private static final class BasePanelMouseListener extends MouseAdapter {
 		private View view = null;
+		private SettingContainer settingContainer = null;
 		private int pressedMouseAbsoluteX = -1;
 		private int pressedMouseAbsoluteY = -1;
 		int pressedWindowX = -1;
@@ -99,7 +105,6 @@ public final class Presenter {
 		int pressedWindowWidth = -1;
 		int pressedWindowHeight = -1;
 		WindowEdge pressedWindowEdge = WindowEdge.NONE;
-		SettingContainer settingContainer;
 
 		private enum WindowEdge {
 			TOP,
@@ -283,20 +288,78 @@ public final class Presenter {
 
 			// Resize the window.
 			this.view.frame.setBounds(resizedWindowX, resizedWindowY, resizedWindowWidth, resizedWindowHeight);
+			try {
+				this.view.resizePanels(this.settingContainer);
+			} catch (InvocationTargetException | InterruptedException ie) {
+				ie.printStackTrace();
+			}
 
-			// Resize the main panel.
-			int mainPanelX = View.WINDOW_EDGE_WIDTH;
-			int mainPanelY = View.WINDOW_EDGE_WIDTH;
-			int mainPanelWidth = resizedWindowWidth - 2 * View.WINDOW_EDGE_WIDTH;
-			int mainPanelHeight = this.settingContainer.retractedWindowHeight - View.WINDOW_EDGE_WIDTH;
-			this.view.mainPanel.setBounds(mainPanelX, mainPanelY, mainPanelWidth, mainPanelHeight);
+			// Update the key retractor label.
+			boolean retracted = (this.view.frame.getSize().height == this.settingContainer.retractedWindowHeight);
+			if (retracted) {
+				this.view.keyRetractorLabel.setText("▼KEY-PANEL");
+			} else {
+				this.view.keyRetractorLabel.setText("▲KEY-PANEL");
+			}
+		}
+	}
 
-			// Resize the key panel.
-			int keyPanelX = View.WINDOW_EDGE_WIDTH;
-			int keyPanelY = this.settingContainer.retractedWindowHeight;
-			int keyPanelWidth = resizedWindowWidth - 2 * View.WINDOW_EDGE_WIDTH;
-			int keyPanelHeight = resizedWindowHeight - this.settingContainer.retractedWindowHeight - View.WINDOW_EDGE_WIDTH;
-			this.view.keyPanel.setBounds(keyPanelX, keyPanelY, keyPanelWidth, keyPanelHeight);
+
+	/**
+	 * The listener handling mouse events on the mouse retractor label.
+	 */
+	private static final class KeyRetractorMouseListener extends MouseAdapter {
+		private View view = null;
+		private SettingContainer settingContainer = null;
+		private int windowHeightBeforeRetracted = -1;
+
+		protected KeyRetractorMouseListener(View view, SettingContainer settingContainer) {
+			this.view = view;
+			this.settingContainer = settingContainer;
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			this.view.keyRetractorLabel.setForeground(Color.RED);
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			Color keyRetractorLabelColor = new Color(
+				this.settingContainer.keyRetractorForegroundColorR,
+				this.settingContainer.keyRetractorForegroundColorG,
+				this.settingContainer.keyRetractorForegroundColorB
+			);
+			this.view.keyRetractorLabel.setForeground(keyRetractorLabelColor);
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			boolean retracted = (this.view.frame.getSize().height == this.settingContainer.retractedWindowHeight);
+			if (retracted) {
+				this.view.frame.setBounds(
+					this.view.frame.getLocation().x,
+					this.view.frame.getLocation().y,
+					this.view.frame.getSize().width,
+					this.windowHeightBeforeRetracted
+				);
+				this.view.keyRetractorLabel.setText("▲KEY-PANEL");
+
+			} else {
+				this.windowHeightBeforeRetracted = this.view.frame.getSize().height;
+				this.view.frame.setBounds(
+					this.view.frame.getLocation().x,
+					this.view.frame.getLocation().y,
+					this.view.frame.getSize().width,
+					this.settingContainer.retractedWindowHeight
+				);
+				this.view.keyRetractorLabel.setText("▼KEY-PANEL");
+			}
+			try {
+				this.view.resizePanels(this.settingContainer);
+			} catch (InvocationTargetException | InterruptedException ie) {
+				ie.printStackTrace();
+			}
 		}
 	}
 

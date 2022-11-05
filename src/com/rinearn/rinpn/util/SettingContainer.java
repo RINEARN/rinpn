@@ -60,6 +60,14 @@ public final class SettingContainer implements Cloneable {
 	public int textFieldForegroundColorG = 255;
 	public int textFieldForegroundColorB = 180;
 
+	public int textLabelForgroundColorR = 100;
+	public int textLabelForgroundColorG = 120;
+	public int textLabelForgroundColorB = 140;
+
+	public int keyRetractorForegroundColorR = 100;
+	public int keyRetractorForegroundColorG = 120;
+	public int keyRetractorForegroundColorB = 140;
+
 	public boolean inputNormalizerEnabled = true;
 	public boolean outputRounderEnabled = true;
 	public boolean performImplicitRoundingBeforeRounding = true;

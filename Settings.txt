@@ -133,6 +133,27 @@ textFieldForegroundColorG = 255;     // Green - 緑成分 (0 ~ 255)
 textFieldForegroundColorB = 180;     // Blue  - 青成分 (0 ~ 255)
 
 
+// --------------------------------------------------------------------------------------------------------------
+// Specify the foreground color (the color of characters) of labels of INPUT/OUTPUT text fields.
+// INPUT/OUTPUT テキストフィールドの上にある、ラベルの前景色（文字の色）を指定します。
+// (Type: int)
+// --------------------------------------------------------------------------------------------------------------
+
+textLabelForgroundColorR = 100;     // Red   - 赤成分 (0 ~ 255)
+textLabelForgroundColorG = 120;     // Green - 緑成分 (0 ~ 255)
+textLabelForgroundColorB = 140;     // Blue  - 青成分 (0 ~ 255)
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify the foreground color (the color of characters) of key the panel retractor label.
+// キーパネル折り畳みラベルの前景色（文字の色）を指定します。
+// (Type: int)
+// --------------------------------------------------------------------------------------------------------------
+
+keyRetractorForegroundColorR = 100;     // Red   - 赤成分 (0 ~ 255)
+keyRetractorForegroundColorG = 120;     // Green - 緑成分 (0 ~ 255)
+keyRetractorForegroundColorB = 200;     // Blue  - 青成分 (0 ~ 255)
+
 
 
 

@@ -183,9 +183,26 @@ public final class View {
 				}
 				*/
 
+				/*
 				inputLabel.setForeground(new Color(0, 0, 0, 120));
 				outputLabel.setForeground(new Color(0, 0, 0, 120));
 				keyRetractorLabel.setForeground(new Color(0, 0, 0, 120));
+				*/
+
+				Color ioLabelColor = new Color(
+					this.settingContainer.textLabelForgroundColorR,
+					this.settingContainer.textLabelForgroundColorG,
+					this.settingContainer.textLabelForgroundColorB
+				);
+				inputLabel.setForeground(ioLabelColor);
+				outputLabel.setForeground(ioLabelColor);
+
+				Color keyRetractorLabelColor = new Color(
+					this.settingContainer.keyRetractorForegroundColorR,
+					this.settingContainer.keyRetractorForegroundColorG,
+					this.settingContainer.keyRetractorForegroundColorB
+				);
+				keyRetractorLabel.setForeground(keyRetractorLabelColor);
 
 				Color textFieldBackgroundColor = new Color(
 					this.settingContainer.textFieldBackgroundColorR,
@@ -617,6 +634,60 @@ public final class View {
 			keyRetractorLabel = null;
 			runButton = null;
 			exitButton = null;
+		}
+	}
+
+
+	/**
+	 * Resizes the main/key panels on the window.
+	 * 
+	 * @param settingContainer The container storing setting values.
+	 */
+	public void resizePanels(SettingContainer settingContainer) throws InvocationTargetException, InterruptedException {
+		if (SwingUtilities.isEventDispatchThread()) {
+			new PanelResizer(settingContainer).run();
+		} else {
+			SwingUtilities.invokeAndWait(new PanelResizer(settingContainer));
+		}
+		this.initialized = true;
+	}
+
+	/**
+	 * The Runnable implementation for resizing the main/key panels on the event-dispatcher thread.
+	 */
+	private class PanelResizer implements Runnable {
+		SettingContainer settingContainer;
+
+		/**
+		 * Creates new resizer.
+		 * 
+		 * @param settingContainer The container storing setting values.
+		 */
+		public PanelResizer(SettingContainer settingContainer) {
+			this.settingContainer = settingContainer;
+		}
+
+		@Override
+		public void run() {
+			int resizedWindowWidth = frame.getSize().width;
+			int resizedWindowHeight = frame.getSize().height;
+
+			// Resize the main panel.
+			int mainPanelX = View.WINDOW_EDGE_WIDTH;
+			int mainPanelY = View.WINDOW_EDGE_WIDTH;
+			int mainPanelWidth = resizedWindowWidth - 2 * View.WINDOW_EDGE_WIDTH;
+			int mainPanelHeight = this.settingContainer.retractedWindowHeight - View.WINDOW_EDGE_WIDTH;
+			mainPanel.setBounds(mainPanelX, mainPanelY, mainPanelWidth, mainPanelHeight);
+
+			// Resize the key panel.
+			int keyPanelX = View.WINDOW_EDGE_WIDTH;
+			int keyPanelY = this.settingContainer.retractedWindowHeight;
+			int keyPanelWidth = resizedWindowWidth - 2 * View.WINDOW_EDGE_WIDTH;
+			int keyPanelHeight = resizedWindowHeight - this.settingContainer.retractedWindowHeight - View.WINDOW_EDGE_WIDTH;
+			if (keyPanelHeight < 20) {
+				keyPanelHeight = 20;
+			}
+			keyPanel.setBounds(keyPanelX, keyPanelY, keyPanelWidth, keyPanelHeight);
 		}
 	}
 }
