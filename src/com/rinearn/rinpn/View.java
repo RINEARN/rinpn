@@ -15,6 +15,8 @@ import java.awt.Insets;
 import java.awt.GridBagLayout;
 import java.awt.GraphicsDevice.WindowTranslucency;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -56,6 +58,8 @@ public final class View {
 	public JButton runButton = null;
 	public JButton exitButton = null;
 	public JPopupMenu textFieldPopupMenu = null;
+
+	public List<JButton> keyPanelButtonList = null;
 
 
 	/**
@@ -144,8 +148,9 @@ public final class View {
 			keyPanel.setBounds(keyPanelX, keyPanelY, keyPanelWidth, keyPanelHeight);
 			basePanel.add(keyPanel);
 
-			// Create and mount components on the main panel.
+			// Create and mount components on the main panel and the key panel.
 			this.mountMainPanelComponents();
+			this.mountKeyPanelComponents();
 
 			// Make the window frame semi-transparent, if possible.
 			GraphicsDevice graphicsDevide = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -300,6 +305,43 @@ public final class View {
 			textFieldPopupMenu.add(new DefaultEditorKit.CutAction()).setText("Cut");
 			textFieldPopupMenu.add(new DefaultEditorKit.CopyAction()).setText("Copy");
 			textFieldPopupMenu.add(new DefaultEditorKit.PasteAction()).setText("Paste");
+		}
+
+		// Create and mount components on the key panel.
+		private void mountKeyPanelComponents() {
+			GridBagLayout layout = new GridBagLayout();
+			GridBagConstraints gridConstraints = new GridBagConstraints(
+				0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0
+			);
+			gridConstraints.insets = new Insets(0, 0, 0, 0);
+			keyPanel.setLayout(layout);
+
+			// Initialize the list for storing the references of all JButtons mounted on the key panel.
+			keyPanelButtonList = new ArrayList<JButton>();
+
+			// Create the panel on which mount function keys.
+			gridConstraints.gridx = 0;
+			gridConstraints.weightx = 5.0;
+			JPanel functionPanel = new JPanel();
+			functionPanel.setBackground(Color.RED); // temporary
+			layout.setConstraints(functionPanel, gridConstraints);
+			keyPanel.add(functionPanel);
+
+			// Create the panel on which mount number keys.
+			gridConstraints.gridx = 1;
+			gridConstraints.weightx = 3.0;
+			JPanel numberPanel = new JPanel();
+			numberPanel.setBackground(Color.GREEN); // temporary
+			layout.setConstraints(numberPanel, gridConstraints);
+			keyPanel.add(numberPanel);
+
+			// Create the panel on which mount action keys.
+			gridConstraints.gridx = 2;
+			gridConstraints.weightx = 1.0;
+			JPanel actionPanel = new JPanel();
+			actionPanel.setBackground(Color.BLUE); // temporary
+			layout.setConstraints(actionPanel, gridConstraints);
+			keyPanel.add(actionPanel);
 		}
 	}
 
