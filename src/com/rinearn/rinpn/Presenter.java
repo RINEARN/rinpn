@@ -105,6 +105,10 @@ public final class Presenter {
 			BOTTOM,
 			LEFT,
 			RIGHT,
+			TOP_RIGHT,
+			TOP_LEFT,
+			BOTTOM_RIGHT,
+			BOTTOM_LEFT,
 			NONE
 		};
 
@@ -116,25 +120,42 @@ public final class Presenter {
 			WindowEdge windowEdge = WindowEdge.NONE;
 			int windowEdgeWidth = View.WINDOW_EDGE_WIDTH;
 
-			if (0 <= mouseX && mouseX <= windowEdgeWidth
-					&& windowEdgeWidth <= mouseY && mouseY <= windowHeight - windowEdgeWidth ) {
+			if (0 <= mouseX && mouseX < windowEdgeWidth
+					&& windowEdgeWidth < mouseY && mouseY < windowHeight - windowEdgeWidth ) {
 				windowEdge = WindowEdge.LEFT;
 			}
 
-			if (windowWidth - windowEdgeWidth <= mouseX && mouseX <= windowWidth
-					&& windowEdgeWidth <= mouseY && mouseY <= windowHeight - windowEdgeWidth ) {
+			if (windowWidth - windowEdgeWidth < mouseX && mouseX <= windowWidth
+					&& windowEdgeWidth < mouseY && mouseY < windowHeight - windowEdgeWidth ) {
 				windowEdge = WindowEdge.RIGHT;
 			}
 
-			if (windowEdgeWidth <= mouseX && mouseX <= windowWidth - windowEdgeWidth
-					&& 0 <= mouseY && mouseY <= windowEdgeWidth ) {
+			if (windowEdgeWidth < mouseX && mouseX < windowWidth - windowEdgeWidth
+					&& 0 <= mouseY && mouseY < windowEdgeWidth ) {
 				windowEdge = WindowEdge.TOP;
 			}
 
-			if (windowEdgeWidth <= mouseX && mouseX <= windowWidth - windowEdgeWidth
-					&& windowHeight - windowEdgeWidth <= mouseY && mouseY <= windowHeight ) {
+			if (windowEdgeWidth < mouseX && mouseX < windowWidth - windowEdgeWidth
+					&& windowHeight - windowEdgeWidth < mouseY && mouseY <= windowHeight ) {
 				windowEdge = WindowEdge.BOTTOM;
 			}
+			
+			if (mouseX <= windowEdgeWidth && mouseY <= windowEdgeWidth) {
+				windowEdge = WindowEdge.TOP_LEFT;
+			}
+
+			if (windowWidth - windowEdgeWidth <= mouseX && mouseY <= windowEdgeWidth) {
+				windowEdge = WindowEdge.TOP_RIGHT;
+			}
+
+			if (mouseX <= windowEdgeWidth && windowHeight - windowEdgeWidth <= mouseY) {
+				windowEdge = WindowEdge.BOTTOM_LEFT;
+			}
+
+			if (windowWidth - windowEdgeWidth <= mouseX && windowHeight - windowEdgeWidth <= mouseY) {
+				windowEdge = WindowEdge.BOTTOM_RIGHT;
+			}
+
 			return windowEdge;
 		}
 
@@ -174,6 +195,22 @@ public final class Presenter {
 					this.view.basePanel.setCursor(Cursor.getPredefinedCursor(Cursor.W_RESIZE_CURSOR));
 					break;
 				}
+				case TOP_RIGHT : {
+					this.view.basePanel.setCursor(Cursor.getPredefinedCursor(Cursor.NE_RESIZE_CURSOR));
+					break;
+				}
+				case TOP_LEFT : {
+					this.view.basePanel.setCursor(Cursor.getPredefinedCursor(Cursor.NW_RESIZE_CURSOR));
+					break;
+				}
+				case BOTTOM_RIGHT : {
+					this.view.basePanel.setCursor(Cursor.getPredefinedCursor(Cursor.SE_RESIZE_CURSOR));
+					break;
+				}
+				case BOTTOM_LEFT : {
+					this.view.basePanel.setCursor(Cursor.getPredefinedCursor(Cursor.SW_RESIZE_CURSOR));
+					break;
+				}
 				case NONE : {
 					this.view.basePanel.setCursor(Cursor.getDefaultCursor());
 					break;
@@ -200,34 +237,41 @@ public final class Presenter {
 			int resizedWindowWidth = this.pressedWindowWidth;
 			int resizedWindowHeight = this.pressedWindowHeight;
 
-			switch (this.pressedWindowEdge) {
-				case TOP : {
-					resizedWindowY += dyFromPressedPoint;
-					resizedWindowHeight -= dyFromPressedPoint;
-					break;
-				}
-				case BOTTOM : {
-					resizedWindowHeight += dyFromPressedPoint;
-					break;
-				}
-				case RIGHT : {
-					resizedWindowWidth += dxFromPressedPoint;
-					break;
-				}
-				case LEFT : {
-					resizedWindowX += dxFromPressedPoint;
-					resizedWindowWidth -= dxFromPressedPoint;
-					break;
-				}
-				case NONE : {
-					resizedWindowX = this.pressedWindowX + dxFromPressedPoint;
-					resizedWindowY = this.pressedWindowY + dyFromPressedPoint;
-					break;
-				}
-				default : {
-					throw new RINPnFatalException("Unexpected window edge: " + this.pressedWindowEdge);
-				}
+			if (this.pressedWindowEdge == WindowEdge.TOP
+					|| this.pressedWindowEdge == WindowEdge.TOP_RIGHT
+					|| this.pressedWindowEdge == WindowEdge.TOP_LEFT) {
+
+				resizedWindowY += dyFromPressedPoint;
+				resizedWindowHeight -= dyFromPressedPoint;
 			}
+
+			if (this.pressedWindowEdge == WindowEdge.BOTTOM
+					|| this.pressedWindowEdge == WindowEdge.BOTTOM_RIGHT
+					|| this.pressedWindowEdge == WindowEdge.BOTTOM_LEFT) {
+
+				resizedWindowHeight += dyFromPressedPoint;
+			}
+
+			if (this.pressedWindowEdge == WindowEdge.RIGHT
+					|| this.pressedWindowEdge == WindowEdge.TOP_RIGHT
+					|| this.pressedWindowEdge == WindowEdge.BOTTOM_RIGHT) {
+
+				resizedWindowWidth += dxFromPressedPoint;
+			}
+
+			if (this.pressedWindowEdge == WindowEdge.LEFT
+					|| this.pressedWindowEdge == WindowEdge.TOP_LEFT
+					|| this.pressedWindowEdge == WindowEdge.BOTTOM_LEFT) {
+
+				resizedWindowX += dxFromPressedPoint;
+				resizedWindowWidth -= dxFromPressedPoint;
+			}
+
+			if (this.pressedWindowEdge == WindowEdge.NONE) {
+				resizedWindowX = this.pressedWindowX + dxFromPressedPoint;
+				resizedWindowY = this.pressedWindowY + dyFromPressedPoint;
+			}
+
 			if (resizedWindowHeight < View.WINDOW_MIN_HEIGHT) {
 				resizedWindowHeight = View.WINDOW_MIN_HEIGHT;
 			}
