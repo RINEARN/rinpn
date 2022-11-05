@@ -123,12 +123,26 @@ public final class View {
 				),
 				WINDOW_EDGE_WIDTH)
 			);
-			basePanel.setLayout(new GridLayout(1, 1));
+			basePanel.setLayout(null);
 			frame.getContentPane().add(basePanel);
 
 			// Create the main panel, on which "INPUT" / "OUTPUT" text fields and so on will be put.
+			int mainPanelX = WINDOW_EDGE_WIDTH;
+			int mainPanelY = WINDOW_EDGE_WIDTH;
+			int mainPanelWidth = this.settingContainer.windowWidth - 2 * WINDOW_EDGE_WIDTH;
+			int mainPanelHeight = this.settingContainer.retractedWindowHeight - WINDOW_EDGE_WIDTH;
 			mainPanel = new JPanel();
+			mainPanel.setBounds(mainPanelX, mainPanelY, mainPanelWidth, mainPanelHeight);
 			basePanel.add(mainPanel);
+
+			// Create the key panel.
+			int keyPanelX = WINDOW_EDGE_WIDTH;
+			int keyPanelY = this.settingContainer.retractedWindowHeight;
+			int keyPanelWidth = this.settingContainer.windowWidth - 2 * WINDOW_EDGE_WIDTH;
+			int keyPanelHeight = this.settingContainer.windowHeight - this.settingContainer.retractedWindowHeight - WINDOW_EDGE_WIDTH;
+			keyPanel = new JPanel();
+			keyPanel.setBounds(keyPanelX, keyPanelY, keyPanelWidth, keyPanelHeight);
+			basePanel.add(keyPanel);
 
 			// Create and mount components on the main panel.
 			this.mountMainPanelComponents();
@@ -146,6 +160,7 @@ public final class View {
 					this.settingContainer.windowBackgroundColorB
 				);
 				mainPanel.setBackground(windowBackgroundColor);
+				keyPanel.setBackground(windowBackgroundColor);
 
 				runButton.setBackground(new Color(255, 255, 255));
 				exitButton.setBackground(new Color(255, 255, 255));

@@ -39,9 +39,10 @@ public final class SettingContainer implements Cloneable {
 
 	public int textFieldFontSize = 18;
 	public boolean stayOnTopOfAllWindows = true;
-	public int windowWidth = 400;
-	public int windowHeight = 160;
+	public int windowWidth = 540;
+	public int windowHeight = 380;
 	public double windowOpacity = 0.76;
+	public int retractedWindowHeight = 160;
 
 	public int windowBackgroundColorR = 180;
 	public int windowBackgroundColorG = 220;
