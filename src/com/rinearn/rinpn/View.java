@@ -43,8 +43,8 @@ public final class View {
 	public JFrame frame = null;
 	public JPanel basePanel = null;
 	public JPanel mainPanel = null;
-	public JPanel topPanel = null;
-	public JPanel midPanel = null;
+	public JPanel inputLabelPanel = null;
+	public JPanel outputLabelPanel = null;
 	public JTextField inputField = null;
 	public JTextField outputField = null;
 	public JLabel inputLabel = null;
@@ -130,14 +130,14 @@ public final class View {
 			basePanel.add(mainPanel);
 
 			// Create the top horizontal panel (on which "INPUT" label will be put).
-			topPanel = new JPanel();
-			topPanel.setLayout(new GridLayout(1, 2));
-			mainPanel.add(topPanel);
+			inputLabelPanel = new JPanel();
+			inputLabelPanel.setLayout(new GridLayout(1, 2));
+			mainPanel.add(inputLabelPanel);
 
 			// Create the "INPUT" label.
 			inputLabel = new JLabel("  ▼INPUT", JLabel.LEFT);
 			inputLabel.setFont(SettingContainer.LABEL_FONT);
-			topPanel.add(inputLabel);
+			inputLabelPanel.add(inputLabel);
 
 			// Create fonts for the "INPUT" / "OUTPUT" text fields.
 			Font textFieldFont = new Font(
@@ -152,14 +152,14 @@ public final class View {
 			mainPanel.add(inputField);
 
 			// Create the mid horizontal panel (on which "OUTPUT" label will be put).
-			midPanel = new JPanel();
-			midPanel.setLayout(new GridLayout(1, 2));
-			mainPanel.add(midPanel);
+			outputLabelPanel = new JPanel();
+			outputLabelPanel.setLayout(new GridLayout(1, 2));
+			mainPanel.add(outputLabelPanel);
 
 			// Create the "OUTPUT" label.
 			outputLabel = new JLabel("  ▼OUTPUT   ", JLabel.LEFT);
 			outputLabel.setFont(SettingContainer.LABEL_FONT);
-			midPanel.add(outputLabel);
+			outputLabelPanel.add(outputLabel);
 
 			// Create the "OUTPUT" text field.
 			outputField = new JTextField();
@@ -176,7 +176,7 @@ public final class View {
 			// Create a panel, for aligning the "=" button to the right-side.
 			JPanel midButtonPanel = new JPanel();
 			midButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			midPanel.add(midButtonPanel);
+			outputLabelPanel.add(midButtonPanel);
 
 			// Create "=" button.
 			runButton = new JButton("=");
@@ -186,7 +186,7 @@ public final class View {
 			// Create a panel, for aligning the exit button to the right-side.
 			JPanel topButtonPanel = new JPanel();
 			topButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			topPanel.add(topButtonPanel);
+			inputLabelPanel.add(topButtonPanel);
 
 			// Create the "exit" button.
 			exitButton = new JButton("×");
@@ -202,8 +202,8 @@ public final class View {
 				frame.setAlwaysOnTop(this.settingContainer.stayOnTopOfAllWindows);
 				frame.setOpacity((float)this.settingContainer.windowOpacity);
 
-				topPanel.setBackground(new Color(0, 0, 0, 0));
-				midPanel.setBackground(new Color(0, 0, 0, 0));
+				inputLabelPanel.setBackground(new Color(0, 0, 0, 0));
+				outputLabelPanel.setBackground(new Color(0, 0, 0, 0));
 				midButtonPanel.setBackground(new Color(0, 0, 0, 0));
 				topButtonPanel.setBackground(new Color(0, 0, 0, 0));
 
@@ -280,11 +280,12 @@ public final class View {
 			frame = null;
 			basePanel = null;
 			mainPanel = null;
-			midPanel = null;
 			inputField = null;
 			outputField = null;
 			inputLabel = null;
 			outputLabel = null;
+			inputLabelPanel = null;
+			outputLabelPanel = null;
 			runButton = null;
 			exitButton = null;
 		}
