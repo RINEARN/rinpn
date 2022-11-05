@@ -6,11 +6,13 @@
 package com.rinearn.rinpn;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.GridBagLayout;
 import java.awt.GraphicsDevice.WindowTranslucency;
 import java.lang.reflect.InvocationTargetException;
 
@@ -43,12 +45,14 @@ public final class View {
 	public JFrame frame = null;
 	public JPanel basePanel = null;
 	public JPanel mainPanel = null;
-	public JPanel inputLabelPanel = null;
-	public JPanel outputLabelPanel = null;
+	public JPanel keyPanel = null;
+
 	public JTextField inputField = null;
 	public JTextField outputField = null;
 	public JLabel inputLabel = null;
 	public JLabel outputLabel = null;
+	public JLabel keyRetractorLabel = null;
+
 	public JButton runButton = null;
 	public JButton exitButton = null;
 	public JPopupMenu textFieldPopupMenu = null;
@@ -120,80 +124,14 @@ public final class View {
 				WINDOW_EDGE_WIDTH)
 			);
 			basePanel.setLayout(new GridLayout(1, 1));
-			JPanel innerPanel = new JPanel();
-			innerPanel.setLayout(new GridLayout(1, 1));
 			frame.getContentPane().add(basePanel);
 
 			// Create the main panel, on which "INPUT" / "OUTPUT" text fields and so on will be put.
 			mainPanel = new JPanel();
-			mainPanel.setLayout(new GridLayout(4, 1));
 			basePanel.add(mainPanel);
 
-			// Create the top horizontal panel (on which "INPUT" label will be put).
-			inputLabelPanel = new JPanel();
-			inputLabelPanel.setLayout(new GridLayout(1, 2));
-			mainPanel.add(inputLabelPanel);
-
-			// Create the "INPUT" label.
-			inputLabel = new JLabel("  ▼INPUT", JLabel.LEFT);
-			inputLabel.setFont(SettingContainer.LABEL_FONT);
-			inputLabelPanel.add(inputLabel);
-
-			// Create fonts for the "INPUT" / "OUTPUT" text fields.
-			Font textFieldFont = new Font(
-				SettingContainer.TEXT_FIELD_FONT_NAME,
-				SettingContainer.TEXT_FIELD_FONT_TYPE,
-				this.settingContainer.textFieldFontSize
-			);
-
-			// Create the "INPUT" text field.
-			inputField = new JTextField();
-			inputField.setFont(textFieldFont);
-			mainPanel.add(inputField);
-
-			// Create the mid horizontal panel (on which "OUTPUT" label will be put).
-			outputLabelPanel = new JPanel();
-			outputLabelPanel.setLayout(new GridLayout(1, 2));
-			mainPanel.add(outputLabelPanel);
-
-			// Create the "OUTPUT" label.
-			outputLabel = new JLabel("  ▼OUTPUT   ", JLabel.LEFT);
-			outputLabel.setFont(SettingContainer.LABEL_FONT);
-			outputLabelPanel.add(outputLabel);
-
-			// Create the "OUTPUT" text field.
-			outputField = new JTextField();
-			outputField.setFont(textFieldFont);
-			mainPanel.add(outputField);
-
-			// Create right-clicking menu for the "INPUT" / "OUTPUT" text fields.
-			textFieldPopupMenu = new JPopupMenu();
-			textFieldPopupMenu.add(new DefaultEditorKit.CutAction()).setText("Cut");
-			textFieldPopupMenu.add(new DefaultEditorKit.CopyAction()).setText("Copy");
-			textFieldPopupMenu.add(new DefaultEditorKit.PasteAction()).setText("Paste");
-
-
-			// Create a panel, for aligning the "=" button to the right-side.
-			JPanel midButtonPanel = new JPanel();
-			midButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			outputLabelPanel.add(midButtonPanel);
-
-			// Create "=" button.
-			runButton = new JButton("=");
-			runButton.setFont(SettingContainer.BUTTON_FONT);
-			midButtonPanel.add(runButton);
-
-			// Create a panel, for aligning the exit button to the right-side.
-			JPanel topButtonPanel = new JPanel();
-			topButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			inputLabelPanel.add(topButtonPanel);
-
-			// Create the "exit" button.
-			exitButton = new JButton("×");
-			exitButton.setFont(SettingContainer.EXIT_BUTTON_FONT);
-			exitButton.setForeground(Color.RED);
-			topButtonPanel.add(exitButton);
-
+			// Create and mount components on the main panel.
+			this.mountMainPanelComponents();
 
 			// Make the window frame semi-transparent, if possible.
 			GraphicsDevice graphicsDevide = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -201,11 +139,6 @@ public final class View {
 				frame.setUndecorated(true);
 				frame.setAlwaysOnTop(this.settingContainer.stayOnTopOfAllWindows);
 				frame.setOpacity((float)this.settingContainer.windowOpacity);
-
-				inputLabelPanel.setBackground(new Color(0, 0, 0, 0));
-				outputLabelPanel.setBackground(new Color(0, 0, 0, 0));
-				midButtonPanel.setBackground(new Color(0, 0, 0, 0));
-				topButtonPanel.setBackground(new Color(0, 0, 0, 0));
 
 				Color windowBackgroundColor = new Color(
 					this.settingContainer.windowBackgroundColorR,
@@ -219,6 +152,7 @@ public final class View {
 
 				inputLabel.setForeground(new Color(0, 0, 0, 120));
 				outputLabel.setForeground(new Color(0, 0, 0, 120));
+				keyRetractorLabel.setForeground(new Color(0, 0, 0, 120));
 
 				Color textFieldBackgroundColor = new Color(
 					this.settingContainer.textFieldBackgroundColorR,
@@ -244,6 +178,113 @@ public final class View {
 			mainPanel.setVisible(true);
 			basePanel.setVisible(true);
 			frame.setVisible(true);
+		}
+
+		// Create and mount components on the main panel.
+		private void mountMainPanelComponents() {
+			GridBagLayout layout = new GridBagLayout();
+			GridBagConstraints gridConstraints = new GridBagConstraints(
+				0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0
+			);
+			gridConstraints.insets = new Insets(0, 0, 0, 0);
+			mainPanel.setLayout(layout);
+
+			// The horizontal bar on which the "▼INPUT" label and "X" button are.
+			{
+				gridConstraints.gridy = 0;
+				gridConstraints.gridwidth = 1;
+				gridConstraints.weighty = 1.0;
+				gridConstraints.fill = GridBagConstraints.NONE;
+
+				// Create the "INPUT" label.
+				gridConstraints.gridx = 0;
+				gridConstraints.anchor = GridBagConstraints.WEST;
+				inputLabel = new JLabel("▼INPUT", JLabel.LEFT);
+				layout.setConstraints(inputLabel, gridConstraints);
+				inputLabel.setFont(SettingContainer.LABEL_FONT);
+				mainPanel.add(inputLabel);
+
+				// Create the "X" button.
+				gridConstraints.gridx = 1;
+				gridConstraints.anchor = GridBagConstraints.EAST;
+				exitButton = new JButton("×");
+				layout.setConstraints(exitButton, gridConstraints);
+				exitButton.setFont(SettingContainer.EXIT_BUTTON_FONT);
+				exitButton.setForeground(Color.RED);
+				mainPanel.add(exitButton);
+			}
+
+			// Create the "INPUT" text field.
+			gridConstraints.gridx = 0;
+			gridConstraints.gridy = 1;
+			gridConstraints.gridwidth = 2;
+			gridConstraints.weighty = 1.0;
+			gridConstraints.fill = GridBagConstraints.BOTH;
+			gridConstraints.insets = new Insets(0, 0, 0, 0);
+ 			inputField = new JTextField();
+			layout.setConstraints(inputField, gridConstraints);
+			inputField.setFont(new Font(
+				SettingContainer.TEXT_FIELD_FONT_NAME, SettingContainer.TEXT_FIELD_FONT_TYPE, this.settingContainer.textFieldFontSize
+			));
+			mainPanel.add(inputField);
+
+			// The horizontal bar on which the "▼OUTPUT" label and the "=" buttons are.
+			{
+				gridConstraints.gridy = 2;
+				gridConstraints.gridwidth = 1;
+				gridConstraints.weighty = 1.0;
+				gridConstraints.fill = GridBagConstraints.NONE;
+
+				// Create the "OUTPUT" label.
+				gridConstraints.gridx = 0;
+				gridConstraints.anchor = GridBagConstraints.WEST;
+				outputLabel = new JLabel("▼OUTPUT", JLabel.LEFT);
+				layout.setConstraints(outputLabel, gridConstraints);
+				outputLabel.setFont(SettingContainer.LABEL_FONT);
+				mainPanel.add(outputLabel);
+
+				// Create the "run" button.
+				gridConstraints.gridx = 1;
+				gridConstraints.anchor = GridBagConstraints.EAST;
+				runButton = new JButton("=");
+				layout.setConstraints(runButton, gridConstraints);
+				runButton.setFont(SettingContainer.BUTTON_FONT);
+				mainPanel.add(runButton);
+			}
+
+			// Create the "OUTPUT" text field.
+			gridConstraints.gridx = 0;
+			gridConstraints.gridy = 3;
+			gridConstraints.gridwidth = 2;
+			gridConstraints.weighty = 1.0;
+			gridConstraints.fill = GridBagConstraints.BOTH;
+			gridConstraints.insets = new Insets(0, 0, 0, 0);
+			outputField = new JTextField();
+			layout.setConstraints(outputField, gridConstraints);
+			outputField.setFont(new Font(
+				SettingContainer.TEXT_FIELD_FONT_NAME, SettingContainer.TEXT_FIELD_FONT_TYPE, this.settingContainer.textFieldFontSize
+			));
+			mainPanel.add(outputField);
+
+			// The horizontal bar on which the "▼KEY-PANEL" (key-retractor) label is.
+			gridConstraints.gridx = 0;
+			gridConstraints.gridy = 4;
+			gridConstraints.gridwidth = 1;
+			gridConstraints.weighty = 1.0;
+			gridConstraints.fill = GridBagConstraints.NONE;
+			gridConstraints.anchor = GridBagConstraints.WEST;
+			gridConstraints.insets = new Insets(5, 0, 0, 0);
+			keyRetractorLabel = new JLabel("▼KEY-PANEL", JLabel.LEFT);
+			layout.setConstraints(keyRetractorLabel, gridConstraints);
+			keyRetractorLabel.setFont(SettingContainer.LABEL_FONT);
+			mainPanel.add(keyRetractorLabel);
+
+
+			// Create right-clicking menu for the "INPUT" / "OUTPUT" text fields.
+			textFieldPopupMenu = new JPopupMenu();
+			textFieldPopupMenu.add(new DefaultEditorKit.CutAction()).setText("Cut");
+			textFieldPopupMenu.add(new DefaultEditorKit.CopyAction()).setText("Copy");
+			textFieldPopupMenu.add(new DefaultEditorKit.PasteAction()).setText("Paste");
 		}
 	}
 
@@ -284,8 +325,7 @@ public final class View {
 			outputField = null;
 			inputLabel = null;
 			outputLabel = null;
-			inputLabelPanel = null;
-			outputLabelPanel = null;
+			keyRetractorLabel = null;
 			runButton = null;
 			exitButton = null;
 		}
