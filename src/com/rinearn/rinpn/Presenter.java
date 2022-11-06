@@ -13,13 +13,18 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.lang.reflect.InvocationTargetException;
 
 import com.rinearn.rinpn.util.LocaleCode;
+import com.rinearn.rinpn.util.MessageManager;
 import com.rinearn.rinpn.util.SettingContainer;
 
 
@@ -56,6 +61,21 @@ public final class Presenter {
 		KeyRetractorMouseListener keyRetractorMouseListener = new KeyRetractorMouseListener(view, settingContainer);
 		view.keyRetractorLabel.addMouseListener(keyRetractorMouseListener);
 		view.keyRetractorLabel.addMouseMotionListener(keyRetractorMouseListener);
+
+		FunctionKeyActionListener functonKeyActionListener = new FunctionKeyActionListener(view);
+		for(JButton key: view.functionKeyList) {
+			key.addActionListener(functonKeyActionListener);
+		}
+
+		NumberKeyActionListener numberKeyActionListener = new NumberKeyActionListener(view);
+		for(JButton key: view.numberKeyList) {
+			key.addActionListener(numberKeyActionListener);
+		}
+
+		BehaviorKeyActionListener behaviorKeyActionListener = new BehaviorKeyActionListener(view, model, settingContainer);
+		for(JButton key: view.behaviorKeyList) {
+			key.addActionListener(behaviorKeyActionListener);
+		}
 	}
 
 
@@ -530,6 +550,142 @@ public final class Presenter {
 
 			// Invoke the shutdown process of the model.
 			this.model.shutdown(this.settingContainer);
+		}
+	}
+
+
+	/**
+	 * The listener handling the event of function keys (sin, cos, tan, (, ), _, and so on).
+	 */
+	private static final class FunctionKeyActionListener implements ActionListener {
+		private View view = null;
+
+		protected FunctionKeyActionListener(View view) {
+			this.view = view;
+		}
+		@Override
+		public final void actionPerformed(ActionEvent ae) {
+			JButton key = JButton.class.cast(ae.getSource());
+			String keyText = key.getText();
+			String appendedText = null;
+
+			switch (keyText) {
+				case "_" : {
+					appendedText = " ";
+					break;
+				}
+
+				case "(" :
+				case ")" : 
+				case "PI" : {
+					appendedText = keyText;
+					break;
+				}
+
+				default : {
+					appendedText = keyText + "(";
+					break;
+				}
+			}
+
+			this.view.inputField.setText(this.view.inputField.getText() + appendedText);
+			this.view.inputField.requestFocus(true);
+		}
+	}
+
+
+	/**
+	 * The listener handling the event of number keys (1, 2, 3, +, -, and so on).
+	 */
+	private static final class NumberKeyActionListener implements ActionListener {
+		private View view = null;
+
+		protected NumberKeyActionListener(View view) {
+			this.view = view;
+		}
+		@Override
+		public final void actionPerformed(ActionEvent ae) {
+			JButton key = JButton.class.cast(ae.getSource());
+			this.view.inputField.setText(view.inputField.getText() + key.getText());
+			this.view.inputField.requestFocus(true);
+		}
+	}
+
+
+	/**
+	 * The listener handling the event of behavior keys (=, C, BS, Script).
+	 */
+	private static final class BehaviorKeyActionListener implements ActionListener {
+		private View view = null;
+		private Model model = null;
+		private SettingContainer settingContainer = null;
+
+		protected BehaviorKeyActionListener(View view, Model model, SettingContainer settingContainer) {
+			this.model = model;
+			this.view = view;
+			this.settingContainer = settingContainer;
+		}
+		@Override
+		public final void actionPerformed(ActionEvent ae) {
+
+			JButton key = JButton.class.cast(ae.getSource());
+			String keyText = key.getText();
+
+			switch (keyText) {
+				case "=" : {
+					RunButtonListener.handleEvent(this.view, this.model, this.settingContainer);
+					break;
+				}
+
+				case "C" : {
+					this.view.inputField.setText("");
+					break;
+				}
+
+				case "BS" : {
+					String currentText = view.inputField.getText();
+					if (1 <= currentText.length()) {
+						this.view.inputField.setText(
+							currentText.substring(0, currentText.length() - 1)
+						);
+					}
+					break;
+				}
+
+				case "Script" : {
+
+					// Select a Vnano script file, which has the extension ".vnano"..
+					JFileChooser fileChooser = new JFileChooser(".");
+					FileNameExtensionFilter fileFilter = new FileNameExtensionFilter("Vnano Script File", "vnano");
+					fileChooser.setFileFilter(fileFilter);
+					fileChooser.showOpenDialog(this.view.frame);
+					File scriptFile = fileChooser.getSelectedFile();
+
+					// Canceled.
+					if (scriptFile == null) {
+						return;
+					}
+
+					// If selected a non-Vnano file.
+					if (!scriptFile.getName().endsWith(".vnano") || scriptFile.isDirectory()) {
+						String errorMessage = this.settingContainer.localeCode.equals(LocaleCode.JA_JP) ? 
+							"選択されたファイルは、Vnano のスクリプトファイルではありません。" : 
+							"The selected file is not a Vnano script file." ;
+						MessageManager.showErrorMessage(errorMessage, "!", settingContainer.localeCode);
+						return;
+					}
+
+					// If selected a Vnano script file, execute it.
+					this.view.inputField.setText(scriptFile.getPath());
+					RunButtonListener.handleEvent(view, model, settingContainer);
+					break;
+				}
+
+				default : {
+					throw new RINPnFatalException("Unexpected behavior key: " + keyText);
+				}
+			}
+			view.inputField.requestFocus(true);
 		}
 	}
 }
