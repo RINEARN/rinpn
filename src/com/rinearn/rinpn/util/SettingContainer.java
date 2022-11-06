@@ -39,7 +39,7 @@ public final class SettingContainer implements Cloneable {
 
 	public int textFieldFontSize = 18;
 	public int numberKeyFontSize = 18;
-	public int actionKeyFontSize = 18;
+	public int behaviorKeyFontSize = 18;
 	public int functionKeyFontSize = 14;
 
 	public boolean stayOnTopOfAllWindows = true;

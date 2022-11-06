@@ -77,7 +77,7 @@ retractedWindowHeight = 160;  // Height when the key panel is retracted(px) - �
 
 textFieldFontSize = 18;    // Font size of INPUT/OUTPUT text fields - INPUT/OUTPUTテキストフィールドのフォントサイズ
 numberKeyFontSize = 18;    // Font size of number keys - 数字キーのフォントサイズ
-actionKeyFontSize = 18;    // Font size of action keys - アクションキーのフォントサイズ ("=", "C", ...)
+behaviorKeyFontSize = 18;  // Font size of behavior keys - 動作キーのフォントサイズ ("=", "C", ...)
 functionKeyFontSize = 14;  // Font size of function keys - 関数キーのフォントサイズ ("sin", "cos", ...)
 
 

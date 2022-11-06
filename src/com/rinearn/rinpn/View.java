@@ -61,7 +61,7 @@ public final class View {
 
 	public List<JButton> numberKeyList = null;
 	public List<JButton> functionKeyList = null;
-	public List<JButton> actionKeyList = null;
+	public List<JButton> behaviorKeyList = null;
 
 
 	/**
@@ -552,43 +552,43 @@ public final class View {
 				}
 			}
 
-			// Create the panel on which mount action keys.
+			// Create the panel on which mount behavior keys.
 			gridConstraints.gridx = 2;
 			gridConstraints.weightx = 1.0;
 			gridConstraints.insets = new Insets(0, 0, 0, 0);
-			JPanel actionPanel = new JPanel();
-			actionPanel.setLayout(new GridLayout(4, 1));
-			actionPanel.setBackground(new Color(0, 0, 0, 0));
-			layout.setConstraints(actionPanel, gridConstraints);
-			keyPanel.add(actionPanel);
+			JPanel behaviorPanel = new JPanel();
+			behaviorPanel.setLayout(new GridLayout(4, 1));
+			behaviorPanel.setBackground(new Color(0, 0, 0, 0));
+			layout.setConstraints(behaviorPanel, gridConstraints);
+			keyPanel.add(behaviorPanel);
 
-			// Create action keys.
+			// Create behavior keys.
 			{
 				// Initialize the list for storing the references of all JButtons mounted on the number key panel.
-				actionKeyList = new ArrayList<JButton>();
+				behaviorKeyList = new ArrayList<JButton>();
 
 				JButton numRunButton = new JButton("=");
 				numRunButton.setForeground(Color.BLUE);
-				actionPanel.add(numRunButton);
-				actionKeyList.add(numRunButton);
+				behaviorPanel.add(numRunButton);
+				behaviorKeyList.add(numRunButton);
 
 				JButton clearButton = new JButton("C");
 				clearButton.setForeground(Color.RED);
-				actionPanel.add(clearButton);
-				actionKeyList.add(clearButton);
+				behaviorPanel.add(clearButton);
+				behaviorKeyList.add(clearButton);
 
 				JButton backspaceButton = new JButton("BS");
 				clearButton.setForeground(Color.RED);
-				actionPanel.add(backspaceButton);
-				actionKeyList.add(backspaceButton);
+				behaviorPanel.add(backspaceButton);
+				behaviorKeyList.add(backspaceButton);
 
 				JButton fileButton = new JButton("Script");
-				actionPanel.add(fileButton);
-				actionKeyList.add(fileButton);
+				behaviorPanel.add(fileButton);
+				behaviorKeyList.add(fileButton);
 
-				Font actionKeyFont = new Font("Dialog", Font.BOLD, this.settingContainer.actionKeyFontSize);
-				for (JButton button: actionKeyList) {
-					button.setFont(actionKeyFont);
+				Font behaviorKeyFont = new Font("Dialog", Font.BOLD, this.settingContainer.behaviorKeyFontSize);
+				for (JButton button: behaviorKeyList) {
+					button.setFont(behaviorKeyFont);
 				}
 			}
 		}
