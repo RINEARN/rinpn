@@ -90,9 +90,10 @@ Also, if the path of "bin" folder of the RINPn is registered to the environment 
 
 When the RINPn is executed, the calculator window will be displayed:
 
-![Calculator Window](./img/gui_expression.png)
+![Calculator Window](./img/gui_retractable_en_us.png)
 
-The window size, color, opacity, and so on are customizable by modifying values in "Settings.txt".
+You can retract the key panel by clicking "▲KEY-PANEL" switch, and expand by clicking it again. 
+The window color, opacity, font sizes, and so on are customizable by modifying values in "Settings.txt".
 
 On the above window, you can calculate the value of the inputted expression by typing the "Enter" key, or pressing "=" button. In the expression, various math functions such as sin, cos, and so on are available by default (and you can define your original functions).
 In addition, by inputting the file name/path of a script written in C-like simple language "[Vnano](https://www.vcssl.org/ja-jp/vnano/)", you can execute it (useful for performing complicated calculations automatically).

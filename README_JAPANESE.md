@@ -90,9 +90,9 @@ Microsoft&reg; Windows&reg;上では、**バッチファイル "RINPN_\*.\*.\*.b
 
 RINPn が起動されると、以下のような電卓画面が表示されます：
 
-![Calculator Window](./img/gui_expression.png)
+![Calculator Window](./img/gui_retractable_ja_jp.png)
 
-画面の大きさや色、透明度、その他色々は「 Settings.txt 」内の設定値を変更してカスタマイズできます。
+電卓画面のキーパネル部は、「▲KEY-PANEL」スイッチをクリックすると収納可能で、もう一度クリックすると再び開けます。画面の色や透明度、文字の大きさ、その他色々は「 Settings.txt 」内の設定値を変更してカスタマイズできます。
 
 上の電卓画面上で、計算式を入力して Enter キーを押すか、または「 = 」ボタンを押すと、その式の値を計算できます。式の中では、sin や cos など、各種の数学関数が標準で使用可能で、自作もできます。また、式の代わりに、C言語風の簡易言語「 [Vnano](https://www.vcssl.org/ja-jp/vnano/doc/tutorial/language) 」で記述したスクリプトのファイル名/パスを入力する事で、それを実行する事もできます（複雑な計算処理を自動化するのに便利です）。
 
