@@ -84,7 +84,7 @@ On other OS (Linux&reg;, etc.), execute by the following command:
 
     java -jar RINPn.jar
 
-Also, if the path of "bin" folder of the RINPn is registered to the environment variable Path/PATH, you can launch the RINPn by more simple command as follows:
+Also, if the path of "cmd" folder of the RINPn is registered to the environment variable Path/PATH, you can launch the RINPn by more simple command as follows:
 
     rinpn
 
@@ -99,7 +99,7 @@ On the above window, you can calculate the value of the inputted expression by t
 
 In addition, by inputting the file name/path of a script written in C-like simple language "[Vnano](https://www.vcssl.org/ja-jp/vnano/)", you can execute it. Instead, you also can select a script file by clicking "Script" button. Scripts are useful for performing complicated calculations automatically.
 
-Also, if the path of "bin" folder of the RINPn is registered to the environment variable Path/PATH, you can calculate in the command-line as follows:
+Also, if the path of "cmd" folder of the RINPn is registered to the environment variable Path/PATH, you can calculate in the command-line as follows:
 
     rinpn "1 + 2"
 	> 3
