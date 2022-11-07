@@ -4,7 +4,7 @@
 
 ![Concept Image](./img/signboard.jpg)
 
-RINPn (RINEARN Processor nano) is a free scientific calculator software, having very simple window. The RINPn is available in both GUI (window) and command-lines, and various math functions are available by default. In addition, you can define new functions, and you can also write/execute scripts for taking complex calculations.
+The RINPn is a powerful scientific calculator software, having simple window. The RINPn is available in both GUI (window) and command-lines, and various math functions are available by default. In addition, you can define new functions, and you can also write/execute scripts for taking complex calculations.
 
 **Note: This README is for users who want to build this software from source code by yourself.
 You can also get prebuilt-packages of this software from the following official website.**
@@ -96,7 +96,8 @@ You can retract the key panel by clicking "▲KEY-PANEL" switch, and expand by c
 The window color, opacity, font sizes, and so on are customizable by modifying values in "Settings.txt".
 
 On the above window, you can calculate the value of the inputted expression by typing the "Enter" key, or pressing "=" button. In the expression, various math functions such as sin, cos, and so on are available by default (and you can define your original functions).
-In addition, by inputting the file name/path of a script written in C-like simple language "[Vnano](https://www.vcssl.org/ja-jp/vnano/)", you can execute it (useful for performing complicated calculations automatically).
+
+In addition, by inputting the file name/path of a script written in C-like simple language "[Vnano](https://www.vcssl.org/ja-jp/vnano/)", you can execute it. Instead, you also can select a script file by clicking "Script" button. Scripts are useful for performing complicated calculations automatically.
 
 Also, if the path of "bin" folder of the RINPn is registered to the environment variable Path/PATH, you can calculate in the command-line as follows:
 
