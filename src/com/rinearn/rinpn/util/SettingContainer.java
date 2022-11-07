@@ -38,10 +38,15 @@ public final class SettingContainer implements Cloneable {
 	// getter/setter で包まずに、外からも public なフィールドとして直接アクセスする
 
 	public int textFieldFontSize = 18;
+	public int numberKeyFontSize = 18;
+	public int behaviorKeyFontSize = 18;
+	public int functionKeyFontSize = 14;
+
 	public boolean stayOnTopOfAllWindows = true;
-	public int windowWidth = 400;
-	public int windowHeight = 160;
+	public int windowWidth = 540;
+	public int windowHeight = 380;
 	public double windowOpacity = 0.76;
+	public int retractedWindowHeight = 160;
 
 	public int windowBackgroundColorR = 180;
 	public int windowBackgroundColorG = 220;
@@ -54,6 +59,14 @@ public final class SettingContainer implements Cloneable {
 	public int textFieldForegroundColorR = 140;
 	public int textFieldForegroundColorG = 255;
 	public int textFieldForegroundColorB = 180;
+
+	public int textLabelForgroundColorR = 100;
+	public int textLabelForgroundColorG = 120;
+	public int textLabelForgroundColorB = 140;
+
+	public int keyRetractorForegroundColorR = 100;
+	public int keyRetractorForegroundColorG = 120;
+	public int keyRetractorForegroundColorB = 140;
 
 	public boolean inputNormalizerEnabled = true;
 	public boolean outputRounderEnabled = true;

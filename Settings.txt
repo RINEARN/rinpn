@@ -64,17 +64,21 @@ localeCode = "AUTO";         // Set automatically based on your environment - �
 // (Type: int)
 // --------------------------------------------------------------------------------------------------------------
 
-windowWidth = 400;     // Width (px) - 幅  (ピクセル)
-windowHeight = 160;    // Height(px) - 高さ(ピクセル)
+windowWidth = 540;            // Width (px) - 幅  (ピクセル)
+windowHeight = 340;           // Height(px) - 高さ(ピクセル)
+retractedWindowHeight = 160;  // Height when the key panel is retracted(px) - キーパネル収納時の高さ(ピクセル)
 
 
 // --------------------------------------------------------------------------------------------------------------
-// Specity the font size of INPUT/OUTPUT text fields.
-// INPUT/OUTPUT テキストフィールドで使用するフォントの大きさを指定します。
+// Specity the font sizes.
+// 文字フォントの大きさを指定します。
 // (Type: int)
 // --------------------------------------------------------------------------------------------------------------
 
-textFieldFontSize = 18;
+textFieldFontSize = 18;    // Font size of INPUT/OUTPUT text fields - INPUT/OUTPUTテキストフィールドのフォントサイズ
+numberKeyFontSize = 18;    // Font size of number keys - 数字キーのフォントサイズ
+behaviorKeyFontSize = 18;  // Font size of behavior keys - 動作キーのフォントサイズ ("=", "C", ...)
+functionKeyFontSize = 14;  // Font size of function keys - 関数キーのフォントサイズ ("sin", "cos", ...)
 
 
 // --------------------------------------------------------------------------------------------------------------
@@ -93,7 +97,7 @@ stayOnTopOfAllWindows = true;        // Yes, display on the top - 最前面に�
 // (Type: float)
 // --------------------------------------------------------------------------------------------------------------
 
-windowOpacity = 0.76;     // 0.0 ~ 1.0
+windowOpacity = 0.9;     // 0.0 ~ 1.0
 
 
 // --------------------------------------------------------------------------------------------------------------
@@ -128,6 +132,27 @@ textFieldForegroundColorR = 140;     // Red   - 赤成分 (0 ~ 255)
 textFieldForegroundColorG = 255;     // Green - 緑成分 (0 ~ 255)
 textFieldForegroundColorB = 180;     // Blue  - 青成分 (0 ~ 255)
 
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify the foreground color (the color of characters) of labels of INPUT/OUTPUT text fields.
+// INPUT/OUTPUT テキストフィールドの上にある、ラベルの前景色（文字の色）を指定します。
+// (Type: int)
+// --------------------------------------------------------------------------------------------------------------
+
+textLabelForgroundColorR = 100;     // Red   - 赤成分 (0 ~ 255)
+textLabelForgroundColorG = 120;     // Green - 緑成分 (0 ~ 255)
+textLabelForgroundColorB = 140;     // Blue  - 青成分 (0 ~ 255)
+
+
+// --------------------------------------------------------------------------------------------------------------
+// Specify the foreground color (the color of characters) of key the panel retractor label.
+// キーパネル折り畳みラベルの前景色（文字の色）を指定します。
+// (Type: int)
+// --------------------------------------------------------------------------------------------------------------
+
+keyRetractorForegroundColorR = 100;     // Red   - 赤成分 (0 ~ 255)
+keyRetractorForegroundColorG = 120;     // Green - 緑成分 (0 ~ 255)
+keyRetractorForegroundColorB = 200;     // Blue  - 青成分 (0 ~ 255)
 
 
 
