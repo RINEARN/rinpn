@@ -87,8 +87,8 @@ functionKeyFontSize = 14;  // Font size of function keys - 関数キーのフォ
 // (Type: bool)
 // --------------------------------------------------------------------------------------------------------------
 
-stayOnTopOfAllWindows = true;        // Yes, display on the top - 最前面に表示する
-// stayOnTopOfAllWindows = false;    // No, not necessary       - 最前面の必要は無い
+stayOnTopOfAllWindows = false;        // No, not necessary       - 最前面の必要は無い
+// stayOnTopOfAllWindows = true;      // Yes, display on the top - 最前面に表示する
 
 
 // --------------------------------------------------------------------------------------------------------------

@@ -19,7 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 
 public final class RINPn {
 
-	private static final String VERSION = "0.9.3";
+	private static final String VERSION = "0.9.4";
 	private static final String OPTION_NAME_VERSION = "--version";
 	private static final String OPTION_NAME_DEBUG = "--debug";
 	private static final String OPTION_NAME_DIR = "--dir";

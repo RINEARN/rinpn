@@ -285,7 +285,7 @@ RINPn には2つのモードがあり、ここで扱うGUIモードでは、グ�
 <a href="#start-ready">ダウンロード・展開したフォルダ内</a>にある、
 「 <span class="highlight">RINPn_?.?.?.bat</span> (種類はバッチファイル、?の箇所はバージョンの数字) 」
 を<span class="highlight">ダブルクリックして起動</span>してください。
-なお、<a href="#how-to-use-cui">ステップ 2</a> で説明するように「 bin 」フォルダのパスを環境変数 Path に登録しておくと、
+なお、<a href="#how-to-use-cui">ステップ 2</a> で説明するように「 cmd 」フォルダのパスを環境変数 Path に登録しておくと、
 コマンドライン端末上で「 rinpn 」と打って起動する事も可能になります。
 </p>
 
@@ -309,7 +309,7 @@ RINPn には2つのモードがあり、ここで扱うGUIモードでは、グ�
 </div>
 
 <p>
-なお、<a href="#how-to-use-cui">ステップ 2</a> で説明するように「 bin 」フォルダのパスを環境変数 PATH に登録しておくと、
+なお、<a href="#how-to-use-cui">ステップ 2</a> で説明するように「 cmd 」フォルダのパスを環境変数 PATH に登録しておくと、
 より単純に「 rinpn 」と打って起動する事も可能になります。
 </p>
 
@@ -451,7 +451,7 @@ CUIモードでは、コマンドライン端末上で、電卓画面を起動�
 
 <p>
 ただ、毎回上のように RINPn のフォルダに cd しつつ長いコマンドを打つのは、少し面倒ですね。
-そこでOSの環境変数 PATH (または Path) に、RINPn の「 bin 」フォルダのパスを登録 (すぐ下で説明) すると、
+そこでOSの環境変数 PATH (または Path) に、RINPn の「 cmd 」フォルダのパスを登録 (すぐ下で説明) すると、
 カレントディレクトリがどこであっても「 rinpn 」コマンドで手短に計算できるようになります：
 </p>
 
@@ -488,10 +488,10 @@ RINPn のフォルダを、PC内のどこか定位置に配置した上で、以
 スタートボタンを押す &raquo; 歯車アイコン(設定)を選択 &raquo; 「環境変数を編集」と検索して移動 &raquo; 
 開かれた画面で「ユーザー環境変数」の一覧から「Path」(無ければ作成)を選び「編集」ボタンを押す &raquo; 
 開いた画面の「新規」ボタンを押し、
-RINPn の「 bin 」フォルダのパス<span class="smallsup">※</span>を入力してください。
+RINPn の「 cmd 」フォルダのパス<span class="smallsup">※</span>を入力してください。
 その後、開いている画面を「OK」で閉じれば完了です。
 <br />
-<span style="font-size: 86%;">※ Shiftキーを押しながら bin フォルダを右クリックすると、メニューからパスのコピーを行えます。</span>
+<span style="font-size: 86%;">※ Shiftキーを押しながら cmd フォルダを右クリックすると、メニューからパスのコピーを行えます。</span>
 </div>
 
 <p>
@@ -510,7 +510,7 @@ RINPn の「 bin 」フォルダのパス<span class="smallsup">※</span>を入
 </div>
 
 <p>
-次に、cd コマンドで上記ディレクトリ内の「 bin 」ディレクトリに移動して、
+次に、cd コマンドで上記ディレクトリ内の「 cmd 」ディレクトリに移動して、
 その中にある「 rinpn 」というファイル（拡張子無し）に、以下のように実行権限を付加します：
 </p>
 
@@ -526,7 +526,7 @@ chmod +x rinpn
 </p>
 
 <div class="box">
-export PATH=$PATH:/usr/local/bin/rinpn/rinpn_?_?_?/bin/
+export PATH=$PATH:/usr/local/bin/rinpn/rinpn_?_?_?/cmd/
 <br />
 (?_?_?の箇所はバージョン番号で置き換えてください)
 </div>
@@ -536,7 +536,7 @@ export PATH=$PATH:/usr/local/bin/rinpn/rinpn_?_?_?/bin/
 </p>
 
 <div class="box">
-export PATH="$PATH:/usr/local/bin/rinpn/rinpn_?_?_?/bin/"
+export PATH="$PATH:/usr/local/bin/rinpn/rinpn_?_?_?/cmd/"
 <br />
 (?_?_?の箇所はバージョン番号で置き換えてください)
 </div>
@@ -688,7 +688,7 @@ CUIモードでも、計算式の代わりにスクリプトファイルを指�
 </p>
 
 <div class="note">
-この使い方では、RINPn の「 bin 」フォルダのパスをOSに登録せずに使う事は現実的に考え辛いため（
+この使い方では、RINPn の「 cmd 」フォルダのパスをOSに登録せずに使う事は現実的に考え辛いため（
 <a href="#how-to-use-cui-with-path-setting">パス登録の利点と方法についてはこちら</a>
 ）、以下ではあらかじめパスは登録されていて、rinpn コマンドが使用可能である事を前提に説明します。
 </div>
