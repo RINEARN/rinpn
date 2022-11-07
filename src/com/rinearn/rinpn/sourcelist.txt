@@ -1,6 +1,6 @@
-com/rinearn/rinpn/Main.java
 com/rinearn/rinpn/Model.java
 com/rinearn/rinpn/Presenter.java
+com/rinearn/rinpn/RINPn.java
 com/rinearn/rinpn/RINPnException.java
 com/rinearn/rinpn/RINPnFatalException.java
 com/rinearn/rinpn/util/LocaleCode.java
