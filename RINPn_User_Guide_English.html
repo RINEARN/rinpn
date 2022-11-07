@@ -88,34 +88,49 @@ RINEARN
 <h2 id="start-about">What is the &quot;RINPn&quot; ?</h2>
 
 <p>
-The RINPn is a free scientific calculator software. 
-The calculator window of the RINPn is designed under the concept of 
-&quot;<span class="highlight">Simple & Compact</span>&quot;.
+The RINPn is a free scientific calculator software, having simple window. The following is the window of the RINPn: 
 </p>
 
 <div style="width: 100%; text-align: center;">
-	<img src="./img/gui_expression.png" style="width:100%; max-width:450px;">
+	<img src="./img/gui.png" style="width:100%; max-width:560px;">
 </div>
 
 <p>
-In addition, the RINPn may be &quot;<span class="highlight">Powerful</span>&quot; than you imagined from its tiny window.
+As the above, the RINPn's window has very common UI in scientific calculators, so it is very easy to start using the RINPn.
+</p>
+
+
+<p>
+In contrast with the simplicity of the UI, the features of the RINPn is very <span class="highlight">powerful</span>.
 You can input the whole of expression (formula) to calculate, and you can use various math functions and parentheses in it.
 Also, you can define your own functions, or take automatic processing, by writing scripts (programs).
-The processing speed of the RINPn (max: hundreds MFLOPS ~ several GFLOPS) 
-is not so slow compared with interpreters of general scripting languages, 
-and it may be far faster than you imagined.
+The processing speed of the RINPn (max: hundreds MFLOPS ~ several GFLOPS) is very fast in the category of calculators, 
+and also it is rather fast in the category of scripting languages.
+Furthermore, you can call processes implemented in Java&reg, from calculation expressions and scripts.
+</p>
+
+<div class="note">
+If you want to maximize the processing speed of the RINPn, raize the optimization level specified in &quot;Settings.txt&quot;.
+</div>
+
+<p>
+Also, if you don't need it, you can retract the key panel of the RINPn as follows:
+</p>
+
+<div style="width: 100%; text-align: center;">
+	<img src="./img/gui_retracted.png" style="width:100%; max-width:550px;">
+</div>
+
+<p>
+Probably, anyone can not imagine that the above very small calculator having powerful features!
 </p>
 
 <p>
-Thus, the RINPn is a &quot;Simple &amp; Compact&quot; but &quot;Powerful&quot; calculator, 
-like a small car with a turbo engine!
+In short, the RINPn has the <span class="highlight">"small and good-handling" body</span>, and equipped with the <span class="highlight">"powerful engine"</span>.
+Thus, the RINPn is a calculator like a lightweight sports car!
 </p>
 
 
-
-<div class="note" style="margin-top: 35px;">
-If you want to maximize the processing speed of the RINPn, raize the optimization level specified in &quot;Settings.txt&quot;.
-</div>
 
 
 
@@ -347,14 +362,12 @@ When you succeeded to launch the RINPn, the following calculator window will be 
 </p>
 
 <div style="width: 100%; text-align: center;">
-	<img src="./img/gui_expression.png" style="width:100%; max-width:450px;">
+	<img src="./img/gui_retractable_en_us.png" style="width:100%; max-width:600px;">
 </div>
 
 <p>
-As the above, the calculator window of the RINPn is very simple and compact.
-By default, the calculator window will be displayed at the top-layer of all other windows in translucent color.
-The size, the color, and behaviour (whether the window should always be at the top-layer or not) of the calculator window are customizable.
-For customizing them, open the file &quot;Settings.txt&quot; by a text editor, and edit the content of the file, and overwrite it.
+You can retract the key panel by clicking "▲KEY-PANEL" switch, and expand by clicking it again. 
+The window color, opacity, font sizes, and so on are customizable by modifying values in "Settings.txt" (open the file by a text editor, and modify contents, and save it).
 </p>
 
 
@@ -362,7 +375,7 @@ For customizing them, open the file &quot;Settings.txt&quot; by a text editor, a
 
 <p>
 To take calculations, input the expression into the &quot;INPUT&quot; text-field, 
-and press the Enter key of your key board.
+and press the Enter key of your key board, or click "=" button on the window.
 Then the calculated value of the expression will be output on the &quot;OUTPUT&quot; text-field.
 For example:
 </p>
@@ -519,7 +532,7 @@ to perform procedural, algorithmic, or other complicated calculations.
 
 
 <div style="width: 100%; text-align: center;">
-	<img src="./img/vnano.png" style="width:100%; max-width:380px;">
+	<img src="./img/vnano.png" style="width:100%; max-width:420px;">
 </div>
 
 <h2 id="how-to-use-script-about-vnano">What is the Vnano?</h2>
@@ -592,18 +605,38 @@ For detailed explanations about the above code, see:
 <h2 id="how-to-use-script-execute-gui">How to Execute a Script in GUI mode</h2>
 
 <p>
-To execute this script in the GUI mode, 
-input the script file name (or path) into &quot;INPUT&quot; text-field as follows, and press Enter key. 
-Then the script will be executed and its output value will be displayed on &quot;OUTPUT&quot; text-field: 
+To execute this script in the GUI mode, there are two methods:
 </p>
 
+<ul>
+	<li>Method 1: Click "Script" button on the window, and select the script file to be executed.</li>
+	<li>Method 2: Input the name or path of the script file to "INPUT" text-field, and press Enter key or click "=" button to execute it.</li>
+</ul>
+
 <p>
-For example, input the name of the above example script &quot;Example.vnano&quot; and press Enter key:
+Choose the favorite method from the above.
 </p>
 
 <div style="width: 100%; text-align: center;">
-	<img src="./img/gui_script.png" style="width:100%; max-width:450px;">
+	<img src="./img/gui_script.png" style="width:100%; max-width:550px;">
 </div>
+
+<p>
+For example, execute the example script in the previous section &quot;Example.vnano&quot;:
+</p>
+
+
+<div class="box">
+	INPUT:
+	<br />
+	Example.vnano
+	<br />
+	<br />
+	OUTPUT:
+	<br />
+	0.8414709848
+</div>
+
 
 <p>
 As the above, the output value of the script will be displayed on the &quot;OUTPUT&quot; text-field.
