@@ -11,9 +11,11 @@ import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import org.vcssl.nano.VnanoEngine;
+import org.vcssl.nano.VnanoException;
+import org.vcssl.nano.VnanoFatalException;
+import org.vcssl.nano.interconnect.PluginLoader;
+import org.vcssl.nano.interconnect.ScriptLoader;
 
 import com.rinearn.rinpn.util.LocaleCode;
 import com.rinearn.rinpn.util.MessageManager;
@@ -27,8 +29,11 @@ public final class Model {
 	private static final String DEFAULT_SCRIPT_ENCODING = "UTF-8";
 	private static final String DEFAULT_FILE_IO_ENCODING = "UTF-8";
 
-	private ScriptEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
+	private VnanoEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
 	private String dirPath = ".";
+
+	private String libraryListFilePath = null;
+	private String pluginListFilePath = null;
 
 	private volatile boolean calculating = false;
 
@@ -88,37 +93,28 @@ public final class Model {
 		return this.calculating;
 	}
 
-
 	// 初期化処理
 	public final void initialize(
 			SettingContainer setting, boolean isGuiMode, String dirPath, String libraryListFilePath, String pluginListFilePath)
 					throws RINPnException {
 
 		this.dirPath = dirPath;
+		this.libraryListFilePath = libraryListFilePath;
+		this.pluginListFilePath = pluginListFilePath;
 
-		// 式やライブラリの解釈/実行用に、Vnanoのスクリプトエンジンを読み込んで生成
-		ScriptEngineManager manager = new ScriptEngineManager();
-		this.engine = manager.getEngineByName("vnano");
-		if (engine == null) {
-			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(
-					"Please put Vnano.jar in the same directory as RINPn.jar.",
-					"Engine Loading Error", setting.localeCode
-				);
-			}
-			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(
-					"Vnano.jar を RINPn.jar と同じフォルダ内に配置してください。",
-					"エンジン読み込みエラー", setting.localeCode
-				);
-			}
-			throw new RINPnException("ScriptEngine of the Vnano could not be loaded.");
-		}
+		// 式やライブラリの解釈/実行用に、Vnanoのスクリプトエンジンを生成
+		this.engine = new VnanoEngine();
 
-		// ライブラリ/プラグインの読み込みリストファイルを登録
+		// ライブラリ/プラグインを読み込む
 		try {
-			this.engine.put("___VNANO_LIBRARY_LIST_FILE", libraryListFilePath);
-			this.engine.put("___VNANO_PLUGIN_LIST_FILE", pluginListFilePath);
+			// リストファイルに登録されたライブラリ群の読み込み
+			this.loadLibraryScripts();
+
+			// リストファイルに登録されたプラグイン群の読み込み
+			this.loadPlugins();
+
+			// 組み込み関数「 output 」を提供するプラグイン（このクラス内に内部クラスとして実装）を登録
+			this.engine.connectPlugin("OutputPlugin", new Model.OutputPlugin(setting, isGuiMode));
 
 		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
 		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
@@ -138,15 +134,11 @@ public final class Model {
 			MessageManager.showExceptionStackTrace(e, setting.localeCode);
 		}
 
-		// 組み込み関数「 output 」を提供するプラグイン（このクラス内に内部クラスとして実装）を登録
-		this.engine.put("OutputPlugin", new Model.OutputPlugin(setting, isGuiMode));
-
 		// プラグインからのパーミッション要求の扱いを設定するため、パーミッションの項目名と値を格納するマップを用意
 		Map<String, String> permissionMap = new HashMap<String, String>();
 
 		// 全パーミッション項目のデフォルト挙動を、ユーザーに尋ねて決める挙動に設定（ASK）
 		permissionMap.put("DEFAULT", "ASK");
-		//permissionMap.put("DEFAULT", "DENY"); // デフォルト挙動を、何も訪ねずに拒否する挙動（DENY）にしたい場合はこちら
 
 		// 以下、電卓ソフト的には安全な操作を許可（ALLOW）に設定する
 		permissionMap.put("FILE_READ", "ALLOW");         // ファイルの読み込み
@@ -155,20 +147,49 @@ public final class Model {
 		permissionMap.put("DIRECTORY_LIST", "ALLOW");    // フォルダ内のファイル一覧取得
 		permissionMap.put("DIRECTORY_CREATE", "ALLOW");  // 新規フォルダの作成
 		permissionMap.put("PROGRAM_EXIT", "ALLOW");      // exit 関数によるスクリプトの終了
-		////////// 他に、個別に別挙動に設定したいパーミッション項目があれば、項目名をキーとしてここで続けて put する
-		////////// (とりあえず現状では設定ファイルから読み込んだりはしない方針)
 
 		// パーミッション設定を反映させる
-		this.engine.put("___VNANO_PERMISSION_MAP", permissionMap);
+		try {
+			this.engine.setPermissionMap(permissionMap);
+		} catch (VnanoException e) {
+			if (setting.localeCode.equals(LocaleCode.EN_US)) {
+				MessageManager.showErrorMessage(e.getMessage(), "Permission Setting Error", setting.localeCode);
+			}
+			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
+				MessageManager.showErrorMessage(e.getMessage(), "パーミッション設定エラー", setting.localeCode);
+			}
+		}
 	}
 
+	// リストファイルに登録されたライブラリを読み込んで Vnano Engine に接続
+	private final void loadLibraryScripts() throws VnanoException {
+	    ScriptLoader scriptLoader = new ScriptLoader("UTF-8");
+	    scriptLoader.setLibraryScriptListPath(this.libraryListFilePath);
+	    scriptLoader.load();
+	    String[] libPaths = scriptLoader.getLibraryScriptPaths(true);
+	    String[] libScripts = scriptLoader.getLibraryScriptContents();
+	    int libCount = libScripts.length;
+	    for (int ilib=0; ilib<libCount; ilib++) {
+	        this.engine.registerLibraryScript(libPaths[ilib], libScripts[ilib]);
+	    }
+	}
+
+	// リストファイルに登録されたプラグインを読み込んで Vnano Engine に接続
+	private final void loadPlugins() throws VnanoException {
+        PluginLoader pluginLoader = new PluginLoader("UTF-8");
+        pluginLoader.setPluginListPath(this.pluginListFilePath);
+        pluginLoader.load();
+        for (Object plugin: pluginLoader.getPluginInstances()) {
+            this.engine.connectPlugin("___VNANO_AUTO_KEY", plugin);
+        }
+	}
 
 	// 終了時処理
 	public void shutdown(SettingContainer setting) {
 		try {
 			// プラグインを接続解除し、ライブラリ登録も削除
-			this.engine.put("___VNANO_COMMAND", "REMOVE_PLUGIN");
-			this.engine.put("___VNANO_COMMAND", "REMOVE_LIBRARY");
+			this.engine.disconnectAllPlugins();
+			this.engine.unregisterAllLibraryScripts();
 
 		// shutdown に失敗しても上層ではどうしようも無いため、ここで通知し、さらに上には投げない。
 		} catch (Exception e) {
@@ -192,7 +213,7 @@ public final class Model {
 	// 呼び出しスレッド上で計算処理を実行する
 	// （CUIモードでは直接呼ばれるが、GUIモードでは calculateAsynchronously の方が呼ばれ、そこから別スレッド上でこれが呼ばれる）
 	public final String calculate(String inputtedContent, boolean isGuiMode, SettingContainer setting)
-			throws ScriptException, RINPnException {
+			throws VnanoException, RINPnException {
 
 		// 注意:
 		// このメソッドを synchronized にすると、スクリプト内容が重い場合に Enter キーや実行ボタンが連打された場合、
@@ -276,10 +297,12 @@ public final class Model {
 		// ライブラリ/プラグインの再読み込み
 		try {
 			if (setting.reloadLibrary) {
-				this.engine.put("___VNANO_COMMAND", "RELOAD_LIBRARY");
+				this.engine.unregisterAllLibraryScripts();
+				this.loadLibraryScripts();
 			}
 			if (setting.reloadPlugin) {
-				this.engine.put("___VNANO_COMMAND", "RELOAD_PLUGIN");
+				this.engine.disconnectAllPlugins();
+				this.loadPlugins();
 			}
 
 		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
@@ -317,16 +340,16 @@ public final class Model {
 			optionMap.put("MAIN_SCRIPT_NAME", scriptFile.getName());
 			optionMap.put("MAIN_SCRIPT_DIRECTORY", scriptFile.getParentFile().getAbsolutePath());
 		}
-		engine.put("___VNANO_OPTION_MAP", optionMap);
+		this.engine.setOptionMap(optionMap);
 
 
 		// スクリプトエンジンで計算処理を実行
 		Object value = null;
 		try {
-			value = this.engine.eval(inputtedContent);
+			value = this.engine.executeScript(inputtedContent);
 
 		// 入力した式やライブラリに誤りがあった場合は、計算終了状態に戻してから例外を上層に投げる
-		} catch (ScriptException e) {
+		} catch (VnanoException e) {
 			this.calculating = false;
 			throw e;
 		}
@@ -412,7 +435,7 @@ public final class Model {
 				// 計算リクエスト元に計算完了を通知
 				this.calculationListener.calculationFinished(outputText);
 
-			} catch (ScriptException | RINPnException e) {
+			} catch (VnanoException | VnanoFatalException | RINPnException | RINPnFatalException e) {
 
 				// 計算結果の代わりに、エラーの発生を示すメッセージを通知（ OUTPUT 欄に表示される ）
 				this.calculationListener.calculationFinished("ERROR");

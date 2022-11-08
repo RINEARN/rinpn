@@ -1,13 +1,12 @@
 /*
- * Copyright(C) 2019-2021 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2022 RINEARN (Fumihiro Matsui)
  * This software is released under the MIT License.
  */
 
 package com.rinearn.rinpn;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import org.vcssl.nano.VnanoException;
+import org.vcssl.nano.VnanoFatalException;
 
 import com.rinearn.rinpn.util.LocaleCode;
 import com.rinearn.rinpn.util.MessageManager;
@@ -94,14 +93,9 @@ public final class RINPn {
 	private static void printVersion() {
 		System.out.print("RINPn Ver." + VERSION + " ");
 
-		// Vnanoのバージョンも表示するため、スクリプトエンジンを読み込む
-		ScriptEngineManager manager = new ScriptEngineManager();
-		ScriptEngine engine = manager.getEngineByName("vnano");
-		if (engine == null) {
-			return;
-		}
-		System.out.print(" / with " + engine.get(ScriptEngine.LANGUAGE));
-		System.out.print(" Ver." + engine.get(ScriptEngine.LANGUAGE_VERSION));
+		// Vnanoのバージョンも表示
+		System.out.print(" / with " + org.vcssl.nano.spec.EngineInformation.LANGUAGE_NAME);
+		System.out.print(" Ver." + org.vcssl.nano.spec.EngineInformation.LANGUAGE_VERSION);
 		System.out.println("");
 	}
 
@@ -147,7 +141,7 @@ public final class RINPn {
 				System.out.println(outputText);
 			}
 
-		} catch (ScriptException | RINPnException e) {
+		} catch (VnanoException | VnanoFatalException | RINPnException | RINPnFatalException e) {
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
 			MessageManager.showErrorMessage(message, "!", setting.localeCode);
 			if (setting.exceptionStackTracerEnabled) {
