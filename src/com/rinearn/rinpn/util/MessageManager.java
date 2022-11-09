@@ -30,10 +30,10 @@ public final class MessageManager {
 	};
 
 	private static final String MESSAGE_FOR_MORE_DETAILS_JA_JP
-		= "\n( 詳細は「 " + SettingContainer.SETTING_SCRIPT_PATH_TXT + " (or .vnano) 」内のデバッグ項目類を有効にしてください )" ;
+		= "\n\n詳細はコマンドライン端末上のスタックトレースを参照してください。「 " + SettingContainer.SETTING_SCRIPT_PATH_TXT + " 」内の exceptionStackTracerEnabled を true にすると表示されます。" ;
 
 	private static final String MESSAGE_FOR_MORE_DETAILS_EN_US
-		= "\n( Enable debugging options in \"" + SettingContainer.SETTING_SCRIPT_PATH_TXT + " (or .vnano)\" for more details )";
+		= "For details, see the stack-trace displayed on the command-line terminal. For displaying the stack-trace, enable \" exceptionStackTracerEnabled \" in \"" + SettingContainer.SETTING_SCRIPT_PATH_TXT + "\".";
 
 
 	public static final void setDisplayType(DISPLAY_MODE mode) {
@@ -46,6 +46,13 @@ public final class MessageManager {
 			// その場合はエラーが発生した事だけでも通知するため、ウィンドウタイトルと同内容で代用する
 			// （詳細は必要に応じて、呼び出し元でコマンドラインにスタックトレース等を出力する）
 			message = title;
+		}
+
+		// 原因箇所を表す「 (file: ..., line: ...) 」や「 (ファイル：..., 行番号：...) 」の箇所を分割抽出
+		String causeLinePart = "";
+		if (0 <= message.indexOf("(")) {
+			causeLinePart = message.substring(message.lastIndexOf("("));
+			message = message.substring(0, message.lastIndexOf("("));
 		}
 
 		// ややこしいエラーに対しては、詳細を表示したい場合のための補足説明を追記
@@ -72,21 +79,19 @@ public final class MessageManager {
 		// 画面の種類（GUI/CUI）に応じて表示する
 		switch (displayMode) {
 			case GUI : {
-				int messageLength = message.length();
 
-				// メッセージが長い場合は改行を挟む
-				// (あまり長くないメッセージの場合はそのまま一行で表示する)
+				// メッセージに改行を挟む
 				if (localeCode.equals(LocaleCode.JA_JP)) {
-					if (GUI_MESSAGE_LINE_FEEDING_THRESHOLD_JAJP < messageLength) {
-						message = getLineFeededMessageJaJP(message);
-					}
+					message = getLineFeededMessageJaJP(message);
 				}
 				if (localeCode.equals(LocaleCode.EN_US)) {
-					if (GUI_MESSAGE_LINE_FEEDING_THRESHOLD_ENUS < messageLength) {
-						message = getLineFeededMessageEnUS(message);
-					}
+					message = getLineFeededMessageEnUS(message);
 				}
 
+				// 改行加工後に、ファイル/行番号部分を再接合
+				if (!causeLinePart.contains("main script")) {
+					message += causeLinePart;
+				}
 				JDialog messageWindow = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE).createDialog(null, title);
 				messageWindow.setAlwaysOnTop(true);
 				messageWindow.setVisible(true);
@@ -95,25 +100,28 @@ public final class MessageManager {
 			}
 			case CUI : {
 				if (localeCode.equals(LocaleCode.JA_JP)) {
-					System.err.println("エラー : " + message);
+					System.err.println("エラー : " + message + causeLinePart);
 				}
 				if (localeCode.equals(LocaleCode.EN_US)) {
-					System.err.println("Error: " + message);
+					System.err.println("Error: " + message + causeLinePart);
 				}
 				return;
 			}
 		}
 	}
 
-	// 句読点の位置に改行を挟んで返す
+	// GUIで読みやすいように、（句読点の位置などに）改行を挟んで返す
 	private static final String getLineFeededMessageJaJP(String message) {
+		String eol = System.getProperty("line.separator");
+		int messageLength = message.length();
+		if (messageLength <= GUI_MESSAGE_LINE_FEEDING_THRESHOLD_JAJP) {
+			return message + eol + eol;
+		}
 
 		// 現状は単純に句読点で改行するようにしているけれど、日本語の場合は折り返してもいいかもしれない。
 		// ただ、スクリプト内のエラー部分の抜き出し箇所とかで折り返されると読みづらいので、
 		// 暫定的に句読点ベースにしているものの、将来的に改良を要検討
 
-		String eol = System.getProperty("line.separator");
-		int messageLength = message.length();
 		StringBuilder lineFeededMessageBuilder = new StringBuilder();
 		int lineBegin = 0;
 		while (lineBegin < messageLength) {
@@ -125,6 +133,8 @@ public final class MessageManager {
 				message.indexOf("。", lineBegin + 1),
 				message.indexOf("：", lineBegin + 1),
 				message.indexOf(": ", lineBegin + 1),
+				message.indexOf("？", lineBegin + 1),
+				message.indexOf("? ", lineBegin + 1)
 			};
 			for (int candidate: lineEndCandidates) {
 				if (candidate != -1 && candidate < lineEnd) {
@@ -134,23 +144,26 @@ public final class MessageManager {
 
 			// そこで行を区切って改行コードを挟む
 			String line = message.substring(lineBegin, lineEnd + 1);
+			lineBegin = lineEnd + 1;
 			lineFeededMessageBuilder.append(line);
 			lineFeededMessageBuilder.append(eol);
-			lineBegin = lineEnd + 1;
 		}
 		return lineFeededMessageBuilder.toString();
 	}
 
 
-	// 句読点の位置に改行を挟んで返す
+	// GUIで読みやすいように、（句読点の位置などに）改行を挟んで返す
 	private static final String getLineFeededMessageEnUS(String message) {
+		String eol = System.getProperty("line.separator");
+		int messageLength = message.length();
+		if (messageLength <= GUI_MESSAGE_LINE_FEEDING_THRESHOLD_ENUS) {
+			return message + eol + eol;
+		}
 
 		// 現状は日本語とほぼ同じように句読点で改行するようにしているけれど、
 		// スクリプト内のエラー部分の抜き出し箇所などで区切られて読みづらいケースが出てきた場合は改修を要検討
 		// （固定幅で折り返す場合は、単語の最中に切ってはいけないので、単語内かどうか判定してハイフンを付けたりが必要になると思う）
 
-		String eol = System.getProperty("line.separator");
-		int messageLength = message.length();
 		StringBuilder lineFeededMessageBuilder = new StringBuilder();
 		int lineBegin = 0;
 		while (lineBegin < messageLength) {
@@ -160,7 +173,8 @@ public final class MessageManager {
 			int[] lineEndCandidates = new int[] {
 				message.indexOf(", ", lineBegin + 1),
 				message.indexOf(". ", lineBegin + 1),
-				message.indexOf(": ", lineBegin + 1)
+				message.indexOf(": ", lineBegin + 1),
+				message.indexOf("? ", lineBegin + 1)
 			};
 			for (int candidate: lineEndCandidates) {
 				if (candidate != -1 && candidate < lineEnd) {
@@ -170,9 +184,9 @@ public final class MessageManager {
 
 			// そこで行を区切って改行コードを挟む
 			String line = message.substring(lineBegin, lineEnd + 1);
+			lineBegin = lineEnd + 1;
 			lineFeededMessageBuilder.append(line);
 			lineFeededMessageBuilder.append(eol);
-			lineBegin = lineEnd + 1;
 		}
 		return lineFeededMessageBuilder.toString();
 	}
