@@ -588,7 +588,12 @@ public final class Presenter {
 				}
 			}
 
-			this.view.inputField.setText(this.view.inputField.getText() + appendedText);
+			int caretPosition = view.inputField.getCaretPosition();
+			StringBuilder inputBuilder = new StringBuilder(this.view.inputField.getText());
+			inputBuilder.insert(caretPosition, appendedText);
+
+			this.view.inputField.setText(inputBuilder.toString());
+			this.view.inputField.setCaretPosition(caretPosition + appendedText.length());
 			this.view.inputField.requestFocus(true);
 		}
 	}
@@ -606,7 +611,13 @@ public final class Presenter {
 		@Override
 		public final void actionPerformed(ActionEvent ae) {
 			JButton key = JButton.class.cast(ae.getSource());
-			this.view.inputField.setText(view.inputField.getText() + key.getText());
+
+			int caretPosition = view.inputField.getCaretPosition();
+			StringBuilder inputBuilder = new StringBuilder(this.view.inputField.getText());
+			inputBuilder.insert(caretPosition, key.getText());
+
+			this.view.inputField.setText(inputBuilder.toString());
+			this.view.inputField.setCaretPosition(caretPosition + key.getText().length());
 			this.view.inputField.requestFocus(true);
 		}
 	}
@@ -644,10 +655,15 @@ public final class Presenter {
 
 				case "BS" : {
 					String currentText = view.inputField.getText();
-					if (1 <= currentText.length()) {
+					int caretPosition = view.inputField.getCaretPosition();
+					if (1 <= caretPosition) {
 						this.view.inputField.setText(
-							currentText.substring(0, currentText.length() - 1)
+							currentText.substring(0, caretPosition - 1)
+							+
+							currentText.substring(caretPosition, currentText.length())
 						);
+						this.view.inputField.setCaretPosition(caretPosition - 1);
+						this.view.inputField.requestFocus(true);
 					}
 					break;
 				}
