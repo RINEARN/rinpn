@@ -336,6 +336,7 @@ public final class Presenter {
 		protected KeyRetractorMouseListener(View view, SettingContainer settingContainer) {
 			this.view = view;
 			this.settingContainer = settingContainer;
+			this.windowHeightBeforeRetracted = this.settingContainer.windowHeight;
 		}
 
 		@Override
