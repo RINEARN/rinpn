@@ -11,11 +11,13 @@ import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
+import org.vcssl.nano.VnanoEngine;
+import org.vcssl.nano.VnanoException;
+import org.vcssl.nano.VnanoFatalException;
+import org.vcssl.nano.interconnect.PluginLoader;
 
 import com.rinearn.rinpn.RINPnException;
+import com.rinearn.rinpn.RINPnFatalException;
 
 public final class SettingContainer implements Cloneable {
 
@@ -112,33 +114,25 @@ public final class SettingContainer implements Cloneable {
 		File settingScriptFile = new File(settingScriptFilePath);
 
 		// 設定スクリプト解釈用に、Vnanoのスクリプトエンジンを読み込んで生成
-		ScriptEngineManager manager = new ScriptEngineManager();
-		ScriptEngine settingVnanoEngine = manager.getEngineByName("vnano");
+		VnanoEngine settingVnanoEngine = new VnanoEngine();
 
-		if (settingVnanoEngine == null) {
-			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(
-					"Please put Vnano.jar in the same directory as RINPn.jar.",
-					"Engine Loading Error",
-					localeCode
-				);
-			}
-			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(
-					"Vnano.jar を、RINPn.jar と同じフォルダ内に配置してください。",
-					"エンジン読み込みエラー",
-					localeCode
-				);
-			}
-			throw new RINPnException("ScriptEngine of the Vnano could not be loaded.");
-		}
-
-		// ライブラリ/プラグインの読み込みリストファイルを登録
+		//  プラグインを読み込む
+		// （設定ファイルの解釈では、エラーフローをややこしくしないため、ライブラリは使用不可とし、読み込まない）
 		try {
-			settingVnanoEngine.put("___VNANO_LIBRARY_LIST_FILE", libraryListFilePath);
-			settingVnanoEngine.put("___VNANO_PLUGIN_LIST_FILE", pluginListFilePath);
 
-		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
+			// まず、リストファイルに記載されているプラグインを読み込む
+	        PluginLoader pluginLoader = new PluginLoader("UTF-8");
+	        pluginLoader.setPluginListPath(pluginListFilePath);
+	        pluginLoader.load();
+	        for (Object plugin: pluginLoader.getPluginInstances()) {
+	        	settingVnanoEngine.connectPlugin("___VNANO_AUTO_KEY", plugin);
+	        }
+
+	        // 続いて、このクラス自身もプラグインとして接続し、
+	        // 各設定値のフィールドをスクリプトから読み書き可能にする
+			settingVnanoEngine.connectPlugin("SettingContainer", this); // キーは省略可能な名前空間として使用される
+
+		// 読み込みに失敗しても、そのプラグイン以外の機能には支障が無いため、本体側は落とさない。
 		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
 		} catch (Exception e) {
 			String message = e.getMessage();
@@ -146,17 +140,14 @@ public final class SettingContainer implements Cloneable {
 					message = e.getCause().getMessage();
 			}
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error", localeCode);
+				MessageManager.showErrorMessage(message, "Plug-in Loading Error", localeCode);
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー", localeCode);
+				MessageManager.showErrorMessage(message, "プラグイン読み込みエラー", localeCode);
 			}
 			System.err.println("\n" + message);
 			MessageManager.showExceptionStackTrace(e, localeCode);
 		}
-
-		// 設定値をスクリプトから読み書きするため、このインスタンスをスクリプトエンジンにバインディング
-		settingVnanoEngine.put("SettingContainer", this); // キーは省略可能な名前空間として使用される
 
 		// スクリプトエンジンに渡すオプションを用意
 		//（エラーメッセージ用にスクリプト名し、アクセラレータも無効化する）
@@ -165,7 +156,11 @@ public final class SettingContainer implements Cloneable {
 		optionMap.put("DUMPER_ENABLED", debug);
 		optionMap.put("ACCELERATOR_ENABLED", false);
 		optionMap.put("UI_MODE", isGuiMode ? "GUI" : "CUI");
-		settingVnanoEngine.put("___VNANO_OPTION_MAP", optionMap);
+		try {
+			settingVnanoEngine.setOptionMap(optionMap);
+		} catch (VnanoException vne) {
+			throw new RINPnFatalException(vne);
+		}
 
 		if (debug) {
 			System.out.println("");
@@ -184,24 +179,23 @@ public final class SettingContainer implements Cloneable {
 
 		// 読み込んだ設定スクリプトを実行して、設定ファイルの記述内容を解釈する
 		try {
-			settingVnanoEngine.eval(settingScriptCode);
+			settingVnanoEngine.executeScript(settingScriptCode);
 
 		// 設定スクリプトの内容にエラーがあった場合
-		} catch (ScriptException se) {
-			String errorMessage = MessageManager.customizeExceptionMessage(se.getMessage());
+		} catch (VnanoException | VnanoFatalException vne) {
+			String errorMessage = MessageManager.customizeExceptionMessage(vne.getMessage());
 			if (localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(errorMessage, "Setting Error", localeCode);
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(errorMessage, "設定スクリプトのエラー", localeCode);
 			}
-			throw new RINPnException(se);
+			throw new RINPnException(vne);
 		}
 
-		// ライブラリ/プラグインを接続解除
+		// プラグインを接続解除
 		try {
-			settingVnanoEngine.put("___VNANO_COMMAND", "REMOVE_PLUGIN");
-			settingVnanoEngine.put("___VNANO_COMMAND", "REMOVE_LIBRARY");
+			settingVnanoEngine.disconnectAllPlugins();
 
 		// 設定の読み込みは完了しているため、本体側を落とさないため、例外をさらに上には投げない。通知のみ行う。
 		} catch (Exception e) {
