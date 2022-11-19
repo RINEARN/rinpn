@@ -52,16 +52,23 @@ so same features are also available in scripts of the VCSSL by default, with imp
 			<br />
 			Variable: <a href="#PI">PI</a>
 			<br />
-			Function: <a href="#rad">rad(degree)</a> / <a href="#deg">deg(radian)</a> / <a href="#sin">sin(x)</a> / <a href="#cos">cos(x)</a> / <a href="#tan">tan(x)</a> / 
-			      <a href="#asin">asin(x)</a> / <a href="#acos">acos(x)</a> / <a href="#atan">atan(x)</a> /
-			      <a href="#sqrt">sqrt(x)</a> / <a href="#ln">ln(x)</a> / <a href="#log10">log10(x)</a> / <a href="#pow">pow(x,exponent)</a> / <a href="#exp">exp(x)</a> /
-			      <a href="#abs">abs(x)</a>
+			Function:
+				<a href="#rad">rad(degree)</a> / <a href="#deg">deg(radian)</a> / <a href="#sin">sin(x)</a> / <a href="#cos">cos(x)</a> / <a href="#tan">tan(x)</a> / 
+				<a href="#asin">asin(x)</a> / <a href="#acos">acos(x)</a> / <a href="#atan">atan(x)</a> /
+				<a href="#sqrt">sqrt(x)</a> / <a href="#ln">ln(x)</a> / <a href="#log10">log10(x)</a> / <a href="#pow">pow(x,exponent)</a> / <a href="#exp">exp(x)</a> /
+				<a href="#abs">abs(x)</a>
 		</dd>
 	<dt><a href="#MathStatisticalXnci1Plugin">MathStatisticalXnci1Plugin</a></dt>
 		<dd>
 			Provides elementary statistical functions.
 			<br />
-			Function: <a href="#sum">sum(...)</a> / <a href="#mean">mean(...)</a> / <a href="#van">van(...)</a> / <a href="#van1">van1(...)</a> / <a href="#sdn">sdn(...)</a> / <a href="#sdn1">sdn1(...)</a>
+			Function:
+				<a href="#sum">sum(...)</a> / <a href="#sum_array">sum(array)</a> / 
+				<a href="#mean">mean(...)</a> / <a href="#mean_array">mean(array)</a> / 
+				<a href="#van">van(...)</a> / <a href="#van_array">van(array)</a> / 
+				<a href="#van1">van1(...)</a> / <a href="#van1_array">van1(array)</a> / 
+				<a href="#sdn">sdn(...)</a> / <a href="#sdn_array">sdn(array)</a> / 
+				<a href="#sdn1">sdn1(...)</a> / <a href="#sdn1_array">sdn1(array)</a>
 		</dd>
 </dl>
 
@@ -125,7 +132,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Signature</td>
-		<td class="rcol">float[...] rad( const float &amp;degree[...] )</td>
+		<td class="rcol">float[]...[] rad( const float &amp;degree[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -133,7 +140,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Return value</td>
-		<td class="rcol">(float type, having same ranl/length with the param) The converted value in the unit of radian.</td>
+		<td class="rcol">(float type, having same rank/length with the param) The converted value in the unit of radian.</td>
 	</tr>
 	<tr>
 		<td class="lcol">Example</td>
@@ -159,7 +166,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Signature</td>
-		<td class="rcol">float[...] deg( const float &amp;radian[...] )</td>
+		<td class="rcol">float[]...[] deg( const float &amp;radian[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -190,7 +197,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Singature</td>
-		<td class="rcol">float[...] sin( const float &amp;x[...] )</td>
+		<td class="rcol">float[]...[] sin( const float &amp;x[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -221,7 +228,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Singature</td>
-		<td class="rcol">float[...] cos( const float &amp;x[...] )</td>
+		<td class="rcol">float[]...[] cos( const float &amp;x[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -252,7 +259,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Signature</td>
-		<td class="rcol">float[...] tan( const float &amp;x[...] )</td>
+		<td class="rcol">float[]...[] tan( const float &amp;x[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -283,7 +290,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Signature</td>
-		<td class="rcol">float[...] asin( const float &amp;x[...] )</td>
+		<td class="rcol">float[]...[] asin( const float &amp;x[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -314,7 +321,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Signature</td>
-		<td class="rcol">float[...] acos( const float &amp;x[...] )</td>
+		<td class="rcol">float[]...[] acos( const float &amp;x[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -345,7 +352,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Signature</td>
-		<td class="rcol">float[...] atan( const float &amp;x[...] )</td>
+		<td class="rcol">float[]...[] atan( const float &amp;x[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -376,7 +383,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Signature</td>
-		<td class="rcol">float[...] sqrt( const float &amp;x[...] )</td>
+		<td class="rcol">float[]...[] sqrt( const float &amp;x[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -407,7 +414,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Signature</td>
-		<td class="rcol">float[...] ln( const float &amp;x[...] )</td>
+		<td class="rcol">float[]...[] ln( const float &amp;x[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -438,7 +445,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Signature</td>
-		<td class="rcol">float[...] log10( const float &amp;x[...] )</td>
+		<td class="rcol">float[]...[] log10( const float &amp;x[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -469,7 +476,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Signature</td>
-		<td class="rcol">float[...] pow( const float &amp;x[...], const float &amp;exponent )</td>
+		<td class="rcol">float[]...[] pow( const float &amp;x[]...[], const float &amp;exponent )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -504,7 +511,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Signature</td>
-		<td class="rcol">float[...] exp( const float &amp;exponent[...] )</td>
+		<td class="rcol">float[]...[] exp( const float &amp;exponent[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -537,7 +544,7 @@ The plug-in providing elementary math functions.
 	</tr>
 	<tr>
 		<td class="lcol">Signature</td>
-		<td class="rcol">float[...] abs( const float &amp;x[...] )</td>
+		<td class="rcol">float[]...[] abs( const float &amp;x[]...[] )</td>
 	</tr>
 	<tr>
 		<td class="lcol">Params</td>
@@ -603,6 +610,48 @@ The plug-in providing elementary statistical functions.
 </table>
 
 
+<table id="sum_array" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">sum( array )</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Computes the summation value of the values stored in the specified array.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">float sum( float array[] )</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(float type, 1-D array) The array storing the values of which summation value should be computed.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">(float type) The summation value.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			float array[3];
+			<br />
+			array[0] = 1.0;
+			<br />
+			array[1] = 2.5;
+			<br />
+			array[2] = 4.0;
+			<br />
+			print( sum(array) ); // 7.5
+		</td>
+	</tr>
+</table>
+
+
 <table id="mean" class="spec-table">
 	<tr>
 		<th class="lcol">Function</th>
@@ -631,6 +680,48 @@ The plug-in providing elementary statistical functions.
 	<tr>
 		<td class="lcol">Example</td>
 		<td class="rcol">print( mean(1.0, 2.5, 4.0) ); // 2.5</td>
+	</tr>
+</table>
+
+
+<table id="mean_array" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">mean( array )</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Computes the arithmetic mean value of the values stored in the specified array.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">float mean( float array[] )</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(float type, 1-D array) The array storing the values of which arithmetic mean value should be computed.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">(float type) The arithmetic mean value.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			float array[3];
+			<br />
+			array[0] = 1.0;
+			<br />
+			array[1] = 2.5;
+			<br />
+			array[2] = 4.0;
+			<br />
+			print( mean(array) ); // 2.5
+		</td>
 	</tr>
 </table>
 
@@ -667,6 +758,48 @@ The plug-in providing elementary statistical functions.
 </table>
 
 
+<table id="van_array" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">van( array )</th>
+	</tr>
+	<tr>
+		<td class="lcol">Fearure</td>
+		<td class="rcol">
+			Computes the value of the variance ( denominator : N ).
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">float van( float array[] )</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(float type, 1-D array ) The array storing the values of which value of the variable should be computed.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">(float type) The value of the variance ( denominator : N ).</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			float array[3];
+			<br />
+			array[0] = 1.0;
+			<br />
+			array[1] = 2.5;
+			<br />
+			array[2] = 4.0;
+			<br />
+			print( van(array) ); // 1.5
+		</td>
+	</tr>
+</table>
+
+
 <table id="van1" class="spec-table">
 	<tr>
 		<th class="lcol">Function</th>
@@ -695,6 +828,48 @@ The plug-in providing elementary statistical functions.
 	<tr>
 		<td class="lcol">Example</td>
 		<td class="rcol">print( van1(1.0, 2.5, 4.0) ); // 2.25</td>
+	</tr>
+</table>
+
+
+<table id="van1_array" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">van1( array )</th>
+	</tr>
+	<tr>
+		<td class="lcol">Fearure</td>
+		<td class="rcol">
+			Computes the value of the variance ( denominator : N-1 ).
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">float van1( float array[] )</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(float type, 1-D array ) The array storing the values of which value of the variable should be computed.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">(float type) The value of the variance ( denominator : N-1 ).</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			float array[3];
+			<br />
+			array[0] = 1.0;
+			<br />
+			array[1] = 2.5;
+			<br />
+			array[2] = 4.0;
+			<br />
+			print( van1(array) ); // 2.25
+		</td>
 	</tr>
 </table>
 
@@ -731,6 +906,47 @@ The plug-in providing elementary statistical functions.
 </table>
 
 
+<table id="sdn_array" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">sdn( array )</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Computes the value of the standard-deviation ( denominator : N ), of the values stored in the specifed array.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">float sdn( float array[] )</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(float type, 1-D array) The array storing the values of which value of the standard-deviation should be computed.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">(float type) The value of the standard-deviation ( denominator : N ).</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			float array[3];
+			<br />
+			array[0] = 1.0;
+			<br />
+			array[1] = 2.5;
+			<br />
+			array[2] = 4.0;
+			<br />
+			print( sdn(array) ); // 1.2247... (≒√1.5)
+		</td>
+	</tr>
+</table>
+
 
 <table id="sdn1" class="spec-table">
 	<tr>
@@ -760,6 +976,48 @@ The plug-in providing elementary statistical functions.
 	<tr>
 		<td class="lcol">Example</td>
 		<td class="rcol">print( sdn1(1.0, 2.5, 4.0) ); // 1.5 (=√2.25)</td>
+	</tr>
+</table>
+
+
+<table id="sdn1_array" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">sdn1( array )</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Computes the value of the standard-deviation ( denominator : N-1 ), of the values stored in the specifed array.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">float sdn1( float array[] )</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(float type, 1-D array) The array storing the values of which value of the standard-deviation should be computed.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">(float type) The value of the standard-deviation ( denominator : N-1 ).</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">
+			float array[3];
+			<br />
+			array[0] = 1.0;
+			<br />
+			array[1] = 2.5;
+			<br />
+			array[2] = 4.0;
+			<br />
+			print( sdn1(array) ); // 1.5 (=√2.25)
+		</td>
 	</tr>
 </table>
 

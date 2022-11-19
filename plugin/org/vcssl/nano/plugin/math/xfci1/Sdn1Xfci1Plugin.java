@@ -1,6 +1,6 @@
 package org.vcssl.nano.plugin.math.xfci1;
 
-public class Sdn1Xfci1Plugin extends Float64VectorToScalarOperationXfci1Plugin {
+public class Sdn1Xfci1Plugin extends Float64VariadicScalarOperationXfci1Plugin {
 
 	@Override
 	public final String getFunctionName() {

@@ -4,10 +4,9 @@ import org.vcssl.connect.ExternalFunctionConnectorInterface1;
 
 import org.vcssl.connect.EngineConnectorInterface1;
 import org.vcssl.connect.ArrayDataAccessorInterface1;
-import org.vcssl.connect.Float64ScalarDataAccessorInterface1;
 import org.vcssl.connect.ConnectorException;
 
-public class Float64VectorToScalarOperationXfci1Plugin implements ExternalFunctionConnectorInterface1 {
+public class Float64VariadicScalarOperationXfci1Plugin implements ExternalFunctionConnectorInterface1 {
 
 	@Override
 	public String getFunctionName() {
@@ -16,7 +15,7 @@ public class Float64VectorToScalarOperationXfci1Plugin implements ExternalFuncti
 
 	@Override
 	public Class<?>[] getParameterClasses() {
-		return new Class<?>[] { double[].class };
+		return new Class<?>[] { double.class };
 	}
 
 	@Override
@@ -41,7 +40,7 @@ public class Float64VectorToScalarOperationXfci1Plugin implements ExternalFuncti
 
 	@Override
 	public Class<?> getReturnUnconvertedClass(Class<?>[] parameterClasses) {
-		return Float64ScalarDataAccessorInterface1.class;
+		return ArrayDataAccessorInterface1.class;
 	}
 
 	@Override
@@ -77,7 +76,7 @@ public class Float64VectorToScalarOperationXfci1Plugin implements ExternalFuncti
 
 	@Override
 	public boolean isParameterCountArbitrary() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -93,33 +92,49 @@ public class Float64VectorToScalarOperationXfci1Plugin implements ExternalFuncti
 	@Override
 	public Object invoke(Object[] arguments) throws ConnectorException {
 
-		// Check types of stored data.
-		Object inputDataObject = ( (ArrayDataAccessorInterface1<?> )arguments[1]).getArrayData();
-		if (!( inputDataObject instanceof double[] )) {
-			throw new ConnectorException("The data type of the argument of this function should be \"float\" or \"double\".");
+		// Check types of data containers.
+		for (Object arg: arguments) {
+			if (!(arg instanceof ArrayDataAccessorInterface1)) {
+				throw new ConnectorException("The type of the data container is not supported by this plug-in.");
+			}
 		}
 
+		// Get or allocate output data
 		@SuppressWarnings("unchecked")
-		ArrayDataAccessorInterface1<double[]> inputDataContainer = (ArrayDataAccessorInterface1<double[]>)arguments[1];
-		Float64ScalarDataAccessorInterface1 outputDataContainer = Float64ScalarDataAccessorInterface1.class.cast(arguments[0]);
+		ArrayDataAccessorInterface1<double[]> outputDataContainer = (ArrayDataAccessorInterface1<double[]>)arguments[0];
+		int outputDataOffset = outputDataContainer.getArrayOffset();
+		double[] outputData = outputDataContainer.getArrayData();
+		if (outputData == null || outputDataContainer.getArraySize() != 1) {
+			outputData = new double[ 1 ];
+			outputDataOffset = 0;
+		}
 
-		// Get input data
-		double[] inputData = (double[])inputDataContainer.getArrayData();
-		int inputDataOffset = inputDataContainer.getArrayOffset();
-		int inputDataSize = inputDataContainer.getArraySize();
+		// Check types of data in data containers, and cast data.
+		int inputArgN = arguments.length - 1;
+		double[] inputData = new double[inputArgN];
+		for (int inputArgIndex=0; inputArgIndex<inputArgN; inputArgIndex++) {
+			int argIndex = inputArgIndex + 1;
+			ArrayDataAccessorInterface1<?> inputDataContainer = (ArrayDataAccessorInterface1<?>)arguments[argIndex];
+			Object inputDataObject = inputDataContainer.getArrayData();
+			int inputDataOffset = inputDataContainer.getArrayOffset();
+			if (!(inputDataObject instanceof double[])) {
+				throw new ConnectorException("The data type of the argument of this function should be \"float\" or \"double\".");
+			}
+			inputData[inputArgIndex] = ((double[])inputDataObject)[ inputDataOffset ];
+		}
 
 		// Operate data
-		double result = this.operate(inputData, inputDataOffset, inputDataSize);
+		this.operate(outputData, inputData, outputDataOffset);
 
 		// Store result data
-		outputDataContainer.setFloat64ScalarData(result);
+		outputDataContainer.setArrayData(outputData, outputDataOffset, ArrayDataAccessorInterface1.ARRAY_LENGTHS_OF_SCALAR);
 
 		return null;
 	}
 
 	// Overridden on subclasses
-	public double operate(double[] inputData, int inputDataOffset, int inputDataSize) {
-		return Double.NaN;
+	public void operate(double[] outputData, double[] inputData, int outputDataOffset) {
+
 	}
 
 	@Override
