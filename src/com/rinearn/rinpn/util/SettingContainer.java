@@ -15,6 +15,7 @@ import org.vcssl.nano.VnanoEngine;
 import org.vcssl.nano.VnanoException;
 import org.vcssl.nano.VnanoFatalException;
 import org.vcssl.nano.interconnect.PluginLoader;
+import org.vcssl.nano.interconnect.ScriptLoader;
 
 import com.rinearn.rinpn.RINPnException;
 import com.rinearn.rinpn.RINPnFatalException;
@@ -171,14 +172,12 @@ public final class SettingContainer implements Cloneable {
 			System.out.println("");
 		}
 
-		// 設定スクリプトを読み込む
-		SettingContainer defaultSetting = new SettingContainer(); // 設定を読み込むために使うデフォルトの設定（言語ロケールなどが影響）
-		String settingScriptCode = ScriptFileLoader.load(
-			settingScriptFile.getPath(), DEFAULT_SETTING_SCRIPT_ENCODING, defaultSetting
-		);
-
-		// 読み込んだ設定スクリプトを実行して、設定ファイルの記述内容を解釈する
+		// 設定ファイルを読み込み、スクリプトとして実行する（それにより、各設定値をこのインスタンスに代入される）
 		try {
+			ScriptLoader loader = new ScriptLoader(DEFAULT_SETTING_SCRIPT_ENCODING);
+			loader.setMainScriptPath(settingScriptFile.getPath());
+			loader.load();
+			String settingScriptCode = loader.getMainScriptContent();
 			settingVnanoEngine.executeScript(settingScriptCode);
 
 		// 設定スクリプトの内容にエラーがあった場合
