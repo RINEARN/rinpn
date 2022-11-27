@@ -20,34 +20,51 @@ import org.vcssl.nano.interconnect.ScriptLoader;
 import com.rinearn.rinpn.util.LocaleCode;
 import com.rinearn.rinpn.util.MessageManager;
 import com.rinearn.rinpn.util.OutputValueFormatter;
-import com.rinearn.rinpn.util.ScriptFileLoader;
 import com.rinearn.rinpn.util.SettingContainer;
 
+
+/**
+ * The class providing internal core features of this application
+ * (performing calculations, executing scripts, and so on).
+ */
 public final class Model {
 
 	private static final String SCRIPT_EXTENSION = ".vnano";
 	private static final String DEFAULT_SCRIPT_ENCODING = "UTF-8";
 	private static final String DEFAULT_FILE_IO_ENCODING = "UTF-8";
 
-	private VnanoEngine engine = null; // 計算式やライブラリの処理を実行するためのVnanoのスクリプトエンジン
+	/** The scripting engine of Vnano. */
+	private VnanoEngine engine = null;
+
+	/** The base directory path of relative path resolution. */
 	private String dirPath = ".";
 
+	/** The path of the library list file. */
 	private String libraryListFilePath = null;
+
+	/** The path of the plugin list file. */
 	private String pluginListFilePath = null;
 
+	/** The flag representing whether any calculation or script is currently running. */
 	private volatile boolean calculating = false;
 
-	// スクリプト内から下記の組み込み関数「 output 」を呼んで渡した値を控えておくフィールド（GUIモードでの表示用）
+	// The variable for storing a value passed to "output" function from a script,
+	// for displaying it in GUI mode.
 	private String lastOutputContent = null;
 
 
-	// Presenter層の計算実行処理で実装して用いる、計算完了通知を受け取るためのインターフェース
+	/**
+	 * The interface for receiving the notification 
+	 * when the asynchronous calculation or script processing completes.
+	 */
 	public interface AsyncCalculationListener {
 		public abstract void calculationFinished(String outputText);
 	}
 
 
-	// スクリプトエンジンに組み込み関数「 output 」を提供するプラグインクラス
+	/**
+	 * The plug-in class providing "output" function for Vnano engine.
+	 */
 	public class OutputPlugin {
 
 		private boolean isGuiMode;
@@ -59,20 +76,22 @@ public final class Model {
 
 		public void output(String value) {
 
-			// GUIモード用に値を控える
+			// In GUI mode, it will be displayed later.
 			Model.this.lastOutputContent = value;
 
-			// CUIモード用に値を標準出力に出力する
+			// In CUI mode, it is printed immediately to the standard output.
 			if (!this.isGuiMode) {
 				System.out.println(value);
 			}
 		}
+
 		public void output(long value) {
 			this.output( Long.toString(value) );
 		}
+
 		public void output(double value) {
 
-			// 設定内容に応じて丸め、書式を調整
+			// Round and format.
 			if ( !((Double)value).isNaN() && !((Double)value).isInfinite() ) {
 				BigDecimal roundedValue = OutputValueFormatter.round( ((Double)value).doubleValue(), this.setting);
 				String simplifiedValue = OutputValueFormatter.simplify( roundedValue );
@@ -88,36 +107,45 @@ public final class Model {
 	}
 
 
-	// AsynchronousCalculationRunner や ExitButtonListener から参照する
+	/**
+	 * Returns whether any calculation or script is currently running.
+	 * This method is called from AsyncCalculationRunner, ExitButtonListener, and so on.
+	 * 
+	 * @return Returns true if any calculation or script is currently running.
+	 */
 	public final boolean isCalculating() {
 		return this.calculating;
 	}
 
-	// 初期化処理
+
+	/**
+	 * Initializes this model instance.
+	 * 
+	 * @param setting The container storing setting values.
+	 * @param isGuiMode Specify true if this app is running in GUI mode.
+	 * @param dirPath The base directory path of relative path resolution.
+	 * @param libraryListFilePath The path of the library list file.
+	 * @param pluginListFilePath The path of the plug-in list file.
+	 */
 	public final void initialize(
-			SettingContainer setting, boolean isGuiMode, String dirPath, String libraryListFilePath, String pluginListFilePath)
-					throws RINPnException {
+			SettingContainer setting, boolean isGuiMode, String dirPath, String libraryListFilePath, String pluginListFilePath) {
 
 		this.dirPath = dirPath;
 		this.libraryListFilePath = libraryListFilePath;
 		this.pluginListFilePath = pluginListFilePath;
 
-		// 式やライブラリの解釈/実行用に、Vnanoのスクリプトエンジンを生成
+		// Create a scripting engine of Vnano.
 		this.engine = new VnanoEngine();
 
-		// ライブラリ/プラグインを読み込む
+		// Load library scripts and plug-ins.
 		try {
-			// リストファイルに登録されたライブラリ群の読み込み
 			this.loadLibraryScripts();
-
-			// リストファイルに登録されたプラグイン群の読み込み
 			this.loadPlugins();
 
-			// 組み込み関数「 output 」を提供するプラグイン（このクラス内に内部クラスとして実装）を登録
+			// Connect the plug-in providing "output" function, implemented in this class.
 			this.engine.connectPlugin("OutputPlugin", new Model.OutputPlugin(setting, isGuiMode));
 
-		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
-		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
+		// Don't shutdown this app when it fails to load any library/plug-in, but notify users.
 		} catch (Exception e) {
 			String message = e.getMessage();
 			if (e.getCause() != null && e.getCause().getMessage() != null) {
@@ -129,26 +157,27 @@ public final class Model {
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー", setting.localeCode);
 			}
-			// プラグインエラーはスクリプトの構文エラーよりも深いエラーなため、常にスタックトレースを出力する
+
+			// For errors occurred in plug-ins, always print the stack trace no matter whether it is specified by settings.
 			System.err.println("\n" + message);
 			MessageManager.showExceptionStackTrace(e, setting.localeCode);
 		}
 
-		// プラグインからのパーミッション要求の扱いを設定するため、パーミッションの項目名と値を格納するマップを用意
+		// Create a Map for storing permission item names and values (permission map).
 		Map<String, String> permissionMap = new HashMap<String, String>();
 
-		// 全パーミッション項目のデフォルト挙動を、ユーザーに尋ねて決める挙動に設定（ASK）
+		// Set the default value of all permissions to "ASK".
 		permissionMap.put("DEFAULT", "ASK");
 
-		// 以下、電卓ソフト的には安全な操作を許可（ALLOW）に設定する
-		permissionMap.put("FILE_READ", "ALLOW");         // ファイルの読み込み
-		permissionMap.put("FILE_WRITE", "ALLOW");        // 新規ファイルへの書き込み（上書きは除く）
-		permissionMap.put("FILE_CREATE", "ALLOW");       // 新規ファイルの作成（上書きは除く）
-		permissionMap.put("DIRECTORY_LIST", "ALLOW");    // フォルダ内のファイル一覧取得
-		permissionMap.put("DIRECTORY_CREATE", "ALLOW");  // 新規フォルダの作成
-		permissionMap.put("PROGRAM_EXIT", "ALLOW");      // exit 関数によるスクリプトの終了
+		// Following permission items are safe for purposes of this app, so set to "ALLOW".
+		permissionMap.put("FILE_READ", "ALLOW");         // File reading.
+		permissionMap.put("FILE_WRITE", "ALLOW");        // File writing, excluding overwriting.
+		permissionMap.put("FILE_CREATE", "ALLOW");       // File creation, excluding overwriting.
+		permissionMap.put("DIRECTORY_LIST", "ALLOW");    // Listing files in a directory.
+		permissionMap.put("DIRECTORY_CREATE", "ALLOW");  // Directory creation.
+		permissionMap.put("PROGRAM_EXIT", "ALLOW");      // Termination from script-side, by calling "exit" function.
 
-		// パーミッション設定を反映させる
+		// Set permission settings to the scripting engine.
 		try {
 			this.engine.setPermissionMap(permissionMap);
 		} catch (VnanoException e) {
@@ -161,7 +190,12 @@ public final class Model {
 		}
 	}
 
-	// リストファイルに登録されたライブラリを読み込んで Vnano Engine に接続
+
+	/**
+	 * Loads library scripts listed in the library list file.
+	 * 
+	 * @throws VnanoException Thrown if it fails to load any library.
+	 */
 	private final void loadLibraryScripts() throws VnanoException {
 	    ScriptLoader scriptLoader = new ScriptLoader("UTF-8");
 	    scriptLoader.setLibraryScriptListPath(this.libraryListFilePath);
@@ -174,7 +208,12 @@ public final class Model {
 	    }
 	}
 
-	// リストファイルに登録されたプラグインを読み込んで Vnano Engine に接続
+
+	/**
+	 * Loads plug-ins listed in the plug-in list file.
+	 * 
+	 * @throws VnanoException Thrown if it fails to load any plug-in.
+	 */
 	private final void loadPlugins() throws VnanoException {
         PluginLoader pluginLoader = new PluginLoader("UTF-8");
         pluginLoader.setPluginListPath(this.pluginListFilePath);
@@ -184,14 +223,19 @@ public final class Model {
         }
 	}
 
-	// 終了時処理
+
+	/**
+	 * Shutdown this model instance.
+	 * 
+	 * @param setting The container storing setting values.
+	 */
 	public void shutdown(SettingContainer setting) {
 		try {
-			// プラグインを接続解除し、ライブラリ登録も削除
+			// Unload all library scripts and plug-ins.
 			this.engine.disconnectAllPlugins();
 			this.engine.unregisterAllLibraryScripts();
 
-		// shutdown に失敗しても上層ではどうしようも無いため、ここで通知し、さらに上には投げない。
+		// Don't re-throw to the upper layer, because we can not do nothing at there.
 		} catch (Exception e) {
 			String message = e.getMessage();
 			if (e.getCause() != null && e.getCause().getMessage() != null) {
@@ -203,72 +247,79 @@ public final class Model {
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(message, "プラグイン終了時処理エラー", setting.localeCode);
 			}
-			// プラグインエラーはスクリプトの構文エラーよりも深いエラーなため、常にスタックトレースを出力する
+
+			// For errors occurred in plug-ins, always print the stack trace no matter whether it is specified by settings.
 			System.err.println("\n" + message);
 			MessageManager.showExceptionStackTrace(e, setting.localeCode);
 		}
 	}
 
 
-	// 呼び出しスレッド上で計算処理を実行する
-	// （CUIモードでは直接呼ばれるが、GUIモードでは calculateAsynchronously の方が呼ばれ、そこから別スレッド上でこれが呼ばれる）
+	/**
+	 * Calculates the specified expression, or executes the specified script, on the caller thread.
+	 * 
+	 * @param inputtedContent The calculation expression or the name/path of the script.
+	 * @param isGuiMode Specify true if this app is running in GUI mode.
+	 * @param setting The container storing setting values.
+	 * @return The calculation result value, or the value passed to "output" function from the script.
+	 * 
+	 * @throws VnanoException Thrown if the content of the expression or the script is incorrect.
+	 */
 	public final String calculate(String inputtedContent, boolean isGuiMode, SettingContainer setting)
-			throws VnanoException, RINPnException {
+			throws VnanoException {
 
-		// 注意:
-		// このメソッドを synchronized にすると、スクリプト内容が重い場合に Enter キーや実行ボタンが連打された場合、
-		// 処理がどんどん積もっていって全部消化されるまで待たなければいけなくなってしまう。従って synchronized は付けない。
-		// 代わりに、GUIモードにおけるこのメソッドの呼び出し元である AsynchronousCalculationRunner 側で、
-		// isCalculating() を呼んで現在実行中かどうか検査し、実行中なら追加の計算リクエストを弾くようにする。
+		// Caution!
+		// Don't make this method "synchronized", otherwise calculation requests are piled up 
+		// when an user mashes "=" button or Enter key.
+		// Hence the caller side must check whether any calculation or script is running before calling this method.
+		// If any calculation/script is running, it must decline the additional calculation request.
 
 		if (this.calculating) {
-			// それでも追加の計算リクエストが来た場合は、呼び出し元での検査不備や処理フローの不備なので Fatal エラー扱いにする
 			throw new RINPnFatalException("The previous calculation has not finished yet");
 		}
-
-		// 計算中の状態にする（AsynchronousCalculationRunner から参照する）
 		this.calculating = true;
 
-		// 入力が空の場合は、何もせず空の出力を返す
-		//（そうしないと、入力が式文ではないため評価結果の値が無いし、オプションによっては入力が式文ではない時点でエラーになる）
+		// If the inputted content is empty, return an empty string.
 		if (inputtedContent.trim().length() == 0) {
 			calculating = false;
 			return "";
 		}
 
-		// スクリプト内から output 関数に渡した内容を控える変数をクリア
+		// Clear the variable storing the value passed to "output" function from the script.
 		this.lastOutputContent = null;
 
-		// 入力内容がスクリプトかどうか、およびスクリプト名を控える
-		boolean scriptFileInputted = false;  // スクリプトの場合は true, 計算式の場合は false
+		// Stores whether the inputted content is the name/path of a script file.
+		// If true, also stores the script file.
+		boolean scriptFileInputted = false;
 		File scriptFile = null;
 
-		// 前後の空白やダブルクォーテーションを詰めた内容を用意（内容の判定で使用）
+		// Trim spaces and double quotations at the head/tail of the inputted content.
 		String trimmedContent = inputtedContent.trim();
 		if (trimmedContent.startsWith("\"") && trimmedContent.endsWith("\"")) {
 			trimmedContent = trimmedContent.substring(1, trimmedContent.length()-1);
 		}
 
-		// 詰めた入力内容がスクリプトの拡張子で終わっている場合は、実行対象スクリプトファイルのパスと見なす
-		// ( ファイルパスはダブルクォーテーションで囲われている場合もある )
+		// If the above ends with ".vnano", it is the name/path of a script file.
 		if (trimmedContent.endsWith(SCRIPT_EXTENSION)) {
 			scriptFileInputted = true;
 			scriptFile = new File(trimmedContent);
 
-			// 指定内容がフルパスでなかった場合は、dirPath のディレクトリ基準の相対パスと見なす
+			// If the file path is not absolute, regard it as the relative file path from the "dirPath".
 			if (!scriptFile.isAbsolute()) {
 				scriptFile = new File(dirPath, scriptFile.getPath());
 			}
 
-			// 入力内容をスクリプトファイルの内容で置き換え
-			try {
-				inputtedContent = ScriptFileLoader.load(scriptFile.getAbsolutePath(), DEFAULT_SCRIPT_ENCODING, setting);
-			} catch (RINPnException e) {
-				this.calculating = false;
-				throw e;
-			}
+			// Load the script code from the script file, 
+			// and replace the value of inputtedContent (= file path) to the script code.
+			ScriptLoader loader = new ScriptLoader(DEFAULT_SCRIPT_ENCODING);
+			loader.setMainScriptPath(scriptFile.getAbsolutePath());
+			loader.load();
+			inputtedContent = loader.getMainScriptContent();
 
-			// 設定の一部をスクリプト用に書き換え（整数をfloatと見なすオプションなどは、式の計算には良くても、スクリプトの場合は不便なので）
+			// Temporary disable some options, because they are not suitable for running scripts.
+			// Note that, must clone the setting container before modifying its values, otherwise 
+			// the following options will be kept to be disabled even after when the execution of the script completes.
+			// (An expression, not a script, may be inputted next time, so they should not be kept to be disabled.)
 			try {
 				setting = setting.clone();
 				setting.evalIntLiteralAsFloat = false;
@@ -276,25 +327,25 @@ public final class Model {
 				setting.evalOnlyExpression = false;
 			} catch (CloneNotSupportedException e) {
 				this.calculating = false;
-				throw new RINPnException(e);
+				throw new RINPnFatalException(e);
 			}
 
-		// それ以外は計算式と見なす
+		// Otherwise the inputted content is a calculation expression.
 		} else {
 
-			// 式の記述内容を設定に応じて正規化（全角を半角にしたりなど）
+			// Normalize the content of the expression (e.g.: replace full-width characters to half-width chars).
 			if (setting.inputNormalizerEnabled) {
 				inputtedContent = Normalizer.normalize(inputtedContent, Normalizer.Form.NFKC);
 			}
 
-			// 末尾にセミコロンを追加（無い場合のみ）
+			// Append a semicolon ";" at the end of the expression, if it does not exist.
 			if (!inputtedContent.trim().endsWith(";")) {
 				inputtedContent += ";";
 			}
 		}
 
 
-		// ライブラリ/プラグインの再読み込み
+		// Load library scripts and plug-ins.
 		try {
 			if (setting.reloadLibrary) {
 				this.engine.unregisterAllLibraryScripts();
@@ -305,8 +356,7 @@ public final class Model {
 				this.loadPlugins();
 			}
 
-		// 読み込みに失敗しても、そのプラグイン/ライブラリ以外の機能には支障が無いため、本体側は落とさない。
-		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
+		// Don't shutdown this app when it fails to load any library/plug-in, but notify users.
 		} catch (Exception e) {
 			String message = e.getMessage();
 			if (e.getCause() != null && e.getCause().getMessage() != null) {
@@ -318,13 +368,14 @@ public final class Model {
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー", setting.localeCode);
 			}
-			// プラグインエラーはスクリプトの構文エラーよりも深いエラーなため、常にスタックトレースを出力する
+
+			// For errors occurred in plug-ins, always print the stack trace no matter whether it is specified by settings.
 			System.err.println("\n" + message);
 			MessageManager.showExceptionStackTrace(e, setting.localeCode);
 		}
 
 
-		// スクリプトエンジン関連の設定値を Map（オプションマップ）に格納し、エンジンに渡して設定
+		// Set options to the engine.
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("ACCELERATOR_ENABLED", setting.acceleratorEnabled);
 		optionMap.put("ACCELERATOR_OPTIMIZATION_LEVEL", setting.acceleratorOptimizationLevel);
@@ -343,35 +394,32 @@ public final class Model {
 		this.engine.setOptionMap(optionMap);
 
 
-		// スクリプトエンジンで計算処理を実行
+		// Perform the calculation or run the script/
 		Object value = null;
 		try {
 			value = this.engine.executeScript(inputtedContent);
-
-		// 入力した式やライブラリに誤りがあった場合は、計算終了状態に戻してから例外を上層に投げる
 		} catch (VnanoException e) {
 			this.calculating = false;
 			throw e;
 		}
 
-		// このメソッドの戻り値（出力フィールドに表示される文字列）を格納する
+		// Stores the result to the following variable, and return it as the return value of this method.
 		String outputText = null;
 
-		// スクリプトファイルを実行した場合は、スクリプト内から組み込み関数「 output 」を呼んで渡した内容が
-		// このクラスの lastOutputContent フィールドに保持されている（内部クラス OutputPlugin 参照）ので、
-		// GUIモードではそれを出力フィールドに表示するために返す。
-		// CUIモードでは逐次的に標準出力に出力済みなのでもう何も追加出力する必要は無く、従って何も返さない。
+		// If the inputted content is a script, we regard the value passed to "output" function as the result.
+		// It is stored in "lastOutputContent" field, in GUI mode.
+		// (In CUI mode, it had already been printed to the standard output, so we should do nothing.)
 		if (scriptFileInputted) {
 			if (isGuiMode) {
 				outputText = this.lastOutputContent;
 			}
 
-		// 計算式を実行した場合は、その式の値を丸めた上で文字列化して出力する
+		// If the inputted content is the calculation expression, round its result.
 		} else {
 			if (value instanceof Double) {
 				if ( !((Double)value).isNaN() && !((Double)value).isInfinite() ) {
-					value = OutputValueFormatter.round( ((Double)value).doubleValue(), setting); // 丸め処理： 結果は BigDecimal
-					value = OutputValueFormatter.simplify( (BigDecimal)value );                  // 書式調整： 結果は String
+					value = OutputValueFormatter.round( ((Double)value).doubleValue(), setting); // Rounding： to BigDecimal
+					value = OutputValueFormatter.simplify( (BigDecimal)value );                  // Formatting： to String
 				}
 			}
 			if (value != null) {
@@ -380,44 +428,47 @@ public final class Model {
 			outputText = (String)value;
 		}
 
-		// 計算終了状態に戻す（AsynchronousCalculationRunner から参照する）
 		this.calculating = false;
-
 		return outputText;
 	}
 
-	
-	// 別スレッドで計算を実行し、完了時に AsyncCalculationListener をコールバックする
-	public void calculateAsynchronously(String inputExpression, 
+
+	/**
+	 * Calculates the specified expression, or executes the specified script, on an other thread.
+	 * 
+	 * @param inputtedContent The calculation expression or the name/path of the script.
+	 * @param The listener which will be called-back when the calculation/execution completes.
+	 * @param setting The container storing setting values.
+	 */
+	public void calculateAsynchronously(String inputtedContent, 
 			AsyncCalculationListener asyncCalcListener, SettingContainer setting) {
 		
-		AsyncCalculationRunner asyncCalcRunner = new AsyncCalculationRunner(inputExpression, asyncCalcListener, setting);
+		AsyncCalculationRunner asyncCalcRunner = new AsyncCalculationRunner(inputtedContent, asyncCalcListener, setting);
 		Thread calculatingThread = new Thread(asyncCalcRunner);
 		calculatingThread.start();
 	}
 
 	// 非同期で計算処理を実行するためのRunnable実装
-	private final class AsyncCalculationRunner implements Runnable {
 
+	/**
+	 * The Runnable implementation for performing the internal process of 
+	 * "calculateAsynchronously" method on an other thread. 
+	 */
+	private final class AsyncCalculationRunner implements Runnable {
 		private AsyncCalculationListener calculationListener = null;
 		private SettingContainer setting = null;
-		private String inputExpression = null;
+		private String inputtedContent = null;
 
 		public AsyncCalculationRunner(
-				String inputExpression, AsyncCalculationListener scriptListener, SettingContainer setting) {
+				String inputtedContent, AsyncCalculationListener scriptListener, SettingContainer setting) {
 
-			this.inputExpression = inputExpression;
+			this.inputtedContent = inputtedContent;
 			this.calculationListener = scriptListener;
 			this.setting = setting;
 		}
 
 		@Override
 		public final void run() {
-
-			// スクリプト内容が重い場合に実行ボタンが連打されると、
-			// 処理がどんどん積もっていって全部消化されるまで待たなければいけなくなるので、
-			// 実行中に実行リクエストがあった場合はその場で弾くようにする。
-
 			if (isCalculating()) {
 				if (setting.localeCode.equals(LocaleCode.EN_US)) {
 					MessageManager.showErrorMessage("The previous calculation has not finished yet!", "!", setting.localeCode);
@@ -429,18 +480,12 @@ public final class Model {
 			}
 
 			try {
-				// 入力フィールドの計算式を実行し、結果の値を取得
-				String outputText = calculate(this.inputExpression, true, this.setting);
-
-				// 計算リクエスト元に計算完了を通知
+				String outputText = calculate(this.inputtedContent, true, this.setting);
 				this.calculationListener.calculationFinished(outputText);
 
-			} catch (VnanoException | VnanoFatalException | RINPnException | RINPnFatalException e) {
+			} catch (VnanoException | VnanoFatalException | RINPnFatalException e) {
 
-				// 計算結果の代わりに、エラーの発生を示すメッセージを通知（ OUTPUT 欄に表示される ）
 				this.calculationListener.calculationFinished("ERROR");
-
-				//エラー内容をユーザーに表示
 				String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
 				if (setting.localeCode.equals(LocaleCode.EN_US)) {
 					MessageManager.showErrorMessage(errorMessage, "Expression/Script Error", setting.localeCode);

@@ -161,7 +161,7 @@ public final class RINPn {
 				System.out.println(outputText);
 			}
 
-		} catch (VnanoException | VnanoFatalException | RINPnException | RINPnFatalException e) {
+		} catch (VnanoException | VnanoFatalException | RINPnFatalException e) {
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
 			MessageManager.showErrorMessage(message, "!", setting.localeCode);
 			if (setting.exceptionStackTracerEnabled) {
