@@ -302,7 +302,7 @@ public final class View {
 				gridConstraints.insets = new Insets(0, 0, 0, 0);
 				runButton = new JButton("=");
 				layout.setConstraints(runButton, gridConstraints);
-				runButton.setFont(SettingContainer.BUTTON_FONT);
+				runButton.setFont(SettingContainer.RUN_BUTTON_FONT);
 				mainPanel.add(runButton);
 			}
 
