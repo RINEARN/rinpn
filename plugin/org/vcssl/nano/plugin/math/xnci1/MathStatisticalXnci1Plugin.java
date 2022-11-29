@@ -9,6 +9,7 @@ import org.vcssl.connect.ExternalFunctionConnectorInterface1;
 import org.vcssl.connect.ExternalNamespaceConnectorInterface1;
 import org.vcssl.connect.ExternalStructConnectorInterface1;
 import org.vcssl.connect.ExternalVariableConnectorInterface1;
+
 import org.vcssl.nano.plugin.math.xfci1.MeanXfci1Plugin;
 import org.vcssl.nano.plugin.math.xfci1.Sdn1Xfci1Plugin;
 import org.vcssl.nano.plugin.math.xfci1.SdnXfci1Plugin;
@@ -16,8 +17,12 @@ import org.vcssl.nano.plugin.math.xfci1.SumXfci1Plugin;
 import org.vcssl.nano.plugin.math.xfci1.Van1Xfci1Plugin;
 import org.vcssl.nano.plugin.math.xfci1.VanXfci1Plugin;
 
-//Interface Specification: https://www.vcssl.org/en-us/dev/code/main-jimpl/api/org/vcssl/connect/ExternalNamespaceConnectorInterface1.html
-//インターフェース仕様書:  https://www.vcssl.org/ja-jp/dev/code/main-jimpl/api/org/vcssl/connect/ExternalNamespaceConnectorInterface1.html
+import org.vcssl.nano.plugin.math.xfci1.VectorSumXfci1Plugin;
+import org.vcssl.nano.plugin.math.xfci1.VectorMeanXfci1Plugin;
+import org.vcssl.nano.plugin.math.xfci1.VectorVanXfci1Plugin;
+import org.vcssl.nano.plugin.math.xfci1.VectorVan1Xfci1Plugin;
+import org.vcssl.nano.plugin.math.xfci1.VectorSdnXfci1Plugin;
+import org.vcssl.nano.plugin.math.xfci1.VectorSdn1Xfci1Plugin;
 
 public class MathStatisticalXnci1Plugin implements ExternalNamespaceConnectorInterface1 {
 
@@ -34,12 +39,21 @@ public class MathStatisticalXnci1Plugin implements ExternalNamespaceConnectorInt
 	@Override
 	public ExternalFunctionConnectorInterface1[] getFunctions() {
 		List<ExternalFunctionConnectorInterface1> functionList = new LinkedList<ExternalFunctionConnectorInterface1>();
+
 		functionList.add(new SumXfci1Plugin());
 		functionList.add(new MeanXfci1Plugin());
 		functionList.add(new VanXfci1Plugin());
 		functionList.add(new Van1Xfci1Plugin());
 		functionList.add(new SdnXfci1Plugin());
 		functionList.add(new Sdn1Xfci1Plugin());
+
+		functionList.add(new VectorSumXfci1Plugin());
+		functionList.add(new VectorMeanXfci1Plugin());
+		functionList.add(new VectorVanXfci1Plugin());
+		functionList.add(new VectorVan1Xfci1Plugin());
+		functionList.add(new VectorSdnXfci1Plugin());
+		functionList.add(new VectorSdn1Xfci1Plugin());
+
 		return functionList.toArray(new ExternalFunctionConnectorInterface1[0]);
 	}
 

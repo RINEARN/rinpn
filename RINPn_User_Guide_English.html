@@ -1032,15 +1032,19 @@ into your applications written in Java&reg;. Let's try!
 <h2 id="how-to-embed-example">Example Code</h2>
 
 <p>
-In the package of the RINPn, an example code calculating a value of the expression &quot;1.2 + 3.4&quot; 
-under almost the same engine-settings with the RINPn is attached as &quot;EmbedUseExample.java&quot;:
+The following is an example code calculating a value of the expression &quot;1.2 + 3.4&quot; 
+under almost the same engine-settings with the RINPn:
 </p>
 
 
 <div class="program" style="font-size: 80%;">
-	import javax.script.ScriptEngine;
+	import org.vcssl.nano.VnanoEngine;
 	<br />
-	import javax.script.ScriptException;
+	import org.vcssl.nano.VnanoException;
+	<br />
+	import org.vcssl.nano.interconnect.ScriptLoader;
+	<br />
+	import org.vcssl.nano.interconnect.PluginLoader;
 	<br />
 	import java.util.Map;
 	<br />
@@ -1049,7 +1053,7 @@ under almost the same engine-settings with the RINPn is attached as &quot;EmbedU
 	<br />
 	public class EmbedUseExample {
 		<br />
-		&nbsp;&nbsp;&nbsp;&nbsp;public static void main(String[] args) {
+		&nbsp;&nbsp;&nbsp;&nbsp;public static void main(String[] args) throws VnanoException {
 			<br />
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;////////// Preparation of the Vnano Engine: Begin //////////
@@ -1057,20 +1061,12 @@ under almost the same engine-settings with the RINPn is attached as &quot;EmbedU
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Get the script engine (Vnano Engine) used in the RINPn for calculations.
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ScriptEngine engine = new ScriptEngineManager.getEngineByName(&quot;vnano&quot;);
-			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (engine == null) {
-				<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.err.println(&quot;Script engine loading error&quot;);
-				<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
-				<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VnanoEngine engine = new VnanoEngine();
 			<br />
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Set ptions of the script engine (for details, see Settings.txt)
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map<String, Object> optionMap = new HashMap<String, Object>();
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map&lt;String, Object&gt; optionMap = new HashMap&lt;String, Object&gt;();
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;EVAL_INT_LITERAL_AS_FLOAT&quot;, true);
 			<br />
@@ -1086,12 +1082,12 @@ under almost the same engine-settings with the RINPn is attached as &quot;EmbedU
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;ACCELERATOR_OPTIMIZATION_LEVEL&quot;, 0);
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_OPTION_MAP&quot;, optionMap);
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.setOptionMap(optionMap);
 			<br />
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Set permissions referred from plug-ins supporting permission features. 
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map<String, String> permissionMap = new HashMap<String, String>();
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map&lt;String, String&gt; permissionMap = new HashMap&lt;String, String&gt;();
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;permissionMap.put(&quot;DEFAULT&quot;, &quot;ASK&quot;); &nbsp; // For asking to users by default
 			<br />
@@ -1101,14 +1097,43 @@ under almost the same engine-settings with the RINPn is attached as &quot;EmbedU
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// permissionMap.put(&quot;FILE_READ&quot;, &quot;ALLOW&quot;);
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_PERMISSION_MAP&quot;, permissionMap);
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.setPermissionMap(permissionMap);
 			<br />
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Settings for loading libraries/plugins
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Load plug-ins.
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_LIBRARY_LIST_FILE&quot;, &quot;lib/VnanoLibraryList.txt&quot;);
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PluginLoader pluginLoader = new PluginLoader(&quot;UTF-8&quot;);
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_PLUGIN_LIST_FILE&quot;, &quot;plugin/VnanoPluginList.txt&quot;);
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pluginLoader.setPluginListPath(&quot;./plugin/VnanoPluginList.txt&quot;);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pluginLoader.load();
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (Object plugin: pluginLoader.getPluginInstances()) {
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.connectPlugin(&quot;___VNANO_AUTO_KEY&quot;, plugin);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Load library scripts.
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ScriptLoader scriptLoader = new ScriptLoader(&quot;UTF-8&quot;);
+			<br />
+		    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scriptLoader.setLibraryScriptListPath(&quot;./lib/VnanoLibraryList.txt&quot;);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scriptLoader.load();
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String[] libPaths = scriptLoader.getLibraryScriptPaths(true);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String[] libScripts = scriptLoader.getLibraryScriptContents();
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int libCount = libScripts.length;
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int ilib=0; ilib&lt;libCount; ilib++) {
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.registerLibraryScript(libPaths[ilib], libScripts[ilib]);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
 			<br />
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;////////// Preparation of the Vnano Engine: End //////////
@@ -1116,26 +1141,18 @@ under almost the same engine-settings with the RINPn is attached as &quot;EmbedU
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Calculate the value of &quot;1.2 + 3.4&quot; by the script engine, and output
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try{
-				<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String input = &quot;1.2 + 3.4&quot;;
-				<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double x = (double) engine.eval(input + &quot;;&quot;);
-				<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(&quot;Output of the Vnano Engine: &quot; + x);
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String input = &quot;1.2 + 3.4&quot;;
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} catch (ScriptException e) {
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double x = (double) engine.executeScript(input + &quot;;&quot;);
 			<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();
-				<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(&quot;Output of the Vnano Engine: &quot; + x);
 			<br />
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Unload libraries/plugins
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Unload library scripts and plug-ins.
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_COMMAND&quot;, &quot;REMOVE_LIBRARY&quot;);
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.unregisterAllLibraryScripts();
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_COMMAND&quot;, &quot;REMOVE_PLUGIN&quot;);
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.disconnectAllPlugins();
 			<br />
 		&nbsp;&nbsp;&nbsp;&nbsp;}
 		<br />
@@ -1146,28 +1163,46 @@ under almost the same engine-settings with the RINPn is attached as &quot;EmbedU
 <h2 id="how-to-embed-compile">How to Compile &amp; Execute</h2>
 
 <p>
-How to compile:
+You can compile the above code
+with adding the Jar file of the Vnano Engine &quot;<span class="highlight">Vnano.jar</span>&quot; (bundled in the package of the RINPn)
+to the class path:
 </p>
 
 <div class="console">
-	javac -encoding UTF-8 EmbedUseExample.java
+	(For Microsoft&reg; Windows&reg;)
+	<br />
+	javac -cp ".;Vnano.jar" -encoding UTF-8 EmbedUseExample.java
+	<br />
+	<br />
+	(For Linux&reg;, etc.)
+	<br />
+	javac -cp ".:Vnano.jar" -encoding UTF-8 EmbedUseExample.java
 </div>
 
 <p>
 When the compilation is succeeded, a class file &quot;EmbedUseExample.class&quot; will be generated.
-Execute it with adding the Jar file of the Vnano Engine &quot;<span class="highlight">Vnano.jar</span>&quot; 
-(bundled in the package of the RINPn)
-to the class path:
+Then, execute it as follows:
 </o>
 
-<div>
+
+
 <div class="console">
-	java -cp ".;Vnano.jar" EmbedUseExample &nbsp;&nbsp;&nbsp; (For Microsoft&reg; Windows&reg;)
+	(For Microsoft&reg; Windows&reg;)
 	<br />
-	java -cp ".:Vnano.jar" EmbedUseExample &nbsp;&nbsp;&nbsp; (For Linux&reg;, etc.)
+	java -cp ".;Vnano.jar" EmbedUseExample &nbsp;&nbsp;&nbsp;
 	<br />
 	<br />
-	(Result) Output of the Vnano Engine: 4.6
+	(For Linux&reg;, etc.)
+	<br />
+	java -cp ".:Vnano.jar" EmbedUseExample &nbsp;&nbsp;&nbsp;
+</div>
+
+<p>
+The result is:
+</p>
+
+<div class="console">
+	Output of the Vnano Engine: 4.6
 </div>
 
 <p>

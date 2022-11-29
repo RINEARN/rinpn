@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2021 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2022 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -15,29 +15,55 @@ import org.vcssl.nano.VnanoEngine;
 import org.vcssl.nano.VnanoException;
 import org.vcssl.nano.VnanoFatalException;
 import org.vcssl.nano.interconnect.PluginLoader;
+import org.vcssl.nano.interconnect.ScriptLoader;
 
 import com.rinearn.rinpn.RINPnException;
 import com.rinearn.rinpn.RINPnFatalException;
 
+/**
+ * The class of the container for storing setting values.
+ */
 public final class SettingContainer implements Cloneable {
 
+	/** The name of the font of INPUT/OUTPUT text fields. */
 	public static final String TEXT_FIELD_FONT_NAME = "Monospaced";
+
+	/** The type of the font of INPUT/OUTPUT text fields. */
 	public static final int TEXT_FIELD_FONT_TYPE = Font.BOLD;
+
+	/** The font of text labels. */
 	public static final Font LABEL_FONT = new Font("Dialog", Font.BOLD, 14);
-	public static final Font BUTTON_FONT = new Font("Dialog", Font.BOLD, 14);
+
+	/** The font of "=" buttons. */
+	public static final Font RUN_BUTTON_FONT = new Font("Dialog", Font.BOLD, 14);
+
+	/** The font of exit buttons. */
 	public static final Font EXIT_BUTTON_FONT = new Font("Dialog", Font.BOLD, 14);
 
-	// 設定ファイルは、拡張子 .txt と .vnano のどちらか存在する方（vnano優先）が読まれる
-	//（新規導入環境での開きやすさを確保するため、標準では .txt で、.vnano に変えても参照される、という仕様）
+	/**
+	 * The extension of the setting file: "txt".
+	 * Note that Both extensions ".txt" and ".vnano" are valid for setting files.
+	 */
 	public static final String SETTING_SCRIPT_PATH_TXT = "Settings.txt";
+
+	/**
+	 * The extension of the setting file: "vnano".
+	 * Note that Both extensions ".txt" and ".vnano" are valid for setting files.
+	 */
 	public static final String SETTING_SCRIPT_PATH_VNANO = "Settings.vnano";
 
+	/** The default character encoding of the setting file. */
 	public static final String DEFAULT_SETTING_SCRIPT_ENCODING = "UTF-8";
 
+	/** The maximum length of the digits to be rounded. */
 	public static final int MAX_ROUNDING_LENGTH = 100;
 
-	// 各設定値のフィールドは、スクリプトエンジンに接続して設定スクリプト内で読み書きするため、
-	// getter/setter で包まずに、外からも public なフィールドとして直接アクセスする
+	// ====================================================================================================
+	// The following fields correspond the items in the setting file.
+	// Their values are updated by Vnano Engine, when it execute the setting file as a script.
+	// ( An instance of this class will be connected to the engine as a plug-in,
+	//   so fields of the instance can be accessed from the script runs on the engine. )
+	// ====================================================================================================
 
 	public int textFieldFontSize = 18;
 	public int numberKeyFontSize = 18;
@@ -95,16 +121,29 @@ public final class SettingContainer implements Cloneable {
 	public String localeCode = LocaleCode.getDefaultLocaleCode();
 
 
+	/**
+	 * Clones this instance.
+	 * 
+	 * @return The cloned instance.
+	 */
 	@Override
 	public SettingContainer clone() throws CloneNotSupportedException {
 		SettingContainer cloned = (SettingContainer) ( super.clone() );
-
-		// 参照型のフィールドを追加した際はここでコピー処理を追記
-
+		// When we add non-mutable fields to this class, we must deep-copy their values here.
 		return cloned;
 	}
 
 
+	/**
+	 * Execute the setting file as a script, for updating the values of this instance.
+	 * 
+	 * @param settingScriptFilePath The path of the setting (script) file.
+	 * @param libraryListFilePath The path of the library list file.
+	 * @param pluginListFilePath The path of the plug-in list file.
+	 * @param isGuiMode Specify true it this application runs in GUI mode.
+	 * @param debug Specify true if this application runs in debugging mode.
+	 * @throws RINPnException Thrown if invalid settings or script code exists.
+	 */
 	public synchronized final void evaluateSettingScript(
 			String settingScriptFilePath,
 			String libraryListFilePath, String pluginListFilePath, boolean isGuiMode, boolean debug)
@@ -113,14 +152,14 @@ public final class SettingContainer implements Cloneable {
 		String localeCode = LocaleCode.getDefaultLocaleCode();
 		File settingScriptFile = new File(settingScriptFilePath);
 
-		// 設定スクリプト解釈用に、Vnanoのスクリプトエンジンを読み込んで生成
+		// Create a Vnano Engine for executing the setting file as a script.
 		VnanoEngine settingVnanoEngine = new VnanoEngine();
 
-		//  プラグインを読み込む
-		// （設定ファイルの解釈では、エラーフローをややこしくしないため、ライブラリは使用不可とし、読み込まない）
+		// Connect plug-ins to the above engine.
+		// (Don't load library scripts, because it make the debugging of the setting file difficult.)
 		try {
 
-			// まず、リストファイルに記載されているプラグインを読み込む
+			// Load all plug-ins specified in the plug-in list file.
 	        PluginLoader pluginLoader = new PluginLoader("UTF-8");
 	        pluginLoader.setPluginListPath(pluginListFilePath);
 	        pluginLoader.load();
@@ -128,12 +167,10 @@ public final class SettingContainer implements Cloneable {
 	        	settingVnanoEngine.connectPlugin("___VNANO_AUTO_KEY", plugin);
 	        }
 
-	        // 続いて、このクラス自身もプラグインとして接続し、
-	        // 各設定値のフィールドをスクリプトから読み書き可能にする
-			settingVnanoEngine.connectPlugin("SettingContainer", this); // キーは省略可能な名前空間として使用される
+	        // Load this instance as a plug-in, for updating its fields.
+			settingVnanoEngine.connectPlugin("SettingContainer", this);
 
-		// 読み込みに失敗しても、そのプラグイン以外の機能には支障が無いため、本体側は落とさない。
-		// そのため、例外をさらに上には投げない。（ただし失敗メッセージは表示する。）
+		// Don't re-throw to the upper layer, because we can not do nothing at there.
 		} catch (Exception e) {
 			String message = e.getMessage();
 			if (e.getCause() != null && e.getCause().getMessage() != null) {
@@ -149,8 +186,7 @@ public final class SettingContainer implements Cloneable {
 			MessageManager.showExceptionStackTrace(e, localeCode);
 		}
 
-		// スクリプトエンジンに渡すオプションを用意
-		//（エラーメッセージ用にスクリプト名し、アクセラレータも無効化する）
+		// Set the engine's options.
 		Map<String, Object> optionMap = new HashMap<String, Object>();
 		optionMap.put("MAIN_SCRIPT_NAME", settingScriptFile.getName());
 		optionMap.put("DUMPER_ENABLED", debug);
@@ -171,17 +207,16 @@ public final class SettingContainer implements Cloneable {
 			System.out.println("");
 		}
 
-		// 設定スクリプトを読み込む
-		SettingContainer defaultSetting = new SettingContainer(); // 設定を読み込むために使うデフォルトの設定（言語ロケールなどが影響）
-		String settingScriptCode = ScriptFileLoader.load(
-			settingScriptFile.getPath(), DEFAULT_SETTING_SCRIPT_ENCODING, defaultSetting
-		);
-
-		// 読み込んだ設定スクリプトを実行して、設定ファイルの記述内容を解釈する
+		// Load the setting file, and execute its content as a script code.
+		// By this step, the values of this instance (= setting values) will be updated.
 		try {
+			ScriptLoader loader = new ScriptLoader(DEFAULT_SETTING_SCRIPT_ENCODING);
+			loader.setMainScriptPath(settingScriptFile.getPath());
+			loader.load();
+			String settingScriptCode = loader.getMainScriptContent();
 			settingVnanoEngine.executeScript(settingScriptCode);
 
-		// 設定スクリプトの内容にエラーがあった場合
+		// Thrown when any error exists in the script (setting file).
 		} catch (VnanoException | VnanoFatalException vne) {
 			String errorMessage = MessageManager.customizeExceptionMessage(vne.getMessage());
 			if (localeCode.equals(LocaleCode.EN_US)) {
@@ -193,11 +228,11 @@ public final class SettingContainer implements Cloneable {
 			throw new RINPnException(vne);
 		}
 
-		// プラグインを接続解除
+		// Disconnect plug-ins.
 		try {
 			settingVnanoEngine.disconnectAllPlugins();
 
-		// 設定の読み込みは完了しているため、本体側を落とさないため、例外をさらに上には投げない。通知のみ行う。
+		// Don't re-throw to the upper layer, because we can not do nothing at there.
 		} catch (Exception e) {
 			String message = e.getMessage();
 			if (e.getCause() != null && e.getCause().getMessage() != null) {
@@ -213,11 +248,16 @@ public final class SettingContainer implements Cloneable {
 			MessageManager.showExceptionStackTrace(e, localeCode);
 		}
 
-		// 読み込んだ設定値を検査する
+		// Check/normalize the updated values of the fields of this instance (= setting values).
 		this.checkAndNormalizeSettingValues();
 	}
 
 
+	/**
+	 * Checks and normalizes the updated values of the fields of this instance (= setting values).
+	 * 
+	 * @throws RINPnException Thrown if invalid setting value exists.
+	 */
 	private final void checkAndNormalizeSettingValues()
 			throws RINPnException {
 
@@ -414,5 +454,4 @@ public final class SettingContainer implements Cloneable {
 			throw new RINPnException(errorMessage);
 		}
 	}
-
 }

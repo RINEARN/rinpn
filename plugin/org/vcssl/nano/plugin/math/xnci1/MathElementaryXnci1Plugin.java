@@ -39,9 +39,6 @@ import org.vcssl.nano.plugin.math.xfci1.SinXfci1Plugin;
 import org.vcssl.nano.plugin.math.xfci1.SqrtXfci1Plugin;
 import org.vcssl.nano.plugin.math.xfci1.TanXfci1Plugin;
 
-//Interface Specification: https://www.vcssl.org/en-us/dev/code/main-jimpl/api/org/vcssl/connect/ExternalNamespaceConnectorInterface1.html
-//インターフェース仕様書:  https://www.vcssl.org/ja-jp/dev/code/main-jimpl/api/org/vcssl/connect/ExternalNamespaceConnectorInterface1.html
-
 public class MathElementaryXnci1Plugin implements ExternalNamespaceConnectorInterface1 {
 
 	@Override
@@ -57,24 +54,6 @@ public class MathElementaryXnci1Plugin implements ExternalNamespaceConnectorInte
 	@Override
 	public ExternalFunctionConnectorInterface1[] getFunctions() {
 		List<ExternalFunctionConnectorInterface1> functionList = new LinkedList<ExternalFunctionConnectorInterface1>();
-
-		// General implementations, supporting scalar & array (any dim) arguments
-		// スカラ含む任意次元配列の引数に対応した汎用実装
-		// （プラグイン仕様書に記載の全機能は、一応これらの汎用実装のみで満たしている）
-		functionList.add(new RadXfci1Plugin());
-		functionList.add(new DegXfci1Plugin());
-		functionList.add(new SinXfci1Plugin());
-		functionList.add(new CosXfci1Plugin());
-		functionList.add(new TanXfci1Plugin());
-		functionList.add(new AsinXfci1Plugin());
-		functionList.add(new AcosXfci1Plugin());
-		functionList.add(new AtanXfci1Plugin());
-		functionList.add(new SqrtXfci1Plugin());
-		functionList.add(new LnXfci1Plugin());
-		functionList.add(new Log10Xfci1Plugin());
-		functionList.add(new PowXfci1Plugin());
-		functionList.add(new ExpXfci1Plugin());
-		functionList.add(new AbsXfci1Plugin());
 
 		// Fast implementations, supporting only scalar arguments
 		// スカラ引数のみに対応した高速実装
@@ -93,6 +72,24 @@ public class MathElementaryXnci1Plugin implements ExternalNamespaceConnectorInte
 		functionList.add(new FastScalarPowXfci1Plugin());
 		functionList.add(new FastScalarExpXfci1Plugin());
 		functionList.add(new FastScalarAbsXfci1Plugin());
+
+		// General implementations, supporting scalar & array (any dim) arguments
+		// スカラ含む任意次元配列の引数に対応した汎用実装
+		// （プラグイン仕様書に記載の全機能は、一応これらの汎用実装のみで満たしている）
+		functionList.add(new RadXfci1Plugin());
+		functionList.add(new DegXfci1Plugin());
+		functionList.add(new SinXfci1Plugin());
+		functionList.add(new CosXfci1Plugin());
+		functionList.add(new TanXfci1Plugin());
+		functionList.add(new AsinXfci1Plugin());
+		functionList.add(new AcosXfci1Plugin());
+		functionList.add(new AtanXfci1Plugin());
+		functionList.add(new SqrtXfci1Plugin());
+		functionList.add(new LnXfci1Plugin());
+		functionList.add(new Log10Xfci1Plugin());
+		functionList.add(new PowXfci1Plugin());
+		functionList.add(new ExpXfci1Plugin());
+		functionList.add(new AbsXfci1Plugin());
 
 		return functionList.toArray(new ExternalFunctionConnectorInterface1[0]);
 	}

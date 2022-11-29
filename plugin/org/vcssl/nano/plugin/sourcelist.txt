@@ -20,6 +20,7 @@ org/vcssl/nano/plugin/math/xfci1/FastScalarSinXfci1Plugin.java
 org/vcssl/nano/plugin/math/xfci1/FastScalarSqrtXfci1Plugin.java
 org/vcssl/nano/plugin/math/xfci1/FastScalarTanXfci1Plugin.java
 org/vcssl/nano/plugin/math/xfci1/Float64ScalarOperationXfci1Plugin.java
+org/vcssl/nano/plugin/math/xfci1/Float64VariadicScalarOperationXfci1Plugin.java
 org/vcssl/nano/plugin/math/xfci1/Float64VectorizableOperationXfci1Plugin.java
 org/vcssl/nano/plugin/math/xfci1/Float64VectorToScalarOperationXfci1Plugin.java
 org/vcssl/nano/plugin/math/xfci1/LnXfci1Plugin.java
@@ -35,6 +36,12 @@ org/vcssl/nano/plugin/math/xfci1/SumXfci1Plugin.java
 org/vcssl/nano/plugin/math/xfci1/TanXfci1Plugin.java
 org/vcssl/nano/plugin/math/xfci1/Van1Xfci1Plugin.java
 org/vcssl/nano/plugin/math/xfci1/VanXfci1Plugin.java
+org/vcssl/nano/plugin/math/xfci1/VectorMeanXfci1Plugin.java
+org/vcssl/nano/plugin/math/xfci1/VectorSdn1Xfci1Plugin.java
+org/vcssl/nano/plugin/math/xfci1/VectorSdnXfci1Plugin.java
+org/vcssl/nano/plugin/math/xfci1/VectorSumXfci1Plugin.java
+org/vcssl/nano/plugin/math/xfci1/VectorVan1Xfci1Plugin.java
+org/vcssl/nano/plugin/math/xfci1/VectorVanXfci1Plugin.java
 org/vcssl/nano/plugin/math/xnci1/MathElementaryXnci1Plugin.java
 org/vcssl/nano/plugin/math/xnci1/MathStatisticalXnci1Plugin.java
 org/vcssl/nano/plugin/math/xvci1/PiXvci1Plugin.java

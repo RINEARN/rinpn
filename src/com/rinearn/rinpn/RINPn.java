@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2022 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2022 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -16,6 +16,9 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 
+/**
+ * The main class of RINPn.
+ */
 public final class RINPn {
 
 	private static final String VERSION = "0.9.5";
@@ -25,32 +28,47 @@ public final class RINPn {
 	private static final String LIBRARY_LIST_FILE = "lib/VnanoLibraryList.txt";
 	private static final String PLUGIN_LIST_FILE = "plugin/VnanoPluginList.txt";
 
+	/**
+	 * Creates an new instance of RINPn.
+	 */
+	public RINPn() {
+		// The window will not be launched automatically by this constructor
+		// (because the window is not necessary for CUI mode).
+		// For launching the window, call launchCalculatorWindow() explicitly.
+	}
 
+
+	/**
+	 * The main function.
+	 * 
+	 * @param args The command-line arguments.
+	 */
 	public static void main(String[] args) {
 
-		// コマンドラインから渡された内容を控える変数
-		String inputtedContent = null;     // 計算対象（計算式またはスクリプト名）
-		boolean debugEnabled = false; // デバッグモードが有効かどうか
-		String dirPath = ".";         // スクリプトの読み込み基準ディレクトリのパス
+		// Variables for storing inputted the contents.
+		String inputtedContent = null;  // Stores the inputted expression or the scriot file path. 
+		boolean debugEnabled = false;  // Stores whether --debug option is specified.
+		String dirPath = ".";  // Stores the base directory of the relative path resolution.
 
-		// 引数の解釈
+		// Parse arguments.
 		int argLength = args.length;
 		int argIndex = 0;
 		while (argIndex < argLength) {
 
-			// 引数がバージョン出力オプションだった場合は、バージョンを表示
+			// If the arg is "--version", print the version.
 			if (args[argIndex].equals(OPTION_NAME_VERSION)) {
 				printVersion();
 				return;
 
-			// 引数がデバッグオプションだった場合は、デバッグモードを有効化
+			// If the arg is "--debug", enable the debugging option.
 			} else if (args[argIndex].equals(OPTION_NAME_DEBUG)) {
 				debugEnabled = true;
 				argIndex++;
 
+			// If the arg is "--dir", regard the next value as the base directory of the relative path resolution.
 			} else if (args[argIndex].equals(OPTION_NAME_DIR)) {
 				if (argLength <= argIndex + 1) {
-					// ここのエラーメッセージのロケールは、理想的には設定ファイルから取得したいが、そうすると設定の読み込みタイミングを変える必要がある。後々で要検討
+					// We want to determine the locale from the setting file but...
 					if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
 						System.err.println("オプション「 " + OPTION_NAME_DIR + " 」の後に値が必要です。");
 					}
@@ -61,14 +79,13 @@ public final class RINPn {
 				dirPath = args[argIndex + 1];
 				argIndex += 2;
 
-			// それ以外の引数は計算式と見なすので、後で計算するために控える
+			// Otherwise, regard the arg as an calculation expression or the path/name of an script file.
 			} else {
 				if (inputtedContent == null) {
 					inputtedContent = args[argIndex];
 
-				// 既に計算式が控えられている場合は、引数が多すぎるのでエラー
+				// Too many ars:
 				} else {
-					// ここのエラーメッセージのロケールは、理想的には設定ファイルから取得したいが、そうすると設定の読み込みタイミングを変える必要がある。後々で要検討
 					if (LocaleCode.getDefaultLocaleCode().equals(LocaleCode.JA_JP)) {
 						System.err.println("コマンドライン引数の数が多すぎます。");
 					}
@@ -80,51 +97,54 @@ public final class RINPn {
 			}
 		}
 
-		// 計算式が渡されなかった場合は電卓画面を起動
+		// If no calculation expression or script file is specified, launch the GUI window.
 		if (inputtedContent == null) {
 			new RINPn().launchCalculatorWindow(dirPath, debugEnabled);
 
-		// 計算式が渡された場合はCUIモードで計算（結果はコマンドラインに表示）
+		// If any calculation expression or script file is specified, process it in CUI mode.
+		// (The result will be printed to the standard output)
 		} else {
 			new RINPn().calculate(inputtedContent, dirPath, debugEnabled);
 		}
 	}
 
+
+	/**
+	 * Prints the versions of RINPN and Vnano to the standard output.
+	 */
 	private static void printVersion() {
+		
+		// Print the version of RINPn.
 		System.out.print("RINPn Ver." + VERSION + " ");
 
-		// Vnanoのバージョンも表示
+		// Print the version of Vnano.
 		System.out.print(" / with " + org.vcssl.nano.spec.EngineInformation.LANGUAGE_NAME);
 		System.out.print(" Ver." + org.vcssl.nano.spec.EngineInformation.LANGUAGE_VERSION);
 		System.out.println("");
 	}
 
 
-	public RINPn() {
-		// 電卓画面の起動は、インスタンス生成後に明示的に launchCalculatorWindow() を呼ぶ
-	}
-
-
 	/**
-	 * 電卓画面を起動せずに、計算を実行し、結果を標準出力に表示します。
+	 * Calculate an expression or execute a script, and print the result to the standard output.
 	 *
-	 * @param inputtedContent 計算対象（計算式またはスクリプト名）
-	 * @param dirPath スクリプトの読み込み基準ディレクトリのパス
-	 * @param debug デバッグ情報を出力するかどうか
+	 * @param inputtedContent The calculation expression, or the name/path of the script file.
+	 * @param dirPath The path of the base directory for relative path resolution.
+	 * @param debug Specify true for printing information for debugging.
 	 */
 	public final void calculate(String inputtedContent, String dirPath, boolean debug) {
 
-		// メッセージの出力をコマンドラインモードに変更
-		MessageManager.setDisplayType(MessageManager.DISPLAY_MODE.CUI);
+		// Set the mode of the message manager to "CUI", which prints messages to the standard output.
+		MessageManager.setDisplayType(MessageManager.DisplayMode.CUI);
 
-		// 設定値コンテナと計算機モデルを生成して初期化
+		// Create and initialize the container for storing settings,
+		// and the model (which performs calculations) of this app.
 		SettingContainer setting = null;
 		Model model = null;
 		try {
 			setting = this.createInitializedSettingContainer(false, debug);
 			model = this.createInitializedCalculatorModel(dirPath, false, setting);
 
-		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
+		// An exception is thrown if any error occurred for loading settings/libraries.
 		} catch (RINPnException e) {
 			if (setting==null || setting.exceptionStackTracerEnabled) {
 				String localeCode = (setting==null) ? LocaleCode.getDefaultLocaleCode() : setting.localeCode;
@@ -133,7 +153,7 @@ public final class RINPn {
 			return;
 		}
 
-		// 計算を実行して結果を表示
+		// Calculate the expression or execute the script.
 		String outputText = null;
 		try {
 			outputText = model.calculate(inputtedContent, false, setting);
@@ -141,7 +161,7 @@ public final class RINPn {
 				System.out.println(outputText);
 			}
 
-		} catch (VnanoException | VnanoFatalException | RINPnException | RINPnFatalException e) {
+		} catch (VnanoException | VnanoFatalException | RINPnFatalException e) {
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
 			MessageManager.showErrorMessage(message, "!", setting.localeCode);
 			if (setting.exceptionStackTracerEnabled) {
@@ -149,26 +169,27 @@ public final class RINPn {
 			}
 		}
 
-		// 最後に計算機モデルの終了時処理を実行
+		// Shutdown the model of this app.
 		model.shutdown(setting);
 	}
 
 
 	/**
-	 * 電卓画面を起動します。
+	 * Launch the calculator window.
 	 *
-	 * @param debug デバッグモードで起動するかどうか
+	 * @param debug Specify true for printing information for debugging.
 	 */
 	public final void launchCalculatorWindow(String dirPath, boolean debug) {
 
-		// 設定値コンテナと計算機モデルを生成して初期化
+		// Create and initialize the container for storing settings,
+		// and the model (which performs calculations) of this app.
 		SettingContainer setting = null;
 		Model calculator = null;
 		try {
 			setting = this.createInitializedSettingContainer(true, debug);
 			calculator = this.createInitializedCalculatorModel(dirPath, true, setting);
 
-		// スクリプトエンジンの接続や、設定スクリプト/ライブラリの読み込みエラーなどで失敗した場合
+		// An exception is thrown if any error occurred for loading settings/libraries.
 		} catch (RINPnException e) {
 			if (setting==null || setting.exceptionStackTracerEnabled) {
 				String localeCode = (setting==null) ? LocaleCode.getDefaultLocaleCode() : setting.localeCode;
@@ -178,14 +199,14 @@ public final class RINPn {
 		}
 
 
-		// 電卓画面を生成して初期化
+		// Create the view (window, GUI components, and so on) of this app;
 		View view = new View();
 		try {
 			view.initialize(setting);
 
-		// 初期化実行スレッドの処理待ち時の割り込みで失敗した場合など（結構異常な場合なので、リトライせず終了する）
+		// If the initialization process is interrupted, an exception occurs.
+		// It is an irregular case, so exit this app if it has been occurred.
 		} catch (InvocationTargetException | InterruptedException e) {
-
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(
 					"Unexpected exception occurred: " + e.getClass().getCanonicalName(), "Error", setting.localeCode
@@ -199,35 +220,35 @@ public final class RINPn {
 			if (setting.exceptionStackTracerEnabled) {
 				MessageManager.showExceptionStackTrace(e, setting.localeCode);
 			}
-			return; // この例外が発生する場合はまだUI構築が走っていないので、破棄するUIリソースはない
+			return;
 		}
 
-		// UIと計算機モデルとの間でイベント処理や更新処理などを担うプレゼンターを生成し、両者を繋ぐ
+		// Create the presenter (which handles events) of this app, and link the model and the view by it.
 		Presenter presenter = new Presenter();
 		presenter.link(view, calculator, setting);
 	}
 
 
 	/**
-	 * 設定スクリプトを実行して値を初期化済みの、設定値コンテナを生成して返します。
-	 *
-	 * @param debug デバッグ情報を出力するかどうか
-	 * @return 初期化済みの設定値コンテナ
+	 * Creates the setting container storing values written in the setting file.
+	 * 
+	 * @param isGuiMode Specify true if this app is executed in GUI mode.
+	 * @param debug Specify true if print information for debugging.
+	 * @return The created setting container.
 	 * @throws RINPnException
-	 * 		設定スクリプトの読み込みエラーなどで失敗した場合にスローされます。
+	 *      Thrown if an error occurs for loading / parsing the setting file.
 	 */
 	private final SettingContainer createInitializedSettingContainer(boolean isGuiMode, boolean debug)
 			throws RINPnException {
 
 		SettingContainer setting = new SettingContainer();
 
-		// 設定ファイルは、拡張子 .txt と .vnano のどちらか存在する方（vnano優先）が読まれる
-		//（新規導入環境での開きやすさを確保するため、標準では .txt で、.vnano に変えても参照される、という仕様）
+		// The setting file name may have either ".vnano" or ".txt" as the extension.
 		String settingScriptPath = SettingContainer.SETTING_SCRIPT_PATH_VNANO;
 		if (!new File(settingScriptPath).exists()) {
 			settingScriptPath = SettingContainer.SETTING_SCRIPT_PATH_TXT;
 
-			// それでもファイルが存在しない場合はエラー
+			// If both files don't not exist: error.
 			if (!new File(settingScriptPath).exists()) {
 				String errorMessage = null;
 
@@ -253,7 +274,8 @@ public final class RINPn {
 			}
 		}
 
-		// 設定スクリプトを実行して設定値を書き込む（スクリプトエンジンはメソッド内で生成）
+		// Execute the content of the setting file as a Vnano script,
+		// for inputting setting values to fields of the setting container.
 		setting.evaluateSettingScript(
 			settingScriptPath, LIBRARY_LIST_FILE, PLUGIN_LIST_FILE, isGuiMode, debug
 		);
@@ -263,16 +285,15 @@ public final class RINPn {
 
 
 	/**
-	 * ライブラリスクリプトや設定値を読み込んで初期化済みの、計算機モデルを生成して返します。
+	 * Create the model of this app, and initialize it.
 	 *
-	 * @return 初期化済みの計算機モデル
+	 * @return The created model of this app.
 	 * @throws RINPnException
-	 * 		スクリプトエンジンの接続や、ライブラリの読み込みエラーなどで失敗した場合にスローされます。
+	 *      Thrown if an error occurs for initializing the script engine, loading library scripts, and so on.
 	 */
 	private final Model createInitializedCalculatorModel(String dirPath, boolean isGuiMode, SettingContainer setting)
 			throws RINPnException {
 
-		// 計算機のインスタンスを生成、初期化して返す
 		Model model = new Model();
 		model.initialize(setting, isGuiMode, dirPath, LIBRARY_LIST_FILE, PLUGIN_LIST_FILE);
 		return model;
