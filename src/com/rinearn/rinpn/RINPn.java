@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2022 RINEARN (Fumihiro Matsui)
+ * Copyright(C) 2019-2022 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -134,7 +134,7 @@ public final class RINPn {
 	public final void calculate(String inputtedContent, String dirPath, boolean debug) {
 
 		// Set the mode of the message manager to "CUI", which prints messages to the standard output.
-		MessageManager.setDisplayType(MessageManager.DISPLAY_MODE.CUI);
+		MessageManager.setDisplayType(MessageManager.DisplayMode.CUI);
 
 		// Create and initialize the container for storing settings,
 		// and the model (which performs calculations) of this app.
