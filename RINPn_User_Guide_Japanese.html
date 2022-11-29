@@ -1063,15 +1063,19 @@ RINPn が使用している計算＆スクリプト処理エンジンである�
 <h2 id="how-to-embed-example">サンプルコード</h2>
 
 <p>
-Vnanoエンジンを用いて、RINPn と同じようなエンジン設定で式「 1.2 + 3.4 」の値を計算する単純なサンプルコードが、
-RINPn のフォルダ直下に「 EmbedUseExample.java 」として同梱されています：
+以下は、Vnanoエンジンを用いて、
+RINPn と同じようなエンジン設定で式「 1.2 + 3.4 」の値を計算する単純なサンプルコードです：
 </p>
 
 
 <div class="program" style="font-size: 80%;">
-	import javax.script.ScriptEngine;
+	import org.vcssl.nano.VnanoEngine;
 	<br />
-	import javax.script.ScriptException;
+	import org.vcssl.nano.VnanoException;
+	<br />
+	import org.vcssl.nano.interconnect.ScriptLoader;
+	<br />
+	import org.vcssl.nano.interconnect.PluginLoader;
 	<br />
 	import java.util.Map;
 	<br />
@@ -1080,28 +1084,20 @@ RINPn のフォルダ直下に「 EmbedUseExample.java 」として同梱され�
 	<br />
 	public class EmbedUseExample {
 		<br />
-		&nbsp;&nbsp;&nbsp;&nbsp;public static void main(String[] args) {
+		&nbsp;&nbsp;&nbsp;&nbsp;public static void main(String[] args) throws VnanoException {
 			<br />
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;////////// Vnano エンジンの準備 ここから //////////
 			<br />
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// RINPn で計算に用いているスクリプトエンジン（Vnanoエンジン）を取得
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// RINPn で計算に用いているスクリプトエンジン（Vnanoエンジン）を生成
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ScriptEngine engine = new ScriptEngineManager.getEngineByName(&quot;vnano&quot;);
-			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (engine == null) {
-				<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.err.println(&quot;スクリプトエンジンが見つかりません&quot;);
-				<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
-				<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VnanoEngine engine = new VnanoEngine();
 			<br />
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Vnano エンジンのオプション設定（詳細は Settings.txt 内の説明参照）
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map<String, Object> optionMap = new HashMap<String, Object>();
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map&lt;String, Object&gt; optionMap = new HashMap&lt;String, Object&gt;();
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;EVAL_INT_LITERAL_AS_FLOAT&quot;, true);
 			<br />
@@ -1117,12 +1113,12 @@ RINPn のフォルダ直下に「 EmbedUseExample.java 」として同梱され�
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;optionMap.put(&quot;ACCELERATOR_OPTIMIZATION_LEVEL&quot;, 0);
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_OPTION_MAP&quot;, optionMap); // エンジンに登録
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.setOptionMap(optionMap); // エンジンに登録
 			<br />
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// パーミッション機能に対応したプラグインに通知するパーミッション設定
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map<String, String> permissionMap = new HashMap<String, String>();
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Map&lt;String, String&gt; permissionMap = new HashMap&lt;String, String&gt;();
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;permissionMap.put(&quot;DEFAULT&quot;, &quot;ASK&quot;); &nbsp; // ユーザーに尋ねる挙動をデフォルト化
 			<br />
@@ -1132,14 +1128,43 @@ RINPn のフォルダ直下に「 EmbedUseExample.java 」として同梱され�
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// permissionMap.put(&quot;FILE_READ&quot;, &quot;ALLOW&quot;);
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_PERMISSION_MAP&quot;, permissionMap); // エンジンに登録
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.setPermissionMap(permissionMap); // エンジンに登録
 			<br />
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ライブラリ/プラグインの読み込み設定
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// プラグインの読み込み
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_LIBRARY_LIST_FILE&quot;, &quot;lib/VnanoLibraryList.txt&quot;);
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PluginLoader pluginLoader = new PluginLoader(&quot;UTF-8&quot;);
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_PLUGIN_LIST_FILE&quot;, &quot;plugin/VnanoPluginList.txt&quot;);
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pluginLoader.setPluginListPath(&quot;./plugin/VnanoPluginList.txt&quot;);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pluginLoader.load();
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (Object plugin: pluginLoader.getPluginInstances()) {
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.connectPlugin(&quot;___VNANO_AUTO_KEY&quot;, plugin);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+			<br />
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ライブラリの読み込み
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ScriptLoader scriptLoader = new ScriptLoader(&quot;UTF-8&quot;);
+			<br />
+		    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scriptLoader.setLibraryScriptListPath(&quot;./lib/VnanoLibraryList.txt&quot;);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scriptLoader.load();
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String[] libPaths = scriptLoader.getLibraryScriptPaths(true);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String[] libScripts = scriptLoader.getLibraryScriptContents();
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int libCount = libScripts.length;
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for (int ilib=0; ilib&lt;libCount; ilib++) {
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.registerLibraryScript(libPaths[ilib], libScripts[ilib]);
+			<br />
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
 			<br />
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;////////// Vnano エンジンの準備 ここまで //////////
@@ -1147,26 +1172,18 @@ RINPn のフォルダ直下に「 EmbedUseExample.java 」として同梱され�
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Vnano エンジンで「 1.2 + 3.4 」の値を計算して表示
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try{
-				<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String input = &quot;1.2 + 3.4&quot;;
-				<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double x = (double) engine.eval(input + &quot;;&quot;);
-				<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(&quot;Vnano エンジンの出力値: &quot; + x);
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String input = &quot;1.2 + 3.4&quot;;
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} catch (ScriptException e) {
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;double x = (double) engine.executeScript(input + &quot;;&quot;);
 			<br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();
-				<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(&quot;Vnano エンジンの出力値: &quot; + x);
 			<br />
 			<br />
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// ライブラリ/プラグインの解放/接続解除（ソフトウェアの終了前などに行います）
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_COMMAND&quot;, &quot;REMOVE_LIBRARY&quot;);
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.unregisterAllLibraryScripts();
 			<br />
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.put(&quot;___VNANO_COMMAND&quot;, &quot;REMOVE_PLUGIN&quot;);
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;engine.disconnectAllPlugins();
 			<br />
 		&nbsp;&nbsp;&nbsp;&nbsp;}
 		<br />
@@ -1177,28 +1194,45 @@ RINPn のフォルダ直下に「 EmbedUseExample.java 」として同梱され�
 <h2 id="how-to-embed-compile">コンパイル・実行方法</h2>
 
 <p>
-上記のサンプルコードのコンパイル方法は、下記の通りです：
+上記のコードは、Vnano エンジンのJarファイル「 Vnano.jar (RINPnのフォルダ内に既に存在) 」をクラスパスに指定しつつ、下記のようにコンパイルします：
 </p>
 
+<div>
 <div class="console">
-	javac -encoding UTF-8 EmbedUseExample.java
+	(Microsoft&reg; Windows&reg; をご使用の場合)
+	<br />
+	javac -cp ".;Vnano.jar" -encoding UTF-8 EmbedUseExample.java
+	<br />
+	<br />
+	(Linux&reg; やその他の環境をご使用の場合)
+	<br />
+	javac -cp ".:Vnano.jar" -encoding UTF-8 EmbedUseExample.java
+</div>
+<span class="orange">※ 最初の2行は、-cp 直後の &quot;～&quot; 内の区切り文字が、「 ; 」か「 : 」かという点が異なります。</span>
 </div>
 
 <p>
 コンパイルに成功すると、「 EmbedUseExample.class 」が生成されます。
-これを、Vnano エンジンのJarファイル「 Vnano.jar (RINPnのフォルダ内に既に存在) 」をクラスパスに指定しつつ実行します：
+同様に、Vnano.jar をクラスパスに指定しつつ実行します：
 </o>
 
-<div>
 <div class="console">
-	java -cp ".;Vnano.jar" EmbedUseExample &nbsp;&nbsp;&nbsp; (Microsoft&reg; Windows&reg; をご使用の場合)
+	(Microsoft&reg; Windows&reg; をご使用の場合)
 	<br />
-	java -cp ".:Vnano.jar" EmbedUseExample &nbsp;&nbsp;&nbsp; (Linux&reg; やその他の環境をご使用の場合)
+	java -cp ".;Vnano.jar" EmbedUseExample
 	<br />
 	<br />
-	(結果) スクリプトエンジンの出力値: 4.6
+	(Linux&reg; やその他の環境をご使用の場合)
+	<br />
+	java -cp ".:Vnano.jar" EmbedUseExample
 </div>
-<span class="orange">※ 最初の2行は、-cp 直後の &quot;～&quot; 内の区切り文字が、「 ; 」か「 : 」かという点が異なります。</span>
+
+<p>
+実行結果は：
+</p>
+
+<div class="console">
+	スクリプトエンジンの出力値: 4.6
 </div>
 
 <p>
