@@ -51,9 +51,15 @@ so same features are also available in scripts of the VCSSL by default.
 		<dd>
 			Provides data-type-utility functions/variables.
 			<br />
-			Variables: <a href="#INT_MAX">INT_MAX</a> / <a href="#INT_MIN">INT_MIN</a> / <a href="#FLOAT_MAX">FLOAT_MAX</a> / <a href="#FLOAT_MIN_ABS_NORMAL">FLOAT_MIN_ABS_NORMAL</a> / <a href="#FLOAT_MIN_ABS_DENORMAL">FLOAT_MIN_ABS_DENORMAL</a> / <a href="#NAN">NAN</a> / <a href="#INF">INF</a>
+			Variables: 
+			<a href="#INT_MAX">INT_MAX</a> / <a href="#INT_MIN">INT_MIN</a> / <a href="#FLOAT_MAX">FLOAT_MAX</a> / <a href="#FLOAT_MIN_ABS_NORMAL">FLOAT_MIN_ABS_NORMAL</a> / <a href="#FLOAT_MIN_ABS_DENORMAL">FLOAT_MIN_ABS_DENORMAL</a> / <a href="#NAN">NAN</a> / <a href="#INF">INF</a> /
+			<a href="#UP">UP</a> / <a href="#UP_SIGNIF">UP_SIGNIF</a> / <a href="#DOWN">DOWN</a> / <a href="#DOWN_SIGNIF">DOWN_SIGNIF</a> / 
+			<a href="#HALF_UP">HALF_UP</a> / <a href="#HALF_UP_SIGNIF">HALF_UP_SIGNIF</a> / <a href="#HALF_DOWN">HALF_DOWN</a> / <a href="#HALF_DOWN_SIGNIF">HALF_DOWN_SIGNIF</a> / 
+			<a href="#HALF_TO_EVEN">HALF_TO_EVEN</a> / <a href="#HALF_TO_EVEN_SIGNIF">HALF_TO_EVEN_SIGNIF</a>
 			<br />
-			Functions: <a href="#nan">nan(value)</a> / <a href="#inf">inf(value)</a> / <a href="#length">length(array, dimIndex)</a> / <a href="#arrayrank">arrayrank(array)</a>
+			Functions:
+			<a href="#nan">nan(value)</a> / <a href="#inf">inf(value)</a> / <a href="#length">length(array, dimIndex)</a> / <a href="#arrayrank">arrayrank(array)</a> / 
+			<a href="#round">round(floatValue, numberOfDigits, roundingMode)</a> / <a href="#round_string">round(stringValue, numberOfDigits, roundingMode)</a>
 		</dd>
 	<dt><a href="#SystemTerminalIOXnci1Plugin">SystemTerminalIOXnci1Plugin</a></dt>
 		<dd>
@@ -295,6 +301,236 @@ The plug-in providing data-type-utility functions/variables.
 </table>
 
 
+<table id="UP" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">UP</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			The rounding mode of <a href="#round">round</a> function, 
+			for rounding up the <b>fractional</b> part into the specified number of digits.
+			Also, when the value to be rounded is negative, rounds the part excluding the sign in the same way as positive values.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">int (constant)</td>
+	</tr>
+</table>
+
+
+<table id="UP_SIGNIF" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">UP_SIGNIF</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			The rounding mode of <a href="#round">round</a> function, 
+			for rounding up the <b>significand</b> part into the specified number of digits.
+			Also, when the value to be rounded is negative, rounds the part excluding the sign in the same way as positive values.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">int (constant)</td>
+	</tr>
+</table>
+
+
+<table id="DOWN" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">DOWN</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			The rounding mode of <a href="#round">round</a> function, 
+			for rounding down the <b>fractional</b> part into the specified number of digits.
+			Also, when the value to be rounded is negative, rounds the part excluding the sign in the same way as positive values.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">int (constant)</td>
+	</tr>
+</table>
+
+
+<table id="DOWN_SIGNIF" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">DOWN_SIGNIF</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			The rounding mode of <a href="#round">round</a> function, 
+			for rounding down the <b>significand</b> part into the specified number of digits.
+			Also, when the value to be rounded is negative, rounds the part excluding the sign in the same way as positive values.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">int (constant)</td>
+	</tr>
+</table>
+
+
+<table id="HALF_UP" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">HALF_UP</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			The rounding mode of <a href="#round">round</a> function, 
+			for rounding the <b>fractional</b> part into the specified number of digits, as follows:
+			<ul>
+				<li>When the part to be cut off is larger than ...50000..., rounds up the value.</li>
+				<li>When the part to be cut off is smaller than ...50000..., rounds down the value.</li>
+				<li>When the part to be cut off equals to ...50000..., rounds <b>up</b> the value.</dt>
+			</ul>
+			Also, when the value to be rounded is negative, rounds the part excluding the sign in the same way as positive values.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">int (constant)</td>
+	</tr>
+</table>
+
+
+<table id="HALF_UP_SIGNIF" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">HALF_UP_SIGNIF</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			The rounding mode of <a href="#round">round</a> function, 
+			for rounding the <b>significand</b> part into the specified number of digits, as follows:
+			<ul>
+				<li>When the part to be cut off is larger than ...50000..., rounds up the value.</li>
+				<li>When the part to be cut off is smaller than ...50000..., rounds down the value.</li>
+				<li>When the part to be cut off equals to ...50000..., rounds <b>up</b> the value.</dt>
+			</ul>
+			Also, when the value to be rounded is negative, rounds the part excluding the sign in the same way as positive values.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">int (constant)</td>
+	</tr>
+</table>
+
+
+<table id="HALF_DOWN" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">HALF_DOWN</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			The rounding mode of <a href="#round">round</a> function, 
+			for rounding the <b>fractional</b> part into the specified number of digits, as follows:
+			<ul>
+				<li>When the part to be cut off is larger than ...50000..., rounds up the value.</li>
+				<li>When the part to be cut off is smaller than ...50000..., rounds down the value.</li>
+				<li>When the part to be cut off equals to ...50000..., rounds <b>down</b> the value.</dt>
+			</ul>
+			Also, when the value to be rounded is negative, rounds the part excluding the sign in the same way as positive values.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">int (constant)</td>
+	</tr>
+</table>
+
+
+<table id="HALF_DOWN_SIGNIF" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">HALF_DOWN_SIGNIF</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			The rounding mode of <a href="#round">round</a> function, 
+			for rounding the <b>significand</b> part into the specified number of digits, as follows:
+			<ul>
+				<li>When the part to be cut off is larger than ...50000..., rounds up the value.</li>
+				<li>When the part to be cut off is smaller than ...50000..., rounds down the value.</li>
+				<li>When the part to be cut off equals to ...50000..., rounds <b>down</b> the value.</dt>
+			</ul>
+			Also, when the value to be rounded is negative, rounds the part excluding the sign in the same way as positive values.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">int (constant)</td>
+	</tr>
+</table>
+
+
+<table id="HALF_TO_EVEN" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">HALF_TO_EVEN</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			The rounding mode of <a href="#round">round</a> function, 
+			for rounding the <b>fractional</b> part into the specified number of digits, as follows:
+			<ul>
+				<li>When the part to be cut off is larger than ...50000..., rounds up the value.</li>
+				<li>When the part to be cut off is smaller than ...50000..., rounds down the value.</li>
+				<li>When the part to be cut off equals to ...50000..., rounds the value so that the last digit of the rounded value takes an <b>even number</b>.</dt>
+			</ul>
+			Also, when the value to be rounded is negative, rounds the part excluding the sign in the same way as positive values.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">int (constant)</td>
+	</tr>
+</table>
+
+
+<table id="HALF_TO_EVEN_SIGNIF" class="spec-table">
+	<tr>
+		<th class="lcol">Variable</th>
+		<th class="rcol">HALF_TO_EVEN</th>
+	</tr>
+	<tr>
+		<td class="lcol">Value</td>
+		<td class="rcol">
+			The rounding mode of <a href="#round">round</a> function, 
+			for rounding the <b>significand</b> part into the specified number of digits, as follows:
+			<ul>
+				<li>When the part to be cut off is larger than ...50000..., rounds up the value.</li>
+				<li>When the part to be cut off is smaller than ...50000..., rounds down the value.</li>
+				<li>When the part to be cut off equals to ...50000..., rounds the value so that the last digit of the rounded value takes an <b>even number</b>.</dt>
+			</ul>
+			Also, when the value to be rounded is negative, rounds the part excluding the sign in the same way as positive values.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Data Type</td>
+		<td class="rcol">int (constant)</td>
+	</tr>
+</table>
+
+
 <h3>Functions</h3>
 
 
@@ -305,7 +541,7 @@ The plug-in providing data-type-utility functions/variables.
 	</tr>
 	<tr>
 		<td class="lcol">Feature</td>
-		<td class="rcol">Checks whether the passed value is the NaN or not. Not that the NaN does not equal any values containing the NaN itself, so we can not check whether a value is NaN or not by comparing this value by &quot;==&quot; operation. Therefore, use this function for checking it.</td>
+		<td class="rcol">Checks whether the passed value is the NaN or not. Note that the NaN does not equal any values containing the NaN itself, so we can not check whether a value is NaN or not by comparing this value by &quot;==&quot; operation. Therefore, use this function for checking it.</td>
 	</tr>
 	<tr>
 		<td class="lcol">Singature</td>
@@ -415,6 +651,81 @@ The plug-in providing data-type-utility functions/variables.
 	</tr>
 </table>
 
+
+<table id="round" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">round(floatValue, numberOfDigits, roundingMode)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">
+			Rounds the specified value.
+			Note that, the param "floatValue" and the return value are float-type, 
+			and they internally store values in binary representation.
+			This function converts the passed value into decimal representation, then round it, 
+			and finally reconvert the result into binary representation again to return it. 
+			If you want to avoid errors caused by the above binrary-decimal conversions, use 
+			<a href="#round_string">round(stringValue, ...)</a> function instead.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">float round(float floatValue, int numberOfDigits, int roundingMode)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(float type) floatValue: The value to be rounded.
+			<br />
+			(int type) numberOfDigits: The number of digits of the rounded part (fractional part or significand part, depends on mode) in the rounded result value.
+			<br />
+			(int type) roundingMode: The mode of rounding, e.g.: <a href="#HALF_UP">HALF_UP</a> and so on.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">(float type) The rounded value.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">float result = round(123.0625, 3, HALF_UP);<br />print(result); // 123.063</td>
+	</tr>
+</table>
+
+
+<table id="round_string" class="spec-table">
+	<tr>
+		<th class="lcol">Function</th>
+		<th class="rcol">round(stringValue, numberOfDigits, roundingMode)</th>
+	</tr>
+	<tr>
+		<td class="lcol">Feature</td>
+		<td class="rcol">Rounds the specified value.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Signature</td>
+		<td class="rcol">string round(string stringValue, int numberOfDigits, int roundingMode)</td>
+	</tr>
+	<tr>
+		<td class="lcol">Params</td>
+		<td class="rcol">
+			(string type) stringValue: The value to be rounded.
+			<br />
+			(int type) numberOfDigits: The number of digits of the rounded part (fractional part or significand part, depends on mode) in the rounded result value.
+			<br />
+			(int type) roundingMode: The mode of rounding, e.g.: <a href="#HALF_UP">HALF_UP</a> and so on.
+		</td>
+	</tr>
+	<tr>
+		<td class="lcol">Return</td>
+		<td class="rcol">(string type) The rounded value.</td>
+	</tr>
+	<tr>
+		<td class="lcol">Example</td>
+		<td class="rcol">string result = round("123.0625", 3, HALF_UP);<br />print(result); // 123.063</td>
+	</tr>
+</table>
 
 
 <!-- ==================================================================================================== -->
