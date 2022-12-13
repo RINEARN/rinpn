@@ -60,6 +60,7 @@ org/vcssl/nano/plugin/system/xfci1/ErrorXfci1Plugin.java
 org/vcssl/nano/plugin/system/xfci1/ExistsXfci1Plugin.java
 org/vcssl/nano/plugin/system/xfci1/ExitIntXfci1Plugin.java
 org/vcssl/nano/plugin/system/xfci1/ExitVoidXfci1Plugin.java
+org/vcssl/nano/plugin/system/xfci1/FloatRoundXfci1Plugin.java
 org/vcssl/nano/plugin/system/xfci1/FlushXfci1Plugin.java
 org/vcssl/nano/plugin/system/xfci1/InfXfci1Plugin.java
 org/vcssl/nano/plugin/system/xfci1/InputDefaultXfci1Plugin.java
@@ -79,6 +80,7 @@ org/vcssl/nano/plugin/system/xfci1/ReadlnXfci1Plugin.java
 org/vcssl/nano/plugin/system/xfci1/ReadXfci1Plugin.java
 org/vcssl/nano/plugin/system/xfci1/SaveXfci1Plugin.java
 org/vcssl/nano/plugin/system/xfci1/SleepXfci1Plugin.java
+org/vcssl/nano/plugin/system/xfci1/StringRoundXfci1Plugin.java
 org/vcssl/nano/plugin/system/xfci1/TimeXfci1Plugin.java
 org/vcssl/nano/plugin/system/xfci1/WritelnXfci1Plugin.java
 org/vcssl/nano/plugin/system/xfci1/WriteXfci1Plugin.java
@@ -94,10 +96,18 @@ org/vcssl/nano/plugin/system/xvci1/AppendCsvXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/AppendTsvXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/AppendXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/CrXvci1Plugin.java
+org/vcssl/nano/plugin/system/xvci1/DownSignifXvci1Plugin.java
+org/vcssl/nano/plugin/system/xvci1/DownXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/EolXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/FloatMaxXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/FloatMinAbsDenormalXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/FloatMinAbsNormalXvci1Plugin.java
+org/vcssl/nano/plugin/system/xvci1/HalfDownSignifXvci1Plugin.java
+org/vcssl/nano/plugin/system/xvci1/HalfDownXvci1Plugin.java
+org/vcssl/nano/plugin/system/xvci1/HalfToEvenSignifXvci1Plugin.java
+org/vcssl/nano/plugin/system/xvci1/HalfToEvenXvci1Plugin.java
+org/vcssl/nano/plugin/system/xvci1/HalfUpSignifXvci1Plugin.java
+org/vcssl/nano/plugin/system/xvci1/HalfUpXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/InfXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/IntMaxXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/IntMinXvci1Plugin.java
@@ -107,6 +117,8 @@ org/vcssl/nano/plugin/system/xvci1/ReadCsvXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/ReadStsvXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/ReadTsvXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/ReadXvci1Plugin.java
+org/vcssl/nano/plugin/system/xvci1/UpSignifXvci1Plugin.java
+org/vcssl/nano/plugin/system/xvci1/UpXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/WriteCsvXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/WriteTsvXvci1Plugin.java
 org/vcssl/nano/plugin/system/xvci1/WriteXvci1Plugin.java
