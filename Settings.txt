@@ -347,8 +347,8 @@ reloadLibrary = true;       // Reload       - 再読み込みする
 // (Type: bool)
 // --------------------------------------------------------------------------------------------------------------
 
-alwaysPrintError = true;       // Always print errors to the standard error output.
-// alwaysPrintError = false;   // Print only in CUI mode.
+alwaysPrintError = true;       // Always print errors to the standard error output - 常に標準エラー出力に表示する
+// alwaysPrintError = false;   // Print only in CUI mode - CUIモードでのみ標準エラー出力に表示する
 
 
 // --------------------------------------------------------------------------------------------------------------
