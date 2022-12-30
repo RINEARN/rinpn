@@ -125,24 +125,26 @@ public final class MessageManager {
 				messageWindow.dispose();
 
 				// Also, if "alwaysPrints" is set to true, prints the message to the standard error output as single line.
+				String singleLineMerssage = causeLinePart.contains("main script") ? message : message + causeLinePart;
 				if (alwaysPrints) {
 					if (localeCode.equals(LocaleCode.JA_JP)) {
-						System.err.println("エラー : " + message + causeLinePart);
+						System.err.println("エラー : " + singleLineMerssage);
 					}
 					if (localeCode.equals(LocaleCode.EN_US)) {
-						System.err.println("Error: " + message + causeLinePart);
-					}					
+						System.err.println("Error: " + singleLineMerssage);
+					}
 				}
 				return;
 			}
 			case CUI : {
 
 				// In CUI mode, print the message to the standard error output as single line.
+				String singleLineMerssage = causeLinePart.contains("main script") ? message : message + causeLinePart;
 				if (localeCode.equals(LocaleCode.JA_JP)) {
-					System.err.println("エラー : " + message + causeLinePart);
+					System.err.println("エラー : " + singleLineMerssage);
 				}
 				if (localeCode.equals(LocaleCode.EN_US)) {
-					System.err.println("Error: " + message + causeLinePart);
+					System.err.println("Error: " + singleLineMerssage);
 				}
 				return;
 			}
