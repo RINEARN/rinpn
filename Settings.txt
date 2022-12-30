@@ -341,13 +341,13 @@ reloadLibrary = true;       // Reload       - 再読み込みする
 
 
 // --------------------------------------------------------------------------------------------------------------
-// Specify whether print stack traces to the standard-error or don't, when exceptions occurred.  (for debugging)
-// 例外発生時に、スタックトレースを標準エラー出力に表示するかどうかを指定します。               （デバッグ用）
+// Specify whether print stack traces to the standard-error or don't, when errors/exceptions occurred.
+// エラー/例外発生時に、スタックトレースを標準エラー出力に表示するかどうかを指定します。
 // (Type: bool)
 // --------------------------------------------------------------------------------------------------------------
 
-exceptionStackTracerEnabled = false;      // Don't print - 表示しない
-// exceptionStackTracerEnabled = true;    // Print       - 表示する
+exceptionStackTracerEnabled = true;        // Print       - 表示する
+// exceptionStackTracerEnabled = false;    // Don't print - 表示しない
 
 
 // --------------------------------------------------------------------------------------------------------------
