@@ -116,7 +116,8 @@ public final class SettingContainer implements Cloneable {
 	public boolean dumperEnabled = false;
 	public String dumperTarget = "ALL";
 
-	public boolean exceptionStackTracerEnabled = false;
+	public boolean alwaysPrintError = true;
+	public boolean exceptionStackTracerEnabled = true;
 
 	public String localeCode = LocaleCode.getDefaultLocaleCode();
 
@@ -177,10 +178,10 @@ public final class SettingContainer implements Cloneable {
 					message = e.getCause().getMessage();
 			}
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in Loading Error", localeCode);
+				MessageManager.showErrorMessage(message, "Plug-in Loading Error", localeCode, this.alwaysPrintError);
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン読み込みエラー", localeCode);
+				MessageManager.showErrorMessage(message, "プラグイン読み込みエラー", localeCode, this.alwaysPrintError);
 			}
 			System.err.println("\n" + message);
 			MessageManager.showExceptionStackTrace(e, localeCode);
@@ -220,10 +221,10 @@ public final class SettingContainer implements Cloneable {
 		} catch (VnanoException | VnanoFatalException vne) {
 			String errorMessage = MessageManager.customizeExceptionMessage(vne.getMessage());
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(errorMessage, "Setting Error", localeCode);
+				MessageManager.showErrorMessage(errorMessage, "Setting Error", localeCode, this.alwaysPrintError);
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(errorMessage, "設定スクリプトのエラー", localeCode);
+				MessageManager.showErrorMessage(errorMessage, "設定スクリプトのエラー", localeCode, this.alwaysPrintError);
 			}
 			throw new RINPnException(vne);
 		}
@@ -239,10 +240,10 @@ public final class SettingContainer implements Cloneable {
 					message = e.getCause().getMessage();
 			}
 			if (localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in Finalization Error", localeCode);
+				MessageManager.showErrorMessage(message, "Plug-in Finalization Error", localeCode, this.alwaysPrintError);
 			}
 			if (localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン終了時処理エラー", localeCode);
+				MessageManager.showErrorMessage(message, "プラグイン終了時処理エラー", localeCode, this.alwaysPrintError);
 			}
 			System.err.println("\n" + message);
 			MessageManager.showExceptionStackTrace(e, localeCode);
@@ -450,7 +451,7 @@ public final class SettingContainer implements Cloneable {
 			if (this.localeCode.equals(LocaleCode.JA_JP)) {
 				errorTitle = "設定エラー";
 			}
-			MessageManager.showErrorMessage(errorMessage, errorTitle, localeCode);
+			MessageManager.showErrorMessage(errorMessage, errorTitle, localeCode, this.alwaysPrintError);
 			throw new RINPnException(errorMessage);
 		}
 	}

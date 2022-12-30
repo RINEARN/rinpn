@@ -688,7 +688,9 @@ public final class Presenter {
 						String errorMessage = this.settingContainer.localeCode.equals(LocaleCode.JA_JP) ? 
 							"選択されたファイルは、Vnano のスクリプトファイルではありません。" : 
 							"The selected file is not a Vnano script file." ;
-						MessageManager.showErrorMessage(errorMessage, "!", settingContainer.localeCode);
+						MessageManager.showErrorMessage(
+							errorMessage, "!", settingContainer.localeCode, settingContainer.alwaysPrintError
+						);
 						return;
 					}
 

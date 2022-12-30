@@ -163,7 +163,7 @@ public final class RINPn {
 
 		} catch (VnanoException | VnanoFatalException | RINPnFatalException e) {
 			String message = MessageManager.customizeExceptionMessage(e.getMessage());
-			MessageManager.showErrorMessage(message, "!", setting.localeCode);
+			MessageManager.showErrorMessage(message, "!", setting.localeCode, setting.alwaysPrintError);
 			if (setting.exceptionStackTracerEnabled) {
 				MessageManager.showExceptionStackTrace(e, setting.localeCode);
 			}
@@ -209,12 +209,14 @@ public final class RINPn {
 		} catch (InvocationTargetException | InterruptedException e) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
 				MessageManager.showErrorMessage(
-					"Unexpected exception occurred: " + e.getClass().getCanonicalName(), "Error", setting.localeCode
+					"Unexpected exception occurred: " + e.getClass().getCanonicalName(), "Error",
+					setting.localeCode, setting.alwaysPrintError
 				);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
 				MessageManager.showErrorMessage(
-					"予期しない例外が発生しました: " + e.getClass().getCanonicalName(), "エラー", setting.localeCode
+					"予期しない例外が発生しました: " + e.getClass().getCanonicalName(), "エラー",
+					setting.localeCode, setting.alwaysPrintError
 				);
 			}
 			if (setting.exceptionStackTracerEnabled) {
@@ -259,7 +261,9 @@ public final class RINPn {
 						+ " 」または「 "
 						+ SettingContainer.SETTING_SCRIPT_PATH_VNANO
 						+ " 」が見つかりません。";
-					MessageManager.showErrorMessage(errorMessage, "設定ファイル読み込みエラー", LocaleCode.JA_JP);
+					MessageManager.showErrorMessage(
+						errorMessage, "設定ファイル読み込みエラー", LocaleCode.JA_JP, setting.alwaysPrintError
+					);
 				} else {
 					errorMessage =
 						"The setting file \""
@@ -267,7 +271,9 @@ public final class RINPn {
 						+ "\" or \""
 						+ SettingContainer.SETTING_SCRIPT_PATH_VNANO
 						+ "\" is not found.";
-					MessageManager.showErrorMessage(errorMessage, "Setting File Loading Error", LocaleCode.EN_US);
+					MessageManager.showErrorMessage(
+						errorMessage, "Setting File Loading Error", LocaleCode.EN_US, setting.alwaysPrintError
+					);
 				}
 
 				throw new RINPnException(errorMessage);

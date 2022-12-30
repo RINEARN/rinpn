@@ -65,8 +65,9 @@ public final class MessageManager {
 	 * @param message The error message to be displayed.
 	 * @param title The window title of the error message (for GUI mode).
 	 * @param localeCode The locale for switching the language of the error message.
+	 * @param alwaysPrints The flag to print the error message to the standard error output, even in GUI mode.
 	 */
-	public static final void showErrorMessage(String message, String title, String localeCode) {
+	public static final void showErrorMessage(String message, String title, String localeCode, boolean alwaysPrints) {
 
 		// There are "Throwable"s having no message.
 		// For such case, display the content of "title" argument as a message.
@@ -106,24 +107,37 @@ public final class MessageManager {
 			case GUI : {
 
 				// In GUI mode, display the message as multiple lines, if the message is long.
+				String lineFeededMessage = message;
 				if (localeCode.equals(LocaleCode.JA_JP)) {
-					message = getLineFeededMessageJaJP(message);
+					lineFeededMessage = getLineFeededMessageJaJP(lineFeededMessage);
 				}
 				if (localeCode.equals(LocaleCode.EN_US)) {
-					message = getLineFeededMessageEnUS(message);
+					lineFeededMessage = getLineFeededMessageEnUS(lineFeededMessage);
 				}
 				if (!causeLinePart.contains("main script")) {
-					message += causeLinePart;
+					lineFeededMessage += causeLinePart;
 				}
-				JDialog messageWindow = new JOptionPane(message, JOptionPane.PLAIN_MESSAGE).createDialog(null, title);
+				JDialog messageWindow = new JOptionPane(
+					lineFeededMessage, JOptionPane.PLAIN_MESSAGE
+				).createDialog(null, title);
 				messageWindow.setAlwaysOnTop(true);
 				messageWindow.setVisible(true);
 				messageWindow.dispose();
+
+				// Also, if "alwaysPrints" is set to true, prints the message to the standard error output as single line.
+				if (alwaysPrints) {
+					if (localeCode.equals(LocaleCode.JA_JP)) {
+						System.err.println("エラー : " + message + causeLinePart);
+					}
+					if (localeCode.equals(LocaleCode.EN_US)) {
+						System.err.println("Error: " + message + causeLinePart);
+					}					
+				}
 				return;
 			}
 			case CUI : {
 
-				// In GUI mode, display the message as single line.
+				// In CUI mode, print the message to the standard error output as single line.
 				if (localeCode.equals(LocaleCode.JA_JP)) {
 					System.err.println("エラー : " + message + causeLinePart);
 				}

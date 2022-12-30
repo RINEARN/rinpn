@@ -152,10 +152,10 @@ public final class Model {
 					message = e.getCause().getMessage();
 			}
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error", setting.localeCode);
+				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error", setting.localeCode, setting.alwaysPrintError);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー", setting.localeCode);
+				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー", setting.localeCode, setting.alwaysPrintError);
 			}
 
 			// For errors occurred in plug-ins, always print the stack trace no matter whether it is specified by settings.
@@ -182,10 +182,14 @@ public final class Model {
 			this.engine.setPermissionMap(permissionMap);
 		} catch (VnanoException e) {
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(e.getMessage(), "Permission Setting Error", setting.localeCode);
+				MessageManager.showErrorMessage(
+					e.getMessage(), "Permission Setting Error", setting.localeCode, setting.alwaysPrintError
+				);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(e.getMessage(), "パーミッション設定エラー", setting.localeCode);
+				MessageManager.showErrorMessage(
+					e.getMessage(), "パーミッション設定エラー", setting.localeCode, setting.alwaysPrintError
+				);
 			}
 		}
 	}
@@ -242,10 +246,14 @@ public final class Model {
 					message = e.getCause().getMessage();
 			}
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in Finalization Error", setting.localeCode);
+				MessageManager.showErrorMessage(
+					message, "Plug-in Finalization Error", setting.localeCode, setting.alwaysPrintError
+				);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン終了時処理エラー", setting.localeCode);
+				MessageManager.showErrorMessage(
+					message, "プラグイン終了時処理エラー", setting.localeCode, setting.alwaysPrintError
+				);
 			}
 
 			// For errors occurred in plug-ins, always print the stack trace no matter whether it is specified by settings.
@@ -363,10 +371,14 @@ public final class Model {
 					message = e.getCause().getMessage();
 			}
 			if (setting.localeCode.equals(LocaleCode.EN_US)) {
-				MessageManager.showErrorMessage(message, "Plug-in/Library Loading Error", setting.localeCode);
+				MessageManager.showErrorMessage(
+					message, "Plug-in/Library Loading Error", setting.localeCode, setting.alwaysPrintError
+				);
 			}
 			if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-				MessageManager.showErrorMessage(message, "プラグイン/ライブラリ 読み込みエラー", setting.localeCode);
+				MessageManager.showErrorMessage(
+					message, "プラグイン/ライブラリ 読み込みエラー", setting.localeCode, setting.alwaysPrintError
+				);
 			}
 
 			// For errors occurred in plug-ins, always print the stack trace no matter whether it is specified by settings.
@@ -471,10 +483,14 @@ public final class Model {
 		public final void run() {
 			if (isCalculating()) {
 				if (setting.localeCode.equals(LocaleCode.EN_US)) {
-					MessageManager.showErrorMessage("The previous calculation has not finished yet!", "!", setting.localeCode);
+					MessageManager.showErrorMessage(
+						"The previous calculation has not finished yet.", "!", setting.localeCode, setting.alwaysPrintError
+					);
 				}
 				if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-					MessageManager.showErrorMessage("まだ前の計算を実行中です !", "!", setting.localeCode);
+					MessageManager.showErrorMessage(
+						"まだ前の計算を実行中です。", "!", setting.localeCode, setting.alwaysPrintError
+					);
 				}
 				return;
 			}
@@ -488,10 +504,14 @@ public final class Model {
 				this.calculationListener.calculationFinished("ERROR");
 				String errorMessage = MessageManager.customizeExceptionMessage(e.getMessage());
 				if (setting.localeCode.equals(LocaleCode.EN_US)) {
-					MessageManager.showErrorMessage(errorMessage, "Expression/Script Error", setting.localeCode);
+					MessageManager.showErrorMessage(
+						errorMessage, "Expression/Script Error", setting.localeCode, setting.alwaysPrintError
+					);
 				}
 				if (setting.localeCode.equals(LocaleCode.JA_JP)) {
-					MessageManager.showErrorMessage(errorMessage, "計算式やスクリプトのエラー", setting.localeCode);
+					MessageManager.showErrorMessage(
+						errorMessage, "計算式やスクリプトのエラー", setting.localeCode, setting.alwaysPrintError
+					);
 				}
 				if (setting.exceptionStackTracerEnabled) {
 					MessageManager.showExceptionStackTrace(e, setting.localeCode);

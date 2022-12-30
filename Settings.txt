@@ -339,9 +339,20 @@ reloadLibrary = true;       // Reload       - 再読み込みする
 //         - スクリプト処理関連の設定 -
 // **************************************************************************************************************
 
+// --------------------------------------------------------------------------------------------------------------
+// Specify whether always print error message to the standard error output, even in GUI mode.
+// If this option is set to false, in GUI mode, an error message will displayed only as a pop-up window.
+// GUIモードであっても、エラー情報を標準エラー出力に表示するかどうかを指定します。
+// このオプションを false にすると、GUIモードでは、ウィンドウ上にのみエラーメッセージが表示されるようになります。
+// (Type: bool)
+// --------------------------------------------------------------------------------------------------------------
+
+alwaysPrintError = true;       // Always print errors to the standard error output.
+// alwaysPrintError = false;   // Print only in CUI mode.
+
 
 // --------------------------------------------------------------------------------------------------------------
-// Specify whether print stack traces to the standard-error or don't, when errors/exceptions occurred.
+// Specify whether print stack traces to the standard error output, when errors/exceptions occurred.
 // エラー/例外発生時に、スタックトレースを標準エラー出力に表示するかどうかを指定します。
 // (Type: bool)
 // --------------------------------------------------------------------------------------------------------------
