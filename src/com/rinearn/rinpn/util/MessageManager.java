@@ -229,17 +229,19 @@ public final class MessageManager {
 	public static final void showExceptionStackTrace(Exception e, String localeCode) {
 		if (localeCode.equals(LocaleCode.JA_JP)) {
 			System.err.println();
-			System.err.println("--------------------------------------------------------------------------------");
-			System.err.println("スタックトレース : ");
-			System.err.println();
+			System.err.println("詳細エラー情報（スクリプトエンジンのスタックトレース） : ");
+			System.err.print("   ");
 			e.printStackTrace();
+			System.err.println("----------------------------------------------------------------------------------------------------");
+			System.err.println();
 		}
 		if (localeCode.equals(LocaleCode.EN_US)) {
 			System.err.println();
-			System.err.println("--------------------------------------------------------------------------------");
-			System.err.println("Stack Trace: ");
-			System.err.println();
+			System.err.println("Detailed Error Information (Stack Trace of the Scripting Engine): ");
+			System.err.print("   ");
 			e.printStackTrace();
+			System.err.println("----------------------------------------------------------------------------------------------------");
+			System.err.println();
 		}
 	}
 
