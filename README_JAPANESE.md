@@ -19,19 +19,12 @@ RINPn（発音：りんぷん）は、単純で扱いやすい画面を持つ、
 
 
 ## 目次
-- <a href="#version-note">留意事項</a>
 - <a href="#license">ライセンス</a>
 - <a href="#how-to-build">ビルド方法</a>
 - <a href="#how-to-use">使用方法</a>
 - <a href="#architecture">ソフトウェア アーキテクチャ</a>
 - <a href="#about-us">開発元について</a>
 
-
-
-<a id="version-note"></a>
-## 留意事項
-
-RINPn は、まだ正式リリース前のソフトウェアであり、現在はいわゆる「 オープンベータ版 」として公開しています。
 
 
 <a id="license"></a>
