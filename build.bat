@@ -11,7 +11,7 @@ mkdir bin_vnano
 :: --------------------------------------------------
 
 cd src_vnano
-javac @org/vcssl/nano/sourcelist.txt -d ../bin_vnano -encoding UTF-8
+javac -d ../bin_vnano -encoding UTF-8 @org/vcssl/nano/sourcelist.txt
 cd ..
 
 :: --------------------------------------------------
@@ -26,7 +26,7 @@ jar cvfm Vnano.jar src_vnano/org/vcssl/nano/meta/main.mf -C bin_vnano org -C src
 :: --------------------------------------------------
 
 cd src
-javac -cp .;../Vnano.jar @com/rinearn/rinpn/sourcelist.txt -d ../bin -encoding UTF-8
+javac -Xlint:all -cp .;../Vnano.jar -d ../bin -encoding UTF-8 @com/rinearn/rinpn/sourcelist.txt 
 cd ..
 
 :: --------------------------------------------------
