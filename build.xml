@@ -36,7 +36,7 @@
 	
 	<target name="compile-rinpn">
 		<mkdir dir="bin" />
-		<javac srcdir="src" destdir="bin" encoding="UTF-8" includeantruntime="false" debug="true">
+		<javac srcdir="src" destdir="bin" encoding="UTF-8" classpath=".:Vnano.jar" includeantruntime="false" debug="true">
 			<exclude name="**/*Test.java"/>
 		</javac>
 	</target>
