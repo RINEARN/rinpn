@@ -21,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public final class RINPn {
 
-	private static final String VERSION = "1.0.0";
+	private static final String VERSION = "1.0.1";
 	private static final String OPTION_NAME_VERSION = "--version";
 	private static final String OPTION_NAME_DEBUG = "--debug";
 	private static final String OPTION_NAME_DIR = "--dir";
