@@ -55,7 +55,7 @@
 	<target name="archive-rinpn" depends="compile-rinpn">
 		<jar jarfile="RINPn.jar" basedir="bin">
 			<manifest>
-				<attribute name="Main-Class" value="com.rinearn.processornano.RinearnProcessorNano" />
+				<attribute name="Main-Class" value="com.rinearn.rinpn.RINPn" />
 				<attribute name="Class-Path" value=". Vnano.jar" />
 			</manifest>
 		</jar>
