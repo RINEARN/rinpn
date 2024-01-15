@@ -87,7 +87,7 @@
 		</delete>
 	</target>
 
-	<!-- (Optional) Delete ant re-build this application. -->
+	<!-- (Optional) Delete and re-build this application. -->
 	<target name="all" depends="clean,main">
 	</target>
 
