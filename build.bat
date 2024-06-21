@@ -11,6 +11,7 @@ mkdir bin_vnano
 :: --------------------------------------------------
 
 cd src_vnano
+javac -d ../bin_vnano -encoding UTF-8 @org/vcssl/connect/sourcelist.txt
 javac -d ../bin_vnano -encoding UTF-8 @org/vcssl/nano/sourcelist.txt
 cd ..
 
