@@ -459,10 +459,16 @@ public final class Presenter {
 
 		@Override
 		public final void keyPressed(KeyEvent e) {
+			int keyCode = e.getKeyCode();
 
 			// "=" button: runs a calculation or a script.
-			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+			if (keyCode == KeyEvent.VK_ENTER) {
 				RunButtonListener.handleEvent(this.view, this.model, this.settingContainer);
+			}
+
+			// "Esc" button: clear all inputted expression.
+			if (keyCode == KeyEvent.VK_ESCAPE) {
+				this.view.inputField.setText("");
 			}
 		}
 	}
