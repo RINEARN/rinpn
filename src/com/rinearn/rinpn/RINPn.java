@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2022 RINEARN
+ * Copyright(C) 2019-2024 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -21,7 +21,7 @@ import java.lang.reflect.InvocationTargetException;
  */
 public final class RINPn {
 
-	private static final String VERSION = "1.0.0";
+	private static final String VERSION = "1.0.2";
 	private static final String OPTION_NAME_VERSION = "--version";
 	private static final String OPTION_NAME_DEBUG = "--debug";
 	private static final String OPTION_NAME_DIR = "--dir";
@@ -40,13 +40,13 @@ public final class RINPn {
 
 	/**
 	 * The main function.
-	 * 
+	 *
 	 * @param args The command-line arguments.
 	 */
 	public static void main(String[] args) {
 
 		// Variables for storing inputted the contents.
-		String inputtedContent = null;  // Stores the inputted expression or the scriot file path. 
+		String inputtedContent = null;  // Stores the inputted expression or the scriot file path.
 		boolean debugEnabled = false;  // Stores whether --debug option is specified.
 		String dirPath = ".";  // Stores the base directory of the relative path resolution.
 
@@ -113,7 +113,7 @@ public final class RINPn {
 	 * Prints the versions of RINPN and Vnano to the standard output.
 	 */
 	private static void printVersion() {
-		
+
 		// Print the version of RINPn.
 		System.out.print("RINPn Ver." + VERSION + " ");
 
@@ -233,7 +233,7 @@ public final class RINPn {
 
 	/**
 	 * Creates the setting container storing values written in the setting file.
-	 * 
+	 *
 	 * @param isGuiMode Specify true if this app is executed in GUI mode.
 	 * @param debug Specify true if print information for debugging.
 	 * @return The created setting container.

@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2017-2022 RINEARN
+ * Copyright(C) 2017-2024 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -255,7 +255,7 @@ public class DispatchUnit {
 				// Jump:
 				if (shouldJump) {
 					return (int)( (long[])operands[1].getArrayData() )[0];
-				
+
 				// Don't jump:
 				} else {
 					return programCounter + 1;
@@ -316,7 +316,7 @@ public class DispatchUnit {
 			}
 
 			case RET : {
-				
+
 				// Pops the instruction address to which the processing flow should return, from the stack.
 				DataContainer<?> returnAddressContainer = memory.pop();
 				int returnAddress = (int)( (long[])returnAddressContainer.getArrayData() )[0];
@@ -341,7 +341,7 @@ public class DispatchUnit {
 			case CALLX : {
 				int externalFunctionIndex = (int)( (long[])operands[1].getArrayData() )[0];
 				int argumentLength = operands.length - 2;
-				DataContainer<?>[] arguments = new DataContainer[argumentLength];
+				DataContainer<?>[] arguments = new DataContainer<?>[argumentLength];
 				System.arraycopy(operands, 2, arguments, 0, argumentLength);
 				interconnect.callExternalFunction(externalFunctionIndex, operands[0], arguments);
 				return programCounter + 1;
@@ -357,7 +357,7 @@ public class DispatchUnit {
 				// If the evaluation result value is specified as an operand, store it to the memory.
 				if (operandLength == 2) {
 
-					// Depends on its partition, data container may be going to released when the execution of script has end, 
+					// Depends on its partition, data container may be going to released when the execution of script has end,
 					// so copy the content of the data container, not reference of it..
 					DataContainer<?> result = new DataContainer<Object>();
 					executionUnit.allocSameLengths(dataTypes[0], result, operands[1]);

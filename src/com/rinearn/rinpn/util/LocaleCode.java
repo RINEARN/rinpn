@@ -28,10 +28,10 @@ public final class LocaleCode {
 	public static final Locale toLocale(String localeCode) {
 		Locale locale = null;
 		if (localeCode.equals(JA_JP)) {
-			return new Locale("ja", "JP");
+			return Locale.of("ja", "JP");
 		}
 		if (localeCode.equals(EN_US)) {
-			return new Locale("en", "US");
+			return Locale.of("en", "US");
 		}
 		if (localeCode.equals(AUTO)) {
 			return Locale.getDefault();

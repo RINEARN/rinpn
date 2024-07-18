@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2022 RINEARN
+ * Copyright(C) 2019-2024 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -35,7 +35,7 @@ public final class Presenter {
 
 	/**
 	 * Links the specified View and the specified Model by Presenter's event listeners.
-	 * 
+	 *
 	 * @param view The view to be linked.
 	 * @param model The model to be linked.
 	 * @param settingContainer The container storing setting values.
@@ -51,7 +51,7 @@ public final class Presenter {
 		view.basePanel.addMouseListener(basePanelMouseListener);
 		view.basePanel.addMouseMotionListener(basePanelMouseListener);
 
-		view.inputField.addKeyListener(new RunKeyListener(view, model, settingContainer));
+		view.inputField.addKeyListener(new InputFieldKeyListener(view, model, settingContainer));
 		view.inputField.addMouseListener(new InputFieldMouseListener(view));
 		view.outputField.addMouseListener(new OutputFieldMouseListener(view));
 
@@ -166,7 +166,7 @@ public final class Presenter {
 					&& windowHeight - windowEdgeWidth < mouseY && mouseY <= windowHeight ) {
 				windowEdge = WindowEdge.BOTTOM;
 			}
-			
+
 			if (mouseX <= windowEdgeWidth && mouseY <= windowEdgeWidth) {
 				windowEdge = WindowEdge.TOP_LEFT;
 			}
@@ -421,7 +421,7 @@ public final class Presenter {
 			}
 		}
 	}
-	
+
 
 	/**
 	 * The Runnable implementation for updating the content of the "OUTPUT" text field,
@@ -439,6 +439,37 @@ public final class Presenter {
 		@Override
 		public final void run() {
 			this.view.outputField.setText(this.outputText);
+		}
+	}
+
+
+	/**
+	 * The listener of key events on the "INPUT" text field.
+	 */
+	private static final class InputFieldKeyListener extends KeyAdapter {
+		private Model model;
+		private View view;
+		private SettingContainer settingContainer;
+
+		protected InputFieldKeyListener(View view, Model model, SettingContainer settingContainer) {
+			this.model = model;
+			this.view = view;
+			this.settingContainer = settingContainer;
+		}
+
+		@Override
+		public final void keyPressed(KeyEvent e) {
+			int keyCode = e.getKeyCode();
+
+			// "=" button: runs a calculation or a script.
+			if (keyCode == KeyEvent.VK_ENTER) {
+				RunButtonListener.handleEvent(this.view, this.model, this.settingContainer);
+			}
+
+			// "Esc" button: clear all inputted expression.
+			if (keyCode == KeyEvent.VK_ESCAPE) {
+				this.view.inputField.setText("");
+			}
 		}
 	}
 
@@ -470,42 +501,19 @@ public final class Presenter {
 			Model.AsyncCalculationListener asyncCalcListener = new Model.AsyncCalculationListener() {
 				public void calculationFinished(String outputText) {
 					// The calculation/scripting and calling-back will be performed on the other thread.
-					// Hence, use "SwingUtilities.invokeLayer" for updating the content of 
+					// Hence, use "SwingUtilities.invokeLayer" for updating the content of
 					// the "OUTPUT" text field on the event-dispatcher thread.
 					SwingUtilities.invokeLater(new OutputFieldUpdater(view, outputText));
 				}
 			};
 
 			// Perform the calculation on the other thread, asynchronously.
-			// When it will have completed, the above "calculation listener" will be called back. 
+			// When it will have completed, the above "calculation listener" will be called back.
 			model.calculateAsynchronously(view.inputField.getText(), asyncCalcListener, setting);
 		}
 	}
-	
-	
-	/**
-	 * The listener handling the event of "=" button, for running a calculation or a script.
-	 */
-	private static final class RunKeyListener extends KeyAdapter {
-		private Model model;
-		private View view;
-		private SettingContainer settingContainer;
 
-		protected RunKeyListener(View view, Model model, SettingContainer settingContainer) {
-			this.model = model;
-			this.view = view;
-			this.settingContainer = settingContainer;
-		}
 
-		@Override
-		public final void keyPressed(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-				RunButtonListener.handleEvent(this.view, this.model, this.settingContainer);
-			}
-		}
-	}
-
-	
 	/**
 	 * The listener handling the event of the exit button.
 	 */
@@ -577,7 +585,7 @@ public final class Presenter {
 				}
 
 				case "(" :
-				case ")" : 
+				case ")" :
 				case "PI" : {
 					appendedText = keyText;
 					break;
@@ -685,8 +693,8 @@ public final class Presenter {
 
 					// If selected a non-Vnano file.
 					if (!scriptFile.getName().endsWith(".vnano") || scriptFile.isDirectory()) {
-						String errorMessage = this.settingContainer.localeCode.equals(LocaleCode.JA_JP) ? 
-							"選択されたファイルは、Vnano のスクリプトファイルではありません。" : 
+						String errorMessage = this.settingContainer.localeCode.equals(LocaleCode.JA_JP) ?
+							"選択されたファイルは、Vnano のスクリプトファイルではありません。" :
 							"The selected file is not a Vnano script file." ;
 						MessageManager.showErrorMessage(
 							errorMessage, "!", settingContainer.localeCode, settingContainer.alwaysPrintError
