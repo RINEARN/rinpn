@@ -47,7 +47,7 @@ This software is released under the MIT License.
 
 ### Requirements
 
-1. Java&reg;
+1. Java&reg; (19 or later)
 
 1. Git
 
@@ -95,7 +95,9 @@ When the RINPn is executed, the calculator window will be displayed:
 You can retract the key panel by clicking "▲KEY-PANEL" switch, and expand by clicking it again. 
 The window color, opacity, font sizes, and so on are customizable by modifying values in "Settings.txt".
 
-On the above window, you can calculate the value of the inputted expression by typing the "Enter" key, or pressing "=" button. In the expression, various math functions such as sin, cos, and so on are available by default (and you can define your original functions).
+On the above window, you can calculate the value of the inputted expression by typing the "Enter" key, or pressing "=" button. Also, you can clear the input field by "Esc" key or "C" button.
+
+In the expression, various math functions such as sin, cos, and so on are available by default (and you can define your original functions).
 
 In addition, by inputting the file name/path of a script written in C-like simple language "[Vnano](https://www.vcssl.org/ja-jp/vnano/)", you can execute it. Instead, you also can select a script file by clicking "Script" button. Scripts are useful for performing complicated calculations automatically.
 
