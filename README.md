@@ -4,12 +4,11 @@
 
 ![Concept Image](./img/signboard.jpg)
 
-The RINPn is a powerful scientific calculator software, having simple window. The RINPn is available in both GUI (window) and command-lines, and various math functions are available by default. In addition, you can define new functions, and you can also write/execute scripts for taking complex calculations.
+RINPn is a powerful scientific calculator software featuring a straightforward interface. It is available in both GUI (graphical user interface) and command-line versions, and comes equipped with a variety of mathematical functions. Additionally, you can define new functions and execute scripts to perform complex calculations.
 
-**Note: This README is for users who want to build this software from source code by yourself.
-You can also get prebuilt-packages of this software from the following official website.**
+**Note: This README is intended for users who wish to build the software from source. Prebuilt packages of this software can also be obtained from the following official website.**
 
-### The RINPn Official Website
+### RINPn Official Website
 
 - English: [https://www.rinearn.com/en-us/rinpn/](https://www.rinearn.com/en-us/rinpn/)</a>
 - Japanese:   [https://www.rinearn.com/ja-jp/rinpn/](https://www.rinearn.com/ja-jp/rinpn/)</a>
@@ -18,8 +17,7 @@ You can also get prebuilt-packages of this software from the following official 
 
 
 
-## Index
-- <a href="#version-note">Note</a>
+## Table of Contents
 - <a href="#license">License</a>
 - <a href="#how-to-build">How to Build</a>
 - <a href="#how-to-use">How to Use</a>
@@ -28,17 +26,10 @@ You can also get prebuilt-packages of this software from the following official 
 
 
 
-<a id="version-note"></a>
-## Note
-
-The RINPn has not officially released yet. 
-The current version of the RINPn is a &quot;open beta&quot;.
-
-
 <a id="license"></a>
 ## License
 
-This software is released under the MIT License.
+This software is distributed under the MIT License.
 
 
 
@@ -47,20 +38,20 @@ This software is released under the MIT License.
 
 ### Requirements
 
-1. Java&reg; (19 or later)
+1. Java&trade; Development Kit (Version 19 or later)
 
 1. Git
 
 
 ### Building Steps
 
-1. Clone this repository
+1. Clone the repository:
 
 		cd <working-directory>
 		git clone https://github.com/RINEARN/rinpn.git
 		cd rinpn
 
-1. Build
+1. Build the software:
 
 
 		.\build.bat      # For Microsoft Windows
@@ -68,7 +59,7 @@ This software is released under the MIT License.
 
 		(or, if you are using Apache Ant:  ant -f build.xml )
 
-1. Check
+1. Test the build:
 
 		java -jar RINPn.jar --version
 		> RINPn Ver.?.?.?  / with Vnano Ver.?.?.?  (?: numbers)
@@ -78,30 +69,31 @@ This software is released under the MIT License.
 <a id="how-to-use"></a>
 ## How to Use
 
-On Microsoft&reg; Windows&reg;, **double-click the batch file "RINPN_\*.\*.\*.bat" (\*: numbers) to execute the RINPn**. 
+On Microsoft&reg; Windows&reg;, **double-click the batch file "RINPn_\*.\*.\*.bat" (\*: version numbers) to launch RINPn.**
 
-On other OS (Linux&reg;, etc.), execute by the following command:
+For other operating systems (Linux&reg;, etc.), use the following command:
 
     java -jar RINPn.jar
 
-Also, if the path of "cmd" folder of the RINPn is registered to the environment variable Path/PATH, you can launch the RINPn by more simple command as follows:
+If the "cmd" folder within the RINPn directory is added to your Path/PATH environment variable, you can start RINPn with this simpler command:
 
     rinpn
 
-When the RINPn is executed, the calculator window will be displayed:
+Upon launching, the calculator interface will appear as shown below:
 
 ![Calculator Window](./img/gui_retractable_en_us.png)
 
-You can retract the key panel by clicking "▲KEY-PANEL" switch, and expand by clicking it again. 
-The window color, opacity, font sizes, and so on are customizable by modifying values in "Settings.txt".
+You can toggle the visibility of the key panel by clicking the "▲KEY-PANEL" switch, for a more compact or expanded view. Customize the window's color, opacity, font size, and more by editing the "Settings.txt" file.
 
-On the above window, you can calculate the value of the inputted expression by typing the "Enter" key, or pressing "=" button. Also, you can clear the input field by "Esc" key or "C" button.
+To calculate the value of an entered expression, press the "Enter" key on your computer's keyboard or the "=" button on the RINPn interface. To clear the input, use the "Esc" key or the "C" button.
 
-In the expression, various math functions such as sin, cos, and so on are available by default (and you can define your original functions).
+The calculator supports various mathematical functions like sin, cos, etc., by default. You can also define your own functions.
 
-In addition, by inputting the file name/path of a script written in C-like simple language "[Vnano](https://www.vcssl.org/ja-jp/vnano/)", you can execute it. Instead, you also can select a script file by clicking "Script" button. Scripts are useful for performing complicated calculations automatically.
+Furthermore, you can execute scripts written in a C-like simple language "[Vnano](https://www.vcssl.org/ja-jp/vnano/)" by entering the script’s file name or path or by selecting a script file through the "Script" button. These scripts are particularly useful for automating complex calculations.
 
-Also, if the path of "cmd" folder of the RINPn is registered to the environment variable Path/PATH, you can calculate in the command-line as follows:
+
+
+Also, if the "cmd" folder within the RINPn directory is added to your Path/PATH environment variable, you can perform calculations directly from the command line. For example:
 
     rinpn "1 + 2"
 	> 3
@@ -113,79 +105,66 @@ Also, if the path of "cmd" folder of the RINPn is registered to the environment 
 	> 0.8414709848
 
 
-For more details, see the user guide document **"RINPn_User_Guide_English.html"** which is attached in this repository. Also, you can see the same guide on the web: 
+For more details, refer to the user guide document **"RINPn_User_Guide_English.html"** included in this repository. You can also view the same guide online at:
 
 * [RINPn User Guide](https://www.rinearn.com/en-us/rinpn/guide/)</a>
 
-As introduced in the above user guide (and in this README shortly), the RINPn have many features, e.g.:
+As highlighted in the user guide (and briefly in this README), RINPn offers numerous features, including:
 
-* Defining your original functions and variables
-* Running scripts written in C-like simple language "[Vnano](https://www.vcssl.org/en-us/vnano/doc/tutorial/language)"
-* Calling processes implemented in Java
+* Defining custom functions and variables
+* Executing scripts written in a C-like simple language "[Vnano](https://www.vcssl.org/en-us/vnano/doc/tutorial/language)"
+* Invoking processes implemented in Java
 
-and so on. In addition, you can use all built-in functions and variables listed in the following page by default:
+among others. Additionally, all built-in functions and variables provided by the Vnano Standard Plug-ins are available by default and listed on the following page:
 
-* [List of built-In functions and variables, provided by Vnano Standard Plug-ins](https://www.vcssl.org/en-us/vnano/plugin/)</a>
+* [List of built-in functions and variables provided by Vnano Standard Plug-ins](https://www.vcssl.org/en-us/vnano/plugin/)</a>
 
-The RINPn is a very powerful calculator app, so we can't introduce all features in this short README. At first, please try using the RINPn! Then, see the above documents as needed.
+RINPn is an extremely versatile calculator app; hence, this short README cannot cover all its features. We encourage you to start using RINPn and consult the above documents as needed.
 
 
 <a id="architecture"></a>
 ## Software Architecture
 
-The software architecture of the source code of the RINPn is a kind of "MVP pattern", which mainly consists of 3 core components: Model, View, and Presenter.
-Each component is implemented as a class, in [com.rinearn.rinpn](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/) package. In addition, although it is independent from the implementation of the RINPn, [the script engine of the Vnano](https://github.com/RINEARN/vnano) is embedded, which performs calculations and scriptings.
+The software architecture of RINPn follows the "MVP (Model-View-Presenter) pattern" and is primarily composed of three core components: Model, View, and Presenter. Each component is implemented as a class within the [com.rinearn.rinpn](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/) package. Additionally, while it operates independently of RINPn's implementation, [the Vnano script engine](https://github.com/RINEARN/vnano) is embedded to handle calculations and scripting.
 
 
-The following is a block diagram to grasp relationship between components we mentioned above:
+Below is a block diagram that illustrates the relationships between the aforementioned components:
 
 ![Block Diagram](./img/architecture.jpg)
 
-As in the above diagram, the 
-[RINPn](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/RINPn.java) 
-class is the surface layer of implementation of this software, 
-and in there Model/View/Presenter components are combined and work together.
-In the following, we will explain the role of each component.
+As shown in the diagram, the [RINPn](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/RINPn.java) class acts as the surface layer of the software, where the Model, View, and Presenter components are integrated and function collaboratively. The roles of each component will be discussed further in the following sections.
 
 
 
 <a id="architecture-model"></a>
 ### Model ( [com.rinearn.rinpn.Model](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/Model.java) class )
 
-The Model is the component provides the functional aspects of the calculator, excluding the UI.
-For example, the Model takes a calculation expression as an input, and returns the calculation result (performed by using the script engine) as an output.
+The Model component handles the functional aspects of the calculator, independent of the user interface. It receives a calculation expression as input and outputs the result, which is processed using the script engine.
 
-In the CUI mode, the RINPn class calls the calculation process of the Model directly, on the main thread.
-On the other hand, In the GUI mode, the calculation process of the Model is called from the Presenter as an event-driven process.
+In the command-line interface (CUI) mode, the RINPn class directly invokes the calculation process of the Model on the main thread. In contrast, in the graphical user interface (GUI) mode, the calculation process is initiated by the Presenter as part of an event-driven process.
 
 
 <a id="architecture-view"></a>
 ### View ( [com.rinearn.rinpn.View](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/View.java) class )
 
+The View component serves as the graphical interface of the application, consisting of a window, text fields, and other UI elements.
 
-The View is the component plays the role of the graphical surface of the UI, which composed of a window, text fields, and so on.
-
-Note that, the View does not handle any events which occur when an user has operated the UI components. Such events are handled by the Presenter, not the View. The role of the View is only having/providing UI components.
+It is important to note that the View does not handle events triggered by user interactions with the UI components. These events are managed by the Presenter, not the View. The primary role of the View is simply to display and provide access to the UI components.
 
 
 
 <a id="architecture-presenter"></a>
 ### Presenter ( [com.rinearn.rinpn.Presenter](https://github.com/RINEARN/rinpn/blob/main/src/com/rinearn/rinpn/Presenter.java) class )
 
-The Presenter is the component mediates between the Model and the View.
+The Presenter acts as a mediator between the Model and the View.
 
-The Presenter class has various event listeners as inner classes.
-When an user has operated a View's UI component, the corresponding event listener in the Presenter is called. Then, the listener calls the Model's calculation process, and displays its result by updating the View's UI component.
+It includes various event listeners as inner classes. When a user interacts with a UI component of the View, the corresponding event listener in the Presenter is triggered. This listener then initiates the Model's calculation process, and updates the View with the result to display it.
 
 
 <a id="architecture-engine"></a>
 ### Script Engine ( [org.vcssl.nano](https://github.com/RINEARN/vnano/blob/main/src/org/vcssl/nano/) package )
 
-This script engine performs calculations requested by the Model. 
-Executions of scripts, and communications with plug-ins, are also taken by this engine.
-This engine is being developed independently as the "Vnano" script engine, for embedded use in applications.
-For details of this engine, see the document of: 
-[https://github.com/RINEARN/vnano](https://github.com/RINEARN/vnano)
+This script engine, known as "Vnano," is responsible for performing calculations requested by the Model, executing scripts, and managing communications with plug-ins. It is independently developed for embedded use in general applications. For more information about this engine, please visit the Vnano documentation at: [https://github.com/RINEARN/vnano](https://github.com/RINEARN/vnano)
 
 
 
@@ -195,7 +174,7 @@ For details of this engine, see the document of:
 
 The RINPn is developed by a Japanese software development studio: [RINEARN](https://www.rinearn.com/). The author is Fumihiro Matsui.
 
-Please free to contact us if you have any questions, feedbacks, and so on.
+Please feel free to contact us if you have any questions, feedback, or other comments.
 
 
 ---
