@@ -2,6 +2,8 @@
 
 &raquo; [Japanese README](./README_JAPANESE.md)
 
+&raquo; [Ask the AI for help (ChatGPT account required)](https://chatgpt.com/g/g-Hu225rEdv-rinpn-assistant)
+
 ![Concept Image](./img/signboard.jpg)
 
 RINPn is a powerful scientific calculator software featuring a straightforward interface. It is available in both GUI (graphical user interface) and command-line versions, and comes equipped with a variety of mathematical functions. Additionally, you can define new functions and execute scripts to perform complex calculations.
@@ -104,8 +106,7 @@ Also, if the "cmd" folder within the RINPn directory is added to your Path/PATH 
 	rinpn "Example.vnano"
 	> 0.8414709848
 
-
-For more details, refer to the user guide document **"RINPn_User_Guide_English.html"** included in this repository. You can also view the same guide online at:
+For more detailed instructions, please refer to [the documents in the doc folder](doc/README.md). Additionally, a user guide with almost the same content, formatted in an easy-to-read HTML version, is available on the official RINPn website:
 
 * [RINPn User Guide](https://www.rinearn.com/en-us/rinpn/guide/)</a>
 
@@ -120,6 +121,11 @@ among others. Additionally, all built-in functions and variables provided by the
 * [List of built-in functions and variables provided by Vnano Standard Plug-ins](https://www.vcssl.org/en-us/vnano/plugin/)</a>
 
 RINPn is an extremely versatile calculator app; hence, this short README cannot cover all its features. We encourage you to start using RINPn and consult the above documents as needed.
+
+Also, RINPn has an official guide AI, allowing you to ask questions about how to use it:
+
+&raquo; [Ask the AI for help (ChatGPT account required)](https://chatgpt.com/g/g-Hu225rEdv-rinpn-assistant)
+
 
 
 <a id="architecture"></a>
@@ -186,6 +192,8 @@ Please feel free to contact us if you have any questions, feedback, or other com
 - Microsoft Windows is either a registered trademarks or trademarks of Microsoft Corporation in the United States and/or other countries. 
 
 - Linux is a trademark of linus torvalds in the United States and/or other countries. 
+
+* ChatGPT is a trademark or a registered trademark of OpenAI OpCo, LLC in the United States and other countries.
 
 - Other names may be either a registered trademarks or trademarks of their respective owners. 
 

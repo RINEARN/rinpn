@@ -2,6 +2,8 @@
 
 &raquo; [English README](./README.md)
 
+&raquo; [AIに使い方を聞く（ChatGPTのアカウントが必要）](https://chatgpt.com/g/g-Hu225rEdv-rinpn-assistant)
+
 ![Concept Image](./img/signboard.jpg)
 
 RINPn（発音：りんぷん）は、単純で扱いやすい画面を持つ、パワフルな関数電卓ソフトです。GUIとコマンドラインの両方で利用可能です。標準でいろいろな数学・統計関数が利用でき、ユーザー独自の関数を自作する事も可能です。また、複雑な計算処理をスクリプトとして書いて実行する事もできます。
@@ -105,7 +107,7 @@ RINPn が起動されると、以下のような電卓画面が表示されま�
 	> 0.8414709848
 
 
-より詳しい使用方法は、リポジトリ内に同梱されているユーザーガイド「 **RINPn_User_Guide_Japanese.html** 」をご参照ください。また、同内容のガイドがWeb上でも参照できます：
+より詳しい使用方法は、[doc フォルダ内のドキュメント類](doc/README_JAPANESE.md) をご参照ください。また、ほぼ同内容で、読みやすいHTMLに整形されたユーザーガイドが、RINPn の公式サイト上でも参照できます：
 
 * [RINPn ユーザーガイド](https://www.rinearn.com/ja-jp/rinpn/guide/)</a>
 
@@ -120,6 +122,10 @@ RINPn が起動されると、以下のような電卓画面が表示されま�
 * [組み込み関数と変数の一覧（Vnano標準プラグインによって提供）](https://www.vcssl.org/ja-jp/vnano/plugin/)</a>
 
 このように、RINPn はとても強力な電卓ソフトで、この短い README 内で全ての機能を説明する事はできません。まずはともかく、ぜひ RINPn を使ってみてください！ そして、必要に応じて、上に挙げたドキュメントなどに目を通してみてください。
+
+また、RINPn には公式なガイドAIが存在し、質問形式で使い方を聞く事もできます：
+
+&raquo; [AIに使い方を聞く（ChatGPTのアカウントが必要）](https://chatgpt.com/g/g-Hu225rEdv-rinpn-assistant)
 
 
 <a id="architecture"></a>
@@ -195,6 +201,8 @@ Exevalator は、日本の個人運営の開発スタジオ [RINEARN](https://ww
 - Windows は、米国 Microsoft Corporation の米国およびその他の国における登録商標です。
 
 - Linux は、Linus Torvalds 氏の米国およびその他の国における商標または登録商標です。 
+
+* ChatGPT は、米国 OpenAI OpCo, LLC による米国またはその他の国における商標または登録商標です。
 
 - その他、文中に使用されている商標は、その商標を保持する各社の各国における商標または登録商標です。
 
