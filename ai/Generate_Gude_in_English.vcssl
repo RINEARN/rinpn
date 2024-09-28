@@ -1,0 +1,157 @@
+coding UTF-8;
+
+// ================================================================================
+// Markdowns to Knowledge-JSONs Converter Ver.1.0.3
+// Made by: RINEARN (Fumihiro Matsui)
+// Licence: Unlicense or CC0 (Dual License)
+// ================================================================================
+
+import System;
+import File;
+import Text;
+import data.Queue;
+
+
+// --------------------------------------------------------------------------------
+// Defines the constant parameters.
+// --------------------------------------------------------------------------------
+
+const string OUTPUT_FILE_PATH = "./Guide_in_English.json";
+const string OUTPUT_ENCODING = "UTF-8";
+
+const string REFTABLE_OUTPUT_FILE_PATH = "./REFTABLE_Guide_in_English.txt";
+const string REFTABLE_OUTPUT_ENCODING = "UTF-8";
+
+const string INPUT_BASE_DIRECTORY_PATH = "./";
+const string INPUT_ENCODING = "UTF-8";
+
+// --------------------------------------------------------------------------------
+// Defines the pages to be processed.
+// --------------------------------------------------------------------------------
+
+Queue<Page> pageQueue;       // (Path to a Markdown file, URL in ref-table, Title, Short description)
+enqueue<Page>(pageQueue, newPage("../doc/Introduction.md", "https://www.rinearn.com/en-us/rinpn/guide/start", "Introduction - Overview of RINPn and How to Get Started", "Introducing RINPn and explaining how to prepare for its use."));
+enqueue<Page>(pageQueue, newPage("../doc/Step1.md", "https://www.rinearn.com/en-us/rinpn/guide/gui", "Step 1 - How to Use in GUI Mode (on the Calculator Window)", "Explaining how to perform calculations in the RINPn calculator window."));
+enqueue<Page>(pageQueue, newPage("../doc/Step2.md", "https://www.rinearn.com/en-us/rinpn/guide/cui", "Step 2 - How to Use in CUI Mode (on the Command-Line Terminal)", "Explaining how to calculate using RINPn in the command line."));
+enqueue<Page>(pageQueue, newPage("../doc/Step3.md", "https://www.rinearn.com/en-us/rinpn/guide/script", "Step 3 - How to Execute Scripts", "Explaining how to execute scripts for complex numerical calculations, automation, and more."));
+enqueue<Page>(pageQueue, newPage("../doc/Step4.md", "https://www.rinearn.com/en-us/rinpn/guide/library", "Step 4 - How to Add Functions/Variables by Scripts (Library Scripts)", "Explaining how to implement new functions/variables as script code for use in RINPn."));
+enqueue<Page>(pageQueue, newPage("../doc/Step5.md", "https://www.rinearn.com/en-us/rinpn/guide/plugin", "Step 5 - Implement Functions/Variables in Java&trade; (Plug-in Development)", "Explaining how to implement new functions/variables in Java&trade; for use in RINPn."));
+enqueue<Page>(pageQueue, newPage("../doc/Step6.md", "https://www.rinearn.com/en-us/rinpn/guide/embed", "Step 6 - How to Embed into Other Software", "Explaining how to embed the RINPn calculation/scripting engine into other software written in Java&trade;."));
+enqueue<Page>(pageQueue, newPage("../doc/Appendix.md", "https://www.rinearn.com/en-us/rinpn/guide/builtin", "Appendix - List of Built-in Functions/Variables", "A list of frequently used functions/variables available in RINPn."));
+
+
+struct Page {
+	string relativeFilePath;
+	string url;
+	string title;
+	string description;
+	string text;
+	int hierarchyOffset;
+}
+
+Page newPage(string relativeFilePath, string url, string title, string description) {
+	Page page;
+	page.relativeFilePath = relativeFilePath;
+	page.title = title;
+	page.description = description;
+	page.url = url;
+	page.hierarchyOffset = 1; // Always 1 for the current implementation.
+	return page;
+}
+
+
+
+
+// --------------------------------------------------------------------------------
+// Processes the aboves.
+// --------------------------------------------------------------------------------
+
+void main() {
+	int pageCount = size<Page>(pageQueue);
+	println("PAGE COUNT = " + pageCount);
+	
+	int outputFile = open(OUTPUT_FILE_PATH, System.WRITE, OUTPUT_ENCODING);
+	int refTableFile = open(REFTABLE_OUTPUT_FILE_PATH, System.WRITE, REFTABLE_OUTPUT_ENCODING);
+	
+	writeln(outputFile, "{");
+	
+	for (int ipage; ipage<pageCount; ipage++) {
+		
+		// Extract one page from the queue (global variable).
+		Page page = dequeue<Page>(pageQueue);
+		
+		// Open the page file.
+		string absoluteFilePath = getFilePath(page.relativeFilePath, INPUT_BASE_DIRECTORY_PATH, File.ABSOLUTE);
+		int inputFile = open(absoluteFilePath, System.READ, INPUT_ENCODING);
+		
+		// Load, convert, and output the content of the page.
+		println("PROCESSING PAGE = " + absoluteFilePath);
+		processPage(
+			inputFile, outputFile,
+			ipage, (ipage == pageCount - 1),
+			page.title, page.description, page.url, page.hierarchyOffset
+		);
+		
+		// Write a line in the reference-table.
+		writeln(refTableFile, "* [" + page.title + "](" + page.url + "): " + page.description);
+		
+		// Close the page file.
+		close(inputFile);
+	}
+	
+	// Close the knowledge file.
+	writeln(outputFile, "}");
+	close(outputFile);
+	close(refTableFile);
+	
+	println("COMPLETED !");
+}
+
+
+void processPage(int inputFile, int outputFile, int pageIndex, boolean isLast, string title, string description, string url, int hierarchyOffset) {
+	int lineCount = countln(inputFile);
+	int headerLineCount = 0;
+	
+	string offsetTab = "";
+	for (int ihierarchy=0; ihierarchy<hierarchyOffset; ihierarchy++) {
+		offsetTab += "	";
+	}
+	string offsetTabTab = offsetTab + "	";
+
+	writeln(outputFile, offsetTab + "\"page" + pageIndex + "\": {");
+
+	writeln(outputFile, offsetTabTab + "\"title\": \"" + title + "\",");
+	writeln(outputFile, offsetTabTab + "\"description\": \"" + description + "\",");
+	//writeln(outputFile, offsetTabTab + "\"url\": \"" + url + "\",");
+	
+	write(outputFile, offsetTabTab + "\"text\": \"");
+	
+	// Process all the lines in the input file.
+	for (int iline=0; iline<lineCount; iline++) {
+		string line = readln(inputFile);
+		line = escape(line);
+		write(outputFile, line + "\\n");
+	}
+	
+	writeln(outputFile, "\"");
+	if (isLast) {
+		writeln(outputFile, offsetTab + "}");
+	} else {
+		writeln(outputFile, offsetTab + "},");
+	}
+}
+
+private string escape(string line) {
+	line = replaceText(line, "\\", "\\\\", Text.ALL);
+	line = replaceText(line, "\"", "\\\"", Text.ALL);
+	line = replaceText(line, "/", "\\/", Text.ALL);
+	line = replaceText(line, "	", "\\t", Text.ALL);
+	line = replaceText(line, CR+LF, LF, Text.ALL);
+	line = replaceText(line, LF, "\\n", Text.ALL);
+	return line;
+}
+
+
+
+
+

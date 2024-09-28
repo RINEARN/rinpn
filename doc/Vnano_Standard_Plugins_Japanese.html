@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+	<title>Vnano 標準プラグイン 仕様書</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1">
+	<style type="text/css">
+		.spec-dl { font-weight: bold; }
+		.spec-dl dd { margin-bottom: 14px; }
+		.spec-dl dt { display: list-item; list-style-position: outside; margin-left: 20px; list-style-type: disc; }
+	</style>
+</head>
+
+<body>
+
+
+
+<h1>Vnano 標準プラグイン 仕様書</h1>
+<hr />
+
+
+<h2>概要</h2>
+
+<p>
+Vnano 標準プラグインは、Vnano のスクリプト内で使用できる変数/関数として、基本的なユーティリティ機能を提供するための、公式なプラグインのセットです。
+</p>
+
+<p>
+この標準プラグインは、Vnano によるスクリプト処理機能を備えるアプリケーション（ソフトウェア）においては、あらかじめ同梱されている可能性があります。
+そのようなアプリケーションでは、この標準プラグインが提供する機能（変数/関数）は標準で利用できます。
+ただし、用途などによっては、必ずしも全ての標準プラグインが同梱されているとは限らないため、どれが利用可能かについては、アプリケーションのドキュメントをご参照ください。
+</p>
+
+<h2>ライセンス</h2>
+
+<p>
+Vnano 標準プラグインに含まれるプラグインは、全て <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.ja">CC0</a> で公開されています。
+</p>
+
+
+
+<h2>標準プラグインおよび機能一覧</h2>
+
+
+
+<h3><a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html">System プラグイン群</a></h3>
+
+<p>
+基本的な入出力機能やユーティリティ機能などを提供するプラグイン群です。
+</p>
+
+<dl class="spec-dl">
+	<dt><a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#SystemEnvironmentXnci1Plugin">SystemEnvironmentXnci1Plugin</a></dt>
+		<dd>
+			環境に関する情報などを提供するプラグインです。
+			<br />
+			変数: 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#EOL">EOL</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#LF">LF</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#CR">CR</a>
+		</dd>
+	<dt><a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#SystemEnvironmentXnci1Plugin">SystemDataTypeXnci1Plugin</a></dt>
+		<dd>
+			データ型関連のユーティリティ機能を提供するプラグインです。
+			<br />
+			変数: 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#INT_MAX">INT_MAX</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#INT_MIN">INT_MIN</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#FLOAT_MAX">FLOAT_MAX</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#FLOAT_MIN_ABS_NORMAL">FLOAT_MIN_ABS_NORMAL</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#FLOAT_MIN_ABS_DENORMAL">FLOAT_MIN_ABS_DENORMAL</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#NAN">NAN</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#INF">INF</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#UP">UP</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#UP_SIGNIF">UP_SIGNIF</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#DOWN">DOWN</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#DOWN_SIGNIF">DOWN_SIGNIF</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#HALF_UP">HALF_UP</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#HALF_UP_SIGNIF">HALF_UP_SIGNIF</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#HALF_DOWN">HALF_DOWN</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#HALF_DOWN_SIGNIF">HALF_DOWN_SIGNIF</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#HALF_TO_EVEN">HALF_TO_EVEN</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#HALF_TO_EVEN_SIGNIF">HALF_TO_EVEN_SIGNIF</a>
+			<br />
+			関数: 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#nan">nan(value)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#inf">inf(value)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#length">length(array, dimIndex)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#rank">rank(array)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#round">round(float floatValue, int numberOfDigits, int mode)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#round_string">round(string stringValue, int numberOfDigits, int mode)</a>
+		</dd>
+	<dt><a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#SystemTerminalIOXnci1Plugin">SystemTerminalIOXnci1Plugin</a></dt>
+		<dd>
+			端末との入出力機能を提供するプラグインです。
+			<br />
+			関数: 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#print">print(...)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#println">println(...)</a>
+		</dd>
+	<dt><a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#SystemUserIOXnci1Plugin">SystemUserIOXnci1Plugin</a></dt>
+		<dd>
+			ユーザーとの間の対話的な入出力機能を提供するプラグインです。
+			<br />
+			関数: 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#popup">popup(message)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#alert">alert(message)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#confirm">confirm(message)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#input">input(message)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#input-string-any">input(message, defaultValue)</a>
+		</dd>
+	<dt><a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#SystemFileIOXnci1Plugin">SystemFileIOXnci1Plugin</a></dt>
+		<dd>
+			ファイル入出力機能を提供するプラグインです。
+			<br />
+			変数: 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#READ">READ</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#WRITE">WRITE</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#APPEND">APPEND</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#READ_CSV">READ_CSV</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#WRITE_CSV">WRITE_CSV</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#APPEND_CSV">APPEND_CSV</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#READ_TSV">READ_TSV</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#WRITE_TSV">WRITE_TSV</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#APPEND_TSV">APPEND_TSV</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#READ_STSV">READ_STSV</a>
+			<br />
+			関数: 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#open">open(fileName, mode)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#open3arg">open(fileName, mode, encoding)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#close">close(fileId)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#flush">flush(fileId)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#write">write(fileId, ...)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#writeln">writeln(fileId, ...)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#read">read(fileId)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#readln">readln(fileId)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#countln">countln(fileId)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#save">save(filePath, value)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#load">load(filePath)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#exists">exists(filePath)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#isdir">isdir(directoryPath)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#listdir">listdir(directoryPath)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#mkdir">mkdir(directoryPath)</a> / 
+		</dd>
+	<dt><a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#SystemTimeXnci1Plugin">SystemTimeXnci1Plugin</a></dt>
+		<dd>
+			時間制御に関するユーティリティ機能を提供するプラグインです。
+			<br />
+			関数: 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#time">time()</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#sleep">sleep(sleepTime)</a>
+		</dd>
+	<dt><a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#SystemTerminationXnci1Plugin">SystemTerminationXnci1Plugin</a></dt>
+		<dd>
+			スクリプトを終了させる機能を提供するプラグインです。
+			<br />
+			関数: 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#exit">exit()</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#exit_int">exit(exitStatusCode)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#error">error(errorMessage)</a>
+		</dd>
+	<dt><a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#SystemTestXnci1Plugin">SystemTestXnci1Plugin</a></dt>
+		<dd>
+			テストのためのユーティリティ機能を提供するプラグインです。
+			<br />
+			関数: <a href="../plugin/org/vcssl/nano/plugin/system/README_JAPANESE.html#assert">assert(expectedCondition)</a>
+		</dd>
+</dl>
+
+
+
+<h3><a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html">Math プラグイン群</a></h3>
+
+
+
+<p>
+初等的な数学・統計関数などを提供するプラグイン群です。
+</p>
+
+<dl class="spec-dl">
+	<dt><a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#MathElementaryXnci1Plugin">MathElementaryXnci1Plugin</a></dt>
+		<dd>
+			初等的な数学関数などを提供するプラグインです。
+			<br />
+			変数: <a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#PI">PI</a>
+			<br />
+			関数:
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#rad">rad(degree)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#deg">deg(radian)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#sin">sin(x)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#cos">cos(x)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#tan">tan(x)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#asin">asin(x)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#acos">acos(x)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#atan">atan(x)</a> /
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#sqrt">sqrt(x)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#ln">ln(x)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#log10">log10(x)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#pow">pow(x,exponent)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#exp">exp(x)</a> /
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#abs">abs(x)</a>
+		</dd>
+	<dt><a href="../plugin/org/vcssl/nano/plugin/math/README_JAPANESE.html#MathStatisticalXnci1Plugin">MathStatisticalXnci1Plugin</a></dt>
+		<dd>
+			初等的な統計関数などを提供するプラグインです。
+			<br />
+			関数: 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#sum">sum(...)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#sum_array">sum(array)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#mean">mean(...)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#mean_array">mean(array)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#van">van(...)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#van_array">van(array)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#van1">van1(...)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#van1_array">van1(array)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#sdn">sdn(...)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#sdn_array">sdn(array)</a> / 
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#sdn1">sdn1(...)</a>
+			<a href="../plugin/org/vcssl/nano/plugin/math/README_ENGLISH.html#sdn1_array">sdn1(array)</a>
+		</dd>
+</dl>
+
+
+
+
+
+
+</body>
+</html>

@@ -63,12 +63,12 @@ RINEARN
 <div style="margin-bottom: 50px;">
 	- 目次 -
 	<ul style="margin-top: 10px; margin-left: 34px;">
-		<li><a href="#start">はじめに</a></li>
+		<li><a href="#start">はじめに - ソフトの概要と導入方法</a></li>
 		<li><a href="#how-to-use-gui">ステップ 1 - GUIモードで使ってみる（電卓画面での使用）</a></li>
 		<li><a href="#how-to-use-cui">ステップ 2 - CUIモードで使ってみる（コマンドでの使用）</a></li>
 		<li><a href="#how-to-use-script">ステップ 3 - スクリプトを実行する</a></li>
 		<li><a href="#how-to-use-library">ステップ 4 - スクリプトで関数/変数を追加する (ライブラリスクリプトの使用)</a></li>
-		<li><a href="#how-to-use-plugin">ステップ 5 - Java&reg;言語で関数/変数を実装する (プラグイン開発)</a></li>
+		<li><a href="#how-to-use-plugin">ステップ 5 - Java&trade;言語で関数/変数を実装する (プラグイン開発)</a></li>
 		<li><a href="#how-to-embed">ステップ 6 - 別のソフトウェア内に組み込んで使う</a></li>
 		<li><a href="#built-in">付録 - 主な組み込み関数/変数</a></li>
 		<li><a href="#about-us">開発元について</a></li>
@@ -103,7 +103,7 @@ RINPn（りんぷん）は、単純で扱いやすい画面デザインの関数
 処理速度面では、最大で数億(数百メガ)～数十億(数ギガ)回/秒クラスの数値演算が可能<span class="smallsup">※</span>で、
 一般的なスクリプト言語環境と比べてもそこそこ速い部類のスペックがあります。
 なので、それなりの計算量の数値計算プログラミングにも耐えられます。
-さらに、計算式やスクリプトから、Java&reg; 言語で記述した処理を呼ぶ事までできます。
+さらに、計算式やスクリプトから、Java&trade; 言語で記述した処理を呼ぶ事までできます。
 </p>
 
 <div class="note"">
@@ -309,7 +309,7 @@ RINPn には2つのモードがあり、ここで扱うGUIモードでは、グ�
 
 <div class="note">
 	<p style="margin-top: 0px;">
-	上記コマンドを実行した際に、java コマンドが使えない等のエラーが表示される場合は、別途 Java&reg; 言語の実行環境(JRE)の導入が必要です。
+	上記コマンドを実行した際に、java コマンドが使えない等のエラーが表示される場合は、別途 Java&trade; 言語の実行環境(JRE)の導入が必要です。
 	その方法は、下記のようにいくつかあります。
 	</p>
 	
@@ -317,7 +317,7 @@ RINPn には2つのモードがあり、ここで扱うGUIモードでは、グ�
 	色々なOSで共通して行える方法としては、
 	<span class="highlight">OpenJDK</span> という開発環境（実行環境も含まれています）を導入する事が挙げられます。
 	詳しい導入手順については、「 OpenJDK &nbsp; インストール &nbsp; (ここにOSの名前) 」などでWeb検索してみてください。
-	実行環境目当てで入れるには少し大げさなのですが、<a href="#how-to-use-plugin">RINPn では Java&reg; 言語で自作した処理を呼ぶ事も可能</a>で、
+	実行環境目当てで入れるには少し大げさなのですが、<a href="#how-to-use-plugin">RINPn では Java&trade; 言語で自作した処理を呼ぶ事も可能</a>で、
 	その際には開発環境も必要になるため、入れておくと後々で便利かもしれません。
 	</p>
 	
@@ -479,20 +479,20 @@ PCがこれまで通りに使用できなくなるなどの危険があります
 </span>
 </p>
 
-<h3>Microsoft&reg; Windows&reg; 10 でのパス登録方法</h3>
+<h3>Microsoft&reg; Windows&reg; 10 や 11 でのパス登録方法</h3>
 
 <p>
 RINPn のフォルダを、PC内のどこか定位置に配置した上で、以下の手順でパスを登録します：
 </p>
 
 <div class="box">
-スタートボタンを押す &raquo; 歯車アイコン(設定)を選択 &raquo; 「環境変数を編集」と検索して移動 &raquo; 
-開かれた画面で「ユーザー環境変数」の一覧から「Path」(無ければ作成)を選び「編集」ボタンを押す &raquo; 
-開いた画面の「新規」ボタンを押し、
-RINPn の「 cmd 」フォルダのパス<span class="smallsup">※</span>を入力してください。
-その後、開いている画面を「OK」で閉じれば完了です。
-<br />
-<span style="font-size: 86%;">※ Shiftキーを押しながら cmd フォルダを右クリックすると、メニューからパスのコピーを行えます。</span>
+<ul>
+	<li>スタートボタンを押す</li>
+	<li>歯車アイコン(設定)を選択</li>
+	<li>「環境変数を編集」と検索して移動</li>
+	<li>開かれた画面で「ユーザー環境変数」の一覧から「Path」(無ければ作成)を選び「編集」ボタンを押す</li>
+	<li>開いた画面の「新規」ボタンを押し、RINPn の「 cmd 」フォルダのパス<span class="smallsup">※</span>を入力してください。その後、開いている画面を「OK」で閉じれば完了です。</li>
+	<span style="font-size: 86%;">※ Shiftキーを押しながら cmd フォルダを右クリックすると、メニューからパスのコピーを行えます。</span>
 </div>
 
 <p>
@@ -862,7 +862,7 @@ RINPn および Vnano では「 <span class="highlight">ライブラリ スク�
 
 <p>
 上記の「 ExampleLibrary.vnano 」内で定義されている変数「 libvar 」や関数「 libfun(x) 」は、
-例えば <a href="#how-to-use-gui">ステップ 1</a> で扱った、電卓に入力する計算式の中で、
+例えば <a href="#how-to-use-gui">ステップ 1</a> や <a href="#how-to-use-cui">ステップ 2</a> で扱った、電卓に入力する計算式の中で、
 以下の例のように使用できます：
 </p>
 
@@ -888,8 +888,7 @@ RINPn および Vnano では「 <span class="highlight">ライブラリ スク�
 </div>
 
 <p>
-同様に、<a href="#how-to-use-cui">ステップ 2</a> でコマンドライン引数に指定している計算式の中や、
-<a href="#how-to-use-script">ステップ 3</a> でのスクリプト内でも使用できます。
+同様に、<a href="#how-to-use-script">ステップ 3</a> でのスクリプト内でも使用できます。
 <p>
 
 
@@ -910,22 +909,22 @@ RINPn および Vnano では「 <span class="highlight">ライブラリ スク�
 
 <hr style="page-break-before: always" />
 
-<h1 id="how-to-use-plugin">ステップ 5 - Java&reg;言語で関数/変数を実装する<br />(プラグイン開発)</h1>
+<h1 id="how-to-use-plugin">ステップ 5 - Java&trade;言語で関数/変数を実装する<br />(プラグイン開発)</h1>
 
 <p>
-ライブラリ スクリプトによる方法以外にも、Java&reg;言語を用いて、新しい組み込み関数/変数を実装する事もできます。
+ライブラリ スクリプトによる方法以外にも、Java&trade;言語を用いて、新しい組み込み関数/変数を実装する事もできます。
 RINPn および Vnano では、組み込み関数/変数を提供する事を目的とした、
-Java&reg; 言語で記述されたプログラムの事を「 <span class="highlight">プラグイン</span> 」と呼びます。
+Java&trade; 言語で記述されたプログラムの事を「 <span class="highlight">プラグイン</span> 」と呼びます。
 </p>
 
 <p>
 プラグインによる関数/変数定義は、
 <a href="#how-to-use-library">ステップ 4</a> のようにライブラリ スクリプトで関数や変数を定義する方法と比べて、
-Java&reg; 言語の高い機能性を利用できる事が大きなメリットになるかもしれません。
+Java&trade; 言語の高い機能性を利用できる事が大きなメリットになるかもしれません。
 </p>
 
 <p>
-<span class="highlight">半面、実装したコードをコンパイルする際には、 別途 Java&reg; 言語の開発環境 (JDK) が必要です。</span>
+<span class="highlight">半面、実装したコードをコンパイルする際には、 別途 Java&trade; 言語の開発環境 (JDK) が必要です。</span>
 ここでは、ご使用のPCに既に何らかのJDKが導入されていて、javac コマンドが使用可能になっている事を前提として解説します。
 JDK の導入方法については、例えば「 OpenJDK &nbsp; インストール &nbsp; (ここにOSの名前) 」などでWeb検索してみてください。 
 </p>
@@ -990,7 +989,7 @@ RINPn では、プラグインは「 plugin 」フォルダ内に置きます。
 
 <p>
 同様に、<a href="#how-to-use-cui">ステップ 2</a> でコマンドライン引数に指定している計算式の中や、
-<a href="#how-to-use-script">ステップ 3</a> でのスクリプト内でも使用できます。
+<a href="#how-to-use-script">ステップ 3</a> や <a href="#how-to-use-library">ステップ 4</a> でのスクリプト内でも使用できます。
 <p>
 
 
@@ -998,7 +997,7 @@ RINPn では、プラグインは「 plugin 」フォルダ内に置きます。
 
 <p>
 プラグインのコード内容を編集した場合には、コンパイルする必要があります。
-以下のように、普通の Java&reg; 言語のプログラムと同様にコンパイルできます：
+以下のように、普通の Java&trade; 言語のプログラムと同様にコンパイルできます：
 </p>
 
 <div class="console">
@@ -1011,8 +1010,7 @@ javac ExamplePlugin.vnano
 なお、「 plugin 」フォルダ内のさらに org/vcssl/connect フォルダ内には、
 Vnano のプラグイン開発に有用なインターフェース類 ( XFCI1 や XNCI1 など ) が、
 標準で配置されています。
-そのため、必要に応じて、それらのインターフェース類をプラグインから import して使用できます
-（詳細は Vnanoのドキュメント内の「 <a href="https://www.vcssl.org/ja-jp/vnano/doc/tutorial/plugin">プラグインの開発</a> 」をご参照ください）。
+そのため、必要に応じて、それらのインターフェース類をプラグインから import して使用できます。
 その場合でも、特に何かを用意したり、コンパイラにオプション等を指定したりする必要はありません。
 </p>
 
@@ -1057,7 +1055,7 @@ Vnano のプラグイン開発に有用なインターフェース類 ( XFCI1 �
 <p>
 RINPn が使用している計算＆スクリプト処理エンジンである「
 <a href="https://www.vcssl.org/ja-jp/vnano/">Vnanoエンジン</a>
-」は、Java&reg; 言語で記述した別のソフトウェア内に組み込んで使う事ができます。
+」は、Java&trade; 言語で記述した別のソフトウェア内に組み込んで使う事ができます。
 開発元は RINPn と同じで、組み込み方や使い方も意外と簡単なので、ここで実際に試してみましょう！
 </p>
 
@@ -1200,12 +1198,12 @@ RINPn と同じようなエンジン設定で式「 1.2 + 3.4 」の値を計算
 
 <div>
 <div class="console">
-	(Microsoft&reg; Windows&reg; をご使用の場合)
+	# Microsoft&reg; Windows&reg; をご使用の場合
 	<br />
 	javac -cp ".;Vnano.jar" -encoding UTF-8 EmbedUseExample.java
 	<br />
 	<br />
-	(Linux&reg; やその他の環境をご使用の場合)
+	# Linux&reg; やその他の環境をご使用の場合
 	<br />
 	javac -cp ".:Vnano.jar" -encoding UTF-8 EmbedUseExample.java
 </div>
@@ -1218,12 +1216,12 @@ RINPn と同じようなエンジン設定で式「 1.2 + 3.4 」の値を計算
 </o>
 
 <div class="console">
-	(Microsoft&reg; Windows&reg; をご使用の場合)
+	# Microsoft&reg; Windows&reg; をご使用の場合
 	<br />
 	java -cp ".;Vnano.jar" EmbedUseExample
 	<br />
 	<br />
-	(Linux&reg; やその他の環境をご使用の場合)
+	# Linux&reg; やその他の環境をご使用の場合
 	<br />
 	java -cp ".:Vnano.jar" EmbedUseExample
 </div>
