@@ -62,14 +62,14 @@ RINEARN
 <div style="margin-bottom: 50px;">
 	- Table of Contents -
 	<ul style="margin-top: 10px; margin-left: 34px;">
-		<li><a href="#start">Introduction</a></li>
+		<li><a href="#start">Introduction - Overview of RINPn and How to Get Started</a></li>
 		<li><a href="#how-to-use-gui">Step 1 - Using RINPn in GUI Mode</a></li>
 		<li><a href="#how-to-use-cui">Step 2 - Using RINPn in CUI Mode (Command-Line Terminal)</a></li>
 		<li><a href="#how-to-use-script">Step 3 - How to Execute Scripts</a></li>
 		<li><a href="#how-to-use-library">Step 4 - How to Add Functions/Variables by Scripts (Library Scripts)</a></li>
 		<li><a href="#how-to-use-plugin">Step 5 - Implement Functions/Variables in Java&trade; (Plug-in Development)</a></li>
 		<li><a href="#how-to-embed">Step 6 - How to Embed into Other Software</a></li>
-		<li><a href="#built-in">Step 7 - List of Built-in Functions/Variables</a></li>
+		<li><a href="#built-in">Appendix - List of Built-in Functions/Variables</a></li>
 		<li><a href="#about-us">About Us</a></li>
 		<li><a href="#credit">Trademarks/Credits</a></li>
 	</ul>
@@ -78,7 +78,7 @@ RINEARN
 
 <hr style="page-break-before: always" />
 
-<h1 id="start">Introduction</h1>
+<h1 id="start">Introduction - Overview of RINPn and How to Get Started</h1>
 
 
 <h2 id="start-about">What is "RINPn"?</h2>
@@ -311,7 +311,7 @@ you can start it by typing "rinpn" without arguments.
 <div class="note">
 	<p style="margin-top: 0px;">
 	If you receive an error message stating that the "java" command is not found, 
-	you will need to install the Java® Runtime Environment (JRE). 
+	you will need to install the Java&trade; Runtime Environment (JRE). 
 	</p>
 	
 	<p>
@@ -481,16 +481,76 @@ If you are unfamiliar with these settings and can seek assistance, it is advisab
 </p>
 
 
+<h3>How to Register the Path on Microsoft&reg; Windows&reg; 10 and 11</h3>
+
 <p>
-Additionally, on Linux and similar systems, you might encounter a permission error the first time you use the "rinpn" command. 
-If this happens, you can grant the necessary permissions as follows:
+After placing the RINPn folder in a fixed location on your PC, follow the steps below to register the path:
+</p>
+
+<div class="box">
+<ul>
+	<li>Press the Start button</li>
+	<li>Select the gear icon (Settings)</li>
+	<li>Search for "Edit the environment variables" and move to that screen</li>
+	<li>In the opened window, select "Path" from the list of "User environment variables" (create it if it doesn't exist) and press the "Edit" button</li>
+	<li>In the new window, press the "New" button and enter the path to the "cmd" folder in the RINPn directory. After that, close the windows by pressing "OK", and the process is complete.</li>
+</ul>
+Tip: You can copy the path by right-clicking the "cmd" folder while holding down the Shift key and selecting "Copy as path" from the menu.
+</div>
+
+<p>
+Please note that if you move the RINPn folder to another location, you will need to update the registered path accordingly.
+</p>
+
+<h3>How to Register the Path on Linux&reg; and Other Systems</h3>
+
+<p>
+First, place the RINPn folder in a fixed location on your PC. For example, let's assume it's placed in the following directory:
 </p>
 
 <div class="console">
-	cd (directory of RINPn)/cmd
+    /usr/local/bin/rinpn/rinpn_?_?_?/
 	<br />
-	chmod +x rinpn &nbsp;&nbsp;&nbsp;&nbsp; # or, if necessary: sudo chmod +x rinpn
+    (The _?_?_? part represents the version numbers.)
 </div>
+<p>
+Next, use the cd command to navigate to the "cmd" directory inside the above directory, and grant execute permission to the "rinpn" file (no extension) with the following command:
+</p>
+
+<div class="console">
+    chmod +x rinpn
+	<br />
+    (If you encounter a permission error, use sudo chmod +x rinpn.)
+</div>
+
+Finally, open one of the following files in your home directory: ".bashrc" (hidden file), ".bash_profile", or ".profile" (the file that is valid depends on your OS or distribution). Then, add the following line at the end of the file:
+
+<div class="console">
+    export PATH=$PATH:/usr/local/bin/rinpn/rinpn_?_?_?/cmd/
+	<br />
+    (Replace _?_?_? with the version number.)
+</div>
+
+The above applies if your shell is bash. If you're using Ubuntu&reg; or a system with dash as the default shell, surround the right-hand side with double quotes:
+
+<div class="console">
+    export PATH="$PATH:/usr/local/bin/rinpn/rinpn_?_?_?/cmd/"
+	<br />
+    (Replace _?_?_? with the version number.)
+</div>
+
+<p>
+Note that the syntax may vary slightly depending on the shell. Please search for the details according to your environment.
+</p>
+
+<p>
+That's it!
+</p>
+
+
+
+
+
 
 
 <hr style="page-break-before: always" />
@@ -846,8 +906,8 @@ When you create or add new library script files, include their file paths in
 <h1 id="how-to-use-plugin">Step 5 - Implement Functions/Variables in Java&trade; (Plug-in Development)</h1>
 
 <p>
-You can implement new built-in variables and functions using the Java® programming language. 
-Within RINPn and Vnano, we refer to Java® programs that provide built-in functions or variables as <span class="highlight">"plugins."</span>
+You can implement new built-in variables and functions using the Java&trade; programming language. 
+Within RINPn and Vnano, we refer to Java&trade; programs that provide built-in functions or variables as <span class="highlight">"plugins."</span>
 </p>
 
 <p>
@@ -939,9 +999,7 @@ javac ExamplePlugin.vnano
 <p>
 Some compiled class files of special plugin interfaces (XFCI1, XNCI1, etc.) 
 supported by the Vnano Engine are included in the "plugin/org/vcssl/connect" folder. 
-You can import these interfaces in your plugin 
-(see "<a href="https://www.vcssl.org/en-us/vnano/doc/tutorial/plugin">Plugin Development</a>" in the Vnano documentation) 
-and compile them similarly.
+You can import these interfaces in your plugin and compile them similarly.
 </p>
 
 
@@ -1160,7 +1218,7 @@ The result will display:
 <p>
 This confirms the correct calculation of the expression "1.2 + 3.4", which results in "4.6". 
 Within the expression, you can utilize functions from libraries or plugins. 
-Additionally, instead of just an expression, you can pass Vnano script content to the "eval(...)" method of the script engine.
+Additionally, instead of just an expression, you can pass Vnano script content to the "executeScript(...)" method of the script engine.
 </p>
 
 <h2 id="how-to-embed-details">License and Detailed Information about the Vnano Engine</h2>
