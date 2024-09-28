@@ -16,7 +16,7 @@ As shown, the RINPn window has a common UI found in scientific calculators, maki
 
 Despite its simple interface, RINPn offers **powerful features**. You can enter complete expressions (formulas) for calculation, and utilize various mathematical functions and parentheses. Additionally, you can define your own functions or automate processes by writing scripts. The processing speed of RINPn —- ranging from hundreds of MFLOPS to several GFLOPS —- is exceptionally fast for a calculator and also competitive within the realm of scripting languages. Moreover, you can invoke processes implemented in Java&trade; from within calculation expressions and scripts.
 
-    Note: To maximize the processing speed of RINPn, raise the optimization level specified in "Settings.txt."
+> Note: To maximize the processing speed of RINPn, raise the optimization level specified in "Settings.txt."
 
 Furthermore, if needed, you can retract the key panel of RINPn as shown below:
 
@@ -36,13 +36,13 @@ RINPn is licensed under the MIT License, a popular open source license. This lic
 
 Additionally, the license document is included in the "License" folder within the distribution package as "MIT_License.txt," and in the source code repository as "LICENSE".
 
-    - Disclaimer -
-
-    RINPn is provided without any warranties.
-
-    The developers assume no responsibility or liability for the results of using RINPn, including any errors, damages, etc.
-
-    Please ensure you agree with these terms and the conditions of the MIT License before using RINPn.
+> \- Disclaimer -
+>
+> RINPn is provided without any warranties.
+>
+> The developers assume no responsibility or liability for the results of using RINPn, including any errors, damages, etc.
+>
+> Please ensure you agree with these terms and the conditions of the MIT License before using RINPn.
 
 
 ## Downloading and Preparing to Use RINPn
@@ -55,12 +55,11 @@ This document is included in the RINPn package, which you might already have. If
 
 To download, click the "Download Now" button near the top of the page. This will download a compressed ZIP file named **rinpn\_?\_?\_?\_en.zip** (?\_?\_? are version numbers).
 
-    Note: The package available via the "Download Now" button is a pre-built package, ready for immediate use, and is suitable for most users. However, if you prefer to build RINPn yourself, you can obtain the source code from the following repository:
-
-    * The RINPn Source Code Repository
-      https://github.com/RINEARN/rinpn
-
-    Clone the repository and follow the build instructions in the README.
+> Note: The package available via the "Download Now" button is a pre-built package, ready for immediate use, and is suitable for most users. However, if you prefer to build RINPn yourself, you can obtain the source code from the following repository:
+>
+> * [The RINPn Source Code Repository](https://github.com/RINEARN/rinpn)
+>
+> Clone the repository and follow the build instructions in the README.
 
 ### Extract the Downloaded Package
 
@@ -70,12 +69,12 @@ For Microsoft&reg; Windows&reg; users, first **right-click the ZIP file, select 
 
 For users of other operating systems (e.g., Linux&reg;), the ZIP file can typically be extracted via the right-click menu.
 
-    Note: On Linux, the ZIP file can also be extracted using the command line:
-
-        cd (The folder in which the download ZIP file is)
-        unzip -O cp932 rinpn_?_?_?_en.zip    (?_?_? are version numbers)
-
-    This method is particularly useful when using the Japanese edition of RINPn, as extracting via the right-click menu might result in "mojibake" (character corruption).
+> Note: On Linux, the ZIP file can also be extracted using the command line:
+>
+>        cd (The folder in which the download ZIP file is)
+>        unzip -O cp932 rinpn_?_?_?_en.zip    (?_?_? are version numbers)
+>
+> This method is particularly useful when using the Japanese edition of RINPn, as extracting via the right-click menu might result in "mojibake" (character corruption).
 
 After extraction, a folder named rinpn_?_?_?_en will be created containing all the contents of the RINPn package. **While it is possible to browse the files within the ZIP without extracting, RINPn may not function correctly in this state**. Always extract the files before use.
 

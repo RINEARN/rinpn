@@ -1,4 +1,4 @@
-# Step 5 - Step 5 - Implement Functions/Variables in Java&trade; (Plug-in Development)
+# Step 5 - Implement Functions/Variables in Java&trade; (Plug-in Development)
 
 &raquo; [Japanese](Step5_Japanese.md)
 

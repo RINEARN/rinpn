@@ -1,6 +1,6 @@
 # RINPn User Guide
 
-&raquo; [English](Appendix.md)
+&raquo; [Japanese](README_JAPANESE.md)
 
 &raquo; [Ask the AI for help (ChatGPT account required)](https://chatgpt.com/g/g-Hu225rEdv-rinpn-assistant)
 
@@ -13,7 +13,7 @@
 * [Step 4 - How to Add Functions/Variables by Scripts (Library Scripts)](Step4.md)
 * [Step 5 - Implement Functions/Variables in Java™ (Plug-in Development)](Step5.md)
 * [Step 6 - How to Embed into Other Software](Step6.md)
-* [Appendix - List of Built-in Functions/Variables](Introduction.md)
+* [Appendix - List of Built-in Functions/Variables](Appendix.md)
 
 Note: This folder also includes an HTML version of this guide, "RINPn_User_Guide_English.html." If you wish to read this guide locally after downloading this repository, please open it in a web browser.
 

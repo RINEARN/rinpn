@@ -15,7 +15,7 @@ The method to launch RINPn depends on your operating system.
 
 To launch RINPn, double-click the batch file "**RINPn\_?.?.?.bat**" (where ?.?.? represents the version numbers). Alternatively, if you have added the "cmd" folder of RINPn to your system's "Path" environment variable, you can start it by entering the "rinpn" command without arguments in the command-line terminal. (&raquo; [More details](Step2.md))
 
-    Note: The first time you launch RINPn, it may perform some initial setup and configuration steps. Please follow the on-screen instructions.
+> Note: The first time you launch RINPn, it may perform some initial setup and configuration steps. Please follow the on-screen instructions.
 
 ### For Other Operating Systems (Linux&reg;, etc.)
 
@@ -26,11 +26,11 @@ Launch RINPn from the command-line terminal as follows:
 
 Similarly, if you've registered the "cmd" folder of RINPn in the "PATH" environment variable, you can start it by typing "rinpn" without arguments. (&raquo; [More details](Step2.md))
 
-    Note: If you receive an error message stating that the "java" command is not found, you will need to install the Java® Runtime Environment (JRE).
-
-    A common solution across many operating systems is to install OpenJDK, which includes the Java runtime environment. For installation instructions, search online using keywords such as "OpenJDK install (your OS name)." OpenJDK is also beneficial if you plan to design new functions in Java to be called from RINPn, as it allows you to compile Java code.
-
-    On some Linux distributions, you may be able to install only the JRE using the "apt" command. For more details, search "JRE install (your OS name)." Note that JRE packages installable via the "apt" command might include versions ending in "-headless," which are not compatible with RINPn.
+> Note: If you receive an error message stating that the "java" command is not found, you will need to install the Java® Runtime Environment (JRE).
+>
+> A common solution across many operating systems is to install OpenJDK, which includes the Java runtime environment. For installation instructions, search online using keywords such as "OpenJDK install (your OS name)." OpenJDK is also beneficial if you plan to design new functions in Java to be called from RINPn, as it allows you to compile Java code.
+>
+> On some Linux distributions, you may be able to install only the JRE using the "apt" command. For more details, search "JRE install (your OS name)." Note that JRE packages installable via the "apt" command might include versions ending in "-headless," which are not compatible with RINPn.
 
 ## Calculator Window
 
@@ -64,9 +64,9 @@ You can also use functions and variables as follows:
 
 Default available functions and variables are listed in the section: Appendix - List of Built-in Functions/Variables. Additionally, you can create and use new functions and variables as described in [Step-4](Step4.md) and [Step-5](Step5.md).
 
-    - About Precision and Rounding -
-
-    In internal processing, RINPn handles numerical values as double-precision (64-bit) binary floating-point numbers. As a result, some numerical errors may be present in the tail digits of calculation results. Therefore, RINPn rounds the results to 10 digits by default (this setting can be customized in "Settings.txt"). When using RINPn, please be aware of these aspects, as the calculator may not be suitable for purposes requiring absolute precision.
+> \- About Precision and Rounding -
+>
+> In internal processing, RINPn handles numerical values as double-precision (64-bit) binary floating-point numbers. As a result, some numerical errors may be present in the tail digits of calculation results. Therefore, RINPn rounds the results to 10 digits by default (this setting can be customized in "Settings.txt"). When using RINPn, please be aware of these aspects, as the calculator may not be suitable for purposes requiring absolute precision.
 
 
 ---
