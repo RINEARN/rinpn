@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2022 RINEARN
+ * Copyright(C) 2019-2025 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -10,6 +10,7 @@ import java.io.File;
 import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Locale;
 
 import org.vcssl.nano.VnanoEngine;
 import org.vcssl.nano.VnanoException;
@@ -124,7 +125,7 @@ public final class SettingContainer implements Cloneable {
 
 	/**
 	 * Clones this instance.
-	 * 
+	 *
 	 * @return The cloned instance.
 	 */
 	@Override
@@ -137,7 +138,7 @@ public final class SettingContainer implements Cloneable {
 
 	/**
 	 * Execute the setting file as a script, for updating the values of this instance.
-	 * 
+	 *
 	 * @param settingScriptFilePath The path of the setting (script) file.
 	 * @param libraryListFilePath The path of the library list file.
 	 * @param pluginListFilePath The path of the plug-in list file.
@@ -256,7 +257,7 @@ public final class SettingContainer implements Cloneable {
 
 	/**
 	 * Checks and normalizes the updated values of the fields of this instance (= setting values).
-	 * 
+	 *
 	 * @throws RINPnException Thrown if invalid setting value exists.
 	 */
 	private final void checkAndNormalizeSettingValues()
@@ -265,7 +266,7 @@ public final class SettingContainer implements Cloneable {
 		boolean errorOccurred = false;
 		String errorMessage = null;
 
-		this.localeCode = this.localeCode.toLowerCase();
+		this.localeCode = this.localeCode.toLowerCase(Locale.ROOT);
 		if (!LocaleCode.isSupported(this.localeCode)) {
 
 			if (this.localeCode.equals(LocaleCode.EN_US)) {

@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2020 RINEARN
+ * Copyright(C) 2019-2025 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -42,8 +42,8 @@ public final class LocaleCode {
 	public static final String getDefaultLocaleCode() {
 		Locale locale = Locale.getDefault();
 
-		if (   ( locale.getLanguage()!=null && locale.getLanguage().toLowerCase().equals("ja") )
-			   || ( locale.getCountry()!=null && locale.getCountry().toLowerCase().equals("jp") )   ) {
+		if (   ( locale.getLanguage()!=null && locale.getLanguage().toLowerCase(Locale.ROOT).equals("ja") )
+			   || ( locale.getCountry()!=null && locale.getCountry().toLowerCase(Locale.ROOT).equals("jp") )   ) {
 
 			return LocaleCode.JA_JP;
 
