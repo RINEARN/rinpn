@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2022 RINEARN
+ * Copyright(C) 2019-2025 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -7,6 +7,7 @@ package com.rinearn.rinpn.util;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import java.util.Locale;
 
 public final class MessageManager {
 
@@ -51,7 +52,7 @@ public final class MessageManager {
 
 	/**
 	 * Specify how messages should be displayed (display mode).
-	 * 
+	 *
 	 * @param mode The display mode.
 	 */
 	public static final void setDisplayType(DisplayMode mode) {
@@ -61,7 +62,7 @@ public final class MessageManager {
 
 	/**
 	 * Display the specified error message.
-	 * 
+	 *
 	 * @param message The error message to be displayed.
 	 * @param title The window title of the error message (for GUI mode).
 	 * @param localeCode The locale for switching the language of the error message.
@@ -92,9 +93,9 @@ public final class MessageManager {
 			}
 		}
 		if (localeCode.equals(LocaleCode.EN_US)) {
-			String lowerCaseMessage = message.toLowerCase();
+			String lowerCaseMessage = message.toLowerCase(Locale.ROOT);
 			for (String keyword: KEYWORDS_FOR_MOR_DETAILS_EN_US) {
-				String lowerCaseKeyword = keyword.toLowerCase();
+				String lowerCaseKeyword = keyword.toLowerCase(Locale.ROOT);
 				if (lowerCaseMessage.contains(lowerCaseKeyword)) {
 					message += MESSAGE_FOR_MORE_DETAILS_EN_US;
 					break;
@@ -154,7 +155,7 @@ public final class MessageManager {
 
 	/**
 	 * Splits the specified Japanese message into multiple lines, for readability in GUI mode.
-	 * 
+	 *
 	 * @param message The error message as single line.
 	 * @return The error message as multiple lines.
 	 */
@@ -197,7 +198,7 @@ public final class MessageManager {
 
 	/**
 	 * Splits the specified English message into multiple lines, for readability in GUI mode.
-	 * 
+	 *
 	 * @param message The error message as single line.
 	 * @return The error message as multiple lines.
 	 */
@@ -238,7 +239,7 @@ public final class MessageManager {
 
 	/**
 	 * Prints the stack trace to the standard error.
-	 * 
+	 *
 	 * @param e The Exception.
 	 * @param localeCode The locale for switching the language of the header of the stack trace.
 	 */
@@ -264,7 +265,7 @@ public final class MessageManager {
 
 	/**
 	 * Customize the messages of the Exceptions (thrown by Vnano Engine and so on), for this application.
-	 * 
+	 *
 	 * @param message The message of the Exception.
 	 * @return The customized message.
 	 */
@@ -279,9 +280,9 @@ public final class MessageManager {
 		}
 
 		// Customize the error message related with EVAL_ONLY_FLOAT option.
-		// Originally, on Vnano Engine, the above option affects to a calculation expression and a main script, 
+		// Originally, on Vnano Engine, the above option affects to a calculation expression and a main script,
 		// and does not affect to library scripts.
-		// On the other hand, on this application, the above option affects to only a calculation expression, 
+		// On the other hand, on this application, the above option affects to only a calculation expression,
 		// and does not affect to both main and library scripts.
 		// Hence, we should modify the message a little.
 		message = message.replaceAll("ライブラリスクリプト内を除き、", "ファイルに書かれたスクリプトコード内を除き、");
