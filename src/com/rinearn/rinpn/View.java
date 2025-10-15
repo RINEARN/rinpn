@@ -66,7 +66,7 @@ public final class View {
 
 	/**
 	 * Checks whether the UI components have already been initialized.
-	 * 
+	 *
 	 * @return Returns true if they have been initialized.
 	 */
 	public synchronized boolean isInitialized() {
@@ -76,7 +76,7 @@ public final class View {
 
 	/**
 	 * Initializes the UI resources.
-	 * 
+	 *
 	 * @param settingContainer The container storing setting values.
 	 * @throws InterruptedException Thrown when the processing thread has been interrupted.
 	 * @throws InvocationTargetException Thrown when any error occurred on the processing thread..
@@ -98,27 +98,27 @@ public final class View {
 	 * The Runnable implementation for initializing the UI components on the event-dispatcher thread.
 	 */
 	private class ViewInitializer implements Runnable {
-		
+
 		/** The container storing setting values. */
 		private SettingContainer settingContainer;
-		
+
 		/**
 		 * Creates new initializer of the UI.
-		 * 
+		 *
 		 * @param setting The container storing setting values.
 		 */
 		public ViewInitializer(SettingContainer settingContainer) {
 			this.settingContainer = settingContainer;
 		}
-		
+
 		public void run() {
-			
+
 			// Create the window frame.
 			frame = new JFrame();
 			frame.setBounds(0, 0, this.settingContainer.windowWidth, this.settingContainer.windowHeight);
 
 			// The base panel, on which the main panel is added.
-			// There are narrow margins at the top/bottom/right/left edges of the base panel, 
+			// There are narrow margins at the top/bottom/right/left edges of the base panel,
 			// and users can resize the window by mouse-dragging one of the margins.
 			basePanel = new JPanel();
 			basePanel.setBorder(new LineBorder(
@@ -381,11 +381,11 @@ public final class View {
 				functionPanel.add(asinButton);
 				functionKeyList.add(asinButton);
 
-				JButton acosButton = new JButton("cos");
+				JButton acosButton = new JButton("acos");
 				functionPanel.add(acosButton);
 				functionKeyList.add(acosButton);
 
-				JButton atanButton = new JButton("tan");
+				JButton atanButton = new JButton("atan");
 				functionPanel.add(atanButton);
 				functionKeyList.add(atanButton);
 
@@ -597,7 +597,7 @@ public final class View {
 
 	/**
 	 * Disposes the UI resources.
-	 * 
+	 *
 	 * @throws InterruptedException Thrown when the processing thread has been interrupted.
 	 * @throws InvocationTargetException Thrown when any error occurred on the processing thread..
 	 */
@@ -614,13 +614,13 @@ public final class View {
 	 * The Runnable implementation for disposing the UI components on the event-dispatcher thread.
 	 */
 	private class ViewDisposer implements Runnable {
-		
+
 		/**
 		 * Creates new disposer of the UI.
 		 */
 		public ViewDisposer() {
 		}
-		
+
 		@Override
 		public void run() {
 			frame.dispose();
@@ -640,7 +640,7 @@ public final class View {
 
 	/**
 	 * Resizes the main/key panels on the window.
-	 * 
+	 *
 	 * @param settingContainer The container storing setting values.
 	 */
 	public void resizePanels(SettingContainer settingContainer) throws InvocationTargetException, InterruptedException {
@@ -660,7 +660,7 @@ public final class View {
 
 		/**
 		 * Creates new resizer.
-		 * 
+		 *
 		 * @param settingContainer The container storing setting values.
 		 */
 		public PanelResizer(SettingContainer settingContainer) {
