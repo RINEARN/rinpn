@@ -1,5 +1,5 @@
 /*
- * Copyright(C) 2019-2022 RINEARN
+ * Copyright(C) 2019-2025 RINEARN
  * This software is released under the MIT License.
  */
 
@@ -8,6 +8,7 @@ package com.rinearn.rinpn.util;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
+import java.util.Locale;
 
 import com.rinearn.rinpn.RINPnFatalException;
 
@@ -15,7 +16,7 @@ public final class OutputValueFormatter {
 
 	/**
 	 * Rounds the specified value under the specified settings.
-	 * 
+	 *
 	 * @param inputValue The value to be rounded.
 	 * @param setting The container storing setting values.
 	 * @return The rounded value.
@@ -53,12 +54,12 @@ public final class OutputValueFormatter {
 
 	/**
 	 * Rounds the specified value under the specified settings.
-	 * 
+	 *
 	 * @param inputValue The value to be rounded.
 	 * @param mode The rounding mode.
 	 * @param target The part to be rounded.
 	 * @param digits The length of the rounded part.
-	 * @param performsImplicitRounding Specify true if 
+	 * @param performsImplicitRounding Specify true if
 	 * @return The rounded value.
 	 */
 	public static final BigDecimal round(
@@ -68,7 +69,7 @@ public final class OutputValueFormatter {
 		// ----------------------------------------------------------------------------------------------------
 		// Important Note
 		// ----------------------------------------------------------------------------------------------------
-		// Caused by binary-decimal conversion errors, 
+		// Caused by binary-decimal conversion errors,
 		// sometimes the rounded result may look tricky, depends of how it is rounded.
 		//
 		// For example, assumes that a double variable "d" is initialized as follows:
@@ -145,7 +146,7 @@ public final class OutputValueFormatter {
 	 * @return The simplified value.
 	 */
 	public static final String simplify(BigDecimal inputValue) {
-		String fullStr = inputValue.toString().toUpperCase();
+		String fullStr = inputValue.toString().toUpperCase(Locale.ROOT);
 
 		// Split the value into the significand (1.234 of 1.234E5) part and the exponent part (5).
 		String significandStr = null;
